@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Status: Grab Site
+        run: echo "Deploying? Let's go! Snatching the latest code. 🏃‍♂️💨"
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -32,21 +34,33 @@ jobs:
           node-version: '20'
           cache: 'npm'
           cache-dependency-path: 'package-lock.json'
+      - name: Status: Kitchen Prep
+        run: echo "Node is ready to cook some optimized JavaScript. 🍳🔥"
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          echo "Ingredients (dependencies) are in the pot. 🥣📦"
 
       - name: Build
-        run: npm run build:web
+        run: |
+          npm run build:web
+          echo "Web app built. It looks so good it should be in a museum. 🖼️💎"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Status: Red Carpet
+        run: echo "Configuring GitHub Pages. Setting up the red carpet... 👠✨"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './web/dist'
+      - name: Status: Cloud Bound
+        run: echo "Artifacts uploaded. Sending them to the cloud! ☁️🎈"
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Status: World Premiere
+        run: echo "Deployment complete! The world can now see your genius. 🌎🏆"

@@ -11,21 +11,31 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Status: Code Snatch
+        run: echo "Code grabbed! The bot is waking up from its 15-minute nap. 😴☕"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
+      - name: Status: Brain Check
+        run: echo "Node.js is ready. Brain cells are firing. ⚡👀"
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          echo "Dependencies installed. The bot is eating its digital breakfast. 🥐📦"
 
       - name: Build
-        run: npm run build:bot
+        run: |
+          npm run build:bot
+          echo "Bot built! It's now smart enough to avoid walking into walls. 🧱🧠"
 
       - name: Run Aurora Watcher
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           RUN_ONCE: 'true'
-        run: npm run start:bot
+        run: |
+          npm run start:bot
+          echo "Bot is back in the field! Hunting for lights like a cat chasing a laser. 🔦🐈"
