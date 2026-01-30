@@ -40,7 +40,7 @@ export const SolarWindGraph = () => {
   return (
     <>
       <div className="h-[300px] w-full">
-        <ResponsiveContainer width="100%" height="100%" minHeight={0}>
+        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
           <ComposedChart data={recentData}>
             <XAxis
               dataKey="timestamp"

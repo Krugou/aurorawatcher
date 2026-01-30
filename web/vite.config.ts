@@ -38,4 +38,7 @@ export default defineConfig({
   preview: {
     port: 3005,
   },
+  define: {
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
 });

@@ -35,9 +35,8 @@ export const fetchMagneticData = async (lat: number, lon: number): Promise<Magne
       request: 'getFeature',
       storedquery_id: MAGNETOMETER_QUERY_ID,
       bbox: bbox,
-      startTime: startTime,
-      endTime: endTime,
-      parameters: 'MAGN_X,MAGN_Y,MAGN_Z',
+      starttime: startTime,
+      endtime: endTime,
     });
 
     const fetchUrl = buildProxyUrl(`${FMI_WFS_URL}?${params.toString()}`);
@@ -133,9 +132,8 @@ export const fetchMagnetometerHistory = async (
       request: 'getFeature',
       storedquery_id: MAGNETOMETER_QUERY_ID,
       bbox: bbox,
-      startTime: startTime.toISOString(),
-      endTime: endTime.toISOString(),
-      parameters: 'MAGN_X,MAGN_Y,MAGN_Z',
+      starttime: startTime.toISOString(),
+      endtime: endTime.toISOString(),
     });
 
     const fetchUrl = buildProxyUrl(`${FMI_WFS_URL}?${params.toString()}`);
@@ -221,8 +219,8 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
       request: 'getFeature',
       storedquery_id: WEATHER_QUERY_ID,
       bbox: bbox,
-      startTime: startTime,
-      endTime: endTime,
+      starttime: startTime,
+      endtime: endTime,
       parameters: 't2m,n_man,ws_10min',
     });
 

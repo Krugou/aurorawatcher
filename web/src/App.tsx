@@ -157,7 +157,9 @@ const AppContent = () => {
         </CollapsibleSection>
 
         <footer className="text-center py-12 text-slate-500 text-sm">
-          <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
+          <p title={`Build time: ${__BUILD_TIME__}`}>
+            {t('footer.copyright', { year: new Date().getFullYear() })}
+          </p>
         </footer>
       </div>
       <ToastContainer position="top-right" theme="dark" aria-label="Ilmoitukset" />
