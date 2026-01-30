@@ -1,3 +1,9 @@
+# [1.7.0](https://github.com/Krugou/aurorawatcher/compare/v1.6.0...v1.7.0) (2026-01-30)
+
+### Features
+
+- **web:** move accordion button to right and persist state in localStorage ([48dc008](https://github.com/Krugou/aurorawatcher/commit/48dc0083d4df1408a2a972d6befc65fcdd044594))
+
 # [1.6.0](https://github.com/Krugou/aurorawatcher/compare/v1.5.0...v1.6.0) (2026-01-30)
 
 ### Features
