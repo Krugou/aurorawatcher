@@ -1,3 +1,9 @@
+# [1.6.0](https://github.com/Krugou/aurorawatcher/compare/v1.5.0...v1.6.0) (2026-01-30)
+
+### Features
+
+- Add services for fetching FMI magnetic and weather data, and NOAA solar wind data. ([db54a50](https://github.com/Krugou/aurorawatcher/commit/db54a50df030492feb60c206c5ebdb15930d74e2))
+
 # [1.5.0](https://github.com/Krugou/aurorawatcher/compare/v1.4.0...v1.5.0) (2026-01-30)
 
 ### Features
