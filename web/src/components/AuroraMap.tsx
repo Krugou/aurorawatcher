@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { buildProxyUrl } from '../utils/proxy';
 
 import { checkImageColor } from '../utils/auroraUtils';
+import { buildProxyUrl } from '../utils/proxy';
 import { Skeleton } from './Skeleton';
 
 const AURORA_DATA =
