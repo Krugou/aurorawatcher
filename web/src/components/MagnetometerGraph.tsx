@@ -43,12 +43,9 @@ export const MagnetometerGraph = () => {
   };
 
   return (
-    <div className="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800/50 mb-8 transition-friendly hover:border-slate-700">
-      <h3 className="text-lg font-bold text-white mb-6 pl-3 border-l-4 border-purple-500 tracking-tight">
-        {t('graphs.mag_title', 'Magnetic Disturbance (Last 6h)')}
-      </h3>
+    <>
       <div className="h-[300px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minHeight={0}>
           <LineChart data={data}>
             <XAxis
               dataKey="timestamp"
@@ -97,6 +94,6 @@ export const MagnetometerGraph = () => {
       <p className="text-xs text-slate-500 mt-2 text-center">
         {t('graphs.mag_hint', 'Rapid changes in intensity indicate active auroras overhead.')}
       </p>
-    </div>
+    </>
   );
 };

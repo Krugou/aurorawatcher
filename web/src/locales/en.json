@@ -64,6 +64,7 @@
     "kp_hint": "Planetary Activity"
   },
   "graphs": {
+    "title": "Real-time Activity Graphs",
     "mag_title": "Magnetic Disturbance (Last 6h)",
     "mag_hint": "Rapid changes in intensity indicate active auroras overhead.",
     "quiet": "Quiet",

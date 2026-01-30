@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { AuroraMap } from './components/AuroraMap';
 import { CameraGrid } from './components/CameraGrid';
+import { CollapsibleSection } from './components/CollapsibleSection';
 import { DataInfo } from './components/DataInfo';
 import { FullscreenView } from './components/FullscreenView';
 import { Header } from './components/Header';
@@ -98,21 +99,62 @@ const AppContent = () => {
       <div className="w-full max-w-6xl p-4 md:p-8 space-y-12 md:space-y-16">
         <Header />
 
-        <LocalData />
-        <SpaceWeather />
+        <CollapsibleSection
+          title={t('local.title', 'Local Conditions')}
+          headerColorClass="bg-linear-to-b from-purple-500 to-blue-500"
+        >
+          <LocalData />
+        </CollapsibleSection>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <MagnetometerGraph />
-          <SolarWindGraph />
-        </div>
+        <CollapsibleSection
+          title={t('space_weather.title', 'Space Weather (Live)')}
+          headerColorClass="bg-orange-500"
+          badge={
+            <span className="text-xs font-normal text-slate-500 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
+              NOAA SWPC
+            </span>
+          }
+        >
+          <SpaceWeather />
+        </CollapsibleSection>
 
-        <CameraGrid />
+        <CollapsibleSection
+          title={t('graphs.title', 'Real-time Activity Graphs')}
+          headerColorClass="bg-linear-to-r from-purple-500 to-orange-500"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <MagnetometerGraph />
+            <SolarWindGraph />
+          </div>
+        </CollapsibleSection>
 
-        <AuroraMap timestamp={timestamp} />
+        <CollapsibleSection
+          title={t('section.cameras', 'Live Sky Cameras')}
+          headerColorClass="bg-green-500"
+        >
+          <CameraGrid />
+        </CollapsibleSection>
 
-        <DataInfo />
+        <CollapsibleSection
+          title={t('map.title', 'Aurora Forecast Map')}
+          headerColorClass="bg-green-500"
+        >
+          <AuroraMap timestamp={timestamp} />
+        </CollapsibleSection>
 
-        <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
+        <CollapsibleSection
+          title={t('data_info.title', 'How it Works & Data Sources')}
+          headerColorClass="bg-blue-400"
+        >
+          <DataInfo />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          title={t('grid.title', 'Observatory Status')}
+          headerColorClass="bg-blue-500"
+        >
+          <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
+        </CollapsibleSection>
 
         <footer className="text-center py-12 text-slate-500 text-sm">
           <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>

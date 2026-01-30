@@ -25,7 +25,9 @@ const WEATHER_QUERY_ID = 'fmi::observations::weather::simple';
 export const fetchMagneticData = async (lat: number, lon: number): Promise<MagneticData | null> => {
   try {
     const bbox = `${lon - 2},${lat - 2},${lon + 2},${lat + 2}`;
-    const startTime = new Date(Date.now() - 20 * 60 * 1000).toISOString(); // Last 20 mins
+    const now = new Date();
+    const startTime = new Date(now.getTime() - 20 * 60 * 1000).toISOString(); // Last 20 mins
+    const endTime = now.toISOString();
 
     const params = new URLSearchParams({
       service: 'WFS',
@@ -34,6 +36,7 @@ export const fetchMagneticData = async (lat: number, lon: number): Promise<Magne
       storedquery_id: MAGNETOMETER_QUERY_ID,
       bbox: bbox,
       startTime: startTime,
+      endTime: endTime,
       parameters: 'MAGN_X,MAGN_Y,MAGN_Z',
     });
 
@@ -208,7 +211,9 @@ export const fetchMagnetometerHistory = async (
 export const fetchWeatherData = async (lat: number, lon: number): Promise<WeatherData | null> => {
   try {
     const bbox = `${lon - 0.5},${lat - 0.5},${lon + 0.5},${lat + 0.5}`;
-    const startTime = new Date(Date.now() - 60 * 60 * 1000).toISOString(); // Last 1 hour
+    const now = new Date();
+    const startTime = new Date(now.getTime() - 60 * 60 * 1000).toISOString(); // Last 1 hour
+    const endTime = now.toISOString();
 
     const params = new URLSearchParams({
       service: 'WFS',
@@ -217,6 +222,7 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
       storedquery_id: WEATHER_QUERY_ID,
       bbox: bbox,
       startTime: startTime,
+      endTime: endTime,
       parameters: 't2m,n_man,ws_10min',
     });
 

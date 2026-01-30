@@ -25,12 +25,7 @@ export const CameraGrid = () => {
   const timestamp = Date.now(); // Cache buster
 
   return (
-    <section className="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800/50 mb-8">
-      <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-3">
-        <span className="w-2 h-8 bg-green-500 rounded-full"></span>
-        {t('section.cameras', 'Live Sky Cameras')}
-      </h2>
-
+    <>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {CAMERAS.map((cam) => (
           <button
@@ -80,6 +75,6 @@ export const CameraGrid = () => {
           </div>
         </div>
       )}
-    </section>
+    </>
   );
 };

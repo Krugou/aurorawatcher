@@ -59,13 +59,10 @@ export const LocalData = () => {
 
   if (!coords && !geoLoading && !geoError) {
     return (
-      <section className="bg-slate-900 rounded-2xl p-8 shadow-xl border border-slate-800/50 mb-8 flex flex-col items-center text-center">
+      <div className="flex flex-col items-center text-center py-4">
         <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mb-4">
           <span className="text-3xl">📍</span>
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">
-          {t('local.title', 'Local Aurora Hunter')}
-        </h2>
         <p className="text-slate-400 mb-6 max-w-md">
           {t(
             'local.prompt',
@@ -78,25 +75,12 @@ export const LocalData = () => {
         >
           {t('local.button', 'Locate Me & Check Conditions')}
         </button>
-      </section>
+      </div>
     );
   }
 
   return (
-    <section className="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800/50 mb-8">
-      <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-3">
-        <span className="w-2 h-8 bg-linear-to-b from-purple-500 to-blue-500 rounded-full"></span>
-        {t('local.title', 'Local Conditions')}
-        {data && (
-          <span className="text-xs font-normal text-slate-500 ml-auto bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
-            {t('local.observedAt', {
-              station: data.weatherStation,
-              defaultValue: 'Observed at: {{station}}',
-            })}
-          </span>
-        )}
-      </h2>
-
+    <>
       {geoLoading || loading ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Skeleton className="h-24 w-full bg-slate-800 rounded-xl" />
@@ -176,6 +160,6 @@ export const LocalData = () => {
           </div>
         </div>
       ) : null}
-    </section>
+    </>
   );
 };

@@ -4,12 +4,7 @@ export const DataInfo = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="bg-slate-900/50 rounded-2xl p-8 border border-slate-800/50 mb-12">
-      <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-        <span className="text-blue-400">ℹ️</span>
-        {t('data_info.title', 'How it Works & Data Sources')}
-      </h2>
-
+    <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <h3 className="text-blue-400 font-semibold mb-3 flex items-center gap-2">
@@ -82,6 +77,6 @@ export const DataInfo = () => {
           )}
         </p>
       </div>
-    </section>
+    </>
   );
 };

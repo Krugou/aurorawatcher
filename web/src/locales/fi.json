@@ -64,6 +64,7 @@
     "kp_hint": "Planeetta-aktiivisuus"
   },
   "graphs": {
+    "title": "Reaaliaikaiset graafit",
     "mag_title": "Magneettiset häiriöt (Viim. 6h)",
     "mag_hint": "Nopeat muutokset voimakkuudessa viittaavat aktiivisiin revontuliin yläpuolellasi.",
     "quiet": "Rauhallista",
