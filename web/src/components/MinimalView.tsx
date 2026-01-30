@@ -17,7 +17,7 @@ const MinimalCard = ({ loc, timestamp }: MinimalCardProps) => {
         className="w-full h-auto block"
         loading="lazy"
       />
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 text-sm font-medium flex justify-between">
+      <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-2 text-sm font-medium flex justify-between">
         <span>{loc.name}</span>
         {lastModified && <span className="opacity-75">{lastModified}</span>}
       </div>

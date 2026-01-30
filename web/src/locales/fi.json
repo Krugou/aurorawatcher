@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "Revontulivahti"
+  },
+  "header": {
+    "title": "Suomen Revontuliaktiivisuus",
+    "subtitle": "Reaaliaikainen seuranta observatorioilta"
+  },
+  "map": {
+    "title": "Magneettiset Häiriöt",
+    "description": "Kartta näyttää magneettikentän hetkelliset häiriöt Suomen alueella. Mitä punaisempi väri, sitä suurempi todennäköisyys revontulille.",
+    "linkText": "Avaa FMI:n palvelu",
+    "toast": "Korkea revontuliaktiivisuus havaittu! (Punainen alue)",
+    "loading": "Ladataan karttaa...",
+    "error": "Kartan lataus epäonnistui"
+  },
+  "grid": {
+    "title": "Observatoriokamerat",
+    "live": "LIVE",
+    "loading": "Ladataan...",
+    "error": "Kuvan lataus epäonnistui",
+    "updated": "Päivitetty"
+  },
+  "footer": {
+    "copyright": "© {{year}} Revontulivahti. Kuvat: FMI & Observatoriot."
+  },
+  "minimal": {
+    "back": "Takaisin oletusnäkymään"
+  }
+}

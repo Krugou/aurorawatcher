@@ -1,5 +1,8 @@
+import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useImageMetadata } from '../hooks/useImageMetadata';
 import { Location } from '../types';
+import { Skeleton } from './Skeleton';
 
 interface ObservatoryCardProps {
   id: string;
@@ -8,22 +11,45 @@ interface ObservatoryCardProps {
 }
 
 export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) => {
+  const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   // Attempt to fetch timestamp from headers, but use timestamp prop as trigger
   const lastModified = useImageMetadata(loc.image, timestamp);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setHasError(false);
+  }, [timestamp]);
 
   return (
     <div className="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-800 group hover:border-slate-700 transition-all">
       <div className="relative aspect-video bg-black overflow-hidden">
-        <img
-          src={`${loc.image}?t=${timestamp}`}
-          alt={loc.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          loading="lazy"
-        />
+        {isLoading && <Skeleton className="w-full h-full absolute inset-0 z-10" />}
 
-        <div className="absolute top-2 right-2 bg-black/60 px-2 py-1 rounded text-xs text-white backdrop-blur-md">
-          {lastModified ? lastModified : 'LIVE'}
-        </div>
+        {hasError ? (
+          <div className="w-full h-full flex items-center justify-center text-slate-500 bg-slate-900">
+             <span className="text-xs">{t('grid.error')}</span>
+          </div>
+        ) : (
+          <img
+            src={`${loc.image}?t=${timestamp}`}
+            alt={loc.name}
+            className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+            loading="lazy"
+            onLoad={() => setIsLoading(false)}
+            onError={() => {
+              setIsLoading(false);
+              setHasError(true);
+            }}
+          />
+        )}
+
+        {!hasError && (
+          <div className="absolute top-2 right-2 bg-black/60 px-2 py-1 rounded text-xs text-white backdrop-blur-md">
+            {lastModified ? lastModified : t('grid.live')}
+          </div>
+        )}
       </div>
       <div className="p-4 flex items-center justify-between">
         <div>

@@ -1,4 +1,5 @@
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -7,6 +8,7 @@ import { FullscreenView } from './components/FullscreenView';
 import { Header } from './components/Header';
 import { MinimalView } from './components/MinimalView';
 import { ObservatoryGrid } from './components/ObservatoryGrid';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { Location } from './types';
 
 // Konfiguraatio ja tila
@@ -42,6 +44,7 @@ const LOCATIONS: Record<string, Location> = {
 };
 
 const App = () => {
+  const { t } = useTranslation();
   const [timestamp, setTimestamp] = useState(Date.now());
   const [mode, setMode] = useState<'default' | 'minimal' | 'fullscreen'>('default');
   const [activeCam, setActiveCam] = useState<string | null>(null);
@@ -78,6 +81,7 @@ const App = () => {
   // Oletusnäkymä (Työpöytä/Mobiili)
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col items-center">
+      <LanguageSwitcher />
       <div className="w-full max-w-5xl p-4 space-y-8">
         <Header />
 
@@ -86,7 +90,7 @@ const App = () => {
         <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
 
         <footer className="text-center py-12 text-slate-500 text-sm">
-          <p>© {new Date().getFullYear()} Revontulivahti. Kuvat: FMI & Observatoriot.</p>
+          <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
         </footer>
       </div>
       <ToastContainer position="top-right" theme="dark" aria-label="Ilmoitukset" />

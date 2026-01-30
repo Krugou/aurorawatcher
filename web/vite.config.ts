@@ -32,4 +32,10 @@ export default defineConfig({
     }),
   ],
   base: '/aurorawatcher/', // Assumes repository name is 'aurorawatcher' for GitHub Pages
+  server: {
+    port: 3005,
+  },
+  preview: {
+    port: 3005,
+  },
 });

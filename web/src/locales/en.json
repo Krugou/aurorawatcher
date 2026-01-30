@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "Aurora Watcher"
+  },
+  "header": {
+    "title": "Finland Aurora Activity",
+    "subtitle": "Real-time monitoring from observatories"
+  },
+  "map": {
+    "title": "Magnetic Disturbances",
+    "description": "The map shows instantaneous magnetic field disturbances in Finland. The redder the color, the higher the probability of auroras.",
+    "linkText": "Open FMI Service",
+    "toast": "High aurora activity detected! (Red area)",
+    "loading": "Loading map...",
+    "error": "Failed to load map data"
+  },
+  "grid": {
+    "title": "Observatory Cameras",
+    "live": "LIVE",
+    "loading": "Loading...",
+    "error": "Image failed to load",
+    "updated": "Updated"
+  },
+  "footer": {
+    "copyright": "© {{year}} Aurora Watcher. Images: FMI & Observatories."
+  },
+  "minimal": {
+    "back": "Back to default view"
+  }
+}
