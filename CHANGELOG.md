@@ -1,3 +1,9 @@
+# [1.9.0](https://github.com/Krugou/aurorawatcher/compare/v1.8.0...v1.9.0) (2026-01-30)
+
+### Features
+
+- Implement image history management for the bot and add corresponding display components to the web application. ([0760f8f](https://github.com/Krugou/aurorawatcher/commit/0760f8ff10584333e7f9c2bc4aebb837cd70fac0))
+
 # [1.8.0](https://github.com/Krugou/aurorawatcher/compare/v1.7.0...v1.8.0) (2026-01-30)
 
 ### Features
