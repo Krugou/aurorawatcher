@@ -14,23 +14,29 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import { fetchMagnetometerHistory, GraphDataPoint } from '../services/fmiService';
 import { Skeleton } from './Skeleton';
 
-export const MagnetometerGraph = () => {
+export const MagnetometerGraph = ({
+  manualCoords,
+}: {
+  manualCoords?: { latitude: number; longitude: number };
+}) => {
   const { t } = useTranslation();
   const { coords } = useGeolocation();
   const [data, setData] = useState<GraphDataPoint[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const effectiveCoords = manualCoords || coords;
+
   useEffect(() => {
-    if (coords) {
+    if (effectiveCoords) {
       setLoading(true);
-      fetchMagnetometerHistory(coords.latitude, coords.longitude)
+      fetchMagnetometerHistory(effectiveCoords.latitude, effectiveCoords.longitude)
         .then(setData)
         .catch(console.error)
         .finally(() => setLoading(false));
     }
-  }, [coords]);
+  }, [effectiveCoords]);
 
-  if (!coords) return null; // Don't show if no location
+  if (!effectiveCoords) return null; // Don't show if no location
 
   if (loading) return <Skeleton className="h-64 w-full bg-slate-900 rounded-2xl" />;
 

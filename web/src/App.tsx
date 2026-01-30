@@ -51,6 +51,15 @@ const LOCATIONS: Record<string, Location> = {
     mapUrl: 'https://maps.app.goo.gl/BG3JC7uHLLcdi5C1A',
     image: 'https://space.fmi.fi/MIRACLE/RWC/latest_HOV.jpg',
   },
+  helsinki_test: {
+    id: 'helsinki_test',
+    name: 'Helsinki (Test)',
+    fullname: 'Regional Test (Nurmijärvi NUR)',
+    mapUrl: 'https://maps.app.goo.gl/rmr9YMBuR66GCB2X8',
+    image: 'https://space.fmi.fi/MIRACLE/RWC/latest_SIR.jpg',
+    lat: 60.1695,
+    lon: 24.9354,
+  },
 };
 
 const AppContent = () => {
@@ -58,6 +67,9 @@ const AppContent = () => {
   const [timestamp, setTimestamp] = useState(Date.now());
   const [mode, setMode] = useState<'default' | 'minimal' | 'fullscreen'>('default');
   const [activeCam, setActiveCam] = useState<string | null>(null);
+  const [testCoords, setTestCoords] = useState<{ latitude: number; longitude: number } | undefined>(
+    undefined,
+  );
 
   // Tarkista URL-parametrit
   useEffect(() => {
@@ -103,8 +115,16 @@ const AppContent = () => {
           title={t('local.title', 'Local Conditions')}
           headerColorClass="bg-linear-to-b from-purple-500 to-blue-500"
           storageKey="local_data"
+          badge={
+            <button
+              onClick={() => setTestCoords({ latitude: 60.1695, longitude: 24.9354 })}
+              className="text-[10px] uppercase font-bold text-slate-500 hover:text-white"
+            >
+              Test Helsinki
+            </button>
+          }
         >
-          <LocalData />
+          <LocalData manualCoords={testCoords} />
         </CollapsibleSection>
 
         <CollapsibleSection
@@ -126,7 +146,7 @@ const AppContent = () => {
           storageKey="graphs"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <MagnetometerGraph />
+            <MagnetometerGraph manualCoords={testCoords} />
             <SolarWindGraph />
           </div>
         </CollapsibleSection>

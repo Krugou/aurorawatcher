@@ -14,19 +14,25 @@ interface CombinedData {
   windSpeed: number;
 }
 
-export const LocalData = () => {
+export const LocalData = ({
+  manualCoords,
+}: {
+  manualCoords?: { latitude: number; longitude: number };
+}) => {
   const { t } = useTranslation();
   const { coords, error: geoError, loading: geoLoading, requestLocation } = useGeolocation();
   const [data, setData] = useState<CombinedData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  const effectiveCoords = manualCoords || coords;
+
   useEffect(() => {
-    if (coords) {
+    if (effectiveCoords) {
       setLoading(true);
       Promise.all([
-        fetchMagneticData(coords.latitude, coords.longitude),
-        fetchWeatherData(coords.latitude, coords.longitude),
+        fetchMagneticData(effectiveCoords.latitude, effectiveCoords.longitude),
+        fetchWeatherData(effectiveCoords.latitude, effectiveCoords.longitude),
       ])
         .then(([magResult, weatherResult]) => {
           if (magResult && weatherResult) {
@@ -39,14 +45,13 @@ export const LocalData = () => {
               windSpeed: weatherResult.windSpeed,
             });
           } else {
-            // We can handle partial data too, but for now simple error if either missing
             setError(true);
           }
         })
         .catch(() => setError(true))
         .finally(() => setLoading(false));
     }
-  }, [coords]);
+  }, [effectiveCoords]);
 
   // Cloud cover interpretation (0-8 octas)
   const getSkyCondition = (octas: number) => {
@@ -57,7 +62,7 @@ export const LocalData = () => {
 
   const sky = data ? getSkyCondition(data.cloudCover) : { text: '', color: '' };
 
-  if (!coords && !geoLoading && !geoError) {
+  if (!effectiveCoords && !geoLoading && !geoError) {
     return (
       <div className="flex flex-col items-center text-center py-4">
         <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mb-4">

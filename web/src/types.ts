@@ -4,4 +4,6 @@ export interface Location {
   fullname: string;
   mapUrl: string;
   image: string;
+  lat?: number;
+  lon?: number;
 }
