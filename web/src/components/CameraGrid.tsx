@@ -48,11 +48,18 @@ export const CameraGrid = () => {
 
             {/* Modal */}
             {selectedCam && (
+                /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
                 <div
                     className="fixed inset-0 z-50 bg-black/98 flex items-center justify-center p-4 backdrop-blur-sm transition-friendly"
-                    onClick={() => setSelectedCam(null)}
+                    onClick={(e) => { if (e.target === e.currentTarget) setSelectedCam(null); }}
+                    onKeyDown={(e) => { if (e.key === 'Escape') setSelectedCam(null); }}
+                    role="dialog"
+                    aria-modal="true"
+                    tabIndex={-1}
                 >
-                    <div className="max-w-5xl w-full relative animate-in fade-in zoom-in duration-300">
+                    <div
+                        className="max-w-5xl w-full relative animate-in fade-in zoom-in duration-300"
+                    >
                         <img
                             src={`${selectedCam.url}?t=${timestamp}`}
                             alt={selectedCam.name}

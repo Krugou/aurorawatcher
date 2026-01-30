@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { useTranslation } from 'react-i18next';
-import { fetchMagnetometerHistory, GraphDataPoint } from '../services/fmiService';
+import { Line, LineChart, ReferenceLine,ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+
 import { useGeolocation } from '../hooks/useGeolocation';
+import { fetchMagnetometerHistory, GraphDataPoint } from '../services/fmiService';
 import { Skeleton } from './Skeleton';
 
 export const MagnetometerGraph = () => {

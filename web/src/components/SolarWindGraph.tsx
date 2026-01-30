@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ComposedChart, Line, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useTranslation } from 'react-i18next';
+import { Area, ComposedChart, Legend,Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+
 import { fetchSolarHistory, SolarHistoryPoint } from '../services/solarService';
 import { Skeleton } from './Skeleton';
 

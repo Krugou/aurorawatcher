@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { useGeolocation } from '../hooks/useGeolocation';
 import { fetchMagneticData, fetchWeatherData } from '../services/fmiService';
 import { Skeleton } from './Skeleton';

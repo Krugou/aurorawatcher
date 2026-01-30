@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { fetchSolarData, SolarData } from '../services/solarService';
 import { Skeleton } from './Skeleton';
 

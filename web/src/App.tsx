@@ -5,19 +5,19 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 
 import { AuroraMap } from './components/AuroraMap';
+import { CameraGrid } from './components/CameraGrid';
+import { DataInfo } from './components/DataInfo';
 import { FullscreenView } from './components/FullscreenView';
 import { Header } from './components/Header';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { LocalData } from './components/LocalData';
+import { MagnetometerGraph } from './components/MagnetometerGraph';
 import { MinimalView } from './components/MinimalView';
 import { ObservatoryGrid } from './components/ObservatoryGrid';
-import { ThemeToggle } from './components/ThemeToggle';
-import { ThemeProvider } from './context/ThemeContext';
-import { LocalData } from './components/LocalData';
-import { SpaceWeather } from './components/SpaceWeather';
-import { MagnetometerGraph } from './components/MagnetometerGraph';
 import { SolarWindGraph } from './components/SolarWindGraph';
-import { CameraGrid } from './components/CameraGrid';
-import { DataInfo } from './components/DataInfo';
+import { SpaceWeather } from './components/SpaceWeather';
+import { ThemeToggle } from './components/ThemeToggle';
+import { ThemeProvider } from './context/ThemeProvider';
 import { Location } from './types';
 
 // Konfiguraatio ja tila

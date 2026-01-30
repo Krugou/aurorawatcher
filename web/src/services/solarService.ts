@@ -29,7 +29,7 @@ export const fetchSolarData = async (): Promise<SolarData | null> => {
     const kpData = await kpRes.json();
 
     // Helper to get latest valid row from 2D array [header, row1, row2...]
-    const getLatest = (data: any[]) => {
+    const getLatest = (data: string[][]) => {
       // Start from end, lookup until valid
       // Row format depends on file.
       // Mag: [time_tag, bz_gsm, bt, ...]

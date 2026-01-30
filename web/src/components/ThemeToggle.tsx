@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
 
 export const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
