@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Krugou/aurorawatcher/compare/v1.2.0...v1.3.0) (2026-01-30)
+
+
+### Features
+
+* Implement data fetching services for FMI and NOAA, alongside a new AuroraMap component and image metadata hook. ([3f6e3cc](https://github.com/Krugou/aurorawatcher/commit/3f6e3ccbbe1da1cc0a6d9450d04d073c2b62e5b0))
+
 # [1.2.0](https://github.com/Krugou/aurorawatcher/compare/v1.1.0...v1.2.0) (2026-01-30)
 
 
