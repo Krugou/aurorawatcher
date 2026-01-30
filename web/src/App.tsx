@@ -90,8 +90,11 @@ const AppContent = () => {
   // Oletusnäkymä (Työpöytä/Mobiili)
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col items-center transition-colors duration-300">
-      <LanguageSwitcher />
-      <ThemeToggle />
+      {/* Top Controls Container */}
+      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+        <ThemeToggle />
+        <LanguageSwitcher />
+      </div>
       <div className="w-full max-w-6xl p-4 md:p-8 space-y-12 md:space-y-16">
         <Header />
 
