@@ -1,0 +1,61 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run Web",
+      "type": "npm",
+      "script": "dev:web",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*VITE v.*",
+          "endsPattern": ".*Local:.*"
+        }
+      },
+      "presentation": {
+        "group": "dev",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Run Bot",
+      "type": "npm",
+      "script": "dev:bot",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*ts-node.*",
+          "endsPattern": ".*Logged in as.*"
+        }
+      },
+      "presentation": {
+        "group": "dev",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Run All",
+      "dependsOn": [
+        "Run Web",
+        "Run Bot"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

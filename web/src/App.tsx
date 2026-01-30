@@ -12,6 +12,11 @@ import { MinimalView } from './components/MinimalView';
 import { ObservatoryGrid } from './components/ObservatoryGrid';
 import { ThemeToggle } from './components/ThemeToggle';
 import { ThemeProvider } from './context/ThemeContext';
+import { LocalData } from './components/LocalData';
+import { SpaceWeather } from './components/SpaceWeather';
+import { MagnetometerGraph } from './components/MagnetometerGraph';
+import { SolarWindGraph } from './components/SolarWindGraph';
+import { CameraGrid } from './components/CameraGrid';
 import { Location } from './types';
 
 // Konfiguraatio ja tila
@@ -88,6 +93,16 @@ const AppContent = () => {
       <ThemeToggle />
       <div className="w-full max-w-5xl p-4 space-y-8">
         <Header />
+
+        <LocalData />
+        <SpaceWeather />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <MagnetometerGraph />
+            <SolarWindGraph />
+        </div>
+
+        <CameraGrid />
 
         <AuroraMap timestamp={timestamp} />
 
