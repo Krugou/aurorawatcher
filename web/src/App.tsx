@@ -1,14 +1,17 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { AuroraMap } from './components/AuroraMap';
 import { FullscreenView } from './components/FullscreenView';
 import { Header } from './components/Header';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { MinimalView } from './components/MinimalView';
 import { ObservatoryGrid } from './components/ObservatoryGrid';
-import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { ThemeToggle } from './components/ThemeToggle';
+import { ThemeProvider } from './context/ThemeContext';
 import { Location } from './types';
 
 // Konfiguraatio ja tila
@@ -43,7 +46,7 @@ const LOCATIONS: Record<string, Location> = {
   },
 };
 
-const App = () => {
+const AppContent = () => {
   const { t } = useTranslation();
   const [timestamp, setTimestamp] = useState(Date.now());
   const [mode, setMode] = useState<'default' | 'minimal' | 'fullscreen'>('default');
@@ -80,8 +83,9 @@ const App = () => {
 
   // Oletusnäkymä (Työpöytä/Mobiili)
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col items-center">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans flex flex-col items-center transition-colors duration-300">
       <LanguageSwitcher />
+      <ThemeToggle />
       <div className="w-full max-w-5xl p-4 space-y-8">
         <Header />
 
@@ -95,6 +99,14 @@ const App = () => {
       </div>
       <ToastContainer position="top-right" theme="dark" aria-label="Ilmoitukset" />
     </div>
+  );
+};
+
+const App = () => {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 };
 

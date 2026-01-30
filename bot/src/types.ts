@@ -17,3 +17,8 @@ export interface AuroraConfig {
 	latitude: number;
 	longitude: number;
 }
+
+export interface Command {
+	data: any; // specific builder type could be imported but 'any' is safe for now to keep it simple or import SlashCommandBuilder
+	execute: (interaction: any) => Promise<void>;
+}

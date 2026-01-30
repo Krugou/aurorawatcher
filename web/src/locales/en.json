@@ -24,6 +24,10 @@
   "footer": {
     "copyright": "© {{year}} Aurora Watcher. Images: FMI & Observatories."
   },
+  "theme": {
+    "switchToLight": "Switch to Light Mode",
+    "switchToDark": "Switch to Dark Mode"
+  },
   "minimal": {
     "back": "Back to default view"
   }

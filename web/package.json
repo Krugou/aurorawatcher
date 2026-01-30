@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev": "vite --port 3005",
     "dev:advanced": "vite --host --port 3005 --open --cors",
     "start": "vite preview --port 3005",
     "test": "vitest",

@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+
 import { checkImageColor } from '../utils/auroraUtils';
 import { Skeleton } from './Skeleton';
 
@@ -16,6 +17,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const lastToastTimeRef = useRef<number>(0);
 
   // Reset states when timestamp changes
   useEffect(() => {

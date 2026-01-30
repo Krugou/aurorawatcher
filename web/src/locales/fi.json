@@ -24,6 +24,10 @@
   "footer": {
     "copyright": "© {{year}} Revontulivahti. Kuvat: FMI & Observatoriot."
   },
+  "theme": {
+    "switchToLight": "Vaihda vaaleaan tilaan",
+    "switchToDark": "Vaihda tummaan tilaan"
+  },
   "minimal": {
     "back": "Takaisin oletusnäkymään"
   }

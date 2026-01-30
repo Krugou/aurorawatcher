@@ -1,7 +1,9 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import { LanguageSwitcher } from './LanguageSwitcher';
 import '../i18n'; // Ensure i18n is initialized
+
+import { fireEvent,render, screen } from '@testing-library/react';
+import { describe, expect,it } from 'vitest';
+
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 describe('LanguageSwitcher', () => {
   it('renders correctly', () => {

@@ -8,19 +8,34 @@ let previousHash = '';
  * @param imageUrl - The URL of the image to check.
  * @returns A promise that resolves to true if the image has changed, false otherwise.
  */
-export const hasImageChanged = async (imageUrl: string): Promise<boolean> => {
-	const response = await fetch(imageUrl);
-	const arrayBuffer = await response.arrayBuffer();
-	const buffer = Buffer.from(arrayBuffer);
-	const hash = crypto.createHash('sha1');
-	hash.update(buffer);
-	const currentHash = hash.digest('hex');
+export const hasImageChanged = async (imageUrl: string, timeoutMs = 5000): Promise<boolean> => {
+	try {
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-	if (previousHash !== currentHash) {
-		previousHash = currentHash;
-		return true;
+		const response = await fetch(imageUrl, { signal: controller.signal });
+		clearTimeout(timeoutId);
+
+		if (!response.ok) {
+			console.error(`Failed to fetch image ${imageUrl}: ${response.statusText}`);
+			return false;
+		}
+
+		const arrayBuffer = await response.arrayBuffer();
+		const buffer = Buffer.from(arrayBuffer);
+		const hash = crypto.createHash('sha1');
+		hash.update(buffer);
+		const currentHash = hash.digest('hex');
+
+		if (previousHash !== currentHash) {
+			previousHash = currentHash;
+			return true;
+		}
+		return false;
+	} catch (error) {
+		console.error(`Error checking image change for ${imageUrl}:`, error);
+		return false;
 	}
-	return false;
 };
 
 /**

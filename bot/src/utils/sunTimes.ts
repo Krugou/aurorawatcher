@@ -24,22 +24,43 @@ export const convertTimeTo24HourFormat = (time: string): Date => {
  */
 export const getSunriseSunsetTimes = async (
 	latitude: number,
-	longitude: number
+	longitude: number,
+    timeoutMs = 5000
 ): Promise<SunTimes> => {
 	const urlSunriseSunset = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}`;
 
-	const response = await fetch(urlSunriseSunset);
-	const data: SunriseSunsetResponse = await response.json();
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-	const { sunrise, sunset } = data.results;
+        const response = await fetch(urlSunriseSunset, { signal: controller.signal });
+        clearTimeout(timeoutId);
 
-	const sunriseDate = convertTimeTo24HourFormat(sunrise);
-	const sunsetDate = convertTimeTo24HourFormat(sunset);
+        if (!response.ok) {
+            throw new Error(`Sunrise API responded with ${response.status}`);
+        }
 
-	return {
-		sunriseHours: sunriseDate.getUTCHours(),
-		sunsetHours: sunsetDate.getUTCHours(),
-	};
+        const data: SunriseSunsetResponse = await response.json();
+
+        if (data.status !== 'OK') {
+             throw new Error(`Sunrise API status: ${data.status}`);
+        }
+
+        const { sunrise, sunset } = data.results;
+
+        const sunriseDate = convertTimeTo24HourFormat(sunrise);
+        const sunsetDate = convertTimeTo24HourFormat(sunset);
+
+        return {
+            sunriseHours: sunriseDate.getUTCHours(),
+            sunsetHours: sunsetDate.getUTCHours(),
+        };
+    } catch (error) {
+        console.error('Error fetching sunrise/sunset times:', error);
+        // Fallback: Assume dark hours if API fails to be safe (or throw to be handled upstream)
+        // Here we throw so auroraService handles it (it logs error)
+        throw error;
+    }
 };
 
 /**

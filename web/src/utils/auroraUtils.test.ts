@@ -1,5 +1,6 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { checkImageColor, AURORA_COLORS } from './auroraUtils';
+import { afterEach,describe, expect, it, vi } from 'vitest';
+
+import { AURORA_COLORS,checkImageColor } from './auroraUtils';
 
 describe('auroraUtils', () => {
   afterEach(() => {
