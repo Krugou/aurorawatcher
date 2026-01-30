@@ -89,7 +89,7 @@ const App = () => {
           <p>© {new Date().getFullYear()} Revontulivahti. Kuvat: FMI & Observatoriot.</p>
         </footer>
       </div>
-      <ToastContainer position="top-right" theme="dark" />
+      <ToastContainer position="top-right" theme="dark" aria-label="Ilmoitukset" />
     </div>
   );
 };
