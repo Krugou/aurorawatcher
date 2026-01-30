@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Krugou/aurorawatcher/compare/v1.3.0...v1.4.0) (2026-01-30)
+
+
+### Features
+
+* add AuroraMap component for displaying aurora activity with image analysis and notifications, alongside a new hook for image metadata. ([1a7d34a](https://github.com/Krugou/aurorawatcher/commit/1a7d34a68302d74e21395b64ab107ac2626aeffa))
+
 # [1.3.0](https://github.com/Krugou/aurorawatcher/compare/v1.2.0...v1.3.0) (2026-01-30)
 
 
