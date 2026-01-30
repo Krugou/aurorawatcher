@@ -27,9 +27,9 @@ export const SolarWindGraph = () => {
         return `${d.getHours()}:${d.getMinutes().toString().padStart(2, '0')}`;
     };
 
-    return (
-        <div className="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800/50 mb-8">
-            <h3 className="text-lg font-semibold text-white mb-4 pl-2 border-l-4 border-orange-500">
+  return (
+    <div className="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800/50 mb-8 transition-friendly hover:border-slate-700">
+        <h3 className="text-lg font-bold text-white mb-6 pl-3 border-l-4 border-orange-500 tracking-tight">
                 {t('graphs.solar_title', 'Solar Wind & Bz (Last 6h)')}
             </h3>
             <div className="h-[300px] w-full">
@@ -60,7 +60,9 @@ export const SolarWindGraph = () => {
                             domain={[-20, 20]}
                         />
                         <Tooltip
-                            contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f1f5f9' }}
+                            contentStyle={{ backgroundColor: '#020617', borderColor: '#334155', borderRadius: '12px', border: '1px solid #334155', padding: '10px' }}
+                            itemStyle={{ color: '#e2e8f0' }}
+                            labelStyle={{ color: '#94a3b8', fontWeight: 'bold', marginBottom: '4px' }}
                             labelFormatter={(label) => formatTime(label)}
                         />
                         <Legend wrapperStyle={{ paddingTop: '10px' }}/>
@@ -72,7 +74,7 @@ export const SolarWindGraph = () => {
                             fill="#f59e0b"
                             stroke="#f59e0b"
                             fillOpacity={0.1}
-                            name="Speed (km/s)"
+                            name={t('graphs.speed_label', 'Speed (km/s)')}
                         />
                         <Line
                             yAxisId="bz"
@@ -81,7 +83,7 @@ export const SolarWindGraph = () => {
                             stroke="#ef4444" // Red
                             strokeWidth={2}
                             dot={false}
-                            name="Bz (nT)"
+                            name={t('graphs.bz_label', 'Bz (nT)')}
                         />
                     </ComposedChart>
                 </ResponsiveContainer>

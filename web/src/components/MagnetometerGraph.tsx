@@ -34,8 +34,8 @@ export const MagnetometerGraph = () => {
     };
 
     return (
-        <div className="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800/50 mb-8">
-            <h3 className="text-lg font-semibold text-white mb-4 pl-2 border-l-4 border-purple-500">
+    <div className="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800/50 mb-8 transition-friendly hover:border-slate-700">
+        <h3 className="text-lg font-bold text-white mb-6 pl-3 border-l-4 border-purple-500 tracking-tight">
                 {t('graphs.mag_title', 'Magnetic Disturbance (Last 6h)')}
             </h3>
             <div className="h-[300px] w-full">
@@ -54,10 +54,12 @@ export const MagnetometerGraph = () => {
                             label={{ value: 'nT', angle: -90, position: 'insideLeft', fill: '#64748b' }}
                         />
                         <Tooltip
-                            contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f1f5f9' }}
+                            contentStyle={{ backgroundColor: '#020617', borderColor: '#334155', borderRadius: '12px', border: '1px solid #334155', padding: '10px' }}
+                            itemStyle={{ color: '#e2e8f0' }}
+                            labelStyle={{ color: '#94a3b8', fontWeight: 'bold', marginBottom: '4px' }}
                             labelFormatter={(label) => formatTime(label)}
                         />
-                         <ReferenceLine y={50000} label="Quiet" stroke="#334155" strokeDasharray="3 3" />
+                         <ReferenceLine y={50000} label={t('graphs.quiet', 'Quiet')} stroke="#334155" strokeDasharray="3 3" />
                          {/* We can calculate moving average or baseline to show disturbance 'delta',
                              but raw intensity is a good start.
                              Usually auroras show as sharp drops/spikes in X component or total field. */}

@@ -30,5 +30,60 @@
   },
   "minimal": {
     "back": "Back to default view"
+  },
+  "local": {
+    "title": "Local Aurora Hunter",
+    "prompt": "Enable geolocation to see real-time magnetic field and weather conditions for your exact location.",
+    "button": "Locate Me & Check Conditions",
+    "geoError": "Could not determine location. Please allow location access.",
+    "dataError": "No data available for your area right now.",
+    "observedAt": "Observed at: {{station}}",
+    "magField": "Magnetic Field",
+    "intensity": "Raw Intensity (Total)",
+    "visibility": "Visibility",
+    "outdoors": "Outdoors",
+    "clouds": "Cloud Cover: {{percent}}%",
+    "wind": "Wind: {{speed}} m/s",
+    "go": "GO FOR IT! 🚀",
+    "noGo": "BAD VISIBILITY ☁️"
+  },
+  "sky": {
+    "clear": "Clear Sky 🌌",
+    "partly": "Partly Cloudy ⛅",
+    "overcast": "Overcast ☁️"
+  },
+  "space_weather": {
+    "title": "Space Weather (Live)",
+    "bz": "Bz (IMF)",
+    "bz_hint": "Negative is better",
+    "speed": "Solar Wind",
+    "speed_hint": "Faster is better",
+    "density": "Density",
+    "density_hint": "Higher is better",
+    "kp": "Kp Index",
+    "kp_hint": "Planetary Activity"
+  },
+  "graphs": {
+    "mag_title": "Magnetic Disturbance (Last 6h)",
+    "mag_hint": "Rapid changes in intensity indicate active auroras overhead.",
+    "quiet": "Quiet",
+    "solar_title": "Solar Wind & Bz (Last 6h)",
+    "solar_hint": "Correlation of High Speed + Negative Bz triggers Geomagnetic Storms.",
+    "speed_label": "Speed (km/s)",
+    "bz_label": "Bz (nT)"
+  },
+  "section": {
+    "cameras": "Live Sky Cameras"
+  },
+  "cameras": {
+    "close": "Close [Esc]"
+  },
+  "data_info": {
+    "title": "How it Works & Data Sources",
+    "fmi_title": "FMI (Finnish Meteorological Institute)",
+    "fmi_desc": "Ground-level data is fetched directly from FMI Open Data APIs. This includes real-time magnetometer observations from stations across Finland and local weather forecasts (cloud cover, temperature) based on your geolocation.",
+    "noaa_title": "NOAA Space Weather Prediction Center",
+    "noaa_desc": "Solar wind parameters (Bz, Speed, Density) and the Planetary K-index are sourced from NOAA SWPC. This data is measured by satellites like DSCOVR at the L1 Lagrange point, providing a ~30-60 minute warning before solar wind hits Earth.",
+    "disclaimer": "Note: Accurate aurora prediction depends on multiple variables. Even with perfect data, local visibility and fast-changing conditions play a huge role. Always trust your own eyes!"
   }
 }

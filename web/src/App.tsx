@@ -17,6 +17,7 @@ import { SpaceWeather } from './components/SpaceWeather';
 import { MagnetometerGraph } from './components/MagnetometerGraph';
 import { SolarWindGraph } from './components/SolarWindGraph';
 import { CameraGrid } from './components/CameraGrid';
+import { DataInfo } from './components/DataInfo';
 import { Location } from './types';
 
 // Konfiguraatio ja tila
@@ -88,10 +89,10 @@ const AppContent = () => {
 
   // Oletusnäkymä (Työpöytä/Mobiili)
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans flex flex-col items-center transition-colors duration-300">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col items-center transition-colors duration-300">
       <LanguageSwitcher />
       <ThemeToggle />
-      <div className="w-full max-w-5xl p-4 space-y-8">
+      <div className="w-full max-w-6xl p-4 md:p-8 space-y-12 md:space-y-16">
         <Header />
 
         <LocalData />
@@ -105,6 +106,8 @@ const AppContent = () => {
         <CameraGrid />
 
         <AuroraMap timestamp={timestamp} />
+
+        <DataInfo />
 
         <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
 

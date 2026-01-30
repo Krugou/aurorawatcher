@@ -53,7 +53,7 @@ export const SpaceWeather = () => {
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Bz */}
-                <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/30">
+                <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/30 hover-lift">
                     <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">{t('space_weather.bz', 'Bz (IMF)')}</p>
                     <div className="flex items-baseline gap-1">
                         <span className={`text-2xl font-bold ${getBzColor(data.bz)}`}>{data.bz}</span>
@@ -63,7 +63,7 @@ export const SpaceWeather = () => {
                 </div>
 
                 {/* Speed */}
-                <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/30">
+                <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/30 hover-lift">
                     <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">{t('space_weather.speed', 'Solar Wind')}</p>
                     <div className="flex items-baseline gap-1">
                         <span className={`text-2xl font-bold ${getSpeedColor(data.speed)}`}>{Math.round(data.speed)}</span>
@@ -73,7 +73,7 @@ export const SpaceWeather = () => {
                 </div>
 
                  {/* Density */}
-                 <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/30">
+                 <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/30 hover-lift">
                     <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">{t('space_weather.density', 'Density')}</p>
                     <div className="flex items-baseline gap-1">
                         <span className={`text-2xl font-bold ${getDensityColor(data.density)}`}>{Math.round(data.density)}</span>
@@ -83,7 +83,7 @@ export const SpaceWeather = () => {
                 </div>
 
                 {/* Kp Index */}
-                <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/30">
+                <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/30 hover-lift">
                     <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">{t('space_weather.kp', 'Kp Index')}</p>
                     <div className="flex items-center gap-2 mt-1">
                          <span className={`text-2xl font-bold ${getKpColor(data.kp)}`}>{data.kp}</span>

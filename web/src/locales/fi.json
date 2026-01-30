@@ -30,5 +30,60 @@
   },
   "minimal": {
     "back": "Takaisin oletusnäkymään"
+  },
+  "local": {
+    "title": "Paikallinen revontulivahti",
+    "prompt": "Ota sijainti käyttöön nähdäksesi reaaliaikaisen magneettikentän ja sääolosuhteet juuri sinun sijainnissasi.",
+    "button": "Paikanna minut ja tarkista olosuhteet",
+    "geoError": "Sijaintia ei voitu määrittää. Salli sijaintitietoihin pääsy.",
+    "dataError": "Tietoja ei ole tällä hetkellä saatavilla alueellesi.",
+    "observedAt": "Havaittu asemalla: {{station}}",
+    "magField": "Magneettikenttä",
+    "intensity": "Magneettikentän voimakkuus",
+    "visibility": "Näkyvyys",
+    "outdoors": "Ulkoilu",
+    "clouds": "Pilvipeite: {{percent}}%",
+    "wind": "Tuuli: {{speed}} m/s",
+    "go": "GO FOR IT! 🚀",
+    "noGo": "HUONO NÄKYVYYS ☁️"
+  },
+  "sky": {
+    "clear": "Selkeä taivas 🌌",
+    "partly": "Puolipilvistä ⛅",
+    "overcast": "Pilvistä ☁️"
+  },
+  "space_weather": {
+    "title": "Avaruussää (Live)",
+    "bz": "Bz (IMF)",
+    "bz_hint": "Negatiivinen on parempi",
+    "speed": "Aurinkotuuli",
+    "speed_hint": "Nopeampi on parempi",
+    "density": "Tiheys",
+    "density_hint": "Korkeampi on parempi",
+    "kp": "Kp-indeksi",
+    "kp_hint": "Planeetta-aktiivisuus"
+  },
+  "graphs": {
+    "mag_title": "Magneettiset häiriöt (Viim. 6h)",
+    "mag_hint": "Nopeat muutokset voimakkuudessa viittaavat aktiivisiin revontuliin yläpuolellasi.",
+    "quiet": "Rauhallista",
+    "solar_title": "Aurinkotuuli & Bz (Viim. 6h)",
+    "solar_hint": "Korkean nopeuden ja negatiivisen Bz-arvon yhteisvaikutus aiheuttaa magneettisia myrskyjä.",
+    "speed_label": "Nopeus (km/s)",
+    "bz_label": "Bz (nT)"
+  },
+  "section": {
+    "cameras": "Live-taivaskamerat"
+  },
+  "cameras": {
+    "close": "Sulje [Esc]"
+  },
+  "data_info": {
+    "title": "Miten palvelu toimii & Tietolähteet",
+    "fmi_title": "Ilmatieteen laitos (FMI)",
+    "fmi_desc": "Maanpäälliset tiedot haetaan suoraan Ilmatieteen laitoksen avoimen datan rajapinnoista. Tämä sisältää reaaliaikaiset magnetometrihavainnot ympäri Suomea sekä paikalliset sääennusteet (pilvisyys, lämpötila) perustuen sijaintiisi.",
+    "noaa_title": "NOAA Space Weather Prediction Center",
+    "noaa_desc": "Aurinkotuulen parametrit (Bz, nopeus, tiheys) ja Kp-indeksi on peräisin NOAA SWPC:ltä. Tiedot mitataan satelliiteilla (kuten DSCOVR) L1-pisteessä, mikä antaa noin 30–60 minuutin varoituksen ennen kuin aurinkotuuli saavuttaa Maan.",
+    "disclaimer": "Huom: Tarkka revontulien ennustaminen riippuu monesta muuttujasta. Vaikka data olisi täydellistä, paikallinen näkyvyys ja nopeasti muuttuvat olosuhteet vaikuttavat lopputulokseen. Luota aina omiin silmiisi!"
   }
 }
