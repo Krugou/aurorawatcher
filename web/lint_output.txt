@@ -1,0 +1,19 @@
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\App.tsx
+  66:5  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\FullscreenView.tsx
+  4:8  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\MinimalView.tsx
+   4:8   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  28:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\ObservatoryGrid.tsx
+  4:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\hooks\useImageMetadata.ts
+  20:16  error  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 6 problems (6 errors, 0 warnings)
+
