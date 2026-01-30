@@ -1,41 +1,28 @@
 {
-	"name": "aurorawatcher",
+	"name": "aurorawatcher-root",
 	"version": "1.1.0",
-	"description": "Aurora Borealis watcher Discord bot",
-	"main": "dist/index.js",
+	"private": true,
+	"workspaces": [
+		"bot",
+		"web"
+	],
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "tsc",
-		"start:aurora": "tsx src/index.ts",
-		"dev:aurora": "tsx watch src/index.ts",
-		"start": "node dist/index.js"
+		"dev:bot": "npm run dev -w aurorawatcher-bot",
+		"start:bot": "npm run start -w aurorawatcher-bot",
+		"build:bot": "npm run build -w aurorawatcher-bot",
+		"dev:web": "npm run dev -w aurorawatcher-web",
+		"build:web": "npm run build -w aurorawatcher-web",
+		"build": "npm run build --workspaces",
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Krugou/aurorawatcher.git"
 	},
-	"private": true,
-	"type": "module",
-	"author": "Aleksi",
 	"license": "ISC",
 	"devDependencies": {
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
-		"@types/node": "^25.1.0",
-		"semantic-release": "^25.0.2",
-		"tsx": "^4.21.0",
-		"typescript": "^5.9.3"
-	},
-	"dependencies": {
-		"cors": "^2.8.6",
-		"discord.js": "^14.25.1",
-		"dotenv": "^17.2.3",
-		"ejs": "^4.0.1",
-		"express": "^5.2.1",
-		"express-validator": "^7.3.1",
-		"jimp": "^1.6.0",
-		"jsdom": "^27.4.0",
-		"jsonwebtoken": "^9.0.3",
-		"nodemon": "^3.1.11"
+		"semantic-release": "^25.0.2"
 	}
 }

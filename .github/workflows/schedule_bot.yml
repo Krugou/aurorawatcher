@@ -22,10 +22,10 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: npm run build:bot
 
       - name: Run Aurora Watcher
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           RUN_ONCE: 'true'
-        run: npm run start:aurora
+        run: npm run start:bot
