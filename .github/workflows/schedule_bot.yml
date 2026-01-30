@@ -11,7 +11,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Status: Code Snatch
+
+      - name: "Status: Code Snatch"
         run: echo "Code grabbed! The bot is waking up from its 15-minute nap. 😴☕"
 
       - name: Setup Node.js
@@ -19,7 +20,8 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-      - name: Status: Brain Check
+
+      - name: "Status: Brain Check"
         run: echo "Node.js is ready. Brain cells are firing. ⚡👀"
 
       - name: Install dependencies

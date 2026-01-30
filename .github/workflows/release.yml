@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0 # needed for commit analysis
 
-      - name: Status: History Lesson
+      - name: "Status: History Lesson"
         run: echo "Release time! Getting the full history of your greatness. 📜🎖️"
 
       - name: Setup Node.js
@@ -31,7 +31,7 @@ jobs:
           node-version: "22"
           cache: 'npm'
 
-      - name: Status: Autograph Ready
+      - name: "Status: Autograph Ready"
         run: echo "Node is ready to sign some autographs. ✍️🌟"
 
       - name: Install dependencies
