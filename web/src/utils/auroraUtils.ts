@@ -3,9 +3,7 @@ export const AURORA_COLORS = {
   low: { red: 204, green: 187, blue: 68 }, // #CDBA44
 };
 
-export const checkImageColor = (
-  img: HTMLImageElement,
-): { hasHigh: boolean; hasLow: boolean } => {
+export const checkImageColor = (img: HTMLImageElement): { hasHigh: boolean; hasLow: boolean } => {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
 

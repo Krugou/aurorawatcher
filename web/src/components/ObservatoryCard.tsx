@@ -1,4 +1,4 @@
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useImageMetadata } from '../hooks/useImageMetadata';
@@ -30,7 +30,7 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
 
         {hasError ? (
           <div className="w-full h-full flex items-center justify-center text-slate-500 bg-slate-900">
-             <span className="text-xs">{t('grid.error')}</span>
+            <span className="text-xs">{t('grid.error')}</span>
           </div>
         ) : (
           <img

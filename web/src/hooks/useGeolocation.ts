@@ -45,7 +45,7 @@ export const useGeolocation = () => {
           loading: false,
         });
       },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 } // 10 minutes cache
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 }, // 10 minutes cache
     );
   };
 

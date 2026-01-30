@@ -1,6 +1,6 @@
-import { afterEach,describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { AURORA_COLORS,checkImageColor } from './auroraUtils';
+import { AURORA_COLORS, checkImageColor } from './auroraUtils';
 
 describe('auroraUtils', () => {
   afterEach(() => {
@@ -46,12 +46,7 @@ describe('auroraUtils', () => {
     const mockContext = {
       drawImage: vi.fn(),
       getImageData: vi.fn().mockReturnValue({
-        data: [
-          AURORA_COLORS.low.red,
-          AURORA_COLORS.low.green,
-          AURORA_COLORS.low.blue,
-          255,
-        ],
+        data: [AURORA_COLORS.low.red, AURORA_COLORS.low.green, AURORA_COLORS.low.blue, 255],
       }),
     } as unknown as CanvasRenderingContext2D;
 

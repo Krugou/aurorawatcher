@@ -16,9 +16,15 @@ export const LanguageSwitcher = () => {
     >
       <span className="flex items-center gap-2">
         {i18n.language === 'en' ? (
-            <><span>🇫🇮</span><span>FI</span></>
+          <>
+            <span>🇫🇮</span>
+            <span>FI</span>
+          </>
         ) : (
-            <><span>🇬🇧</span><span>EN</span></>
+          <>
+            <span>🇬🇧</span>
+            <span>EN</span>
+          </>
         )}
       </span>
     </button>

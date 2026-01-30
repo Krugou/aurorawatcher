@@ -1,7 +1,7 @@
 export interface Location {
-    id: string;
-    name: string;
-    fullname: string;
-    mapUrl: string;
-    image: string;
+  id: string;
+  name: string;
+  fullname: string;
+  mapUrl: string;
+  image: string;
 }

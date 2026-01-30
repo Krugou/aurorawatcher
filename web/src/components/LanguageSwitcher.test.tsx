@@ -1,7 +1,7 @@
 import '../i18n'; // Ensure i18n is initialized
 
-import { fireEvent,render, screen } from '@testing-library/react';
-import { describe, expect,it } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 import { LanguageSwitcher } from './LanguageSwitcher';
 
