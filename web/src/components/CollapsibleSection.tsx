@@ -8,6 +8,7 @@ interface CollapsibleSectionProps {
   defaultExpanded?: boolean;
   className?: string;
   headerColorClass?: string;
+  storageKey?: string;
 }
 
 export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
@@ -18,35 +19,54 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   defaultExpanded = true,
   className = '',
   headerColorClass = 'bg-blue-500',
+  storageKey,
 }) => {
-  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+  const [isExpanded, setIsExpanded] = useState(() => {
+    if (storageKey) {
+      const saved = localStorage.getItem(`section_${storageKey}`);
+      if (saved !== null) {
+        return saved === 'true';
+      }
+    }
+    return defaultExpanded;
+  });
+
+  const toggleExpanded = () => {
+    const nextValue = !isExpanded;
+    setIsExpanded(nextValue);
+    if (storageKey) {
+      localStorage.setItem(`section_${storageKey}`, String(nextValue));
+    }
+  };
 
   return (
     <section
       className={`bg-slate-900 rounded-2xl shadow-xl border border-slate-800/50 overflow-hidden ${className}`}
     >
       <button
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={toggleExpanded}
         className="w-full flex items-center gap-3 p-6 text-left hover:bg-slate-800/30 transition-colors focus:outline-none"
       >
         {icon ? icon : <span className={`w-2 h-8 ${headerColorClass} rounded-full`}></span>}
         <h2 className="text-xl font-semibold text-white">{title}</h2>
-        {badge && <div className="ml-auto flex items-center">{badge}</div>}
-        <div className={`transition-transform duration-300 ml-3 ${isExpanded ? 'rotate-180' : ''}`}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-slate-500"
-          >
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
+        <div className="ml-auto flex items-center gap-4">
+          {badge && <div className="flex items-center">{badge}</div>}
+          <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-slate-500"
+            >
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
         </div>
       </button>
 

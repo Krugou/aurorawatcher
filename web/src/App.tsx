@@ -102,6 +102,7 @@ const AppContent = () => {
         <CollapsibleSection
           title={t('local.title', 'Local Conditions')}
           headerColorClass="bg-linear-to-b from-purple-500 to-blue-500"
+          storageKey="local_data"
         >
           <LocalData />
         </CollapsibleSection>
@@ -109,6 +110,7 @@ const AppContent = () => {
         <CollapsibleSection
           title={t('space_weather.title', 'Space Weather (Live)')}
           headerColorClass="bg-orange-500"
+          storageKey="space_weather"
           badge={
             <span className="text-xs font-normal text-slate-500 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
               NOAA SWPC
@@ -121,6 +123,7 @@ const AppContent = () => {
         <CollapsibleSection
           title={t('graphs.title', 'Real-time Activity Graphs')}
           headerColorClass="bg-linear-to-r from-purple-500 to-orange-500"
+          storageKey="graphs"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <MagnetometerGraph />
@@ -131,6 +134,7 @@ const AppContent = () => {
         <CollapsibleSection
           title={t('section.cameras', 'Live Sky Cameras')}
           headerColorClass="bg-green-500"
+          storageKey="cameras"
         >
           <CameraGrid />
         </CollapsibleSection>
@@ -138,6 +142,7 @@ const AppContent = () => {
         <CollapsibleSection
           title={t('map.title', 'Aurora Forecast Map')}
           headerColorClass="bg-green-500"
+          storageKey="map"
         >
           <AuroraMap timestamp={timestamp} />
         </CollapsibleSection>
@@ -145,6 +150,7 @@ const AppContent = () => {
         <CollapsibleSection
           title={t('data_info.title', 'How it Works & Data Sources')}
           headerColorClass="bg-blue-400"
+          storageKey="data_info"
         >
           <DataInfo />
         </CollapsibleSection>
@@ -152,6 +158,7 @@ const AppContent = () => {
         <CollapsibleSection
           title={t('grid.title', 'Observatory Status')}
           headerColorClass="bg-blue-500"
+          storageKey="observatory_status"
         >
           <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
         </CollapsibleSection>
