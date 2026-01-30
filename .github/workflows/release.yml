@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: "22"
           cache: 'npm'
       - name: Status: Autograph Ready
         run: echo "Node is ready to sign some autographs. ✍️🌟"
