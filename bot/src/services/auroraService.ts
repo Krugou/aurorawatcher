@@ -3,6 +3,7 @@ import { AURORA_CONFIG, IMAGE_URLS } from '../config.js';
 import { getSunriseSunsetTimes, isDark } from '../utils/sunTimes.js';
 import { hasImageChanged, checkImageColor } from '../utils/imageUtils.js';
 import { createLogger, sendAuroraImages } from './discordService.js';
+import { initHistory, saveImageToHistory, pruneOldHistory } from '../utils/historyUtils.js';
 
 export const checkAndPostAurora = async (client: Client, log: (msg: string) => void): Promise<void> => {
 	const channel = client.channels.cache.get(AURORA_CONFIG.channelID) as TextChannel | undefined;
@@ -14,6 +15,24 @@ export const checkAndPostAurora = async (client: Client, log: (msg: string) => v
 	}
 
 	try {
+        // Initialize history directory
+        await initHistory();
+
+        // Save images to history (fire and forget/await parallel)
+        const cameras = [
+            { id: 'muonio', url: IMAGE_URLS.muonio },
+            { id: 'nyrola', url: IMAGE_URLS.nyrola },
+            { id: 'hankasalmi', url: IMAGE_URLS.hankasalmi },
+            { id: 'metsahovi', url: IMAGE_URLS.metsahovi },
+            { id: 'auroraData', url: IMAGE_URLS.auroraData }
+        ];
+
+        // Save all images
+        await Promise.all(cameras.map(cam => saveImageToHistory(cam.id, cam.url)));
+
+        // Prune old images
+        await pruneOldHistory();
+
 		// Get sunrise/sunset times
 		const { sunriseHours, sunsetHours } = await getSunriseSunsetTimes(
 			AURORA_CONFIG.latitude,

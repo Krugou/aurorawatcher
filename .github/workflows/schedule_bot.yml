@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: "Status: Code Snatch"
+      - name: 'Status: Code Snatch'
         run: echo "Code grabbed! The bot is waking up from its 15-minute nap. 😴☕"
 
       - name: Setup Node.js
@@ -21,7 +21,7 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: "Status: Brain Check"
+      - name: 'Status: Brain Check'
         run: echo "Node.js is ready. Brain cells are firing. ⚡👀"
 
       - name: Install dependencies
@@ -41,3 +41,12 @@ jobs:
         run: |
           npm run start:bot
           echo "Bot is back in the field! Hunting for lights like a cat chasing a laser. 🔦🐈"
+
+      - name: Commit and push images
+        if: success()
+        run: |
+          git config --global user.name 'Aurora Bot'
+          git config --global user.email 'bot@aurorawatcher.com'
+          git add web/public/data/history/ web/public/data/history.json
+          git commit -m "chore: save aurora images [skip ci]" || echo "No changes to commit"
+          git push

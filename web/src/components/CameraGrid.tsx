@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { HistorySlider } from './HistorySlider';
+
 // Reusing locations from App but simplified for grid
 interface Cam {
   name: string;
@@ -61,14 +63,13 @@ export const CameraGrid = () => {
           tabIndex={-1}
         >
           <div className="max-w-5xl w-full relative animate-in fade-in zoom-in duration-300">
-            <img
-              src={`${selectedCam.url}?t=${timestamp}`}
-              alt={selectedCam.name}
-              className="w-full rounded-2xl shadow-blue-900/40 shadow-2xl border border-slate-800"
-            />
-            <div className="flex items-center justify-between mt-6 px-2">
+            <HistorySlider camId={selectedCam.id} currentImageUrl={selectedCam.url} />
+            <div className="flex items-center justify-between mt-2 px-2">
               <p className="text-white text-2xl font-bold tracking-tight">{selectedCam.name}</p>
-              <button className="text-slate-400 hover:text-white transition-colors text-sm font-medium bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700">
+              <button
+                onClick={() => setSelectedCam(null)}
+                className="text-slate-400 hover:text-white transition-colors text-sm font-medium bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700"
+              >
                 {t('cameras.close', 'Close [Esc]')}
               </button>
             </div>
