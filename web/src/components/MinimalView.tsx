@@ -1,5 +1,5 @@
-import { Location } from '../types';
 import { useImageMetadata } from '../hooks/useImageMetadata';
+import { Location } from '../types';
 
 interface MinimalCardProps {
   loc: Location;

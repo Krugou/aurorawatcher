@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
-import { Header } from './components/Header';
-import { AuroraMap } from './components/AuroraMap';
-import { ObservatoryGrid } from './components/ObservatoryGrid';
-import { MinimalView } from './components/MinimalView';
-import { FullscreenView } from './components/FullscreenView';
+import { useEffect,useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+import { AuroraMap } from './components/AuroraMap';
+import { FullscreenView } from './components/FullscreenView';
+import { Header } from './components/Header';
+import { MinimalView } from './components/MinimalView';
+import { ObservatoryGrid } from './components/ObservatoryGrid';
 import { Location } from './types';
 
 // Konfiguraatio ja tila
@@ -39,7 +41,7 @@ const LOCATIONS: Record<string, Location> = {
   },
 };
 
-function App() {
+const App = () => {
   const [timestamp, setTimestamp] = useState(Date.now());
   const [mode, setMode] = useState<'default' | 'minimal' | 'fullscreen'>('default');
   const [activeCam, setActiveCam] = useState<string | null>(null);
@@ -56,10 +58,10 @@ function App() {
       setMode('fullscreen');
     }
 
-    // Päivitä kuvat minuutin välein
+    // Päivitä kuvat 5 minuutin välein (300000 ms)
     const interval = setInterval(() => {
       setTimestamp(Date.now());
-    }, 60000);
+    }, 300000);
     return () => clearInterval(interval);
   }, []);
 
@@ -87,8 +89,9 @@ function App() {
           <p>© {new Date().getFullYear()} Revontulivahti. Kuvat: FMI & Observatoriot.</p>
         </footer>
       </div>
+      <ToastContainer position="top-right" theme="dark" />
     </div>
   );
-}
+};
 
 export default App;

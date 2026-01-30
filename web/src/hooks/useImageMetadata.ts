@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect,useState } from 'react';
 
 export const useImageMetadata = (url: string, refreshTrigger: number) => {
   const [lastModified, setLastModified] = useState<string | null>(null);
