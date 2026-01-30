@@ -1,3 +1,9 @@
+# [1.8.0](https://github.com/Krugou/aurorawatcher/compare/v1.7.0...v1.8.0) (2026-01-30)
+
+### Features
+
+- **web:** add helsinki test location and proof for fmi fetch ([2025347](https://github.com/Krugou/aurorawatcher/commit/2025347b62d077f16d51cee33a128ab924b9ebf0))
+
 # [1.7.0](https://github.com/Krugou/aurorawatcher/compare/v1.6.0...v1.7.0) (2026-01-30)
 
 ### Features
