@@ -1,30 +1,46 @@
 {
-	"name": "aurorawatcher-root",
-	"version": "1.4.0",
-	"private": true,
-	"workspaces": [
-		"bot",
-		"web"
-	],
-	"scripts": {
-		"dev:bot": "npm run dev -w aurorawatcher-bot",
-		"start:bot": "npm run start -w aurorawatcher-bot",
-		"build:bot": "npm run build -w aurorawatcher-bot",
-		"dev:web": "npm run dev -w aurorawatcher-web",
-		"build:web": "npm run build -w aurorawatcher-web",
-		"build": "npm run build --workspaces",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint:yaml": "npx yaml-lint .github/workflows/*.yml"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Krugou/aurorawatcher.git"
-	},
-	"license": "ISC",
-	"devDependencies": {
-		"@semantic-release/changelog": "^6.0.3",
-		"@semantic-release/git": "^10.0.1",
-		"semantic-release": "^25.0.2",
-		"yaml-lint": "^1.7.0"
-	}
+  "name": "aurorawatcher-root",
+  "version": "1.4.0",
+  "private": true,
+  "workspaces": [
+    "bot",
+    "web"
+  ],
+  "scripts": {
+    "dev:bot": "npm run dev -w aurorawatcher-bot",
+    "start:bot": "npm run start -w aurorawatcher-bot",
+    "build:bot": "npm run build -w aurorawatcher-bot",
+    "dev:web": "npm run dev -w aurorawatcher-web",
+    "build:web": "npm run build -w aurorawatcher-web",
+    "build": "npm run build --workspaces",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:yaml": "npx yaml-lint .github/workflows/*.yml",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "web/**/*.{ts,tsx}": [
+      "npm run lint:fix -w aurorawatcher-web",
+      "npm run format -w aurorawatcher-web",
+      "node -e \"require('child_process').execSync('npx tsc -p web/tsconfig.json --noEmit', {stdio: 'inherit'})\""
+    ],
+    "bot/**/*.ts": [
+      "node -e \"require('child_process').execSync('npx tsc -p bot/tsconfig.json --noEmit', {stdio: 'inherit'})\""
+    ],
+    "**/*.{json,md,yml}": [
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Krugou/aurorawatcher.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "semantic-release": "^25.0.2",
+    "yaml-lint": "^1.7.0"
+  }
 }

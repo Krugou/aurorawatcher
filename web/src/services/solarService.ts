@@ -16,6 +16,11 @@ const URLS = {
 
 export const fetchSolarData = async (): Promise<SolarData | null> => {
   try {
+    console.log('[Solar Data] Fetching URLs via proxy:', {
+      mag: buildProxyUrl(URLS.mag),
+      plasma: buildProxyUrl(URLS.plasma),
+      kp: buildProxyUrl(URLS.kp),
+    });
     const [magRes, plasmaRes, kpRes] = await Promise.all([
       fetch(buildProxyUrl(URLS.mag)),
       fetch(buildProxyUrl(URLS.plasma)),
@@ -23,6 +28,11 @@ export const fetchSolarData = async (): Promise<SolarData | null> => {
     ]);
 
     if (!magRes.ok || !plasmaRes.ok || !kpRes.ok) {
+      console.error('[Solar Data] Fetch failed:', {
+        mag: { status: magRes.status, text: magRes.statusText },
+        plasma: { status: plasmaRes.status, text: plasmaRes.statusText },
+        kp: { status: kpRes.status, text: kpRes.statusText },
+      });
       throw new Error('One or more NOAA endpoints failed');
     }
 
@@ -70,7 +80,6 @@ export const fetchSolarData = async (): Promise<SolarData | null> => {
       kp,
       timestamp: latestMag[0], // Use Mag time as primary reference
     };
-
   } catch (error) {
     console.error('Error fetching solar data:', error);
     return null;
@@ -78,74 +87,88 @@ export const fetchSolarData = async (): Promise<SolarData | null> => {
 };
 
 export interface SolarHistoryPoint {
-    timestamp: number;
-    bz: number;
-    speed: number;
-    density: number;
-    kp?: number;
+  timestamp: number;
+  bz: number;
+  speed: number;
+  density: number;
+  kp?: number;
 }
 
 export const fetchSolarHistory = async (): Promise<SolarHistoryPoint[]> => {
-    try {
-        const [magRes, plasmaRes] = await Promise.all([
-          fetch(buildProxyUrl(URLS.mag)),
-          fetch(buildProxyUrl(URLS.plasma)),
-        ]);
+  try {
+    console.log('[Solar History] Fetching URLs via proxy:', {
+      mag: buildProxyUrl(URLS.mag),
+      plasma: buildProxyUrl(URLS.plasma),
+    });
+    const [magRes, plasmaRes] = await Promise.all([
+      fetch(buildProxyUrl(URLS.mag)),
+      fetch(buildProxyUrl(URLS.plasma)),
+    ]);
 
-        if (!magRes.ok || !plasmaRes.ok) return [];
-
-        const magData = await magRes.json();
-        const plasmaData = await plasmaRes.json();
-
-        // Convert to maps for easy joining by timestamp
-        // Data format: [header, row1, row2...]
-        // Mag: time(0), ... bz(3)
-        // Plasma: time(0), density(1), speed(2)
-
-        const map = new Map<string, Partial<SolarHistoryPoint>>();
-
-        // Process Mag
-        if (Array.isArray(magData)) {
-            magData.slice(1).forEach(row => {
-                const timeStr = row[0];
-                const bz = parseFloat(row[3]);
-                if (!map.has(timeStr)) map.set(timeStr, { timestamp: new Date(timeStr).getTime() });
-                const entry = map.get(timeStr)!;
-                entry.bz = bz;
-            });
-        }
-
-        // Process Plasma
-        if (Array.isArray(plasmaData)) {
-            plasmaData.slice(1).forEach(row => {
-                const timeStr = row[0];
-                const density = parseFloat(row[1]);
-                const speed = parseFloat(row[2]);
-
-                // Plasma times might not match Mag times exactly (1 min resolution vs 1 min)
-                // But usually they are aligned by SWPC. If not, we might drop some points or need closest match.
-                // For simplicity, we assume exact string match or we rely on 'mag' being the master
-
-                if (map.has(timeStr)) {
-                     const entry = map.get(timeStr)!;
-                     entry.density = density;
-                     entry.speed = speed;
-                }
-            });
-        }
-
-        // Convert map to array and filter incomplete
-        const result: SolarHistoryPoint[] = [];
-        for (const val of map.values()) {
-            if (val.timestamp && val.bz !== undefined && val.speed !== undefined && val.density !== undefined) {
-                result.push(val as SolarHistoryPoint);
-            }
-        }
-
-        return result.sort((a,b) => a.timestamp - b.timestamp);
-
-    } catch (e) {
-        console.error("Error fetching solar history", e);
-        return [];
+    if (!magRes.ok || !plasmaRes.ok) {
+      console.error('[Solar History] Fetch failed:', {
+        mag: { status: magRes.status, text: magRes.statusText },
+        plasma: { status: plasmaRes.status, text: plasmaRes.statusText },
+      });
+      return [];
     }
+
+    const magData = await magRes.json();
+    const plasmaData = await plasmaRes.json();
+
+    // Convert to maps for easy joining by timestamp
+    // Data format: [header, row1, row2...]
+    // Mag: time(0), ... bz(3)
+    // Plasma: time(0), density(1), speed(2)
+
+    const map = new Map<string, Partial<SolarHistoryPoint>>();
+
+    // Process Mag
+    if (Array.isArray(magData)) {
+      magData.slice(1).forEach((row) => {
+        const timeStr = row[0];
+        const bz = parseFloat(row[3]);
+        if (!map.has(timeStr)) map.set(timeStr, { timestamp: new Date(timeStr).getTime() });
+        const entry = map.get(timeStr)!;
+        entry.bz = bz;
+      });
+    }
+
+    // Process Plasma
+    if (Array.isArray(plasmaData)) {
+      plasmaData.slice(1).forEach((row) => {
+        const timeStr = row[0];
+        const density = parseFloat(row[1]);
+        const speed = parseFloat(row[2]);
+
+        // Plasma times might not match Mag times exactly (1 min resolution vs 1 min)
+        // But usually they are aligned by SWPC. If not, we might drop some points or need closest match.
+        // For simplicity, we assume exact string match or we rely on 'mag' being the master
+
+        if (map.has(timeStr)) {
+          const entry = map.get(timeStr)!;
+          entry.density = density;
+          entry.speed = speed;
+        }
+      });
+    }
+
+    // Convert map to array and filter incomplete
+    const result: SolarHistoryPoint[] = [];
+    for (const val of map.values()) {
+      if (
+        val.timestamp &&
+        val.bz !== undefined &&
+        val.speed !== undefined &&
+        val.density !== undefined
+      ) {
+        result.push(val as SolarHistoryPoint);
+      }
+    }
+
+    return result.sort((a, b) => a.timestamp - b.timestamp);
+  } catch (e) {
+    console.error('Error fetching solar history', e);
+    return [];
+  }
 };
