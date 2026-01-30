@@ -1,4 +1,5 @@
 import { useEffect,useState } from 'react';
+import { buildProxyUrl } from '../utils/proxy';
 
 export const useImageMetadata = (url: string, refreshTrigger: number) => {
   const [lastModified, setLastModified] = useState<string | null>(null);
@@ -7,7 +8,8 @@ export const useImageMetadata = (url: string, refreshTrigger: number) => {
     const fetchMetadata = async () => {
       try {
         // Try to fetch headers. Note: This will fail if CORS is not enabled on the target server.
-        const response = await fetch(url + `?t=${Date.now()}`, { method: 'HEAD' });
+        const proxyUrl = buildProxyUrl(url + `?t=${Date.now()}`);
+        const response = await fetch(proxyUrl, { method: 'HEAD' });
         const dateHeader = response.headers.get('Last-Modified');
         if (dateHeader) {
           const date = new Date(dateHeader);

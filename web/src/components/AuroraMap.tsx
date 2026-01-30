@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { buildProxyUrl } from '../utils/proxy';
 
 import { checkImageColor } from '../utils/auroraUtils';
 import { Skeleton } from './Skeleton';
@@ -72,7 +73,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
           ) : (
             <img
               crossOrigin="anonymous"
-              src={`${AURORA_DATA}?t=${timestamp}`}
+              src={buildProxyUrl(`${AURORA_DATA}?t=${timestamp}`)}
               alt="Aurora Data"
               className={`w-full h-full object-contain transition-all duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
               onLoad={handleImageLoad}

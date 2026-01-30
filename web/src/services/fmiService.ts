@@ -1,3 +1,5 @@
+import { buildProxyUrl } from '../utils/proxy';
+
 interface MagneticData {
   station: string;
   timestamp: string;
@@ -35,7 +37,8 @@ export const fetchMagneticData = async (lat: number, lon: number): Promise<Magne
       parameters: 'MAGN_X,MAGN_Y,MAGN_Z'
     });
 
-    const response = await fetch(`${FMI_WFS_URL}?${params.toString()}`);
+    const fetchUrl = buildProxyUrl(`${FMI_WFS_URL}?${params.toString()}`);
+    const response = await fetch(fetchUrl);
     if (!response.ok) throw new Error('FMI API failed');
 
     const text = await response.text();
@@ -122,7 +125,8 @@ export const fetchMagnetometerHistory = async (lat: number, lon: number, hours: 
             parameters: 'MAGN_X,MAGN_Y,MAGN_Z'
         });
 
-        const response = await fetch(`${FMI_WFS_URL}?${params.toString()}`);
+        const fetchUrl = buildProxyUrl(`${FMI_WFS_URL}?${params.toString()}`);
+        const response = await fetch(fetchUrl);
         if (!response.ok) throw new Error('FMI History API failed');
 
         const text = await response.text();
@@ -189,7 +193,8 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
       parameters: 't2m,n_man,ws_10min'
     });
 
-    const response = await fetch(`${FMI_WFS_URL}?${params.toString()}`);
+    const fetchUrl = buildProxyUrl(`${FMI_WFS_URL}?${params.toString()}`);
+    const response = await fetch(fetchUrl);
     if (!response.ok) throw new Error('FMI Weather API failed');
 
     const text = await response.text();

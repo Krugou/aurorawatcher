@@ -1,3 +1,5 @@
+import { buildProxyUrl } from '../utils/proxy';
+
 export interface SolarData {
   bz: number; // Interplanetary Magnetic Field (nT)
   speed: number; // Solar wind speed (km/s)
@@ -15,9 +17,9 @@ const URLS = {
 export const fetchSolarData = async (): Promise<SolarData | null> => {
   try {
     const [magRes, plasmaRes, kpRes] = await Promise.all([
-      fetch(URLS.mag),
-      fetch(URLS.plasma),
-      fetch(URLS.kp),
+      fetch(buildProxyUrl(URLS.mag)),
+      fetch(buildProxyUrl(URLS.plasma)),
+      fetch(buildProxyUrl(URLS.kp)),
     ]);
 
     if (!magRes.ok || !plasmaRes.ok || !kpRes.ok) {
@@ -86,8 +88,8 @@ export interface SolarHistoryPoint {
 export const fetchSolarHistory = async (): Promise<SolarHistoryPoint[]> => {
     try {
         const [magRes, plasmaRes] = await Promise.all([
-          fetch(URLS.mag),
-          fetch(URLS.plasma),
+          fetch(buildProxyUrl(URLS.mag)),
+          fetch(buildProxyUrl(URLS.plasma)),
         ]);
 
         if (!magRes.ok || !plasmaRes.ok) return [];
