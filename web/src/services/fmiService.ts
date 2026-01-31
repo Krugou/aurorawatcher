@@ -1,4 +1,4 @@
-import { buildProxyUrl } from '../utils/proxy';
+
 
 interface MagneticData {
   station: string;
@@ -20,13 +20,13 @@ interface WeatherData {
 
 const FMI_WFS_URL = 'https://opendata.fmi.fi/wfs';
 const MAGNETOMETER_QUERY_ID = 'fmi::observations::magnetometer::simple';
-const WEATHER_QUERY_ID = 'fmi::observations::weather::simple';
+const WEATHER_QUERY_ID = 'fmi::observations::weather::multipointcoverage';
 
 export const fetchMagneticData = async (lat: number, lon: number): Promise<MagneticData | null> => {
   try {
-    const bbox = `${lon - 2},${lat - 2},${lon + 2},${lat + 2}`;
+    const bbox = `${lat - 2},${lon - 2},${lat + 2},${lon + 2}`;
     const now = new Date();
-    const startTime = new Date(now.getTime() - 20 * 60 * 1000).toISOString(); // Last 20 mins
+    const startTime = new Date(now.getTime() - 60 * 60 * 1000).toISOString(); // Last 1 hour is enough with correct BBOX
     const endTime = now.toISOString();
 
     const params = new URLSearchParams({
@@ -39,26 +39,33 @@ export const fetchMagneticData = async (lat: number, lon: number): Promise<Magne
       endtime: endTime,
     });
 
-    const fetchUrl = buildProxyUrl(`${FMI_WFS_URL}?${params.toString()}`);
-    console.log('FMI Fetching:', fetchUrl);
+    const fetchUrl = `${FMI_WFS_URL}?${params.toString()}`;
+    console.log('[FMI Mag] Fetching URL:', fetchUrl);
     const response = await fetch(fetchUrl);
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('FMI API failed with status:', response.status, errorText);
+      console.error('[FMI Mag] API failed with status:', response.status, errorText);
       throw new Error('FMI API failed');
     }
 
     const text = await response.text();
+    console.log(`[FMI Mag] Response received. Length: ${text.length} chars. Snippet: ${text.substring(0, 200)}...`);
+
     const parser = new DOMParser();
     const xml = parser.parseFromString(text, 'text/xml');
 
     const members = xml.getElementsByTagNameNS('http://www.opengis.net/wfs/2.0', 'member');
-    if (members.length === 0) return null;
+    console.log(`[FMI Mag] Found ${members.length} members in XML.`);
+
+    if (members.length === 0) {
+        console.warn('[FMI Mag] No members found! Check BBOX or Time window.');
+        return null;
+    }
 
     // Group measurements by time to find a complete set of X, Y, Z
     const measurements: Record<string, { x?: number; y?: number; z?: number; station: string }> =
       {};
-    let lastTime = '';
+    // Removed unused lastTime variable
 
     for (let i = 0; i < members.length; i++) {
       const element = members[i].children[0];
@@ -77,30 +84,57 @@ export const fetchMagneticData = async (lat: number, lon: number): Promise<Magne
           measurements[time] = { station: location };
         }
 
-        if (paramName === 'MAGN_X') measurements[time].x = paramValue;
-        if (paramName === 'MAGN_Y') measurements[time].y = paramValue;
-        if (paramName === 'MAGN_Z') measurements[time].z = paramValue;
-
-        lastTime = time;
+        if (paramName.includes('MAGN_X') || paramName.includes('MAGNX')) measurements[time].x = paramValue;
+        if (paramName.includes('MAGN_Y') || paramName.includes('MAGNY')) measurements[time].y = paramValue;
+        if (paramName.includes('MAGN_Z') || paramName.includes('MAGNZ')) measurements[time].z = paramValue;
       }
     }
 
-    // Get the latest complete reading
-    const latest = measurements[lastTime];
-    if (!latest || latest.x === undefined || latest.y === undefined || latest.z === undefined) {
+    // Find the latest complete reading
+    // Sort timestamps descending
+    const sortedTimes = Object.keys(measurements).sort((a, b) => {
+      return new Date(b).getTime() - new Date(a).getTime();
+    });
+
+    let latest = null;
+    let latestTime = '';
+
+    for (const time of sortedTimes) {
+      const m = measurements[time];
+      if (m.x !== undefined && m.y !== undefined && m.z !== undefined) {
+        latest = m;
+        latestTime = time;
+        break;
+      }
+    }
+
+    if (!latest) {
+      console.warn('[FMI Mag] No complete (X,Y,Z) measurement found in the fetched window.');
       return null;
+    }
+
+    // Try to find a better station name if it's "Unknown"
+    let finalStation = latest.station;
+    if (finalStation === 'Unknown') {
+        // Look through ANY measurement to find a name
+        for (const time of sortedTimes) {
+            if (measurements[time].station !== 'Unknown') {
+                finalStation = measurements[time].station;
+                break;
+            }
+        }
     }
 
     // Calculate approx total intensity F = sqrt(x^2 + y^2 + z^2)
     const intensity = Math.sqrt(
-      Math.pow(latest.x, 2) + Math.pow(latest.y, 2) + Math.pow(latest.z, 2),
+      Math.pow(latest.x!, 2) + Math.pow(latest.y!, 2) + Math.pow(latest.z!, 2),
     );
 
     return {
-      station: latest.station,
-      timestamp: lastTime,
+      station: finalStation,
+      timestamp: latestTime,
       fieldIntensity: Math.round(intensity * 10) / 10,
-      components: { x: latest.x, y: latest.y, z: latest.z },
+      components: { x: latest.x!, y: latest.y!, z: latest.z! },
     };
   } catch (error) {
     console.error('FMI Fetch error:', error);
@@ -122,7 +156,7 @@ export const fetchMagnetometerHistory = async (
   hours: number = 6,
 ): Promise<GraphDataPoint[]> => {
   try {
-    const bbox = `${lon - 2},${lat - 2},${lon + 2},${lat + 2}`;
+    const bbox = `${lat - 2},${lon - 2},${lat + 2},${lon + 2}`;
     const endTime = new Date();
     const startTime = new Date(endTime.getTime() - hours * 60 * 60 * 1000);
 
@@ -136,12 +170,10 @@ export const fetchMagnetometerHistory = async (
       endtime: endTime.toISOString(),
     });
 
-    const fetchUrl = buildProxyUrl(`${FMI_WFS_URL}?${params.toString()}`);
+    const fetchUrl = `${FMI_WFS_URL}?${params.toString()}`;
     console.log(
       '[FMI History] Fetching:',
       fetchUrl,
-      'Original URL:',
-      `${FMI_WFS_URL}?${params.toString()}`,
     );
     const response = await fetch(fetchUrl);
     if (!response.ok) {
@@ -178,9 +210,9 @@ export const fetchMagnetometerHistory = async (
       if (timeStr && paramName && !isNaN(paramValue)) {
         if (!measurements[timeStr]) measurements[timeStr] = {};
 
-        if (paramName === 'MAGN_X') measurements[timeStr].x = paramValue;
-        if (paramName === 'MAGN_Y') measurements[timeStr].y = paramValue;
-        if (paramName === 'MAGN_Z') measurements[timeStr].z = paramValue;
+        if (paramName.includes('MAGN_X') || paramName.includes('MAGNX')) measurements[timeStr].x = paramValue;
+        if (paramName.includes('MAGN_Y') || paramName.includes('MAGNY')) measurements[timeStr].y = paramValue;
+        if (paramName.includes('MAGN_Z') || paramName.includes('MAGNZ')) measurements[timeStr].z = paramValue;
       }
     }
 
@@ -208,9 +240,8 @@ export const fetchMagnetometerHistory = async (
 
 export const fetchWeatherData = async (lat: number, lon: number): Promise<WeatherData | null> => {
   try {
-    const bbox = `${lon - 0.5},${lat - 0.5},${lon + 0.5},${lat + 0.5}`;
     const now = new Date();
-    const startTime = new Date(now.getTime() - 60 * 60 * 1000).toISOString(); // Last 1 hour
+    const startTime = new Date(now.getTime() - 90 * 60 * 1000).toISOString(); // 1.5h to be safe
     const endTime = now.toISOString();
 
     const params = new URLSearchParams({
@@ -218,75 +249,79 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
       version: '2.0.0',
       request: 'getFeature',
       storedquery_id: WEATHER_QUERY_ID,
-      bbox: bbox,
+      latlon: `${lat},${lon}`,
       starttime: startTime,
       endtime: endTime,
       parameters: 't2m,n_man,ws_10min',
     });
 
-    const fetchUrl = buildProxyUrl(`${FMI_WFS_URL}?${params.toString()}`);
-    console.log('[FMI Weather] Fetching:', fetchUrl);
+    const fetchUrl = `${FMI_WFS_URL}?${params.toString()}`;
+    console.log('[FMI Weather] Fetching direct URL:', fetchUrl);
     const response = await fetch(fetchUrl);
     if (!response.ok) {
-      const errorBody = await response.text();
-      console.error(
-        '[FMI Weather] Error:',
-        response.status,
-        response.statusText,
-        'Body:',
-        errorBody,
-      );
-      throw new Error('FMI Weather API failed');
+        console.error('[FMI Weather] Fetch failed with status:', response.status);
+        throw new Error(`Status ${response.status}`);
     }
 
     const text = await response.text();
     const parser = new DOMParser();
     const xml = parser.parseFromString(text, 'text/xml');
 
-    const members = xml.getElementsByTagNameNS('http://www.opengis.net/wfs/2.0', 'member');
-    if (members.length === 0) return null;
+    // Parse Positions
+    const posNode = xml.getElementsByTagNameNS('*', 'positions')[0];
+    if (!posNode || !posNode.textContent) return null;
+    const pArr = posNode.textContent.trim().split(/\s+/);
 
-    // Group by time
-    const measurements: Record<
-      string,
-      { t2m?: number; n_man?: number; ws_10min?: number; station: string }
-    > = {};
-    let lastTime = '';
+    // Parse Values
+    const vNode = xml.getElementsByTagNameNS('*', 'doubleOrNilReasonTupleList')[0];
+    if (!vNode || !vNode.textContent) return null;
+    const vArr = vNode.textContent.trim().split(/\s+/);
 
-    for (let i = 0; i < members.length; i++) {
-      const element = members[i].children[0];
-      if (!element) continue;
+    let latestValid = null;
+    let maxTime = 0;
 
-      const time = element.getElementsByTagNameNS('*', 'Time')[0]?.textContent;
-      const paramName = element.getElementsByTagNameNS('*', 'ParameterName')[0]?.textContent;
-      const paramValue = parseFloat(
-        element.getElementsByTagNameNS('*', 'ParameterValue')[0]?.textContent || 'NaN',
-      );
-      const location =
-        element.getElementsByTagNameNS('*', 'LocationName')[0]?.textContent || 'Unknown';
+    // We have 3 values per point: t2m, n_man, ws_10min
+    const entryCount = Math.floor(vArr.length / 3);
+    for (let i = 0; i < entryCount; i++) {
+        const time = parseInt(pArr[i * 3 + 2]) * 1000;
+        const t2m = parseFloat(vArr[i * 3]);
+        const n_man = parseFloat(vArr[i * 3 + 1]);
+        const ws = parseFloat(vArr[i * 3 + 2]);
 
-      if (time && paramName && !isNaN(paramValue)) {
-        if (!measurements[time]) measurements[time] = { station: location };
-
-        if (paramName === 't2m') measurements[time].t2m = paramValue;
-        if (paramName === 'n_man') measurements[time].n_man = paramValue;
-        if (paramName === 'ws_10min') measurements[time].ws_10min = paramValue;
-
-        lastTime = time;
-      }
+        // Accept Temp + Wind even if Clouds (n_man) is missing
+        if (!isNaN(t2m) && !isNaN(ws)) {
+            if (time > maxTime) {
+                maxTime = time;
+                latestValid = {
+                    temperature: t2m,
+                    cloudCover: isNaN(n_man) ? 0 : n_man,
+                    windSpeed: ws
+                };
+            }
+        }
     }
 
-    const latest = measurements[lastTime];
-    if (!latest) return null;
+    if (!latestValid) return null;
+
+    // Station name
+    const nameNodes = xml.getElementsByTagNameNS('*', 'name');
+    let station = 'Unknown';
+    for(let i=0; i<nameNodes.length; i++) {
+        const n = nameNodes[i].textContent;
+        // Find first name that isn't just a number
+        if (n && n.length > 5 && isNaN(parseInt(n))) {
+            station = n;
+            break;
+        }
+    }
 
     return {
-      station: latest.station,
-      temperature: latest.t2m ?? 0,
-      cloudCover: latest.n_man ?? 0,
-      windSpeed: latest.ws_10min ?? 0,
+      station,
+      ...latestValid
     };
+
   } catch (error) {
-    console.error('FMI Weather fetch error:', error);
+    console.error('[FMI Weather] Fetch error:', error);
     return null;
   }
 };

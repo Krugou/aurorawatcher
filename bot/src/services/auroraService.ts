@@ -62,8 +62,10 @@ export const checkAndPostAurora = async (client: Client, log: (msg: string) => v
 			{ id: 'auroraData', url: IMAGE_URLS.auroraData }
 		];
 
-		// Save all images
-		await Promise.all(cameras.map(cam => saveImageToHistory(cam.id, cam.url)));
+		// Save all images sequentially to prevent race conditions on history.json
+		for (const cam of cameras) {
+			await saveImageToHistory(cam.id, cam.url);
+		}
 		summary.imagesSaved = cameras.length;
 
 		// Prune old history entries

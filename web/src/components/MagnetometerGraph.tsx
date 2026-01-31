@@ -50,9 +50,9 @@ export const MagnetometerGraph = ({
 
   return (
     <>
-      <div className="h-[300px] w-full">
-        <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-          <LineChart data={data}>
+      <div className="h-[250px] w-full mt-4 overflow-hidden relative">
+        <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
+          <LineChart data={data} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
             <XAxis
               dataKey="timestamp"
               tickFormatter={formatTime}

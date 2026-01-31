@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useGeolocation } from '../hooks/useGeolocation';
 import { fetchMagneticData, fetchWeatherData } from '../services/fmiService';
+import { fetchNorwayWeather } from '../services/weatherService';
 import { Skeleton } from './Skeleton';
 
 interface CombinedData {
@@ -29,12 +30,34 @@ export const LocalData = ({
 
   useEffect(() => {
     if (effectiveCoords) {
+      console.log('[LocalData] Fetching for coords:', effectiveCoords);
       setLoading(true);
+      setError(false); // Reset error state on new fetch attempt
       Promise.all([
         fetchMagneticData(effectiveCoords.latitude, effectiveCoords.longitude),
-        fetchWeatherData(effectiveCoords.latitude, effectiveCoords.longitude),
+        fetchWeatherData(effectiveCoords.latitude, effectiveCoords.longitude).then(async (res) => {
+          if (!res) {
+            console.warn('[LocalData] FMI Weather failed, trying MET Norway fallback...');
+            try {
+              const norway = await fetchNorwayWeather(effectiveCoords.latitude, effectiveCoords.longitude);
+              return {
+                station: norway.location,
+                temperature: norway.temperature,
+                cloudCover: 0,
+                windSpeed: 0,
+                _isFallback: true,
+                description: norway.description
+              };
+            } catch (e) {
+              console.error('[LocalData] MET Norway fallback also failed:', e);
+              return null;
+            }
+          }
+          return res;
+        }),
       ])
         .then(([magResult, weatherResult]) => {
+          console.log('[LocalData] Fetch results:', { magResult, weatherResult });
           if (magResult && weatherResult) {
             setData({
               magStation: magResult.station,
@@ -43,24 +66,33 @@ export const LocalData = ({
               temperature: weatherResult.temperature,
               cloudCover: weatherResult.cloudCover,
               windSpeed: weatherResult.windSpeed,
+              // @ts-ignore - Adding dynamic description for fallback
+              description: (weatherResult as any).description
             });
           } else {
+            console.warn('[LocalData] One or more datasets missing');
             setError(true);
           }
         })
-        .catch(() => setError(true))
+        .catch((err) => {
+          console.error('[LocalData] Fetch error:', err);
+          setError(true);
+        })
         .finally(() => setLoading(false));
+    } else {
+      console.log('[LocalData] No coords available yet');
     }
   }, [effectiveCoords]);
 
   // Cloud cover interpretation (0-8 octas)
-  const getSkyCondition = (octas: number) => {
+  const getSkyCondition = (octas: number, description?: string) => {
+    if (description) return { text: description.charAt(0).toUpperCase() + description.slice(1), color: 'text-blue-400' };
     if (octas <= 1) return { text: t('sky.clear', 'Clear Sky 🌌'), color: 'text-green-400' };
     if (octas <= 4) return { text: t('sky.partly', 'Partly Cloudy ⛅'), color: 'text-yellow-400' };
     return { text: t('sky.overcast', 'Overcast ☁️'), color: 'text-slate-400' };
   };
 
-  const sky = data ? getSkyCondition(data.cloudCover) : { text: '', color: '' };
+  const sky = data ? getSkyCondition(data.cloudCover, (data as any).description) : { text: '', color: '' };
 
   if (!effectiveCoords && !geoLoading && !geoError) {
     return (
