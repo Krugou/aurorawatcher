@@ -68,9 +68,6 @@ const AppContent = () => {
   const [timestamp, setTimestamp] = useState(Date.now());
   const [mode, setMode] = useState<'default' | 'minimal' | 'fullscreen'>('default');
   const [activeCam, setActiveCam] = useState<string | null>(null);
-  const [testCoords, setTestCoords] = useState<{ latitude: number; longitude: number } | undefined>(
-    undefined,
-  );
 
   // Aurora Alert Logic
   const isHighActivity = useAuroraAlert();
@@ -98,10 +95,8 @@ const AppContent = () => {
   // Mobiili/Kioski -näkymät
   if (mode === 'fullscreen' && activeCam) {
     const loc = LOCATIONS[activeCam];
-    // Map test location to Nyrölä history
-    const historyId = activeCam === 'helsinki_test' ? 'nyrola' : activeCam;
 
-    return <FullscreenView loc={loc} historyId={historyId} allLocations={Object.keys(LOCATIONS)} />;
+    return <FullscreenView loc={loc} historyId={activeCam} allLocations={Object.keys(LOCATIONS)} />;
   }
 
   if (mode === 'minimal') {
@@ -123,16 +118,8 @@ const AppContent = () => {
           title={t('local.title', 'Local Conditions')}
           headerColorClass="bg-linear-to-b from-purple-500 to-blue-500"
           storageKey="local_data"
-          badge={
-            <button
-              onClick={() => setTestCoords({ latitude: 60.1695, longitude: 24.9354 })}
-              className="text-[10px] uppercase font-bold text-slate-500 hover:text-white"
-            >
-              Test Helsinki
-            </button>
-          }
         >
-          <LocalData manualCoords={testCoords} />
+          <LocalData />
         </CollapsibleSection>
 
         <CollapsibleSection
@@ -154,7 +141,7 @@ const AppContent = () => {
           storageKey="graphs"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <MagnetometerGraph manualCoords={testCoords} />
+            <MagnetometerGraph />
             <SolarWindGraph />
           </div>
         </CollapsibleSection>

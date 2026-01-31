@@ -19,7 +19,8 @@
     "live": "LIVE",
     "loading": "Ladataan...",
     "error": "Kuvan lataus epäonnistui",
-    "updated": "Päivitetty"
+    "updated": "Päivitetty",
+    "view_fullscreen": "Koko näyttö"
   },
   "footer": {
     "copyright": "© {{year}} Revontulivahti. Kuvat: FMI & Observatoriot."

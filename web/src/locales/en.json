@@ -19,7 +19,8 @@
     "live": "LIVE",
     "loading": "Loading...",
     "error": "Image failed to load",
-    "updated": "Updated"
+    "updated": "Updated",
+    "view_fullscreen": "Full Screen"
   },
   "footer": {
     "copyright": "© {{year}} Aurora Watcher. Images: FMI & Observatories."
