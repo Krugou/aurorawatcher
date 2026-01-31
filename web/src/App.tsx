@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 
 import { AuroraMap } from './components/AuroraMap';
-import { CameraGrid } from './components/CameraGrid';
 import { CollapsibleSection } from './components/CollapsibleSection';
 import { DataInfo } from './components/DataInfo';
 import { FullscreenView } from './components/FullscreenView';
@@ -19,6 +18,8 @@ import { SolarWindGraph } from './components/SolarWindGraph';
 import { SpaceWeather } from './components/SpaceWeather';
 import { ThemeToggle } from './components/ThemeToggle';
 import { ThemeProvider } from './context/ThemeProvider';
+import { useAuroraAlert } from './hooks/useAuroraAlert';
+import { useTitleFlasher } from './hooks/useTitleFlasher';
 import { Location } from './types';
 
 // Konfiguraatio ja tila
@@ -71,6 +72,10 @@ const AppContent = () => {
     undefined,
   );
 
+  // Aurora Alert Logic
+  const isHighActivity = useAuroraAlert();
+  useTitleFlasher(isHighActivity);
+
   // Tarkista URL-parametrit
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -93,7 +98,16 @@ const AppContent = () => {
   // Mobiili/Kioski -näkymät
   if (mode === 'fullscreen' && activeCam) {
     const loc = LOCATIONS[activeCam];
-    return <FullscreenView loc={loc} timestamp={timestamp} />;
+    // Map test location to Nyrölä history
+    const historyId = activeCam === 'helsinki_test' ? 'nyrola' : activeCam;
+
+    return (
+      <FullscreenView
+        loc={loc}
+        historyId={historyId}
+        allLocations={Object.keys(LOCATIONS)}
+      />
+    );
   }
 
   if (mode === 'minimal') {
@@ -152,11 +166,11 @@ const AppContent = () => {
         </CollapsibleSection>
 
         <CollapsibleSection
-          title={t('section.cameras', 'Live Sky Cameras')}
-          headerColorClass="bg-green-500"
-          storageKey="cameras"
+          title={t('grid.title', 'Observatory Status')}
+          headerColorClass="bg-blue-500"
+          storageKey="observatory_status"
         >
-          <CameraGrid />
+          <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
         </CollapsibleSection>
 
         <CollapsibleSection
@@ -173,14 +187,6 @@ const AppContent = () => {
           storageKey="data_info"
         >
           <DataInfo />
-        </CollapsibleSection>
-
-        <CollapsibleSection
-          title={t('grid.title', 'Observatory Status')}
-          headerColorClass="bg-blue-500"
-          storageKey="observatory_status"
-        >
-          <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
         </CollapsibleSection>
 
         <footer className="text-center py-12 text-slate-500 text-sm">

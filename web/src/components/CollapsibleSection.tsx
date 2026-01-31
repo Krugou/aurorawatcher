@@ -43,14 +43,29 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
     <section
       className={`bg-slate-900 rounded-2xl shadow-xl border border-slate-800/50 overflow-hidden ${className}`}
     >
-      <button
+      <div
+        role="button"
+        tabIndex={0}
         onClick={toggleExpanded}
-        className="w-full flex items-center gap-3 p-6 text-left hover:bg-slate-800/30 transition-colors focus:outline-none"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            toggleExpanded();
+          }
+        }}
+        className="w-full flex items-center gap-3 p-6 text-left hover:bg-slate-800/30 transition-colors focus:outline-none cursor-pointer"
       >
         {icon ? icon : <span className={`w-2 h-8 ${headerColorClass} rounded-full`}></span>}
         <h2 className="text-xl font-semibold text-white">{title}</h2>
         <div className="ml-auto flex items-center gap-4">
-          {badge && <div className="flex items-center">{badge}</div>}
+          {badge && (
+            <div
+              className="flex items-center"
+              onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
+            >
+              {badge}
+            </div>
+          )}
           <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +83,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
             </svg>
           </div>
         </div>
-      </button>
+      </div>
 
       <div
         className={`transition-all duration-300 ease-in-out ${

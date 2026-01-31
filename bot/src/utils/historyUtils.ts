@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 // bot/src/utils -> bot/src -> bot -> root -> web -> public -> data
 const DATA_DIR = path.resolve(__dirname, '../../../web/public/data');
 const HISTORY_DIR = path.join(DATA_DIR, 'history');
-const HISTORY_FILE = path.join(DATA_DIR, 'history.json');
+const HISTORY_FILE = path.join(DATA_DIR, 'history_index.json');
 
 // Interface for history data
 export interface HistoryEntry {

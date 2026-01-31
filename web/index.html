@@ -1,17 +1,41 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aurora Watcher</title>
-    <meta name="theme-color" content="#0f172a" />
-    <meta name="description" content="Reaaliaikainen revontulien seuranta" />
-    <link rel="apple-touch-icon" href="/pwa-192x192.png" />
-  </head>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="vite.svg" />
+  <link rel="icon" type="image/png" sizes="192x192" href="pwa-192x192.png" />
+  <link rel="apple-touch-icon" href="pwa-192x192.png" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurora Watcher - Revontulivahti</title>
+
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description"
+    content="Reaaliaikainen revontulien seuranta, sääennusteet ja magneettikentän häiriöt Suomessa. (Real-time aurora tracking, weather, and magnetic field alerts in Finland.)" />
+  <meta name="keywords"
+    content="aurora borealis, revontulet, suomi, finland, space weather, magnetic field, fmi, noaa, aurora alert" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://krugou.github.io/aurorawatcher/" />
+  <meta property="og:title" content="Aurora Watcher - Revontulivahti" />
+  <meta property="og:description"
+    content="Reaaliaikainen revontulien seuranta ja avaruussäädata. Katso live-kamerat ja ennusteet." />
+  <meta property="og:image" content="pwa-512x512.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://krugou.github.io/aurorawatcher/" />
+  <meta property="twitter:title" content="Aurora Watcher - Revontulivahti" />
+  <meta property="twitter:description"
+    content="Reaaliaikainen revontulien seuranta ja avaruussäädata. Katso live-kamerat ja ennusteet." />
+  <meta property="twitter:image" content="pwa-512x512.png" />
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

@@ -29,12 +29,14 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
   const playIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    fetch('/data/history.json')
+    fetch(`${import.meta.env.BASE_URL}data/history_index.json?t=${Date.now()}`)
       .then((res) => {
         if (!res.ok) throw new Error('No history available');
         return res.json();
       })
       .then((data: HistoryData) => {
+        console.log(`Loaded ${data.entries.length} entries. Filtering for ${camId}...`);
+
         // Filter for this camera and sort by time
         const camHistory = data.entries
           .filter((e) => e.camId === camId)
@@ -100,13 +102,13 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
     };
   }, [isPlaying, history.length]);
 
-  const isLive = currentIndex >= history.length;
+  const isLive = currentIndex >= history.length || history.length === 0;
   const currentEntry = !isLive ? history[currentIndex] : null;
 
   // Determine image source
-  const displayImage = isLive
-    ? `${currentImageUrl}?t=${Date.now()}` // Live
-    : `/data/${currentEntry?.filename}`; // Historical
+  const displayImage = !isLive && currentEntry
+    ? `${import.meta.env.BASE_URL}data/${currentEntry.filename}` // Historical
+    : `${currentImageUrl}?t=${Date.now()}`; // Live
 
   // Format time
   const formatTime = (ts: number) => {
@@ -238,6 +240,9 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
       {!loading && history.length === 0 && (
         <div className="text-center text-slate-500 text-sm">
           {t('history.noData', 'No history data available yet.')}
+          <div className="text-xs text-slate-700 mt-1">
+             Debug: CamID={camId}, Entries={fullHistory.length} (Filtered from fetch)
+          </div>
         </div>
       )}
     </div>
