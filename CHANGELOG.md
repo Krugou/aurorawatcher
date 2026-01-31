@@ -1,3 +1,9 @@
+# [1.11.0](https://github.com/Krugou/aurorawatcher/compare/v1.10.2...v1.11.0) (2026-01-31)
+
+### Features
+
+- **ci:** add detailed job summaries to github actions output ([dd83f45](https://github.com/Krugou/aurorawatcher/commit/dd83f45c079e8d4017dc1bc411534cd67c54c31f))
+
 ## [1.10.2](https://github.com/Krugou/aurorawatcher/compare/v1.10.1...v1.10.2) (2026-01-31)
 
 ### Bug Fixes
