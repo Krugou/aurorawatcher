@@ -1,3 +1,9 @@
+## [1.10.1](https://github.com/Krugou/aurorawatcher/compare/v1.10.0...v1.10.1) (2026-01-31)
+
+### Bug Fixes
+
+- **ci:** grant write permissions to github-actions bot ([c15cb11](https://github.com/Krugou/aurorawatcher/commit/c15cb11a40609b2cf0deb5c6bfd0b684684a4300))
+
 # [1.10.0](https://github.com/Krugou/aurorawatcher/compare/v1.9.0...v1.10.0) (2026-01-31)
 
 ### Features
