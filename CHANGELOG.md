@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/Krugou/aurorawatcher/compare/v1.11.0...v1.12.0) (2026-01-31)
+
+### Features
+
+- **history:** extend retention to 7 days and fix web linting ([18fdf58](https://github.com/Krugou/aurorawatcher/commit/18fdf589afd300e9ae13912851acad508af8311b))
+- Implement Aurora Watcher Discord bot to check and post aurora activity based on image analysis. ([25f4e9f](https://github.com/Krugou/aurorawatcher/commit/25f4e9f9a72b6b6338b92ee9eba962ba22330215))
+
 # [1.11.0](https://github.com/Krugou/aurorawatcher/compare/v1.10.2...v1.11.0) (2026-01-31)
 
 ### Features
