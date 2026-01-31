@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/Krugou/aurorawatcher/compare/v1.12.0...v1.13.0) (2026-01-31)
+
+### Features
+
+- Initialize the web application structure, core components, data services, and historical image data. ([e3efa45](https://github.com/Krugou/aurorawatcher/commit/e3efa45d9e9f8a0e8b4f1598ee80e79d5d04707a))
+- Introduce history playback slider and local environmental data display components. ([13bbffb](https://github.com/Krugou/aurorawatcher/commit/13bbffbd6f3296e6fdcb1472ffbf531bc7752d3b))
+
 # [1.12.0](https://github.com/Krugou/aurorawatcher/compare/v1.11.0...v1.12.0) (2026-01-31)
 
 ### Features
