@@ -182,16 +182,44 @@ export const LocalData = ({
                 </p>
               </div>
               <div className="text-right">
-                {/* Simple Verdict */}
-                {data.cloudCover <= 3 ? (
-                  <span className="px-3 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded-full border border-green-500/30">
-                    {t('local.go', 'GO FOR IT! 🚀')}
-                  </span>
-                ) : (
-                  <span className="px-3 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded-full border border-red-500/30">
-                    {t('local.noGo', 'BAD VISIBILITY ☁️')}
-                  </span>
-                )}
+                {/* Randomized Funny Verdicts */}
+                {(() => {
+                  const isGood = data.cloudCover <= 3;
+                  const goVerdicts = [
+                    t('local.go1', 'GO FOR IT! 🚀'),
+                    t('local.go2', "SKY'S NAKED! 🌌"),
+                    t('local.go3', 'AURORA BAIT LOCATED 🎣'),
+                    t('local.go4', 'PUT YOUR SHOES ON! 👟'),
+                    t('local.go5', 'SPACE PARTY ENABLING 👽'),
+                    t('local.go6', 'BEST VIEW IN HELSINKI? 🇫🇮'),
+                    t('local.go7', 'COFFEE IS READY, GO! ☕'),
+                    t('local.go8', 'BETTER THAN NETFLIX 📺'),
+                    t('local.go9', 'CLEAREST NIGHT EVER? 💎'),
+                    t('local.go10', 'UNLEASH THE CAMERA! 📸'),
+                  ];
+                  const noGoVerdicts = [
+                    t('local.noGo1', 'BAD VISIBILITY ☁️'),
+                    t('local.noGo2', 'STAY ON THE SOFA 🛋️'),
+                    t('local.noGo3', "CLOUD PARTY (YOU'RE NOT INVITED) ☁️"),
+                    t('local.noGo4', 'PERFECT NIGHT FOR TEA 🫖'),
+                    t('local.noGo5', 'TOTAL WHITE-OUT 🌫️'),
+                    t('local.noGo6', 'AURORAS ARE HIDING 🙈'),
+                    t('local.noGo7', 'CLOUDS: 1, YOU: 0 ⚽'),
+                    t('local.noGo8', 'TRY AGAIN LATER... 😴'),
+                    t('local.noGo9', 'NICE VIEW OF WATER VAPOR �'),
+                    t('local.noGo10', 'NETFLIX & NO CHILL 🍿'),
+                  ];
+
+                  // Use temperature as a seed or just random (it will change on re-render, adding to the "funny" aspect)
+                  const verdicts = isGood ? goVerdicts : noGoVerdicts;
+                  const verdict = verdicts[Math.floor(Math.random() * verdicts.length)];
+
+                  return (
+                    <span className={`px-3 py-1 ${isGood ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'} text-xs font-bold rounded-full border animate-pulse`}>
+                      {verdict}
+                    </span>
+                  );
+                })()}
               </div>
             </div>
           </div>
