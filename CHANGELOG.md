@@ -1,3 +1,9 @@
+## [1.10.2](https://github.com/Krugou/aurorawatcher/compare/v1.10.1...v1.10.2) (2026-01-31)
+
+### Bug Fixes
+
+- **ci:** handle race conditions in aurora image save step ([802b8d0](https://github.com/Krugou/aurorawatcher/commit/802b8d0e986365300d459fc496ee43ccdad03e53))
+
 ## [1.10.1](https://github.com/Krugou/aurorawatcher/compare/v1.10.0...v1.10.1) (2026-01-31)
 
 ### Bug Fixes
