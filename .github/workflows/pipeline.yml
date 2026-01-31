@@ -1,0 +1,93 @@
+name: Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write # for semantic-release & checkout
+  pages: write # for gh-pages
+  id-token: write # for oidc
+  issues: write # for semantic-release
+  pull-requests: write # for semantic-release
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  check-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install Dependencies
+        run: npm ci
+      - name: Lint (Web)
+        run: npm run lint -w aurorawatcher-web
+      - name: Test (Web)
+        run: npm run test -w aurorawatcher-web
+      - name: Build (Web)
+        run: npm run build -w aurorawatcher-web
+      - name: Upload Web Artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './web/dist'
+
+  check-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build (Bot)
+        run: npm run build -w aurorawatcher-bot
+
+  deploy-web:
+    needs: check-web
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  release:
+    needs: [check-web, check-bot, deploy-web]
+    if: github.ref == 'refs/heads/main'
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

@@ -48,7 +48,5 @@ jobs:
       - name: Commit and push images
         if: success()
         run: |
-          git config --global user.name 'Aurora Bot'
-          git config --global user.email 'bot@aurorawatcher.com'
-          git add web/public/data/history/ web/public/data/history.json
-          git commit -m "chore: save aurora images [skip ci]" --no-verify && (git pull --rebase --autostash && git push) || echo "No changes to commit"
+          chmod +x scripts/save_images.sh
+          ./scripts/save_images.sh
