@@ -6,7 +6,7 @@ USER_NAME="Aurora Bot"
 USER_EMAIL="bot@aurorawatcher.com"
 COMMIT_MESSAGE="chore: save aurora images [skip ci]"
 HISTORY_DIR="web/public/data/history/"
-HISTORY_JSON="web/public/data/history.json"
+HISTORY_JSON="web/public/data/history_index.json"
 
 echo "Setup git configuration..."
 git config --global user.name "$USER_NAME"

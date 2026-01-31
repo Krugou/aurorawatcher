@@ -19,6 +19,9 @@ interface HistorySliderProps {
 
 export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) => {
   const { t } = useTranslation();
+  // URL to fetch data directly from GitHub (bypassing GitHub Pages cache/build times)
+  const RAW_DATA_BASE = 'https://raw.githubusercontent.com/Krugou/aurorawatcher/main/web/public/';
+
   const [fullHistory, setFullHistory] = useState<HistoryEntry[]>([]);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +32,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
   const playIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}data/history_index.json?t=${Date.now()}`)
+    fetch(`${RAW_DATA_BASE}data/history_index.json?t=${Date.now()}`)
       .then((res) => {
         if (!res.ok) throw new Error('No history available');
         return res.json();
@@ -109,7 +112,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
   // Determine image source
   const displayImage =
     !isLive && currentEntry
-      ? `${import.meta.env.BASE_URL}data/${currentEntry.filename}` // Historical
+      ? `${RAW_DATA_BASE}data/${currentEntry.filename}` // Historical (Raw GitHub)
       : `${currentImageUrl}?t=${Date.now()}`; // Live
 
   // Format time
