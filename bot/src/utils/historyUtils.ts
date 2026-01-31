@@ -48,6 +48,7 @@ export const initHistory = async (): Promise<void> => {
 /**
  * Downloads an image and saves it to the history directory.
  * Returns the relative path to the saved image or null if failed.
+ * Uses cyclic naming (HHmm) to overwrite images from previous days.
  */
 export const saveImageToHistory = async (camId: string, url: string): Promise<string | null> => {
 	try {
@@ -60,14 +61,25 @@ export const saveImageToHistory = async (camId: string, url: string): Promise<st
 		const arrayBuffer = await response.arrayBuffer();
 		const buffer = Buffer.from(arrayBuffer);
 
-		const timestamp = Date.now();
-		const filename = `${camId}_${timestamp}.jpg`;
+		const now = new Date();
+		// Round to nearest 15 minutes
+		const minutes = now.getMinutes();
+		const roundedMinutes = Math.round(minutes / 15) * 15;
+		now.setMinutes(roundedMinutes);
+		now.setSeconds(0);
+		now.setMilliseconds(0);
+
+		const hours = now.getHours().toString().padStart(2, '0');
+		const mins = now.getMinutes().toString().padStart(2, '0');
+		const timeSlot = `${hours}${mins}`;
+
+		const filename = `${camId}_${timeSlot}.jpg`;
 		const filePath = path.join(HISTORY_DIR, filename);
 
 		await fs.writeFile(filePath, buffer);
 
 		// Update history.json
-		await updateHistoryIndex(camId, filename, timestamp);
+		await updateHistoryIndex(camId, filename, now.getTime());
 
 		return filename;
 	} catch (error) {
@@ -89,6 +101,9 @@ const updateHistoryIndex = async (camId: string, filename: string, timestamp: nu
 			data = { lastUpdated: Date.now(), entries: [] };
 		}
 
+		// Remove existing entry for this specific timestamp/slot if checking for exact duplicates,
+        // but since we want history to show valid past points, we just add.
+        // Pruning handles the cleanup of the JSON list.
 		data.entries.push({
 			timestamp,
 			camId,
@@ -104,7 +119,8 @@ const updateHistoryIndex = async (camId: string, filename: string, timestamp: nu
 };
 
 /**
- * Removes images and history entries older than the specified retention period (default 24 hours).
+ * Removes history entries from the JSON index older than the retention period.
+ * Does NOT delete files, as they are part of a cyclic set (0000-2345).
  */
 export const pruneOldHistory = async (retentionHours = 24): Promise<void> => {
 	try {
@@ -120,33 +136,21 @@ export const pruneOldHistory = async (retentionHours = 24): Promise<void> => {
 		}
 
 		const newEntries: HistoryEntry[] = [];
-		const filesToDelete: string[] = [];
 
 		for (const entry of data.entries) {
 			if (entry.timestamp > cutoffTime) {
 				newEntries.push(entry);
-			} else {
-				// Extract just the filename from the stored path (history/filename.jpg)
-				const filename = path.basename(entry.filename);
-				filesToDelete.push(path.join(HISTORY_DIR, filename));
 			}
+            // Logic to delete files is removed to support cyclic overwriting
 		}
 
-		// Update JSON first
-		data.entries = newEntries;
-		data.lastUpdated = Date.now();
-		await fs.writeFile(HISTORY_FILE, JSON.stringify(data, null, 2));
-
-		// delete files
-		for (const filePath of filesToDelete) {
-			try {
-				await fs.unlink(filePath);
-			} catch (err) {
-				console.warn(`Failed to delete old file ${filePath}:`, err);
-			}
-		}
-
-		console.log(`Pruned ${filesToDelete.length} old images.`);
+		// Update JSON
+		if (data.entries.length !== newEntries.length) {
+            data.entries = newEntries;
+            data.lastUpdated = Date.now();
+            await fs.writeFile(HISTORY_FILE, JSON.stringify(data, null, 2));
+            console.log(`Pruned ${data.entries.length - newEntries.length} old entries from history.json.`);
+        }
 
 	} catch (error) {
 		console.error('Error pruning history:', error);

@@ -14,7 +14,21 @@ export const checkAndPostAurora = async (client: Client, log: (msg: string) => v
 		return;
 	}
 
+
 	try {
+		// Get sunrise/sunset times
+		const { sunriseHours, sunsetHours } = await getSunriseSunsetTimes(
+			AURORA_CONFIG.latitude,
+			AURORA_CONFIG.longitude
+		);
+
+		// Only check during dark hours
+		if (!isDark(sunriseHours, sunsetHours)) {
+			log(`Sun is out (it's between sunrise and sunset), skipping image post.`);
+			client.user?.setActivity('Sun Up ☀️', { type: ActivityType.Watching });
+			return;
+		}
+
         // Initialize history directory
         await initHistory();
 
@@ -30,21 +44,8 @@ export const checkAndPostAurora = async (client: Client, log: (msg: string) => v
         // Save all images
         await Promise.all(cameras.map(cam => saveImageToHistory(cam.id, cam.url)));
 
-        // Prune old images
+        // Prune old history entries
         await pruneOldHistory();
-
-		// Get sunrise/sunset times
-		const { sunriseHours, sunsetHours } = await getSunriseSunsetTimes(
-			AURORA_CONFIG.latitude,
-			AURORA_CONFIG.longitude
-		);
-
-		// Only check during dark hours
-		if (!isDark(sunriseHours, sunsetHours)) {
-			log(`Sun is out (it's between sunrise and sunset), skipping image post.`);
-			client.user?.setActivity('Sun Up ☀️', { type: ActivityType.Watching });
-			return;
-		}
 
 		client.user?.setActivity('Night Sky 🌌', { type: ActivityType.Watching });
 

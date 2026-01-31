@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface HistoryEntry {
@@ -19,9 +19,14 @@ interface HistorySliderProps {
 
 export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) => {
   const { t } = useTranslation();
+  const [fullHistory, setFullHistory] = useState<HistoryEntry[]>([]);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [timeRange, setTimeRange] = useState<number>(24); // Hours
+
+  const playIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     fetch('/data/history.json')
@@ -34,16 +39,58 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
         const camHistory = data.entries
           .filter((e) => e.camId === camId)
           .sort((a, b) => a.timestamp - b.timestamp);
+
+        setFullHistory(camHistory);
         setHistory(camHistory);
-        // Default to latest (live)
-        setCurrentIndex(camHistory.length);
+        setCurrentIndex(camHistory.length); // Default to live
       })
       .catch((err) => {
         console.warn('Failed to load history:', err);
+        setFullHistory([]);
         setHistory([]);
       })
       .finally(() => setLoading(false));
   }, [camId]);
+
+  // Filter history based on time range
+  useEffect(() => {
+    if (fullHistory.length === 0) return;
+
+    const now = Date.now();
+    const cutoff = now - timeRange * 60 * 60 * 1000;
+
+    const filtered = fullHistory.filter((e) => e.timestamp >= cutoff);
+    setHistory(filtered);
+
+    // Reset to live when changing range if we were live or out of bounds
+    if (currentIndex >= filtered.length || currentIndex === -1) {
+      setCurrentIndex(filtered.length);
+    } else {
+      // Try to maintain relative position or find closest timestamp?
+      // Simpler to just snap to live to avoid confusion
+      setCurrentIndex(filtered.length);
+    }
+  }, [timeRange, fullHistory]);
+
+  // Playback logic
+  useEffect(() => {
+    if (isPlaying) {
+      playIntervalRef.current = setInterval(() => {
+        setCurrentIndex((prev) => {
+          if (prev >= history.length) {
+            setIsPlaying(false);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 500); // 2fps
+    } else {
+      if (playIntervalRef.current) clearInterval(playIntervalRef.current);
+    }
+    return () => {
+      if (playIntervalRef.current) clearInterval(playIntervalRef.current);
+    };
+  }, [isPlaying, history.length]);
 
   const isLive = currentIndex >= history.length;
   const currentEntry = !isLive ? history[currentIndex] : null;
@@ -62,10 +109,29 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
     ? t('history.live', 'LIVE NOW')
     : formatTime(currentEntry?.timestamp || 0);
 
+  const ranges = [1, 6, 12, 24];
+
   return (
     <div className="flex flex-col gap-4">
+      {/* Time Range Selector */}
+      <div className="flex justify-center gap-2">
+        {ranges.map((h) => (
+          <button
+            key={h}
+            onClick={() => setTimeRange(h)}
+            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors border ${
+              timeRange === h
+                ? 'bg-blue-600 border-blue-500 text-white'
+                : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:text-white'
+            }`}
+          >
+            {h}h
+          </button>
+        ))}
+      </div>
+
       {/* Image Display */}
-      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-800 bg-black aspect-video">
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-800 bg-black aspect-video group">
         <img
           src={displayImage}
           alt={isLive ? 'Live View' : 'Historical View'}
@@ -87,7 +153,23 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
       {history.length > 0 && (
         <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50 backdrop-blur-sm">
           <div className="flex items-center gap-4">
-            <span className="text-xs text-slate-400 font-mono w-12 text-right">
+            {/* Play/Pause */}
+            <button
+              onClick={() => {
+                if (isLive) setCurrentIndex(0); // Restart if at end
+                setIsPlaying(!isPlaying);
+              }}
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-700 text-white hover:bg-blue-600 transition-colors"
+              title={isPlaying ? 'Pause' : 'Play'}
+            >
+              {isPlaying ? (
+                <span className="font-bold">⏸</span>
+              ) : (
+                <span className="font-bold ml-1">▶</span>
+              )}
+            </button>
+
+            <span className="text-xs text-slate-400 font-mono w-12 text-right hidden sm:block">
               {history.length > 0 ? formatTime(history[0].timestamp) : '--:--'}
             </span>
 
@@ -96,37 +178,39 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
               min={0}
               max={history.length}
               value={currentIndex}
-              onChange={(e) => setCurrentIndex(parseInt(e.target.value))}
-              className="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400 transition-all"
+              onChange={(e) => {
+                setIsPlaying(false);
+                setCurrentIndex(parseInt(e.target.value));
+              }}
+              className="flex-1 h-8 sm:h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400 transition-all touch-none"
             />
 
-            <span className="text-xs text-slate-400 font-mono w-12 text-left">
+            <span className="text-xs text-slate-400 font-mono w-12 text-left hidden sm:block">
               {t('history.liveShort', 'LIVE')}
             </span>
           </div>
 
           <div className="flex justify-between items-center mt-2 px-1">
             <button
-              onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
+              onClick={() => {
+                setIsPlaying(false);
+                setCurrentIndex((prev) => Math.max(0, prev - 1));
+              }}
               disabled={currentIndex === 0}
-              className="text-slate-400 hover:text-white disabled:opacity-30 transition-colors"
+              className="px-3 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-700 disabled:opacity-30 transition-colors text-sm"
             >
-              Example: Previous frame
+              ← {t('history.prev', 'Prev')}
             </button>
-            <div className="text-xs text-slate-500">
-              {isLive
-                ? t('history.viewingLive', 'Viewing Live Feed')
-                : t('history.viewingPast', {
-                    time: formatTime(currentEntry!.timestamp),
-                    defaultValue: 'Viewing: {{time}}',
-                  })}
-            </div>
+            <div className="text-xs text-slate-500">{history.length} frames</div>
             <button
-              onClick={() => setCurrentIndex((prev) => Math.min(history.length, prev + 1))}
+              onClick={() => {
+                setIsPlaying(false);
+                setCurrentIndex((prev) => Math.min(history.length, prev + 1));
+              }}
               disabled={isLive}
-              className="text-slate-400 hover:text-white disabled:opacity-30 transition-colors"
+              className="px-3 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-700 disabled:opacity-30 transition-colors text-sm"
             >
-              Example: Next frame
+              {t('history.next', 'Next')} →
             </button>
           </div>
         </div>
