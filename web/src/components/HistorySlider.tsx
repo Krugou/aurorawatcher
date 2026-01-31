@@ -60,17 +60,25 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
     const cutoff = now - timeRange * 60 * 60 * 1000;
 
     const filtered = fullHistory.filter((e) => e.timestamp >= cutoff);
-    setHistory(filtered);
+
+    // Only update state if length changes or we need to reset invalid index
+    // Use a function setter or check current value to avoid loop if adding history as dep?
+    // Actually simplicity is key: checks below break loops
+    setHistory((prev) => {
+      if (prev.length === filtered.length && prev[0]?.timestamp === filtered[0]?.timestamp) {
+        return prev;
+      }
+      return filtered;
+    });
 
     // Reset to live when changing range if we were live or out of bounds
+    // We check against 'filtered.length' effectively
     if (currentIndex >= filtered.length || currentIndex === -1) {
       setCurrentIndex(filtered.length);
-    } else {
-      // Try to maintain relative position or find closest timestamp?
-      // Simpler to just snap to live to avoid confusion
-      setCurrentIndex(filtered.length);
     }
-  }, [timeRange, fullHistory]);
+    // If we are viewing history that still exists in the new filter, keep the index (crudely)
+    // Ideally we'd match timestamps but maintaining "live" is the primary UX goal
+  }, [timeRange, fullHistory]); // Removed currentIndex to fix logic loop, added logic inside to handle index
 
   // Playback logic
   useEffect(() => {
@@ -102,14 +110,19 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
 
   // Format time
   const formatTime = (ts: number) => {
-    return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return new Date(ts).toLocaleTimeString([], {
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
   };
 
   const displayTime = isLive
     ? t('history.live', 'LIVE NOW')
     : formatTime(currentEntry?.timestamp || 0);
 
-  const ranges = [1, 6, 12, 24];
+  const ranges = [6, 24, 72, 168];
 
   return (
     <div className="flex flex-col gap-4">
@@ -125,7 +138,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:text-white'
             }`}
           >
-            {h}h
+            {h === 168 ? '7d' : h === 72 ? '3d' : `${h}h`}
           </button>
         ))}
       </div>
