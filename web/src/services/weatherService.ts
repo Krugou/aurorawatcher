@@ -22,10 +22,7 @@ export interface WeatherData {
  * @returns WeatherData object
  * @throws WeatherError on failure
  */
-export const fetchNorwayWeather = async (
-  lat: number,
-  lon: number
-): Promise<WeatherData> => {
+export const fetchNorwayWeather = async (lat: number, lon: number): Promise<WeatherData> => {
   if (typeof lat !== 'number' || typeof lon !== 'number' || isNaN(lat) || isNaN(lon)) {
     throw new WeatherError('Invalid coordinates for weather fetch');
   }
@@ -34,8 +31,8 @@ export const fetchNorwayWeather = async (
     const response = await fetch(url, {
       headers: {
         'User-Agent': 'socials-app/1.0 aleksi.nokelainen@gmail.com',
-        'Accept': 'application/json'
-      }
+        Accept: 'application/json',
+      },
     });
     if (!response.ok) {
       throw new WeatherError(`Weather API error: ${response.status}`);
@@ -56,10 +53,12 @@ export const fetchNorwayWeather = async (
       temperature: details.air_temperature,
       description: summary?.symbol_code?.replace(/_/g, ' ') || 'Unknown',
       location: `${lat.toFixed(2)}, ${lon.toFixed(2)}`,
-      icon: summary?.symbol_code || ''
+      icon: summary?.symbol_code || '',
     };
   } catch (error) {
     if (error instanceof WeatherError) throw error;
-    throw new WeatherError('Failed to fetch weather: ' + (error instanceof Error ? error.message : 'Unknown error'));
+    throw new WeatherError(
+      'Failed to fetch weather: ' + (error instanceof Error ? error.message : 'Unknown error'),
+    );
   }
 };

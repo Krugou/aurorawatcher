@@ -101,13 +101,7 @@ const AppContent = () => {
     // Map test location to Nyrölä history
     const historyId = activeCam === 'helsinki_test' ? 'nyrola' : activeCam;
 
-    return (
-      <FullscreenView
-        loc={loc}
-        historyId={historyId}
-        allLocations={Object.keys(LOCATIONS)}
-      />
-    );
+    return <FullscreenView loc={loc} historyId={historyId} allLocations={Object.keys(LOCATIONS)} />;
   }
 
   if (mode === 'minimal') {
