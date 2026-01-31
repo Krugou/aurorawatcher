@@ -1,4 +1,4 @@
-import { TextChannel } from 'discord.js';
+import { TextChannel, EmbedBuilder, AttachmentBuilder } from 'discord.js';
 import { IMAGE_URLS, LOCATIONS, AURORA_INFO_URL } from '../config.js';
 
 /**
@@ -14,33 +14,43 @@ export const createLogger = (channel: TextChannel) => {
 };
 
 /**
- * Sends all aurora observatory images to a Discord channel.
+ * Sends all aurora observatory images to a Discord channel in a single message using Embeds.
  * @param textChannel - The Discord text channel to send messages to.
  */
 export const sendAuroraImages = async (textChannel: TextChannel): Promise<void> => {
-	// Muonio
-	await textChannel.send({ files: [IMAGE_URLS.muonio] });
-	await textChannel.send(LOCATIONS.muonio.name);
-	await textChannel.send(LOCATIONS.muonio.mapUrl);
+	const embeds: EmbedBuilder[] = [];
+	const files: AttachmentBuilder[] = [];
 
-	// Nyrölä
-	await textChannel.send({ files: [IMAGE_URLS.nyrola] });
-	await textChannel.send(LOCATIONS.nyrola.name);
-	await textChannel.send(LOCATIONS.nyrola.mapUrl);
+	// Helper to add location to embeds and files
+	const addLocation = (key: keyof typeof LOCATIONS, imageUrl: string, filename: string) => {
+		const location = LOCATIONS[key];
+		files.push(new AttachmentBuilder(imageUrl, { name: filename }));
+		embeds.push(
+			new EmbedBuilder()
+				.setTitle(location.name)
+				.setURL(location.mapUrl)
+				.setImage(`attachment://${filename}`)
+				.setColor(0x0099ff)
+		);
+	};
 
-	// Hankasalmi
-	await textChannel.send({ files: [IMAGE_URLS.hankasalmi] });
-	await textChannel.send(LOCATIONS.hankasalmi.name);
-	await textChannel.send(LOCATIONS.hankasalmi.mapUrl);
+	// Add observatories
+	addLocation('muonio', IMAGE_URLS.muonio, 'muonio.jpg');
+	addLocation('nyrola', IMAGE_URLS.nyrola, 'nyrola.jpg');
+	addLocation('hankasalmi', IMAGE_URLS.hankasalmi, 'hankasalmi.jpg');
+	addLocation('metsahovi', IMAGE_URLS.metsahovi, 'metsahovi.jpg');
 
-	// Metsähovi
-	await textChannel.send({ files: [IMAGE_URLS.metsahovi] });
-	await textChannel.send(LOCATIONS.metsahovi.name);
-	await textChannel.send(LOCATIONS.metsahovi.mapUrl);
+	// Add Aurora Data
+	files.push(new AttachmentBuilder(IMAGE_URLS.auroraData, { name: 'aurora_data.png' }));
+	embeds.push(
+		new EmbedBuilder()
+			.setTitle('Aurora Data')
+			.setURL(AURORA_INFO_URL)
+			.setImage('attachment://aurora_data.png')
+			.setColor(0xff0000)
+	);
 
-	// Aurora data
-	await textChannel.send({ files: [IMAGE_URLS.auroraData] });
-	await textChannel.send(AURORA_INFO_URL);
+	await textChannel.send({ embeds, files });
 };
 
 /**
