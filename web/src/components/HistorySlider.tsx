@@ -80,6 +80,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
     }
     // If we are viewing history that still exists in the new filter, keep the index (crudely)
     // Ideally we'd match timestamps but maintaining "live" is the primary UX goal
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeRange, fullHistory]); // Removed currentIndex to fix logic loop, added logic inside to handle index
 
   // Playback logic
@@ -106,9 +107,10 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
   const currentEntry = !isLive ? history[currentIndex] : null;
 
   // Determine image source
-  const displayImage = !isLive && currentEntry
-    ? `${import.meta.env.BASE_URL}data/${currentEntry.filename}` // Historical
-    : `${currentImageUrl}?t=${Date.now()}`; // Live
+  const displayImage =
+    !isLive && currentEntry
+      ? `${import.meta.env.BASE_URL}data/${currentEntry.filename}` // Historical
+      : `${currentImageUrl}?t=${Date.now()}`; // Live
 
   // Format time
   const formatTime = (ts: number) => {
@@ -241,7 +243,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
         <div className="text-center text-slate-500 text-sm">
           {t('history.noData', 'No history data available yet.')}
           <div className="text-xs text-slate-700 mt-1">
-             Debug: CamID={camId}, Entries={fullHistory.length} (Filtered from fetch)
+            Debug: CamID={camId}, Entries={fullHistory.length} (Filtered from fetch)
           </div>
         </div>
       )}

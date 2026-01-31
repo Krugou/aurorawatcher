@@ -59,7 +59,9 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
         <div className="ml-auto flex items-center gap-4">
           {badge && (
             <div
-              className="flex items-center"
+              className="flex items-center cursor-default"
+              role="button"
+              tabIndex={0}
               onClick={(e) => e.stopPropagation()}
               onKeyDown={(e) => e.stopPropagation()}
             >

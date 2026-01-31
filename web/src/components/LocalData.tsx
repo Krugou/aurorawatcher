@@ -13,6 +13,7 @@ interface CombinedData {
   temperature: number;
   cloudCover: number;
   windSpeed: number;
+  description?: string;
 }
 
 export const LocalData = ({
@@ -39,14 +40,17 @@ export const LocalData = ({
           if (!res) {
             console.warn('[LocalData] FMI Weather failed, trying MET Norway fallback...');
             try {
-              const norway = await fetchNorwayWeather(effectiveCoords.latitude, effectiveCoords.longitude);
+              const norway = await fetchNorwayWeather(
+                effectiveCoords.latitude,
+                effectiveCoords.longitude,
+              );
               return {
                 station: norway.location,
                 temperature: norway.temperature,
                 cloudCover: 0,
                 windSpeed: 0,
                 _isFallback: true,
-                description: norway.description
+                description: norway.description,
               };
             } catch (e) {
               console.error('[LocalData] MET Norway fallback also failed:', e);
@@ -66,8 +70,7 @@ export const LocalData = ({
               temperature: weatherResult.temperature,
               cloudCover: weatherResult.cloudCover,
               windSpeed: weatherResult.windSpeed,
-              // @ts-ignore - Adding dynamic description for fallback
-              description: (weatherResult as any).description
+              description: (weatherResult as { description?: string }).description,
             });
           } else {
             console.warn('[LocalData] One or more datasets missing');
@@ -86,13 +89,17 @@ export const LocalData = ({
 
   // Cloud cover interpretation (0-8 octas)
   const getSkyCondition = (octas: number, description?: string) => {
-    if (description) return { text: description.charAt(0).toUpperCase() + description.slice(1), color: 'text-blue-400' };
+    if (description)
+      return {
+        text: description.charAt(0).toUpperCase() + description.slice(1),
+        color: 'text-blue-400',
+      };
     if (octas <= 1) return { text: t('sky.clear', 'Clear Sky 🌌'), color: 'text-green-400' };
     if (octas <= 4) return { text: t('sky.partly', 'Partly Cloudy ⛅'), color: 'text-yellow-400' };
     return { text: t('sky.overcast', 'Overcast ☁️'), color: 'text-slate-400' };
   };
 
-  const sky = data ? getSkyCondition(data.cloudCover, (data as any).description) : { text: '', color: '' };
+  const sky = data ? getSkyCondition(data.cloudCover, data.description) : { text: '', color: '' };
 
   if (!effectiveCoords && !geoLoading && !geoError) {
     return (
@@ -215,7 +222,9 @@ export const LocalData = ({
                   const verdict = verdicts[Math.floor(Math.random() * verdicts.length)];
 
                   return (
-                    <span className={`px-3 py-1 ${isGood ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'} text-xs font-bold rounded-full border animate-pulse`}>
+                    <span
+                      className={`px-3 py-1 ${isGood ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'} text-xs font-bold rounded-full border animate-pulse`}
+                    >
                       {verdict}
                     </span>
                   );
