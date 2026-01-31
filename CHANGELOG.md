@@ -1,3 +1,9 @@
+# [1.10.0](https://github.com/Krugou/aurorawatcher/compare/v1.9.0...v1.10.0) (2026-01-31)
+
+### Features
+
+- cyclic 24h image history and history viewer UI ([0146468](https://github.com/Krugou/aurorawatcher/commit/0146468b40e7feebf5e9dca02c464e9de021c7e3))
+
 # [1.9.0](https://github.com/Krugou/aurorawatcher/compare/v1.8.0...v1.9.0) (2026-01-30)
 
 ### Features
