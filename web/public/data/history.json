@@ -1,10 +1,20 @@
 {
-  "lastUpdated": 1769816285606,
+  "lastUpdated": 1769871881316,
   "entries": [
     {
       "timestamp": 1769816285604,
       "camId": "nyrola",
       "filename": "history/nyrola_1769816285604.jpg"
+    },
+    {
+      "timestamp": 1769871600000,
+      "camId": "hankasalmi",
+      "filename": "history/hankasalmi_20260131_1500.jpg"
+    },
+    {
+      "timestamp": 1769871600000,
+      "camId": "auroraData",
+      "filename": "history/auroraData_20260131_1500.jpg"
     }
   ]
 }
