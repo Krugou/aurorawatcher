@@ -37,4 +37,11 @@ else
     echo "Pushing changes..."
     git push
     echo "Successfully pushed changes."
+
+    if [ -n "$GITHUB_STEP_SUMMARY" ]; then
+        echo "## 📸 Aurora Images Saved" >> "$GITHUB_STEP_SUMMARY"
+        echo "The bot successfully collected and saved new aurora images. 🌌" >> "$GITHUB_STEP_SUMMARY"
+        echo "- **Status**: Saved & Pushed" >> "$GITHUB_STEP_SUMMARY"
+        echo "- **Time**: $(date)" >> "$GITHUB_STEP_SUMMARY"
+    fi
 fi

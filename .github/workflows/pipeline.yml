@@ -43,6 +43,12 @@ jobs:
         with:
           path: './web/dist'
 
+      - name: Summary
+        if: success()
+        run: |
+          echo "## ✅ Web Checks Passed" >> $GITHUB_STEP_SUMMARY
+          echo "Linting, Testing, and Building completed successfully. 🧹✨" >> $GITHUB_STEP_SUMMARY
+
   check-bot:
     runs-on: ubuntu-latest
     steps:
@@ -58,6 +64,12 @@ jobs:
       - name: Build (Bot)
         run: npm run build -w aurorawatcher-bot
 
+      - name: Summary
+        if: success()
+        run: |
+          echo "## 🤖 Bot Checks Passed" >> $GITHUB_STEP_SUMMARY
+          echo "Bot compiled and ready to crunch data. 🧠⚡" >> $GITHUB_STEP_SUMMARY
+
   deploy-web:
     needs: check-web
     if: github.ref == 'refs/heads/main'
@@ -69,6 +81,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "## 🚀 Deployment Successful" >> $GITHUB_STEP_SUMMARY
+          echo "The web app is live! [View Site](${{ steps.deployment.outputs.page_url }}) 🌍" >> $GITHUB_STEP_SUMMARY
 
   release:
     needs: [check-web, check-bot, deploy-web]
@@ -91,3 +109,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "## 🎉 Release Published" >> $GITHUB_STEP_SUMMARY
+          echo "New version released via Semantic Release. 🐙📦" >> $GITHUB_STEP_SUMMARY
