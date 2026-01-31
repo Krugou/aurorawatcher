@@ -1,4 +1,5 @@
 import { Client, Events, GatewayIntentBits, Interaction, TextChannel } from 'discord.js';
+import * as fs from 'fs/promises';
 import 'dotenv/config';
 
 import { AURORA_CONFIG } from './config.js';
@@ -42,8 +43,31 @@ auroraBot.on(Events.ClientReady, () => {
 	// Initial check
 	if (process.env.RUN_ONCE === 'true') {
 		console.log('Running in single-execution mode (RUN_ONCE=true)');
-		checkAndPostAurora(auroraBot, log).then(() => {
+		checkAndPostAurora(auroraBot, log).then(async (summary) => {
 			console.log('Single execution finished. Exiting.');
+
+			if (process.env.GITHUB_STEP_SUMMARY) {
+				const jobsSummary = `
+### 🌌 Aurora Watcher Execution Summary
+
+| Metric | Value |
+| :--- | :--- |
+| **Outcome** | ${summary.outcome} |
+| **Is Dark?** | ${summary.isDark ? 'Yes 🌑' : 'No ☀️'} |
+| **Activity Detected?** | ${summary.auroraActivityDetected ? 'Yes 🟢' : 'No ⚪'} |
+| **Images Saved** | ${summary.imagesSaved} |
+| **Alert Sent?** | ${summary.imageChanged ? 'Yes 🚀' : 'No'} |
+
+*Executed at: ${new Date().toISOString()}*
+`;
+				try {
+					await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, jobsSummary);
+					console.log('Successfully wrote summary to GITHUB_STEP_SUMMARY');
+				} catch (err) {
+					console.error('Error writing to GITHUB_STEP_SUMMARY:', err);
+				}
+			}
+
 			process.exit(0);
 		});
 	} else {
