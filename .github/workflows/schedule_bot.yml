@@ -5,6 +5,9 @@ on:
     - cron: '*/15 * * * *' # Run every 15 minutes
   workflow_dispatch: # Allow manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   check-aurora:
     runs-on: ubuntu-latest
