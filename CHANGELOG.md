@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/Krugou/aurorawatcher/compare/v1.13.0...v1.14.0) (2026-02-02)
+
+### Features
+
+- Add historical aurora images for 2026-01-31 21:30 and create the history index. ([5de8ddb](https://github.com/Krugou/aurorawatcher/commit/5de8ddb4cd4807b08efe811ddaf59541d8acdc2a))
+- Introduce a script for automated aurora image saving and a React component for historical image playback. ([37a9cb5](https://github.com/Krugou/aurorawatcher/commit/37a9cb5c714603caa179a0a16f56ea4550533fb2))
+
 # [1.13.0](https://github.com/Krugou/aurorawatcher/compare/v1.12.0...v1.13.0) (2026-01-31)
 
 ### Features
