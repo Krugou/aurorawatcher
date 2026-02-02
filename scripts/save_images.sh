@@ -2,7 +2,7 @@
 set -e
 
 # Configuration
-USER_NAME="Aurora Bot"
+USER_NAME="Aleksin Aurora Bot"
 USER_EMAIL="bot@aurorawatcher.com"
 COMMIT_MESSAGE="chore: save aurora images [skip ci]"
 HISTORY_DIR="web/public/data/history/"
