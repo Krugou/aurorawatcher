@@ -52,15 +52,6 @@ const LOCATIONS: Record<string, Location> = {
     mapUrl: 'https://maps.app.goo.gl/BG3JC7uHLLcdi5C1A',
     image: 'https://space.fmi.fi/MIRACLE/RWC/latest_HOV.jpg',
   },
-  helsinki_test: {
-    id: 'helsinki_test',
-    name: 'Helsinki (Test)',
-    fullname: 'Regional Test (Nurmijärvi NUR)',
-    mapUrl: 'https://maps.app.goo.gl/rmr9YMBuR66GCB2X8',
-    image: 'https://space.fmi.fi/MIRACLE/RWC/latest_SIR.jpg',
-    lat: 60.1695,
-    lon: 24.9354,
-  },
 };
 
 const AppContent = () => {
@@ -121,7 +112,13 @@ const AppContent = () => {
         >
           <LocalData />
         </CollapsibleSection>
-
+        <CollapsibleSection
+          title={t('grid.title', 'Observatory Status')}
+          headerColorClass="bg-blue-500"
+          storageKey="observatory_status"
+        >
+          <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
+        </CollapsibleSection>
         <CollapsibleSection
           title={t('space_weather.title', 'Space Weather (Live)')}
           headerColorClass="bg-orange-500"
@@ -144,14 +141,6 @@ const AppContent = () => {
             <MagnetometerGraph />
             <SolarWindGraph />
           </div>
-        </CollapsibleSection>
-
-        <CollapsibleSection
-          title={t('grid.title', 'Observatory Status')}
-          headerColorClass="bg-blue-500"
-          storageKey="observatory_status"
-        >
-          <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
         </CollapsibleSection>
 
         <CollapsibleSection
