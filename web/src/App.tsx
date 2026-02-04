@@ -91,12 +91,16 @@ const AppContent = () => {
   }
 
   if (mode === 'minimal') {
-    return <MinimalView locations={LOCATIONS} timestamp={timestamp} />;
+    return (
+      <div className="animate-gradient-xy bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950 min-h-screen">
+        <MinimalView locations={LOCATIONS} timestamp={timestamp} />
+      </div>
+    );
   }
 
   // Oletusnäkymä (Työpöytä/Mobiili)
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col items-center transition-colors duration-300">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950 animate-gradient-xy text-slate-100 font-sans flex flex-col items-center transition-colors duration-300">
       {/* Top Controls Container */}
       <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
         <ThemeToggle />
