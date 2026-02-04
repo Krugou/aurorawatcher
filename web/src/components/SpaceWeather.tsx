@@ -19,7 +19,9 @@ export const SpaceWeather = () => {
 
     // Refresh every minute
     const interval = setInterval(load, 60000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   if (loading) {

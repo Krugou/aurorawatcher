@@ -32,7 +32,9 @@ export const MagnetometerGraph = ({
       fetchMagnetometerHistory(effectiveCoords.latitude, effectiveCoords.longitude)
         .then(setData)
         .catch(console.error)
-        .finally(() => setLoading(false));
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [effectiveCoords]);
 

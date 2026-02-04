@@ -80,7 +80,9 @@ const AppContent = () => {
     const interval = setInterval(() => {
       setTimestamp(Date.now());
     }, 300000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   // Mobiili/Kioski -näkymät

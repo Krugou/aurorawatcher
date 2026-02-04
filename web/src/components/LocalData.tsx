@@ -52,7 +52,7 @@ export const LocalData = ({
                 _isFallback: true,
                 description: norway.description,
               };
-            } catch (e) {
+            } catch (e: unknown) {
               console.error('[LocalData] MET Norway fallback also failed:', e);
               return null;
             }
@@ -77,11 +77,13 @@ export const LocalData = ({
             setError(true);
           }
         })
-        .catch((err) => {
+        .catch((err: unknown) => {
           console.error('[LocalData] Fetch error:', err);
           setError(true);
         })
-        .finally(() => setLoading(false));
+        .finally(() => {
+          setLoading(false);
+        });
     } else {
       console.log('[LocalData] No coords available yet');
     }

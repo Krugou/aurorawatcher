@@ -1,0 +1,136 @@
+
+> aurorawatcher-web@0.0.0 lint
+> eslint .
+
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\CollapsibleSection.tsx
+  57:10  error  Prefer using nullish coalescing operator (`??`) instead of a ternary expression, as it is simpler to read  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\FullscreenView.tsx
+  86:43  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\HistorySlider.tsx
+   52:15  error  Prefer the safe `: unknown` for a `catch` callback variable                                                @typescript-eslint/use-unknown-in-catch-callback-variable
+  130:42  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\LanguageSwitcher.tsx
+  8:5  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\LocalData.tsx
+  30:40  error  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+  80:17  error  Prefer the safe `: unknown` for a `catch` callback variable                                                @typescript-eslint/use-unknown-in-catch-callback-variable
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\MagnetometerGraph.tsx
+  27:40  error    Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+  78:53  warning  Unsafe argument of type error typed assigned to a parameter of type `number`                               @typescript-eslint/no-unsafe-argument
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\ObservatoryCard.tsx
+  69:14  error  Prefer using nullish coalescing operator (`??`) instead of a ternary expression, as it is simpler to read  @typescript-eslint/prefer-nullish-coalescing
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\SolarWindGraph.tsx
+  79:53  warning  Unsafe argument of type error typed assigned to a parameter of type `number`  @typescript-eslint/no-unsafe-argument
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\SpaceWeather.tsx
+  18:5   warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  21:34  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\context\ThemeProvider.tsx
+  9:9  error  Unnecessary conditional, value is always truthy  @typescript-eslint/no-unnecessary-condition
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\hooks\useAuroraAlert.ts
+  28:5   warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  29:34  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\hooks\useGeolocation.ts
+  17:9  error  Unnecessary conditional, value is always falsy  @typescript-eslint/no-unnecessary-condition
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\hooks\useImageMetadata.ts
+  33:5  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\i18n.ts
+  8:1  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\main.tsx
+  9:12  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\services\fmiService.ts
+   70:5   error    Expected a `for-of` loop instead of a `for` loop with this simple iteration  @typescript-eslint/prefer-for-of
+   72:11  error    Unnecessary conditional, value is always falsy                               @typescript-eslint/no-unnecessary-condition
+   74:66  error    Unnecessary optional chain on a non-nullish value                            @typescript-eslint/no-unnecessary-condition
+   75:80  error    Unnecessary optional chain on a non-nullish value                            @typescript-eslint/no-unnecessary-condition
+   77:65  error    Unnecessary optional chain on a non-nullish value                            @typescript-eslint/no-unnecessary-condition
+   80:63  error    Unnecessary optional chain on a non-nullish value                            @typescript-eslint/no-unnecessary-condition
+   83:13  error    Unnecessary conditional, value is always falsy                               @typescript-eslint/no-unnecessary-condition
+  133:16  warning  Forbidden non-null assertion                                                 @typescript-eslint/no-non-null-assertion
+  133:41  warning  Forbidden non-null assertion                                                 @typescript-eslint/no-non-null-assertion
+  133:66  warning  Forbidden non-null assertion                                                 @typescript-eslint/no-non-null-assertion
+  140:24  warning  Forbidden non-null assertion                                                 @typescript-eslint/no-non-null-assertion
+  140:38  warning  Forbidden non-null assertion                                                 @typescript-eslint/no-non-null-assertion
+  140:52  warning  Forbidden non-null assertion                                                 @typescript-eslint/no-non-null-assertion
+  200:5   error    Expected a `for-of` loop instead of a `for` loop with this simple iteration  @typescript-eslint/prefer-for-of
+  202:11  error    Unnecessary conditional, value is always falsy                               @typescript-eslint/no-unnecessary-condition
+  204:69  error    Unnecessary optional chain on a non-nullish value                            @typescript-eslint/no-unnecessary-condition
+  205:80  error    Unnecessary optional chain on a non-nullish value                            @typescript-eslint/no-unnecessary-condition
+  207:65  error    Unnecessary optional chain on a non-nullish value                            @typescript-eslint/no-unnecessary-condition
+  211:13  error    Unnecessary conditional, value is always falsy                               @typescript-eslint/no-unnecessary-condition
+  275:17  error    Unnecessary optional chain on a non-nullish value                            @typescript-eslint/no-unnecessary-condition
+  280:15  error    Unnecessary optional chain on a non-nullish value                            @typescript-eslint/no-unnecessary-condition
+  312:5   error    Expected a `for-of` loop instead of a `for` loop with this simple iteration  @typescript-eslint/prefer-for-of
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\services\solarService.ts
+   39:11  warning  Unsafe assignment of an `any` value                                                     @typescript-eslint/no-unsafe-assignment
+   40:11  warning  Unsafe assignment of an `any` value                                                     @typescript-eslint/no-unsafe-assignment
+   41:11  warning  Unsafe assignment of an `any` value                                                     @typescript-eslint/no-unsafe-assignment
+   59:33  warning  Unsafe argument of type `any` assigned to a parameter of type `string[][]`              @typescript-eslint/no-unsafe-argument
+   60:36  warning  Unsafe argument of type `any` assigned to a parameter of type `string[][]`              @typescript-eslint/no-unsafe-argument
+   61:32  warning  Unsafe argument of type `any` assigned to a parameter of type `string[][]`              @typescript-eslint/no-unsafe-argument
+  116:11  warning  Unsafe assignment of an `any` value                                                     @typescript-eslint/no-unsafe-assignment
+  117:11  warning  Unsafe assignment of an `any` value                                                     @typescript-eslint/no-unsafe-assignment
+  129:15  warning  Unsafe assignment of an `any` value                                                     @typescript-eslint/no-unsafe-assignment
+  129:29  warning  Unsafe member access [0] on an `any` value                                              @typescript-eslint/no-unsafe-member-access
+  130:31  warning  Unsafe argument of type `any` assigned to a parameter of type `string`                  @typescript-eslint/no-unsafe-argument
+  130:35  warning  Unsafe member access [3] on an `any` value                                              @typescript-eslint/no-unsafe-member-access
+  131:22  warning  Unsafe argument of type `any` assigned to a parameter of type `string`                  @typescript-eslint/no-unsafe-argument
+  131:40  warning  Unsafe argument of type `any` assigned to a parameter of type `string`                  @typescript-eslint/no-unsafe-argument
+  131:71  warning  Unsafe argument of type `any` assigned to a parameter of type `string | number | Date`  @typescript-eslint/no-unsafe-argument
+  132:23  warning  Forbidden non-null assertion                                                            @typescript-eslint/no-non-null-assertion
+  132:31  warning  Unsafe argument of type `any` assigned to a parameter of type `string`                  @typescript-eslint/no-unsafe-argument
+  140:15  warning  Unsafe assignment of an `any` value                                                     @typescript-eslint/no-unsafe-assignment
+  140:29  warning  Unsafe member access [0] on an `any` value                                              @typescript-eslint/no-unsafe-member-access
+  141:36  warning  Unsafe argument of type `any` assigned to a parameter of type `string`                  @typescript-eslint/no-unsafe-argument
+  141:40  warning  Unsafe member access [1] on an `any` value                                              @typescript-eslint/no-unsafe-member-access
+  142:34  warning  Unsafe argument of type `any` assigned to a parameter of type `string`                  @typescript-eslint/no-unsafe-argument
+  142:38  warning  Unsafe member access [2] on an `any` value                                              @typescript-eslint/no-unsafe-member-access
+  148:21  warning  Unsafe argument of type `any` assigned to a parameter of type `string`                  @typescript-eslint/no-unsafe-argument
+  149:25  warning  Forbidden non-null assertion                                                            @typescript-eslint/no-non-null-assertion
+  149:33  warning  Unsafe argument of type `any` assigned to a parameter of type `string`                  @typescript-eslint/no-unsafe-argument
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\services\weatherService.ts
+  40:11  warning  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  42:11  warning  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  42:30  warning  Unsafe member access .properties on an `any` value                                                         @typescript-eslint/no-unsafe-member-access
+  46:11  warning  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  47:11  warning  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  47:26  warning  Unsafe member access .data on an `any` value                                                               @typescript-eslint/no-unsafe-member-access
+  48:11  warning  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  48:26  warning  Unsafe member access .data on an `any` value                                                               @typescript-eslint/no-unsafe-member-access
+  49:36  warning  Unsafe member access .air_temperature on an `any` value                                                    @typescript-eslint/no-unsafe-member-access
+  53:7   warning  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  53:28  warning  Unsafe member access .air_temperature on an `any` value                                                    @typescript-eslint/no-unsafe-member-access
+  54:7   warning  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  54:20  warning  Unsafe call of an `any` typed value                                                                        @typescript-eslint/no-unsafe-call
+  54:29  warning  Unsafe member access .symbol_code on an `any` value                                                        @typescript-eslint/no-unsafe-member-access
+  54:61  error    Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+  56:7   warning  Unsafe assignment of an `any` value                                                                        @typescript-eslint/no-unsafe-assignment
+  56:22  warning  Unsafe member access .symbol_code on an `any` value                                                        @typescript-eslint/no-unsafe-member-access
+  56:34  error    Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+
+Ô£û 86 problems (28 errors, 58 warnings)
+
+npm error Lifecycle script `lint` failed with error:
+npm error code 1
+npm error path C:\Users\moxch\Documents\GitHub\aurorawatcher\web
+npm error workspace aurorawatcher-web@0.0.0
+npm error location C:\Users\moxch\Documents\GitHub\aurorawatcher\web
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c eslint .

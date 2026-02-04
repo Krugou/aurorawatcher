@@ -49,12 +49,14 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
         setHistory(camHistory);
         setCurrentIndex(camHistory.length); // Default to live
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         console.warn('Failed to load history:', err);
         setFullHistory([]);
         setHistory([]);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+      });
   }, [camId]);
 
   // Filter history based on time range
@@ -138,7 +140,9 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
         {ranges.map((h) => (
           <button
             key={h}
-            onClick={() => setTimeRange(h)}
+            onClick={() => {
+              setTimeRange(h);
+            }}
             className={`px-3 py-1 rounded-full text-xs font-medium transition-colors border ${
               timeRange === h
                 ? 'bg-blue-600 border-blue-500 text-white'

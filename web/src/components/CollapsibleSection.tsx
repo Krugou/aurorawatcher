@@ -62,8 +62,12 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
               className="flex items-center cursor-default"
               role="button"
               tabIndex={0}
-              onClick={(e) => e.stopPropagation()}
-              onKeyDown={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              onKeyDown={(e) => {
+                e.stopPropagation();
+              }}
             >
               {badge}
             </div>

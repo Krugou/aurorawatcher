@@ -27,7 +27,9 @@ export const useAuroraAlert = () => {
 
     checkActivity();
     const interval = setInterval(checkActivity, 60000 * 5); // Check every 5 mins
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return isHighActivity;

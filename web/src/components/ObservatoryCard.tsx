@@ -38,7 +38,9 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
             alt={loc.name}
             className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
             loading="lazy"
-            onLoad={() => setIsLoading(false)}
+            onLoad={() => {
+              setIsLoading(false);
+            }}
             onError={() => {
               setIsLoading(false);
               setHasError(true);

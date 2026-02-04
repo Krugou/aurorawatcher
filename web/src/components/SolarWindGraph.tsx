@@ -23,7 +23,9 @@ export const SolarWindGraph = () => {
     fetchSolarHistory()
       .then(setData)
       .catch(console.error)
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   if (loading) return <Skeleton className="h-64 w-full bg-slate-900 rounded-2xl mb-8" />;

@@ -156,7 +156,7 @@ export interface GraphDataPoint {
 export const fetchMagnetometerHistory = async (
   lat: number,
   lon: number,
-  hours: number = 6,
+  hours = 6,
 ): Promise<GraphDataPoint[]> => {
   try {
     const bbox = `${lat - 2},${lon - 2},${lat + 2},${lon + 2}`;
@@ -272,12 +272,12 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
 
     // Parse Positions
     const posNode = xml.getElementsByTagNameNS('*', 'positions')[0];
-    if (!posNode || !posNode.textContent) return null;
+    if (!posNode?.textContent) return null;
     const pArr = posNode.textContent.trim().split(/\s+/);
 
     // Parse Values
     const vNode = xml.getElementsByTagNameNS('*', 'doubleOrNilReasonTupleList')[0];
-    if (!vNode || !vNode.textContent) return null;
+    if (!vNode?.textContent) return null;
     const vArr = vNode.textContent.trim().split(/\s+/);
 
     let latestValid = null;
