@@ -1,3 +1,9 @@
+# [1.15.0](https://github.com/Krugou/aurorawatcher/compare/v1.14.0...v1.15.0) (2026-02-04)
+
+### Features
+
+- add moving gradient background ([bf5020b](https://github.com/Krugou/aurorawatcher/commit/bf5020bc23423b9ac3a5d77378dfb35ba5353e0c))
+
 # [1.14.0](https://github.com/Krugou/aurorawatcher/compare/v1.13.0...v1.14.0) (2026-02-02)
 
 ### Features
