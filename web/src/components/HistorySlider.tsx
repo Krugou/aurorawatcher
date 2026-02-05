@@ -143,7 +143,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
             onClick={() => {
               setTimeRange(h);
             }}
-            className={`px-4 py-2 border-2 text-sm font-bold font-mono transition-colors ${
+            className={`px-5 py-3 md:px-6 md:py-4 border-2 text-sm md:text-base font-bold font-mono transition-colors min-w-[60px] ${
               timeRange === h
                 ? 'bg-neo-blue border-black text-white shadow-neo-sm z-10'
                 : 'bg-white text-black border-black border-l-0 first:border-l-2 hover:bg-gray-200 dark:bg-zinc-800 dark:text-white dark:border-white'
@@ -183,13 +183,13 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 if (isLive) setCurrentIndex(0); // Restart if at end
                 setIsPlaying(!isPlaying);
               }}
-              className="w-12 h-12 flex items-center justify-center border-2 border-black dark:border-white bg-neo-yellow hover:bg-yellow-400 text-black transition-colors shadow-neo-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+              className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center border-2 border-black dark:border-white bg-neo-yellow hover:bg-yellow-400 text-black transition-colors shadow-neo-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
               title={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? (
-                <span className="font-bold text-xl">II</span>
+                <span className="font-bold text-2xl">II</span>
               ) : (
-                <span className="font-bold text-xl">▶</span>
+                <span className="font-bold text-2xl">▶</span>
               )}
             </button>
 
@@ -206,7 +206,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 setIsPlaying(false);
                 setCurrentIndex(parseInt(e.target.value));
               }}
-              className="flex-1 h-8 bg-gray-200 dark:bg-zinc-800 appearance-none border-2 border-black dark:border-white [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:bg-neo-pink [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black"
+              className="flex-1 h-10 md:h-12 bg-gray-200 dark:bg-zinc-800 appearance-none border-2 border-black dark:border-white [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-10 [&::-webkit-slider-thumb]:md:h-12 [&::-webkit-slider-thumb]:bg-neo-pink [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:cursor-pointer"
             />
 
             <span className="text-xs text-black dark:text-white font-mono w-12 text-left hidden sm:block">
@@ -221,11 +221,11 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 setCurrentIndex((prev) => Math.max(0, prev - 1));
               }}
               disabled={currentIndex === 0}
-              className="px-4 py-1 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-xs uppercase hover:bg-gray-200 disabled:opacity-50"
+              className="px-5 py-3 md:px-6 md:py-4 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-sm uppercase hover:bg-gray-200 disabled:opacity-50 min-w-[80px]"
             >
               &lt; PREV
             </button>
-            <div className="text-xs text-gray-500 font-mono uppercase tracking-widest">
+            <div className="text-sm text-gray-500 font-mono uppercase tracking-widest">
               {history.length} FRAMES
             </div>
             <button
@@ -234,7 +234,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 setCurrentIndex((prev) => Math.min(history.length, prev + 1));
               }}
               disabled={isLive}
-              className="px-4 py-1 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-xs uppercase hover:bg-gray-200 disabled:opacity-50"
+              className="px-5 py-3 md:px-6 md:py-4 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-sm uppercase hover:bg-gray-200 disabled:opacity-50 min-w-[80px]"
             >
               NEXT &gt;
             </button>
