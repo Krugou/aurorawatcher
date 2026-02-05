@@ -1,11 +1,11 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-neo-orange: #FF4800;
-  --color-neo-mint: #00FF9D;
-  --color-neo-yellow: #FFDE00;
-  --color-neo-blue: #2B65EC;
-  --color-neo-pink: #FF0080;
+  --color-neo-orange: #ff4800;
+  --color-neo-mint: #00ff9d;
+  --color-neo-yellow: #ffde00;
+  --color-neo-blue: #2b65ec;
+  --color-neo-pink: #ff0080;
 
   --font-sans: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -56,19 +56,30 @@ button:active {
 
 /* Glitch Animation */
 @keyframes glitch {
-  2%, 64% { transform: translate(2px,0) skew(0deg); }
-  4%, 60% { transform: translate(-2px,0) skew(0deg); }
-  62% { transform: translate(0,0) skew(5deg); }
+  2%,
+  64% {
+    transform: translate(2px, 0) skew(0deg);
+  }
+  4%,
+  60% {
+    transform: translate(-2px, 0) skew(0deg);
+  }
+  62% {
+    transform: translate(0, 0) skew(5deg);
+  }
 }
 
 .animate-glitch {
   animation: glitch 1s linear infinite;
 }
 
-
 @keyframes marquee {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 .animate-marquee {
