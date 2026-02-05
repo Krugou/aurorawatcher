@@ -155,11 +155,11 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
       </div>
 
       {/* Image Display */}
-      <div className="relative border-2 border-black dark:border-white bg-black group shadow-neo dark:shadow-neo-dark w-full max-h-[50vh] flex items-center justify-center overflow-hidden">
+      <div className="relative border-2 border-black dark:border-white bg-black group shadow-neo dark:shadow-neo-dark w-full h-[35vh] max-h-[300px] md:max-h-[400px] flex items-center justify-center overflow-hidden">
         <img
           src={displayImage}
           alt={isLive ? 'Live View' : 'Historical View'}
-          className="w-full h-full object-contain max-h-[50vh]"
+          className="w-full h-full object-contain"
         />
 
         {/* Time Overlay */}
