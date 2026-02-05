@@ -11,18 +11,18 @@ export const LanguageSwitcher = () => {
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center justify-center h-10 px-3 bg-slate-800/60 hover:bg-slate-700/80 text-white rounded-xl border border-slate-700/50 text-xs font-bold transition-friendly backdrop-blur-md cursor-pointer hover-lift shadow-lg"
+      className="flex items-center justify-center h-12 w-16 bg-white dark:bg-black hover:bg-neo-blue dark:hover:bg-neo-blue hover:text-white dark:hover:text-white text-black dark:text-white border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none cursor-pointer font-bold font-mono"
       aria-label="Switch Language"
     >
       <span className="flex items-center gap-2">
         {i18n.language === 'en' ? (
           <>
-            <span>🇫🇮</span>
+            <span className="text-xl">🇫🇮</span>
             <span>FI</span>
           </>
         ) : (
           <>
-            <span>🇬🇧</span>
+            <span className="text-xl">🇬🇧</span>
             <span>EN</span>
           </>
         )}

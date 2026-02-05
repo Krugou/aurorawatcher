@@ -136,26 +136,26 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
   return (
     <div className="flex flex-col gap-4">
       {/* Time Range Selector */}
-      <div className="flex justify-center gap-2">
+      <div className="flex justify-center gap-0">
         {ranges.map((h) => (
           <button
             key={h}
             onClick={() => {
               setTimeRange(h);
             }}
-            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors border ${
+            className={`px-4 py-2 border-2 text-sm font-bold font-mono transition-colors ${
               timeRange === h
-                ? 'bg-blue-600 border-blue-500 text-white'
-                : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:text-white'
+                ? 'bg-neo-blue border-black text-white shadow-neo-sm z-10'
+                : 'bg-white text-black border-black border-l-0 first:border-l-2 hover:bg-gray-200 dark:bg-zinc-800 dark:text-white dark:border-white'
             }`}
           >
-            {h === 168 ? '7d' : h === 72 ? '3d' : `${h}h`}
+            {h === 168 ? '7D' : h === 72 ? '3D' : `${h}H`}
           </button>
         ))}
       </div>
 
       {/* Image Display */}
-      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-800 bg-black aspect-video group">
+      <div className="relative border-2 border-black dark:border-white bg-black aspect-video group shadow-neo dark:shadow-neo-dark">
         <img
           src={displayImage}
           alt={isLive ? 'Live View' : 'Historical View'}
@@ -163,19 +163,19 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
         />
 
         {/* Time Overlay */}
-        <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10">
+        <div className="absolute top-4 left-4 bg-black/80 px-4 py-2 border border-white">
           <span
             className={`font-mono font-bold text-lg ${isLive ? 'text-red-500 animate-pulse' : 'text-white'}`}
           >
-            {isLive ? '🔴 ' : '🕒 '}
-            {displayTime}
+            {isLive ? '● LIVE' : '↺ REPLAY'}
           </span>
+          <div className="text-white text-xs font-mono">{displayTime}</div>
         </div>
       </div>
 
       {/* Controls */}
       {history.length > 0 && (
-        <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50 backdrop-blur-sm">
+        <div className="bg-white dark:bg-black border-2 border-black dark:border-white p-4 shadow-neo-sm dark:shadow-neo-sm-dark">
           <div className="flex items-center gap-4">
             {/* Play/Pause */}
             <button
@@ -183,17 +183,17 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 if (isLive) setCurrentIndex(0); // Restart if at end
                 setIsPlaying(!isPlaying);
               }}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-700 text-white hover:bg-blue-600 transition-colors"
+              className="w-12 h-12 flex items-center justify-center border-2 border-black dark:border-white bg-neo-yellow hover:bg-yellow-400 text-black transition-colors shadow-neo-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
               title={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? (
-                <span className="font-bold">⏸</span>
+                <span className="font-bold text-xl">II</span>
               ) : (
-                <span className="font-bold ml-1">▶</span>
+                <span className="font-bold text-xl">▶</span>
               )}
             </button>
 
-            <span className="text-xs text-slate-400 font-mono w-12 text-right hidden sm:block">
+            <span className="text-xs text-black dark:text-white font-mono w-16 text-right hidden sm:block">
               {history.length > 0 ? formatTime(history[0].timestamp) : '--:--'}
             </span>
 
@@ -206,52 +206,51 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 setIsPlaying(false);
                 setCurrentIndex(parseInt(e.target.value));
               }}
-              className="flex-1 h-8 sm:h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400 transition-all touch-none"
+              className="flex-1 h-8 bg-gray-200 dark:bg-zinc-800 appearance-none border-2 border-black dark:border-white [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:bg-neo-pink [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black"
             />
 
-            <span className="text-xs text-slate-400 font-mono w-12 text-left hidden sm:block">
-              {t('history.liveShort', 'LIVE')}
+            <span className="text-xs text-black dark:text-white font-mono w-12 text-left hidden sm:block">
+              LIVE
             </span>
           </div>
 
-          <div className="flex justify-between items-center mt-2 px-1">
+          <div className="flex justify-between items-center mt-4 px-1">
             <button
               onClick={() => {
                 setIsPlaying(false);
                 setCurrentIndex((prev) => Math.max(0, prev - 1));
               }}
               disabled={currentIndex === 0}
-              className="px-3 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-700 disabled:opacity-30 transition-colors text-sm"
+              className="px-4 py-1 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-xs uppercase hover:bg-gray-200 disabled:opacity-50"
             >
-              ← {t('history.prev', 'Prev')}
+              &lt; PREV
             </button>
-            <div className="text-xs text-slate-500">{history.length} frames</div>
+            <div className="text-xs text-gray-500 font-mono uppercase tracking-widest">
+              {history.length} FRAMES
+            </div>
             <button
               onClick={() => {
                 setIsPlaying(false);
                 setCurrentIndex((prev) => Math.min(history.length, prev + 1));
               }}
               disabled={isLive}
-              className="px-3 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-700 disabled:opacity-30 transition-colors text-sm"
+              className="px-4 py-1 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-xs uppercase hover:bg-gray-200 disabled:opacity-50"
             >
-              {t('history.next', 'Next')} →
+              NEXT &gt;
             </button>
           </div>
         </div>
       )}
 
       {loading && (
-        <div className="text-center text-slate-500 text-sm animate-pulse">
-          {t('history.loading', 'Loading history...')}
+        <div className="text-center font-mono text-black dark:text-white animate-pulse">
+          {'/// LOADING HISTORY DATA ///'}
         </div>
       )}
 
       {!loading && history.length === 0 && (
-        <div className="text-center text-slate-500 text-sm">
-          {t('history.noData', 'No history data available yet.')}
-          <div className="text-xs text-slate-700 mt-1">
-            Debug: CamID={camId}, Entries={fullHistory.length} (Filtered from fetch)
-          </div>
+        <div className="text-center font-mono text-gray-500 border-2 border-dashed border-gray-400 p-4">
+          NO DATA STREAM AVAILABLE
         </div>
       )}
     </div>

@@ -102,9 +102,9 @@ const AppContent = () => {
 
   // Oletusnäkymä (Työpöytä/Mobiili)
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950 animate-gradient-xy text-slate-100 font-sans flex flex-col items-center transition-colors duration-300">
+    <div className="min-h-screen bg-[#f0f0f0] dark:bg-[#050505] text-black dark:text-white font-sans flex flex-col items-center transition-colors duration-300">
       {/* Top Controls Container */}
-      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+      <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
         <ThemeToggle />
         <LanguageSwitcher />
       </div>
@@ -113,24 +113,24 @@ const AppContent = () => {
 
         <CollapsibleSection
           title={t('local.title', 'Local Conditions')}
-          headerColorClass="bg-linear-to-b from-purple-500 to-blue-500"
+          headerColorClass="bg-neo-pink"
           storageKey="local_data"
         >
           <LocalData />
         </CollapsibleSection>
         <CollapsibleSection
           title={t('grid.title', 'Observatory Status')}
-          headerColorClass="bg-blue-500"
+          headerColorClass="bg-neo-blue"
           storageKey="observatory_status"
         >
           <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
         </CollapsibleSection>
         <CollapsibleSection
           title={t('space_weather.title', 'Space Weather (Live)')}
-          headerColorClass="bg-orange-500"
+          headerColorClass="bg-neo-orange"
           storageKey="space_weather"
           badge={
-            <span className="text-xs font-normal text-slate-500 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
+            <span className="text-sm font-bold font-mono text-black bg-white px-3 py-1 border-2 border-black dark:border-white shadow-neo-sm dark:shadow-neo-sm-dark">
               NOAA SWPC
             </span>
           }
@@ -140,7 +140,7 @@ const AppContent = () => {
 
         <CollapsibleSection
           title={t('graphs.title', 'Real-time Activity Graphs')}
-          headerColorClass="bg-linear-to-r from-purple-500 to-orange-500"
+          headerColorClass="bg-neo-yellow text-black"
           storageKey="graphs"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -151,7 +151,7 @@ const AppContent = () => {
 
         <CollapsibleSection
           title={t('map.title', 'Aurora Forecast Map')}
-          headerColorClass="bg-green-500"
+          headerColorClass="bg-neo-mint text-black"
           storageKey="map"
         >
           <AuroraMap timestamp={timestamp} />
@@ -159,13 +159,13 @@ const AppContent = () => {
 
         <CollapsibleSection
           title={t('data_info.title', 'How it Works & Data Sources')}
-          headerColorClass="bg-blue-400"
+          headerColorClass="bg-gray-400 text-black"
           storageKey="data_info"
         >
           <DataInfo />
         </CollapsibleSection>
 
-        <footer className="text-center py-12 text-slate-500 text-sm">
+        <footer className="text-center py-12 text-gray-500 font-mono text-xs uppercase tracking-widest">
           <p title={`Build time: ${__BUILD_TIME__}`}>
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </p>

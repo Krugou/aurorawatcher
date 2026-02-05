@@ -52,54 +52,63 @@ export const MagnetometerGraph = ({
 
   return (
     <>
-      <div className="h-[250px] w-full mt-4 overflow-hidden relative">
+      <div className="h-[250px] w-full mt-4 overflow-hidden relative bg-gray-100 dark:bg-zinc-900 border-2 border-black dark:border-white shadow-neo-sm">
         <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
-          <LineChart data={data} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+          <LineChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
             <XAxis
               dataKey="timestamp"
               tickFormatter={formatTime}
-              stroke="#64748b"
-              tick={{ fill: '#64748b' }}
+              stroke="#000"
+              tick={{ fill: '#000', fontFamily: 'monospace', fontSize: 10 }}
             />
             <YAxis
               domain={['auto', 'auto']}
-              stroke="#64748b"
-              tick={{ fill: '#64748b' }}
-              label={{ value: 'nT', angle: -90, position: 'insideLeft', fill: '#64748b' }}
+              stroke="#000"
+              tick={{ fill: '#000', fontFamily: 'monospace', fontSize: 10 }}
+              label={{
+                value: 'nT',
+                angle: -90,
+                position: 'insideLeft',
+                fill: '#000',
+                fontFamily: 'monospace',
+              }}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#020617',
-                borderColor: '#334155',
-                borderRadius: '12px',
-                border: '1px solid #334155',
+                backgroundColor: '#000',
+                borderColor: '#fff',
+                borderRadius: '0px',
+                border: '2px solid #fff',
                 padding: '10px',
+                boxShadow: '4px 4px 0px 0px #fff',
               }}
-              itemStyle={{ color: '#e2e8f0' }}
-              labelStyle={{ color: '#94a3b8', fontWeight: 'bold', marginBottom: '4px' }}
+              itemStyle={{ color: '#00FF9D', fontFamily: 'monospace' }}
+              labelStyle={{
+                color: '#fff',
+                fontWeight: 'bold',
+                marginBottom: '4px',
+                fontFamily: 'monospace',
+              }}
               labelFormatter={(label) => formatTime(label)}
             />
             <ReferenceLine
               y={50000}
-              label={t('graphs.quiet', 'Quiet')}
-              stroke="#334155"
-              strokeDasharray="3 3"
+              label={{ value: t('graphs.quiet', 'QUIET'), fill: '#666', fontFamily: 'monospace' }}
+              stroke="#666"
+              strokeDasharray="4 4"
             />
-            {/* We can calculate moving average or baseline to show disturbance 'delta',
-                             but raw intensity is a good start.
-                             Usually auroras show as sharp drops/spikes in X component or total field. */}
             <Line
-              type="monotone"
+              type="step"
               dataKey="intensity"
-              stroke="#a855f7"
-              strokeWidth={2}
+              stroke="#00FF9D"
+              strokeWidth={3}
               dot={false}
-              activeDot={{ r: 6, fill: '#d8b4fe' }}
+              activeDot={{ r: 6, fill: '#fff', stroke: '#000', strokeWidth: 2 }}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <p className="text-xs text-slate-500 mt-2 text-center">
+      <p className="text-xs font-mono text-black dark:text-white mt-2 text-center uppercase tracking-wider">
         {t('graphs.mag_hint', 'Rapid changes in intensity indicate active auroras overhead.')}
       </p>
     </>

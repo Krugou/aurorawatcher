@@ -41,7 +41,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
 
   return (
     <section
-      className={`bg-slate-900 rounded-2xl shadow-xl border border-slate-800/50 overflow-hidden ${className}`}
+      className={`bg-white dark:bg-zinc-900 border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark overflow-hidden ${className}`}
     >
       <div
         role="button"
@@ -52,10 +52,18 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
             toggleExpanded();
           }
         }}
-        className="w-full flex items-center gap-3 p-6 text-left hover:bg-slate-800/30 transition-colors focus:outline-none cursor-pointer"
+        className="w-full flex items-center gap-4 p-6 text-left hover:brightness-110 transition-all focus:outline-none cursor-pointer"
       >
-        {icon ? icon : <span className={`w-2 h-8 ${headerColorClass} rounded-full`}></span>}
-        <h2 className="text-xl font-semibold text-white">{title}</h2>
+        {icon ? (
+          icon
+        ) : (
+          <div
+            className={`w-6 h-6 ${headerColorClass} border-2 border-black dark:border-white shadow-neo-sm dark:shadow-neo-sm-dark`}
+          ></div>
+        )}
+        <h2 className="text-2xl font-display font-bold uppercase tracking-wider text-black dark:text-white">
+          {title}
+        </h2>
         <div className="ml-auto flex items-center gap-4">
           {badge && (
             <div
@@ -72,18 +80,24 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
               {badge}
             </div>
           )}
-          <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+          <div
+            className={`transition-transform duration-300 border-2 border-black dark:border-white p-1 bg-white dark:bg-black ${
+              isExpanded
+                ? 'rotate-180 shadow-none translate-x-[2px] translate-y-[2px]'
+                : 'shadow-neo-sm dark:shadow-neo-sm-dark'
+            }`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-slate-500"
+              strokeWidth="3"
+              strokeLinecap="square"
+              strokeLinejoin="miter"
+              className="text-black dark:text-white"
             >
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
@@ -96,7 +110,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
           isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
         }`}
       >
-        <div className="px-6 pb-6 border-t border-slate-800/30 pt-6">{children}</div>
+        <div className="px-6 pb-6 border-t-2 border-black dark:border-white pt-6">{children}</div>
       </div>
     </section>
   );

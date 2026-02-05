@@ -142,55 +142,66 @@ export const LocalData = ({
           {t('local.dataError', 'No data available for your area right now.')}
         </div>
       ) : data ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark bg-white dark:bg-black">
           {/* Magnetic Field Card */}
-          <div className="bg-slate-800/40 p-5 rounded-2xl border border-slate-700/30 flex flex-col justify-between hover-lift">
+          <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
             <div>
-              <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">
-                {t('local.magField', 'Magnetic Field')}
+              <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-pink inline-block px-2">
+                {t('local.magField', 'MAG FIELD')}
               </p>
-              <p className="text-xs text-slate-500">{data.magStation}</p>
+              <p className="text-xs font-mono text-gray-500 uppercase">
+                STATION: {data.magStation}
+              </p>
             </div>
             <div className="mt-4">
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-bold text-white">{data.fieldIntensity}</span>
-                <span className="text-sm text-slate-500">nT</span>
+                <span className="text-4xl font-display font-bold text-black dark:text-white group-hover:text-neo-pink transition-colors">
+                  {data.fieldIntensity}
+                </span>
+                <span className="text-sm font-mono text-gray-500">nT</span>
               </div>
-              <p className="text-xs text-purple-400 mt-1">
-                {t('local.intensity', 'Raw Intensity (Total)')}
+              <p className="text-xs font-mono text-black dark:text-white mt-1 uppercase">
+                {t('local.intensity', 'RAW INTENSITY')}
               </p>
             </div>
           </div>
 
           {/* Visibility Card */}
-          <div className="bg-slate-800/40 p-5 rounded-2xl border border-slate-700/30 flex flex-col justify-between hover-lift">
-            <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">
-              {t('local.visibility', 'Visibility')}
+          <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
+            <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-blue inline-block px-2">
+              {t('local.visibility', 'VISIBILITY')}
             </p>
             <div className="mt-4">
-              <p className={`text-2xl font-bold ${sky.color}`}>{sky.text}</p>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className={`text-2xl font-display font-bold text-black dark:text-white uppercase`}>
+                {sky.text}
+              </p>
+              <p className="text-sm font-mono text-gray-500 mt-1 uppercase">
                 {t('local.clouds', {
                   percent: Math.round((data.cloudCover / 8) * 100),
-                  defaultValue: 'Cloud Cover: {{percent}}%',
+                  defaultValue: 'COVERAGE: {{percent}}%',
                 })}
               </p>
             </div>
           </div>
 
           {/* Conditions Card */}
-          <div className="bg-slate-800/40 p-5 rounded-2xl border border-slate-700/30 flex flex-col justify-between hover-lift">
-            <p className="text-xs text-slate-400 uppercase tracking-wider font-bold mb-1">
-              {t('local.outdoors', 'Outdoors')}
+          <div className="p-6 flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
+            <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-yellow inline-block px-2">
+              {t('local.outdoors', 'ENV SENSORS')}
             </p>
-            <div className="mt-4 flex items-end justify-between">
+            <div className="mt-4 flex flex-col justify-between gap-4">
               <div>
-                <span className="text-3xl font-bold text-white">{data.temperature}°C</span>
-                <p className="text-xs text-slate-500 mt-1">
-                  {t('local.wind', { speed: data.windSpeed, defaultValue: 'Wind: {{speed}} m/s' })}
+                <span className="text-4xl font-display font-bold text-black dark:text-white">
+                  {data.temperature}°C
+                </span>
+                <p className="text-xs font-mono text-gray-500 mt-1 uppercase">
+                  {t('local.wind', {
+                    speed: data.windSpeed,
+                    defaultValue: 'WIND VELOCITY: {{speed}} M/S',
+                  })}
                 </p>
               </div>
-              <div className="text-right">
+              <div className="text-left md:text-right">
                 {/* Randomized Funny Verdicts */}
                 {(() => {
                   const isGood = data.cloudCover <= 3;
@@ -209,23 +220,22 @@ export const LocalData = ({
                   const noGoVerdicts = [
                     t('local.noGo1', 'BAD VISIBILITY ☁️'),
                     t('local.noGo2', 'STAY ON THE SOFA 🛋️'),
-                    t('local.noGo3', "CLOUD PARTY (YOU'RE NOT INVITED) ☁️"),
+                    t('local.noGo3', 'CLOUD PARTY ☁️'),
                     t('local.noGo4', 'PERFECT NIGHT FOR TEA 🫖'),
                     t('local.noGo5', 'TOTAL WHITE-OUT 🌫️'),
                     t('local.noGo6', 'AURORAS ARE HIDING 🙈'),
                     t('local.noGo7', 'CLOUDS: 1, YOU: 0 ⚽'),
                     t('local.noGo8', 'TRY AGAIN LATER... 😴'),
-                    t('local.noGo9', 'NICE VIEW OF WATER VAPOR �'),
+                    t('local.noGo9', 'NICE VIEW OF WATER VAPOR '),
                     t('local.noGo10', 'NETFLIX & NO CHILL 🍿'),
                   ];
 
-                  // Use temperature as a seed or just random (it will change on re-render, adding to the "funny" aspect)
                   const verdicts = isGood ? goVerdicts : noGoVerdicts;
                   const verdict = verdicts[Math.floor(Math.random() * verdicts.length)];
 
                   return (
                     <span
-                      className={`px-3 py-1 ${isGood ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'} text-xs font-bold rounded-full border animate-pulse`}
+                      className={`px-3 py-1 ${isGood ? 'bg-neo-mint text-black border-black/10' : 'bg-red-500 text-white border-red-900'} text-xs font-bold font-mono uppercase tracking-wide border-2 border-black inline-block shadow-neo-sm transform -rotate-1`}
                     >
                       {verdict}
                     </span>

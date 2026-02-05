@@ -3,13 +3,25 @@ import { useTranslation } from 'react-i18next';
 export const Header = () => {
   const { t } = useTranslation();
   return (
-    <header className="text-center py-8">
-      <h1 className="text-5xl font-bold bg-linear-to-r from-green-500 to-blue-600 dark:from-green-400 dark:to-blue-500 bg-clip-text text-transparent mb-2">
-        {t('app.title')}
-      </h1>
-      <p className="text-slate-500 dark:text-slate-400 text-lg transition-colors">
-        {t('header.subtitle')}
-      </p>
+    <header className="text-center relative mb-8">
+      <div className="border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark bg-white dark:bg-black p-6 relative overflow-hidden group">
+        <div className="absolute top-0 left-0 w-full bg-neo-yellow h-8 border-b-2 border-black dark:border-white flex items-center overflow-hidden">
+          <div className="animate-marquee whitespace-nowrap font-mono font-bold text-black text-sm uppercase tracking-widest">
+            {
+              '/// SYSTEM STATUS: ONLINE /// MONITORING SOLAR WIND /// CHECKING MAGNETOMETERS /// KP INDEX STABLE ///'
+            }
+          </div>
+        </div>
+
+        <div className="mt-8">
+          <h1 className="text-6xl md:text-8xl font-display font-bold uppercase tracking-tighter text-black dark:text-white mb-2 group-hover:animate-glitch">
+            {t('app.title')}
+          </h1>
+          <div className="inline-block bg-black dark:bg-white text-white dark:text-black px-4 py-1 font-mono text-sm uppercase font-bold tracking-widest transform -rotate-1">
+            {t('header.subtitle')}
+          </div>
+        </div>
+      </div>
     </header>
   );
 };
