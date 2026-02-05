@@ -60,23 +60,7 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
           </span>
         </div>
 
-        {/* Hover overlay for fullscreen */}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none md:pointer-events-auto">
-          <a
-            href={`?cam=${id}`}
-            className="px-6 py-3 bg-neo-yellow text-black border-2 border-black font-bold font-mono text-sm uppercase tracking-wider transform translate-y-4 group-hover:translate-y-0 transition-all shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none flex items-center gap-2"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="square"
-                strokeLinejoin="miter"
-                strokeWidth={2}
-                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-              />
-            </svg>
-            {t('grid.view_fullscreen')}
-          </a>
-        </div>
+        {/* Hover overlay removed for cleaner mobile UX - using footer button instead */}
 
         {!hasError && (
           <div className="absolute top-4 right-4 bg-black text-white px-2 py-1 font-mono text-xs border border-white shadow-neo-sm dark:shadow-none">
@@ -94,6 +78,23 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
           </p>
         </div>
         <div className="flex gap-2">
+          {/* History / Fullscreen Button - Always visible for accessibility */}
+          <a
+            href={`?cam=${id}`}
+            className="flex items-center gap-2 px-3 py-2 bg-neo-yellow text-black border-2 border-black font-bold font-mono text-xs uppercase hover:bg-black hover:text-white transition-colors"
+            title={t('grid.view_fullscreen')}
+          >
+            <span>HISTORY</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="square"
+                strokeLinejoin="miter"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </a>
+
           <a
             href={loc.mapUrl}
             target="_blank"

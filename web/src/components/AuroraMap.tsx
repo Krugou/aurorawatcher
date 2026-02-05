@@ -53,52 +53,49 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
   };
 
   return (
-    <div className="grid md:grid-cols-2 gap-8 items-center">
-      <div className="relative group rounded-xl overflow-hidden shadow-2xl bg-black min-h-[300px]">
+    <div className="grid md:grid-cols-2 gap-8 items-center border-2 border-black dark:border-white p-6 bg-white dark:bg-black shadow-neo dark:shadow-neo-dark">
+      <div className="relative group border-2 border-black dark:border-white overflow-hidden shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all bg-black min-h-[300px]">
         {isLoading && <Skeleton className="w-full h-full absolute inset-0 z-10" />}
 
         {hasError ? (
-          <div className="w-full h-full flex flex-col items-center justify-center text-slate-500 p-8 text-center bg-slate-900 border border-slate-800">
-            <svg
-              className="w-12 h-12 mb-2 opacity-50"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+          <div className="w-full h-full flex flex-col items-center justify-center text-black dark:text-white p-8 text-center bg-neo-yellow border border-black">
+            <svg className="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
+                strokeLinecap="square"
+                strokeLinejoin="miter"
+                strokeWidth={3}
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
               />
             </svg>
-            <p>{t('map.error')}</p>
+            <p className="font-mono font-bold uppercase">{t('map.error')}</p>
           </div>
         ) : (
           <img
             crossOrigin="anonymous"
             src={`${AURORA_DATA}?t=${timestamp}`}
             alt="Aurora Data"
-            className={`w-full h-full object-contain transition-all duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+            className={`w-full h-full object-contain transition-all duration-500 bg-gray-200 dark:bg-zinc-800 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
             onLoad={handleImageLoad}
             onError={handleError}
           />
         )}
       </div>
       <div className="space-y-4">
-        <p className="text-slate-300 leading-relaxed">{t('map.description')}</p>
+        <p className="text-black dark:text-white leading-relaxed font-mono text-sm">
+          {t('map.description')}
+        </p>
         <a
           href={INFO_URL}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 font-medium transition-colors"
+          className="inline-flex items-center gap-2 bg-neo-mint text-black border-2 border-black px-4 py-2 font-bold font-mono uppercase shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
         >
           {t('map.linkText')}
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
+              strokeLinecap="square"
+              strokeLinejoin="miter"
+              strokeWidth={3}
               d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
             />
           </svg>
