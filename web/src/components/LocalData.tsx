@@ -129,17 +129,21 @@ export const LocalData = ({
     <>
       {geoLoading || loading ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Skeleton className="h-24 w-full bg-slate-800 rounded-xl" />
-          <Skeleton className="h-24 w-full bg-slate-800 rounded-xl" />
-          <Skeleton className="h-24 w-full bg-slate-800 rounded-xl" />
+          <Skeleton className="h-40 w-full bg-slate-800" />
+          <Skeleton className="h-40 w-full bg-slate-800" />
+          <Skeleton className="h-40 w-full bg-slate-800" />
         </div>
       ) : geoError ? (
-        <div className="bg-red-900/20 border border-red-900/50 text-red-400 text-center p-6 rounded-xl">
-          {t('local.geoError', 'Could not determine location. Please allow location access.')}
+        <div className="bg-neo-pink text-black text-center p-6 border-2 border-black">
+          <p className="font-mono font-bold uppercase">
+            {t('local.geoError', 'Could not determine location. Please allow location access.')}
+          </p>
         </div>
       ) : error ? (
-        <div className="bg-slate-800/50 border border-slate-700/50 text-slate-400 text-center p-6 rounded-xl">
-          {t('local.dataError', 'No data available for your area right now.')}
+        <div className="bg-neo-yellow text-black text-center p-6 border-2 border-black">
+          <p className="font-mono font-bold uppercase">
+            {t('local.dataError', 'No data available for your area right now.')}
+          </p>
         </div>
       ) : data ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark bg-white dark:bg-black">

@@ -40,7 +40,7 @@ export const MagnetometerGraph = ({
 
   if (!effectiveCoords) return null; // Don't show if no location
 
-  if (loading) return <Skeleton className="h-64 w-full bg-slate-900 rounded-2xl" />;
+  if (loading) return <Skeleton className="h-64 w-full bg-slate-900" />;
 
   if (data.length === 0) return null;
 

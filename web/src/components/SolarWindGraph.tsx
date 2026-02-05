@@ -28,7 +28,7 @@ export const SolarWindGraph = () => {
       });
   }, []);
 
-  if (loading) return <Skeleton className="h-64 w-full bg-slate-900 rounded-2xl mb-8" />;
+  if (loading) return <Skeleton className="h-64 w-full bg-slate-900 mb-8" />;
   if (data.length === 0) return null;
 
   // Filter last 6 hours
