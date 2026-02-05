@@ -26,17 +26,11 @@ export const SpaceWeather = () => {
 
   if (loading) {
     return (
-      <section className="bg-slate-900 rounded-2xl p-6 shadow-xl border border-slate-800/50 mb-8">
-        <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <span className="text-2xl">☀️</span>
-          Space Weather
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <Skeleton key={i} className="h-20 w-full bg-slate-800 rounded-xl" />
-          ))}
-        </div>
-      </section>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[1, 2, 3, 4].map((i) => (
+          <Skeleton key={i} className="h-28 w-full bg-slate-800" />
+        ))}
+      </div>
     );
   }
 
