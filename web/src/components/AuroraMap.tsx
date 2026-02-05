@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { checkImageColor, scanStationStatuses, StationStatus } from '../utils/auroraUtils';
+import { useGeolocation } from '../hooks/useGeolocation';
+import {
+  checkImageColor,
+  findNearestStation,
+  scanStationStatuses,
+  StationStatus,
+} from '../utils/auroraUtils';
 import { Skeleton } from './Skeleton';
 
 const AURORA_DATA =
@@ -15,9 +21,15 @@ interface AuroraMapProps {
 
 export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
   const { t } = useTranslation();
+  const { coords } = useGeolocation();
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [stationStatuses, setStationStatuses] = useState<StationStatus[]>([]);
+  const [nearestStation, setNearestStation] = useState<string | null>(null);
+  const [savedStation, setSavedStation] = useState<string | null>(() => {
+    return localStorage.getItem('aurora_saved_station');
+  });
+
   const lastToastTimeRef = useRef<number>(0);
 
   // Reset states when timestamp changes
@@ -27,6 +39,29 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
     setStationStatuses([]);
   }, [timestamp]);
 
+  // Find nearest station when coords change and auto-save it
+  useEffect(() => {
+    if (coords) {
+      const nearest = findNearestStation(coords.latitude, coords.longitude);
+      setNearestStation(nearest);
+      // Auto-save the nearest station if none is saved yet
+      if (nearest && !savedStation) {
+        setSavedStation(nearest);
+        localStorage.setItem('aurora_saved_station', nearest);
+      }
+    }
+  }, [coords, savedStation]);
+
+  const toggleSavedStation = (name: string) => {
+    if (savedStation === name) {
+      setSavedStation(null);
+      localStorage.removeItem('aurora_saved_station');
+    } else {
+      setSavedStation(name);
+      localStorage.setItem('aurora_saved_station', name);
+    }
+  };
+
   const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
     setIsLoading(false);
     const img = event.currentTarget;
@@ -35,19 +70,41 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
       const scanned = scanStationStatuses(img);
       setStationStatuses(scanned);
 
-      // 2. Check for overall high activity for toast
-      const { hasHigh } = checkImageColor(img);
+      // 2. Alerts Logic
       const now = Date.now();
-      if (hasHigh && now - lastToastTimeRef.current > 5 * 60 * 1000) {
-        toast.error(t('map.toast'), {
-          position: 'top-right',
-          autoClose: 10000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-        lastToastTimeRef.current = now;
+      const COOLDOWN = 5 * 60 * 1000;
+
+      if (now - lastToastTimeRef.current > COOLDOWN) {
+        let shouldAlert = false;
+
+        if (savedStation) {
+          // If user has a favorite, ONLY alert if that specific station is HIGH
+          const favorite = scanned.find((s) => s.name === savedStation);
+          if (favorite?.status === 'HIGH') {
+            shouldAlert = true;
+          }
+        } else {
+          // Default: Check for overall high activity
+          const { hasHigh } = checkImageColor(img);
+          if (hasHigh) {
+            shouldAlert = true;
+          }
+        }
+
+        if (shouldAlert) {
+          toast.error(
+            savedStation ? `${savedStation.toUpperCase()}: ${t('map.toast')}` : t('map.toast'),
+            {
+              position: 'top-right',
+              autoClose: 10000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            },
+          );
+          lastToastTimeRef.current = now;
+        }
       }
     } catch (e) {
       console.error('Failed to analyze aurora image colors:', e);
@@ -92,27 +149,69 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
       {/* Info Column */}
       <div className="space-y-6">
         <div className="space-y-4">
-          <h2 className="text-xl font-display font-bold uppercase text-black dark:text-white">
-            {t('map.status_title', 'STATION STATUS')}
-          </h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-display font-bold uppercase text-black dark:text-white">
+              {t('map.status_title', 'STATION STATUS')}
+            </h2>
+            {savedStation && (
+              <span className="text-xs font-mono font-bold bg-neo-yellow text-black px-2 py-1 border border-black">
+                ★ SAVED: {savedStation}
+              </span>
+            )}
+          </div>
+
           <div className="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-            {stationStatuses.map((s) => (
-              <div
-                key={s.name}
-                className="flex items-center gap-2 p-2 border border-black dark:border-white bg-gray-50 dark:bg-zinc-900"
-              >
+            {stationStatuses.map((s) => {
+              const isNearest = s.name === nearestStation;
+              const isSaved = s.name === savedStation;
+
+              return (
                 <div
-                  className="w-3 h-3 border border-black dark:border-white"
-                  style={{ backgroundColor: s.color }}
-                />
-                <div className="flex flex-col">
-                  <span className="text-xs font-mono font-bold text-black dark:text-white uppercase truncate">
-                    {s.name}
-                  </span>
-                  <span className="text-[10px] font-mono text-gray-500 uppercase">{s.status}</span>
+                  key={s.name}
+                  className={`flex items-center gap-2 p-2 border-2 ${isSaved ? 'border-neo-yellow bg-yellow-50 dark:bg-yellow-900/10' : 'border-black dark:border-white bg-gray-50 dark:bg-zinc-900'} relative group transition-all`}
+                >
+                  <div
+                    className="w-3 h-3 border border-black dark:border-white shrink-0"
+                    style={{ backgroundColor: s.color }}
+                  />
+                  <div className="flex flex-col min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono font-bold text-black dark:text-white uppercase truncate">
+                        {s.name}
+                      </span>
+                      {isNearest && (
+                        <span className="text-[9px] bg-neo-blue text-white px-1 font-mono font-bold">
+                          NEAR
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[10px] font-mono text-gray-500 uppercase">
+                      {s.status}
+                    </span>
+                  </div>
+
+                  {/* Save Button */}
+                  <button
+                    onClick={() => {
+                      toggleSavedStation(s.name);
+                    }}
+                    className={`ml-auto p-1 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors ${isSaved ? 'text-neo-yellow' : 'text-gray-300 hover:text-neo-yellow'}`}
+                    title={isSaved ? 'Unsave Station' : 'Save Station'}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill={isSaved ? 'currentColor' : 'none'}
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                  </button>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             {stationStatuses.length === 0 && !isLoading && (
               <div className="col-span-2 text-center text-xs font-mono text-gray-500 py-4">
                 NO DATA DETECTED

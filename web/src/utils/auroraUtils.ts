@@ -9,20 +9,27 @@ export interface StationStatus {
   status: 'HIGH' | 'MODERATE' | 'LOW' | 'QUIET' | 'UNKNOWN';
 }
 
-// Normalized coordinates (0-1) based on map-latest-fi.png
-const STATION_COORDINATES: Record<string, { x: number; y: number }> = {
-  Kevo: { x: 0.6, y: 0.12 },
-  Kilpisjärvi: { x: 0.28, y: 0.18 },
-  Ivalo: { x: 0.62, y: 0.2 },
-  Muonio: { x: 0.38, y: 0.26 },
-  Sodankylä: { x: 0.61, y: 0.3 },
-  Pello: { x: 0.4, y: 0.36 },
-  Ranua: { x: 0.61, y: 0.42 },
-  Oulujärvi: { x: 0.65, y: 0.52 },
-  Mekrijärvi: { x: 0.88, y: 0.63 },
-  Hankasalmi: { x: 0.65, y: 0.68 },
-  Nurmijärvi: { x: 0.58, y: 0.82 },
-  Tartto: { x: 0.68, y: 0.95 },
+// Normalized coordinates (0-1) based on map-latest-fi.png + GPS
+interface Coords {
+  x: number;
+  y: number;
+  lat: number;
+  lon: number;
+}
+
+export const STATION_COORDINATES: Record<string, Coords> = {
+  Kevo: { x: 0.6, y: 0.12, lat: 69.76, lon: 27.01 },
+  Kilpisjärvi: { x: 0.28, y: 0.18, lat: 69.02, lon: 20.79 },
+  Ivalo: { x: 0.62, y: 0.2, lat: 68.56, lon: 27.29 },
+  Muonio: { x: 0.38, y: 0.26, lat: 67.96, lon: 23.68 },
+  Sodankylä: { x: 0.61, y: 0.3, lat: 67.37, lon: 26.63 },
+  Pello: { x: 0.4, y: 0.36, lat: 66.77, lon: 23.97 },
+  Ranua: { x: 0.61, y: 0.42, lat: 65.93, lon: 26.5 },
+  Oulujärvi: { x: 0.65, y: 0.52, lat: 64.3, lon: 27.1 },
+  Mekrijärvi: { x: 0.88, y: 0.63, lat: 62.77, lon: 30.97 },
+  Hankasalmi: { x: 0.65, y: 0.68, lat: 62.3, lon: 26.65 },
+  Nurmijärvi: { x: 0.58, y: 0.82, lat: 60.51, lon: 24.65 },
+  Tartto: { x: 0.68, y: 0.95, lat: 58.26, lon: 26.46 },
 };
 
 // FMI Map Colors to Meaning
@@ -43,6 +50,36 @@ const getColorDistance = (
   b2: number,
 ) => {
   return Math.sqrt(Math.pow(r2 - r1, 2) + Math.pow(g2 - g1, 2) + Math.pow(b2 - b1, 2));
+};
+
+// Haversine formula to calculate distance in km
+const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+  const R = 6371; // Earth radius in km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+};
+
+export const findNearestStation = (userLat: number, userLon: number): string | null => {
+  let nearestStation = null;
+  let minDistance = Infinity;
+
+  Object.entries(STATION_COORDINATES).forEach(([name, coords]) => {
+    const distance = calculateDistance(userLat, userLon, coords.lat, coords.lon);
+    if (distance < minDistance) {
+      minDistance = distance;
+      nearestStation = name;
+    }
+  });
+
+  return nearestStation;
 };
 
 export const scanStationStatuses = (img: HTMLImageElement): StationStatus[] => {
