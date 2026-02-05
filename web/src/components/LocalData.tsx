@@ -105,11 +105,11 @@ export const LocalData = ({
 
   if (!effectiveCoords && !geoLoading && !geoError) {
     return (
-      <div className="flex flex-col items-center text-center py-4">
-        <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mb-4">
+      <div className="flex flex-col items-center text-center py-8 px-4 border-2 border-black dark:border-white bg-white dark:bg-black shadow-neo dark:shadow-neo-dark">
+        <div className="w-16 h-16 bg-neo-blue flex items-center justify-center mb-4 border-2 border-black">
           <span className="text-3xl">📍</span>
         </div>
-        <p className="text-slate-400 mb-6 max-w-md">
+        <p className="text-black dark:text-white font-mono text-sm mb-6 max-w-md uppercase">
           {t(
             'local.prompt',
             'Enable geolocation to see real-time magnetic field and weather conditions for your exact location.',
@@ -117,7 +117,7 @@ export const LocalData = ({
         </p>
         <button
           onClick={requestLocation}
-          className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-semibold transition-all hover:scale-105 active:scale-95 text-lg shadow-lg shadow-blue-900/20"
+          className="bg-neo-mint text-black px-8 py-3 font-bold font-mono uppercase border-2 border-black shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
         >
           {t('local.button', 'Locate Me & Check Conditions')}
         </button>
