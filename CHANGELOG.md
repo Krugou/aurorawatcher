@@ -1,3 +1,9 @@
+# [1.16.0](https://github.com/Krugou/aurorawatcher/compare/v1.15.0...v1.16.0) (2026-02-07)
+
+### Features
+
+- Implement image history management utilities and a web UI for historical image playback. ([bdcb509](https://github.com/Krugou/aurorawatcher/commit/bdcb509d6c7a874bca7268bfe0701831497a32a7))
+
 # [1.15.0](https://github.com/Krugou/aurorawatcher/compare/v1.14.0...v1.15.0) (2026-02-04)
 
 ### Features
