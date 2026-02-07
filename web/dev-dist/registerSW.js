@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/aurorawatcher/dev-sw.js?dev-sw', { scope: '/aurorawatcher/', type: 'module' })

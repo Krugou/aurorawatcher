@@ -65,21 +65,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
           {title}
         </h2>
         <div className="ml-auto flex items-center gap-4">
-          {badge && (
-            <div
-              className="flex items-center cursor-default"
-              role="button"
-              tabIndex={0}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              onKeyDown={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              {badge}
-            </div>
-          )}
+          {badge && <div className="flex items-center cursor-default">{badge}</div>}
           <div
             className={`transition-transform duration-300 border-2 border-black dark:border-white p-1 bg-white dark:bg-black ${
               isExpanded

@@ -38,13 +38,13 @@ export const SpaceWeather = () => {
 
   // Helpers for coloring
   const getBzColor = (val: number) =>
-    val < -5 ? 'text-red-500' : val < 0 ? 'text-green-400' : 'text-slate-400';
+    val < -5 ? 'text-red-600' : val < 0 ? 'text-green-600' : 'text-slate-500';
   const getSpeedColor = (val: number) =>
-    val > 600 ? 'text-red-500' : val > 500 ? 'text-yellow-400' : 'text-slate-400';
+    val > 600 ? 'text-red-500' : val > 500 ? 'text-yellow-600' : 'text-slate-500';
   const getDensityColor = (val: number) =>
-    val > 20 ? 'text-red-500' : val > 10 ? 'text-yellow-400' : 'text-slate-400';
+    val > 20 ? 'text-red-500' : val > 10 ? 'text-yellow-600' : 'text-slate-500';
   const getKpColor = (val: number) =>
-    val >= 5 ? 'text-red-500' : val >= 4 ? 'text-yellow-400' : 'text-green-400';
+    val >= 5 ? 'text-red-600' : val >= 4 ? 'text-yellow-600' : 'text-green-600';
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -59,14 +59,14 @@ export const SpaceWeather = () => {
           </span>
           <span className="text-xs font-mono text-gray-500">nT</span>
         </div>
-        <p className="text-[10px] font-mono text-gray-400 mt-2 uppercase">
+        <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
           {t('space_weather.bz_hint', 'Negative is better')}
         </p>
       </div>
 
       {/* Speed */}
       <div className="bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group">
-        <p className="text-xs font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-blue inline-block px-1">
+        <p className="text-xs font-mono font-bold uppercase tracking-widest text-white mb-2 bg-neo-blue inline-block px-1">
           {t('space_weather.speed', 'Solar Wind')}
         </p>
         <div className="flex items-baseline gap-1 mt-2">
@@ -75,7 +75,7 @@ export const SpaceWeather = () => {
           </span>
           <span className="text-xs font-mono text-gray-500">km/s</span>
         </div>
-        <p className="text-[10px] font-mono text-gray-400 mt-2 uppercase">
+        <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
           {t('space_weather.speed_hint', 'Faster is better')}
         </p>
       </div>
@@ -91,7 +91,7 @@ export const SpaceWeather = () => {
           </span>
           <span className="text-xs font-mono text-gray-500">p/cm³</span>
         </div>
-        <p className="text-[10px] font-mono text-gray-400 mt-2 uppercase">
+        <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
           {t('space_weather.density_hint', 'Higher is better')}
         </p>
       </div>
@@ -114,7 +114,7 @@ export const SpaceWeather = () => {
             ))}
           </div>
         </div>
-        <p className="text-[10px] font-mono text-gray-400 mt-2 uppercase">
+        <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
           {t('space_weather.kp_hint', 'Planetary Activity')}
         </p>
       </div>

@@ -1,0 +1,411 @@
+[
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "tags": [
+      "cat.color",
+      "wcag2aa",
+      "wcag143",
+      "TTv5",
+      "TT13.c",
+      "EN-301-549",
+      "EN-9.1.4.3",
+      "ACT",
+      "RGAAv4",
+      "RGAA-3.2.1"
+    ],
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#90a1b9",
+              "bgColor": "#ffffff",
+              "contrastRatio": 2.63,
+              "fontSize": "27.0pt (36px)",
+              "fontWeight": "bold",
+              "messageKey": null,
+              "expectedContrastRatio": "3:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group\">",
+                "target": [".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(1)"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 2.63 (foreground color: #90a1b9, background color: #ffffff, font size: 27.0pt (36px), font weight: bold). Expected contrast ratio of 3:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<span class=\"text-4xl font-display font-bold text-slate-400\">3.06</span>",
+        "target": [
+          ".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(1) > .items-baseline.gap-1.mt-2 > .text-slate-400.text-4xl.font-display"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.63 (foreground color: #90a1b9, background color: #ffffff, font size: 27.0pt (36px), font weight: bold). Expected contrast ratio of 3:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#99a1af",
+              "bgColor": "#ffffff",
+              "contrastRatio": 2.6,
+              "fontSize": "7.5pt (10px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group\">",
+                "target": [".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(1)"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 2.6 (foreground color: #99a1af, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p class=\"text-[10px] font-mono text-gray-400 mt-2 uppercase\">Negative is better</p>",
+        "target": [
+          ".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(1) > .text-gray-400.mt-2"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.6 (foreground color: #99a1af, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#000000",
+              "bgColor": "#2b65ec",
+              "contrastRatio": 4.17,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "bold",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<p class=\"text-xs font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-blue inline-block px-1\">Solar Wind</p>",
+                "target": [
+                  ".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(2) > .px-1.mb-2.inline-block"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 4.17 (foreground color: #000000, background color: #2b65ec, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p class=\"text-xs font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-blue inline-block px-1\">Solar Wind</p>",
+        "target": [
+          ".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(2) > .px-1.mb-2.inline-block"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #000000, background color: #2b65ec, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#90a1b9",
+              "bgColor": "#ffffff",
+              "contrastRatio": 2.63,
+              "fontSize": "27.0pt (36px)",
+              "fontWeight": "bold",
+              "messageKey": null,
+              "expectedContrastRatio": "3:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group\">",
+                "target": [".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(2)"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 2.63 (foreground color: #90a1b9, background color: #ffffff, font size: 27.0pt (36px), font weight: bold). Expected contrast ratio of 3:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<span class=\"text-4xl font-display font-bold text-slate-400\">479</span>",
+        "target": [
+          ".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(2) > .items-baseline.gap-1.mt-2 > .text-slate-400.text-4xl.font-display"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.63 (foreground color: #90a1b9, background color: #ffffff, font size: 27.0pt (36px), font weight: bold). Expected contrast ratio of 3:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#99a1af",
+              "bgColor": "#ffffff",
+              "contrastRatio": 2.6,
+              "fontSize": "7.5pt (10px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group\">",
+                "target": [".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(2)"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 2.6 (foreground color: #99a1af, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p class=\"text-[10px] font-mono text-gray-400 mt-2 uppercase\">Faster is better</p>",
+        "target": [
+          ".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(2) > .text-gray-400.mt-2"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.6 (foreground color: #99a1af, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#99a1af",
+              "bgColor": "#ffffff",
+              "contrastRatio": 2.6,
+              "fontSize": "7.5pt (10px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group\">",
+                "target": [".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(3)"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 2.6 (foreground color: #99a1af, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p class=\"text-[10px] font-mono text-gray-400 mt-2 uppercase\">Higher is better</p>",
+        "target": [
+          ".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(3) > .text-gray-400.mt-2"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.6 (foreground color: #99a1af, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#05df72",
+              "bgColor": "#ffffff",
+              "contrastRatio": 1.77,
+              "fontSize": "27.0pt (36px)",
+              "fontWeight": "bold",
+              "messageKey": null,
+              "expectedContrastRatio": "3:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group\">",
+                "target": [".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(4)"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 1.77 (foreground color: #05df72, background color: #ffffff, font size: 27.0pt (36px), font weight: bold). Expected contrast ratio of 3:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<span class=\"text-4xl font-display font-bold text-green-400\">2.67</span>",
+        "target": [".text-green-400"],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.77 (foreground color: #05df72, background color: #ffffff, font size: 27.0pt (36px), font weight: bold). Expected contrast ratio of 3:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#99a1af",
+              "bgColor": "#ffffff",
+              "contrastRatio": 2.6,
+              "fontSize": "7.5pt (10px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group\">",
+                "target": [".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(4)"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 2.6 (foreground color: #99a1af, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p class=\"text-[10px] font-mono text-gray-400 mt-2 uppercase\">Planetary Activity</p>",
+        "target": [
+          ".p-4.hover\\:shadow-none.hover\\:translate-x-\\[2px\\]:nth-child(4) > .text-gray-400.mt-2"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.6 (foreground color: #99a1af, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#000000",
+              "bgColor": "#2b65ec",
+              "contrastRatio": 4.17,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "bold",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<a href=\"https://en.ilmatieteenlaitos.fi/open-data\" target=\"_blank\" rel=\"noreferrer\" class=\"text-xs font-bold font-mono text-black dark:text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors\">FMI Open Data</a>",
+                "target": [".hover\\:bg-white.hover\\:text-black.bg-neo-blue:nth-child(1)"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 4.17 (foreground color: #000000, background color: #2b65ec, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<a href=\"https://en.ilmatieteenlaitos.fi/open-data\" target=\"_blank\" rel=\"noreferrer\" class=\"text-xs font-bold font-mono text-black dark:text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors\">FMI Open Data</a>",
+        "target": [".hover\\:bg-white.hover\\:text-black.bg-neo-blue:nth-child(1)"],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #000000, background color: #2b65ec, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#000000",
+              "bgColor": "#2b65ec",
+              "contrastRatio": 4.17,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "bold",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<a href=\"https://space.fmi.fi/MIRACLE/RWC/\" target=\"_blank\" rel=\"noreferrer\" class=\"text-xs font-bold font-mono text-black dark:text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors\">MIRACLE Network</a>",
+                "target": [".hover\\:bg-white.hover\\:text-black.bg-neo-blue:nth-child(2)"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 4.17 (foreground color: #000000, background color: #2b65ec, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<a href=\"https://space.fmi.fi/MIRACLE/RWC/\" target=\"_blank\" rel=\"noreferrer\" class=\"text-xs font-bold font-mono text-black dark:text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors\">MIRACLE Network</a>",
+        "target": [".hover\\:bg-white.hover\\:text-black.bg-neo-blue:nth-child(2)"],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.17 (foreground color: #000000, background color: #2b65ec, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#6a7282",
+              "bgColor": "#f0f0f0",
+              "contrastRatio": 4.24,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"min-h-screen bg-[#f0f0f0] dark:bg-[#050505] text-black dark:text-white font-sans flex flex-col items-center transition-colors duration-300\">",
+                "target": [".min-h-screen"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 4.24 (foreground color: #6a7282, background color: #f0f0f0, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p title=\"Build time: 2026-02-07T13:21:47.005Z\">© 2026 Aurora Watcher. Images: FMI &amp; Observatories.</p>",
+        "target": ["footer > p"],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.24 (foreground color: #6a7282, background color: #f0f0f0, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+      }
+    ]
+  },
+  {
+    "id": "nested-interactive",
+    "impact": "serious",
+    "tags": [
+      "cat.keyboard",
+      "wcag2a",
+      "wcag412",
+      "TTv5",
+      "TT6.a",
+      "EN-301-549",
+      "EN-9.4.1.2",
+      "RGAAv4",
+      "RGAA-7.1.1"
+    ],
+    "description": "Ensure interactive controls are not nested as they are not always announced by screen readers or can cause focus problems for assistive technologies",
+    "help": "Interactive controls must not be nested",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/nested-interactive?application=playwright",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "no-focusable-content",
+            "data": null,
+            "relatedNodes": [
+              {
+                "html": "<div class=\"flex items-center cursor-default\" role=\"button\" tabindex=\"0\"><span class=\"text-sm font-bold font-mono text-black bg-white px-3 py-1 border-2 border-black dark:border-white shadow-neo-sm dark:shadow-neo-sm-dark\">NOAA SWPC</span></div>",
+                "target": [".cursor-default"]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has focusable descendants"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<div role=\"button\" tabindex=\"0\" class=\"w-full flex items-center gap-4 p-6 text-left hover:brightness-110 transition-all focus:outline-none cursor-pointer\">",
+        "target": ["section:nth-child(4) > .text-left.hover\\:brightness-110.focus\\:outline-none"],
+        "failureSummary": "Fix any of the following:\n  Element has focusable descendants"
+      }
+    ]
+  }
+]

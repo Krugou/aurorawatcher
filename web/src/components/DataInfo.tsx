@@ -22,7 +22,7 @@ export const DataInfo = () => {
               href="https://en.ilmatieteenlaitos.fi/open-data"
               target="_blank"
               rel="noreferrer"
-              className="text-xs font-bold font-mono text-black dark:text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors"
+              className="text-xs font-bold font-mono text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors"
             >
               FMI Open Data
             </a>
@@ -30,7 +30,7 @@ export const DataInfo = () => {
               href="https://space.fmi.fi/MIRACLE/RWC/"
               target="_blank"
               rel="noreferrer"
-              className="text-xs font-bold font-mono text-black dark:text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors"
+              className="text-xs font-bold font-mono text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors"
             >
               MIRACLE Network
             </a>

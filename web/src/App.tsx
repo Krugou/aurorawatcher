@@ -165,7 +165,7 @@ const AppContent = () => {
           <DataInfo />
         </CollapsibleSection>
 
-        <footer className="text-center py-12 text-gray-500 font-mono text-xs uppercase tracking-widest">
+        <footer className="text-center py-12 text-gray-600 font-mono text-xs uppercase tracking-widest">
           <p title={`Build time: ${__BUILD_TIME__}`}>
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </p>
