@@ -131,7 +131,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
     ? t('history.live', 'LIVE NOW')
     : formatTime(currentEntry?.timestamp || 0);
 
-  const ranges = [6, 24, 72, 168];
+  const ranges = [6, 24, 72, 168, 720];
 
   return (
     <div className="flex flex-col gap-4">
@@ -149,7 +149,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 : 'bg-white text-black border-black border-l-0 first:border-l-2 hover:bg-gray-200 dark:bg-zinc-800 dark:text-white dark:border-white'
             }`}
           >
-            {h === 168 ? '7D' : h === 72 ? '3D' : `${h}H`}
+            {h === 720 ? '30D' : h === 168 ? '7D' : h === 72 ? '3D' : `${h}H`}
           </button>
         ))}
       </div>

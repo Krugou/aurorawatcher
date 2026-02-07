@@ -125,7 +125,7 @@ const updateHistoryIndex = async (camId: string, filename: string, timestamp: nu
  * Removes history entries from the JSON index older than the retention period.
  * Also deletes the corresponding files from disk.
  */
-export const pruneOldHistory = async (retentionHours = 168): Promise<void> => {
+export const pruneOldHistory = async (retentionHours = 720): Promise<void> => {
 	try {
 		const retentionMs = retentionHours * 60 * 60 * 1000;
 		const cutoffTime = Date.now() - retentionMs;
