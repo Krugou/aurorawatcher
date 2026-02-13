@@ -15,44 +15,43 @@ function walkDir(dir, callback) {
   }
 }
 
-// Matches text between > and < in TSX files
-const hardcodedPattern = />([^<>{}\n]+)</g;
 const results = [];
 
 walkDir(srcDir, (filePath) => {
   if (filePath.endsWith('.tsx')) {
     const content = fs.readFileSync(filePath, 'utf8');
+
+    // 1. Text between tags: >TEXT<
+    const textPattern = />([^<>{}\n]+)</g;
     let match;
-    while ((match = hardcodedPattern.exec(content)) !== null) {
+    while ((match = textPattern.exec(content)) !== null) {
       const text = match[1].trim();
-      // Filter out: short text, only numbers, only whitespace, common symbols, or text inside curly braces
-      if (text.length > 1 && !text.match(/^[\d\s\W]+$/) && !text.includes('{') && !text.includes('}')) {
+      if (text.length > 1 && !text.match(/^[\d\s\W]+$/)) {
         results.push(`${path.relative(__dirname, filePath)} [text]: ${text}`);
       }
     }
 
-    // Check for common attributes like title, placeholder, alt, aria-label
-    // Also include text within quotes that isn't a known i18n key pattern
-    const attrPattern = /\s(title|placeholder|alt|aria-label)=["']([^"']+)["']/g;
-    while ((match = attrPattern.exec(content)) !== null) {
-        const text = match[2].trim();
-        // Skip text that already looks like an i18n key or is very short
-        if (text.length > 1 && !text.match(/^[a-z0-9_\-]+\.[a-z0-9_\-]+$/)) {
-            results.push(`${path.relative(__dirname, filePath)} [attr]: ${text}`);
-        }
+    // 2. Attributes with static strings: title="TEXT"
+    const staticAttrPattern = /\s(title|placeholder|alt|aria-label)=["']([^"']+)["']/g;
+    while ((match = staticAttrPattern.exec(content)) !== null) {
+      const text = match[2].trim();
+      if (text.length > 1 && !text.match(/^[a-z0-9_\-]+\.[a-z0-9_\-]+$/)) {
+        results.push(`${path.relative(__dirname, filePath)} [static-attr]: ${text}`);
+      }
     }
 
-    // Check for hardcoded strings in props that likely need translation but aren't attributes
-    // e.g., badge={<Badge>TEXT</Badge>} or similar (handled by hardcodedPattern)
-    // but also values like title="Hardcoded Title"
-    const propPattern = /\s([a-z]+)=["']([^"']+)["']/gi;
-    while ((match = propPattern.exec(content)) !== null) {
-        const propName = match[1];
-        const text = match[2].trim();
-        // Filter out props that are usually NOT translated (id, className, src, href, etc.)
-        const nonTranslatableProps = ['id', 'className', 'src', 'href', 'target', 'rel', 'key', 'type', 'name', 'value', 'method', 'action', 'loading', 'crossOrigin', 'storageKey', 'headerColorClass', 'role', 'tabIndex'];
-        if (!nonTranslatableProps.includes(propName) && text.length > 1 && !text.match(/^[a-z0-9_\-]+\.[a-z0-9_\-]+$/)) {
-             results.push(`${path.relative(__dirname, filePath)} [prop ${propName}]: ${text}`);
+    // 3. Dynamic expressions with strings: prop={... 'TEXT' ...}
+    // This looks for strings inside curly braces
+    const dynamicPattern = /\{[^}]*['"]([^'"]+)['"][^}]*\}/g;
+    while ((match = dynamicPattern.exec(content)) !== null) {
+        const text = match[1].trim();
+        // Skip common non-translatable strings like 'main', 'true', 'false', 'none', colors, etc.
+        const skip = ['main', 'true', 'false', 'none', 'currentColor', 'top-right', 'dark', 'light', 'linear', 'linear-to-br', 'Slate-950', 'bg-neo-pink', 'Enter', ' ', 'auto', 'timestamp', 'intensity', 'speed', 'bz', '#000', '#fff', '2d', 'Last-Modified', 'anonymous', 'numeric', '2-digit', 'magnetic_data', 'local_data', 'observatory_status', 'space_weather', 'graphs', 'map', 'data_info', 'section_', 'aurora_saved_station', 't=', '6H', '24H', '3D', '7D', '30D'];
+        if (text.length > 1 && !skip.includes(text) && !text.match(/^[a-z0-9_\-]+\.[a-z0-9_\-]+$/) && !text.match(/^#?[a-f0-9]{3,6}$/i) && !text.includes('/') && !text.startsWith('http')) {
+             // Avoid matching things like '2-digit' from Intl options
+             if (!['numeric', '2-digit', 'short', 'long', 'narrow'].includes(text)) {
+                results.push(`${path.relative(__dirname, filePath)} [dynamic-expr]: ${text}`);
+             }
         }
     }
   }
@@ -62,5 +61,5 @@ if (results.length === 0) {
     console.log('No hardcoded strings found! 🎉');
 } else {
     console.log('--- POTENTIALLY HARDCODED STRINGS ---');
-    console.log(results.join('\n'));
+    console.log([...new Set(results)].join('\n'));
 }

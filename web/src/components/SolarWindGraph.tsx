@@ -57,7 +57,7 @@ export const SolarWindGraph = () => {
               stroke="#000"
               tick={{ fill: '#000', fontFamily: 'monospace', fontSize: 10 }}
               label={{
-                value: 'km/s',
+                value: t('common.unit_speed'),
                 angle: -90,
                 position: 'insideLeft',
                 fill: '#000',
@@ -72,7 +72,7 @@ export const SolarWindGraph = () => {
               stroke="#FF4800"
               tick={{ fill: '#FF4800', fontFamily: 'monospace', fontSize: 10 }}
               label={{
-                value: 'nT',
+                value: t('common.unit_mag'),
                 angle: 90,
                 position: 'insideRight',
                 fill: '#FF4800',

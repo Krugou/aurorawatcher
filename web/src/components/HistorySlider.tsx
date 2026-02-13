@@ -94,8 +94,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
       playIntervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => {
           if (prev >= history.length) {
-            setIsPlaying(false);
-            return prev;
+            return 0; // Loop back to the beginning
           }
           return prev + 1;
         });
@@ -164,7 +163,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
       <div className="relative border-2 border-black dark:border-white bg-black group shadow-neo dark:shadow-neo-dark w-full h-[35vh] max-h-[300px] md:max-h-[400px] flex items-center justify-center overflow-hidden">
         <img
           src={displayImage}
-          alt={isLive ? 'Live View' : 'Historical View'}
+          alt={isLive ? t('history.live_alt') : t('history.hist_alt')}
           className="w-full h-full object-contain"
         />
 
@@ -190,7 +189,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 setIsPlaying(!isPlaying);
               }}
               className="w-12 h-12 flex items-center justify-center border-2 border-black dark:border-white bg-neo-yellow hover:bg-yellow-400 text-black transition-colors shadow-neo-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-none shrink-0"
-              title={isPlaying ? 'Pause' : 'Play'}
+              title={isPlaying ? t('history.pause') : t('history.play')}
             >
               {isPlaying ? (
                 <span className="font-bold text-xl">II</span>

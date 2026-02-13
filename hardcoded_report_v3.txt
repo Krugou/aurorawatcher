@@ -1,0 +1,230 @@
+--- POTENTIALLY HARDCODED STRINGS ---
+web\src\App.tsx [dynamic-expr]: ,
+  },
+  nyrola: {
+    id:
+web\src\App.tsx [dynamic-expr]: ,
+  },
+  metsahovi: {
+    id:
+web\src\App.tsx [dynamic-expr]: );
+    }
+    const cam = params.get(
+web\src\App.tsx [dynamic-expr]: )}
+          headerColorClass=
+web\src\components\AuroraMap.tsx [dynamic-expr]: );
+    } else {
+      setSavedStation(name);
+      localStorage.setItem(
+web\src\components\AuroraMap.tsx [dynamic-expr]: ,
+              autoClose: 10000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            },
+          );
+          lastToastTimeRef.current = now;
+        }
+      }
+    } catch (e) {
+      console.error(
+web\src\components\AuroraMap.tsx [dynamic-expr]: )}
+            className={`w-full h-full object-contain transition-all duration-500 bg-gray-200 dark:bg-zinc-800 ${isLoading ?
+web\src\components\AuroraMap.tsx [dynamic-expr]: } relative group transition-all`}
+                >
+                  <div
+                    className=
+web\src\components\AuroraMap.tsx [dynamic-expr]: }`}
+                    title={
+                      isSaved
+                        ? t(
+web\src\components\AuroraMap.tsx [dynamic-expr]: }
+                      stroke=
+web\src\components\AuroraMap.tsx [dynamic-expr]: )}
+            <svg className=
+web\src\components\CollapsibleSection.tsx [dynamic-expr]: ,
+  storageKey,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(() => {
+    if (storageKey) {
+      const saved = localStorage.getItem(`section_${storageKey}`);
+      if (saved !== null) {
+        return saved ===
+web\src\components\CollapsibleSection.tsx [dynamic-expr]: ) {
+            toggleExpanded();
+          }
+        }}
+        className=
+web\src\components\CollapsibleSection.tsx [dynamic-expr]: }`}
+      >
+        <div className=
+web\src\components\FullscreenView.tsx [dynamic-expr]: )}
+      >
+        <svg
+          xmlns=
+web\src\components\FullscreenView.tsx [dynamic-expr]: )}
+        >
+          <svg className=
+web\src\components\HistorySlider.tsx [text]: II
+web\src\components\HistorySlider.tsx [dynamic-expr]: ,
+    });
+  };
+
+  const displayTime = isLive ? t(
+web\src\components\HistorySlider.tsx [dynamic-expr]: }`}
+          >
+            {h === 720
+              ? t(
+web\src\components\HistorySlider.tsx [dynamic-expr]: }
+          className=
+web\src\components\HistorySlider.tsx [dynamic-expr]: }`}
+          >
+            {isLive ? `● ${t(
+web\src\components\LanguageSwitcher.test.tsx [dynamic-expr]: );
+    expect(button).toBeInTheDocument();
+  });
+
+  it(
+web\src\components\LanguageSwitcher.tsx [text]: FI
+web\src\components\LanguageSwitcher.tsx [text]: EN
+web\src\components\LanguageSwitcher.tsx [dynamic-expr]: ;
+    i18n.changeLanguage(newLang);
+  };
+
+  return (
+    <button
+      onClick={toggleLanguage}
+      className=
+web\src\components\LanguageSwitcher.tsx [dynamic-expr]: text-xl
+web\src\components\LocalData.tsx [dynamic-expr]: );
+            try {
+              const norway = await fetchNorwayWeather(
+                effectiveCoords.latitude,
+                effectiveCoords.longitude,
+              );
+              return {
+                station: norway.location,
+                temperature: norway.temperature,
+                cloudCover: 0,
+                windSpeed: 0,
+                _isFallback: true,
+                description: norway.description,
+              };
+            } catch (e: unknown) {
+              console.error(
+web\src\components\LocalData.tsx [dynamic-expr]: , { magResult, weatherResult });
+          if (magResult && weatherResult) {
+            setData({
+              magStation: magResult.station,
+              fieldIntensity: magResult.fieldIntensity,
+              weatherStation: weatherResult.station,
+              temperature: weatherResult.temperature,
+              cloudCover: weatherResult.cloudCover,
+              windSpeed: weatherResult.windSpeed,
+              description: (weatherResult as { description?: string }).description,
+            });
+          } else {
+            console.warn(
+web\src\components\LocalData.tsx [dynamic-expr]: , err);
+          setError(true);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      console.log(
+web\src\components\LocalData.tsx [dynamic-expr]: ,
+      };
+    if (octas <= 1) return { text: t(
+web\src\components\LocalData.tsx [dynamic-expr]: };
+    return { text: t(
+web\src\components\LocalData.tsx [dynamic-expr]: };
+
+  if (!effectiveCoords && !geoLoading && !geoError) {
+    return (
+      <div className=
+web\src\components\LocalData.tsx [dynamic-expr]: bg-red-500 text-white border-red-900
+web\src\components\MagnetometerGraph.tsx [dynamic-expr]: )}`;
+  };
+
+  return (
+    <>
+      <div className=
+web\src\components\MagnetometerGraph.tsx [dynamic-expr]: , fontSize: 10 }}
+              label={{
+                value:
+web\src\components\MagnetometerGraph.tsx [dynamic-expr]: ,
+              }}
+              itemStyle={{ color:
+web\src\components\MinimalView.tsx [dynamic-expr]: >
+      <img
+        src={`${loc.image}?t=${timestamp}`}
+        alt={loc.name}
+        className=
+web\src\components\NotificationPermission.tsx [dynamic-expr]: );
+    } else {
+      setPermission(Notification.permission);
+    }
+  }, []);
+
+  const requestPermission = async () => {
+    if (!(
+web\src\components\NotificationPermission.tsx [dynamic-expr]: , e);
+          }
+        }
+      }
+    } catch (e) {
+      console.error(
+web\src\components\NotificationPermission.tsx [dynamic-expr]: , event.data);
+    };
+
+    registration.active?.postMessage({ type:
+web\src\components\ObservatoryCard.tsx [dynamic-expr]: }`}
+            loading=
+web\src\components\ObservatoryCard.tsx [dynamic-expr]: )}
+          >
+            <span>{t(
+web\src\components\ObservatoryCard.tsx [dynamic-expr]: )}
+          >
+            <svg className=
+web\src\components\ObservatoryGrid.tsx [dynamic-expr]: grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6
+web\src\components\Skeleton.tsx [dynamic-expr]: }: SkeletonProps) => {
+  const { t } = useTranslation();
+  return (
+    <div
+      className={`bg-gray-200 dark:bg-zinc-800 animate-pulse border-2 border-dashed border-gray-400 dark:border-gray-600 ${className}`}
+      role=
+web\src\components\SolarWindGraph.tsx [text]: Date.now() - d.timestamp
+web\src\components\SolarWindGraph.tsx [dynamic-expr]: )}`;
+  };
+
+  return (
+    <>
+      <div className=
+web\src\components\SolarWindGraph.tsx [dynamic-expr]: ,
+              }}
+              domain={[
+web\src\components\SolarWindGraph.tsx [dynamic-expr]: , fontSize: 10 }}
+              label={{
+                value:
+web\src\components\SolarWindGraph.tsx [dynamic-expr]: ,
+              }}
+              itemStyle={{ color:
+web\src\components\SolarWindGraph.tsx [dynamic-expr]: , strokeWidth: 2 }}
+              name={t(
+web\src\components\SpaceWeather.tsx [dynamic-expr]: >
+        {[1, 2, 3, 4].map((i) => (
+          <Skeleton key={i} className=
+web\src\components\ThemeToggle.tsx [dynamic-expr]: )}
+    >
+      {theme ===
+web\src\context\ThemeProvider.tsx [dynamic-expr]: ;
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme ===
+web\src\context\ThemeProvider.tsx [dynamic-expr]: );
+    }
+    localStorage.setItem(

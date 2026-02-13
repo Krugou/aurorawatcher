@@ -66,7 +66,7 @@ export const MagnetometerGraph = ({
               stroke="#000"
               tick={{ fill: '#000', fontFamily: 'monospace', fontSize: 10 }}
               label={{
-                value: 'nT',
+                value: t('common.unit_mag'),
                 angle: -90,
                 position: 'insideLeft',
                 fill: '#000',
