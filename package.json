@@ -21,7 +21,8 @@
     "web/**/*.{ts,tsx}": [
       "npm run lint:fix -w aurorawatcher-web",
       "npm run format -w aurorawatcher-web",
-      "node -e \"require('child_process').execSync('npx tsc -p web/tsconfig.json --noEmit', {stdio: 'inherit'})\""
+      "node -e \"require('child_process').execSync('npx tsc -p web/tsconfig.json --noEmit', {stdio: 'inherit'})\"",
+      "node -e \"require('child_process').execSync('npm test -w aurorawatcher-web -- --run', {stdio: 'inherit'})\""
     ],
     "bot/**/*.ts": [
       "node -e \"require('child_process').execSync('npx tsc -p bot/tsconfig.json --noEmit', {stdio: 'inherit'})\""
