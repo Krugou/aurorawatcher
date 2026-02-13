@@ -39,7 +39,7 @@ export default defineConfig(({ mode }) => ({
       },
     }),
   ],
-  base: '/aurorawatcher/', // Assumes repository name is 'aurorawatcher' for GitHub Pages
+  base: mode === 'development' ? '/' : '/aurorawatcher/', // Assumes repository name is 'aurorawatcher' for GitHub Pages
   server: {
     port: 3005,
   },
@@ -47,7 +47,7 @@ export default defineConfig(({ mode }) => ({
     port: 3005,
   },
   define: {
-    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+    __BUILD_TIME__: JSON.stringify(new Date().toLocaleString()),
   },
   esbuild: {
     drop: mode === 'production' ? ['debugger'] : [],

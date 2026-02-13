@@ -4,14 +4,20 @@ import { analytics } from '../firebase';
 
 // Helper to safely log events only in production or if analytics is initialized
 const safeLogEvent = (eventName: string, eventParams?: Record<string, unknown>) => {
+  const params = { ...eventParams };
+
+  if (import.meta.env.DEV) {
+    console.debug(`[Analytics] ${eventName}`, params);
+    // improved debug mode for Firebase DebugView
+    params.debug_mode = true;
+  }
+
   if (analytics) {
     try {
-      logEvent(analytics, eventName, eventParams);
+      logEvent(analytics, eventName, params);
     } catch (e) {
       console.warn('Analytics logging failed:', e);
     }
-  } else {
-    console.debug(`[Analytics Mock] ${eventName}`, eventParams);
   }
 };
 
