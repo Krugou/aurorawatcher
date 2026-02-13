@@ -1,3 +1,9 @@
+## [1.18.2](https://github.com/Krugou/aurorawatcher/compare/v1.18.1...v1.18.2) (2026-02-13)
+
+### Bug Fixes
+
+- **i18n:** robust station key normalization and build time logging ([007ce26](https://github.com/Krugou/aurorawatcher/commit/007ce2634b2bace225060277dd35a7bb779a5e50))
+
 ## [1.18.1](https://github.com/Krugou/aurorawatcher/compare/v1.18.0...v1.18.1) (2026-02-13)
 
 ### Bug Fixes
