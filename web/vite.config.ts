@@ -50,6 +50,10 @@ export default defineConfig(({ mode }) => ({
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
   },
   esbuild: {
-    drop: mode === 'production' ? ['console', 'debugger'] : [],
+    drop: mode === 'production' ? ['debugger'] : [],
+    pure:
+      mode === 'production'
+        ? ['console.log', 'console.info', 'console.debug', 'console.trace']
+        : [],
   },
 }));
