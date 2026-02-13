@@ -13,7 +13,10 @@
     "toast": "High aurora activity detected! (Red area)",
     "loading": "Loading map...",
     "error": "Failed to load map data",
-    "status_title": "STATION STATUS"
+    "status_title": "STATION STATUS",
+    "saved": "SAVED",
+    "near": "NEAR",
+    "high": "HIGH ACTIVITY"
   },
   "grid": {
     "title": "Observatory Cameras",
@@ -29,6 +32,13 @@
   },
   "footer": {
     "copyright": "© {{year}} Aurora Watcher. Images: FMI & Observatories."
+  },
+  "status": {
+    "quiet": "QUIET",
+    "low": "LOW",
+    "moderate": "MODERATE",
+    "high": "HIGH",
+    "unknown": "UNKNOWN"
   },
   "theme": {
     "switchToLight": "Switch to Light Mode",
@@ -50,6 +60,7 @@
     "outdoors": "Outdoors",
     "clouds": "Cloud Cover: {{percent}}%",
     "wind": "Wind: {{speed}} m/s",
+    "station_label": "STATION",
     "go": "GO FOR IT! 🚀",
     "go1": "GO FOR IT! 🚀",
     "go2": "SKY'S NAKED! 🌌",
@@ -114,6 +125,8 @@
     "pause": "Pause",
     "live_alt": "Live View",
     "hist_alt": "Historical View",
+    "live_label": "● LIVE",
+    "hist_label": "↺ HISTORY",
     "loading": "/// LOADING HISTORY DATA ///",
     "no_data": "NO DATA STREAM AVAILABLE",
     "range_6h": "6H",
@@ -161,6 +174,29 @@
     "notifications": "Notifications",
     "unit_mag": "nT",
     "unit_speed": "km/s",
-    "unit_density": "p/cm³"
+    "unit_density": "p/cm³",
+    "alert_title": "🔴 AURORAS DETECTED!",
+    "build_time": "Build time",
+    "noaa_swpc": "NOAA SWPC",
+    "loc": {
+      "muonio": "Muonio",
+      "muonio_full": "Muonio, Finland",
+      "nyrola": "Nyrölä",
+      "nyrola_full": "Nyrölä Observatory, Finland",
+      "hankasalmi": "Hankasalmi",
+      "hankasalmi_full": "Hankasalmi Observatory",
+      "metsahovi": "Metsähovi",
+      "metsahovi_full": "Metsähovi Radio Observatory",
+      "kevo": "Kevo",
+      "kilpisjarvi": "Kilpisjärvi",
+      "ivalo": "Ivalo",
+      "sodankyla": "Sodankylä",
+      "pello": "Pello",
+      "ranua": "Ranua",
+      "oulujarvi": "Oulujärvi",
+      "mekrijarvi": "Mekrijärvi",
+      "nurmijarvi": "Nurmijärvi",
+      "tartto": "Tartu"
+    }
   }
 }

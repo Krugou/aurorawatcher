@@ -155,7 +155,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
             </h2>
             {savedStation && (
               <span className="text-xs font-mono font-bold bg-neo-yellow text-black px-2 py-1 border border-black">
-                ★ {t('common.saved', 'SAVED')}: {savedStation}
+                ★ {t('map.saved')}: {t(`common.loc.${savedStation.toLowerCase()}`)}
               </span>
             )}
           </div>
@@ -177,16 +177,16 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                   <div className="flex flex-col min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono font-bold text-black dark:text-white uppercase truncate">
-                        {s.name}
+                        {t(`common.loc.${s.name.toLowerCase()}`)}
                       </span>
                       {isNearest && (
                         <span className="text-[9px] bg-neo-blue text-white px-1 font-mono font-bold">
-                          {t('common.near', 'NEAR')}
+                          {t('map.near')}
                         </span>
                       )}
                     </div>
                     <span className="text-[10px] font-mono text-gray-500 uppercase">
-                      {s.status}
+                      {t(`status.${s.status.toLowerCase()}`)}
                     </span>
                   </div>
 
@@ -196,11 +196,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                       toggleSavedStation(s.name);
                     }}
                     className={`ml-auto p-1 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors ${isSaved ? 'text-neo-yellow' : 'text-gray-300 hover:text-neo-yellow'}`}
-                    title={
-                      isSaved
-                        ? t('common.unsave', 'Unsave Station')
-                        : t('common.save', 'Save Station')
-                    }
+                    title={isSaved ? t('common.unsave') : t('common.save')}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

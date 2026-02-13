@@ -96,9 +96,9 @@ export const LocalData = ({
         text: description.charAt(0).toUpperCase() + description.slice(1),
         color: 'text-blue-400',
       };
-    if (octas <= 1) return { text: t('sky.clear', 'Clear Sky 🌌'), color: 'text-green-400' };
-    if (octas <= 4) return { text: t('sky.partly', 'Partly Cloudy ⛅'), color: 'text-yellow-400' };
-    return { text: t('sky.overcast', 'Overcast ☁️'), color: 'text-slate-400' };
+    if (octas <= 1) return { text: t('sky.clear'), color: 'text-green-400' };
+    if (octas <= 4) return { text: t('sky.partly'), color: 'text-yellow-400' };
+    return { text: t('sky.overcast'), color: 'text-slate-400' };
   };
 
   const sky = data ? getSkyCondition(data.cloudCover, data.description) : { text: '', color: '' };
@@ -147,7 +147,14 @@ export const LocalData = ({
                 {t('local.magField')}
               </p>
               <p className="text-xs font-mono text-gray-500 uppercase">
-                {t('common.station', 'STATION')}: {data.magStation}
+                {t('common.station')}:{' '}
+                {t(
+                  `common.loc.${(data.magStation || '')
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')}`,
+                  { defaultValue: data.magStation },
+                )}
               </p>
             </div>
             <div className="mt-4">
@@ -201,28 +208,28 @@ export const LocalData = ({
                 {(() => {
                   const isGood = data.cloudCover <= 3;
                   const goVerdicts = [
-                    t('local.go1', 'GO FOR IT! 🚀'),
-                    t('local.go2', "SKY'S NAKED! 🌌"),
-                    t('local.go3', 'AURORA BAIT LOCATED 🎣'),
-                    t('local.go4', 'PUT YOUR SHOES ON! 👟'),
-                    t('local.go5', 'SPACE PARTY ENABLING 👽'),
-                    t('local.go6', 'BEST VIEW IN HELSINKI? 🇫🇮'),
-                    t('local.go7', 'COFFEE IS READY, GO! ☕'),
-                    t('local.go8', 'BETTER THAN NETFLIX 📺'),
-                    t('local.go9', 'CLEAREST NIGHT EVER? 💎'),
-                    t('local.go10', 'UNLEASH THE CAMERA! 📸'),
+                    t('local.go1'),
+                    t('local.go2'),
+                    t('local.go3'),
+                    t('local.go4'),
+                    t('local.go5'),
+                    t('local.go6'),
+                    t('local.go7'),
+                    t('local.go8'),
+                    t('local.go9'),
+                    t('local.go10'),
                   ];
                   const noGoVerdicts = [
-                    t('local.noGo1', 'BAD VISIBILITY ☁️'),
-                    t('local.noGo2', 'STAY ON THE SOFA 🛋️'),
-                    t('local.noGo3', 'CLOUD PARTY ☁️'),
-                    t('local.noGo4', 'PERFECT NIGHT FOR TEA 🫖'),
-                    t('local.noGo5', 'TOTAL WHITE-OUT 🌫️'),
-                    t('local.noGo6', 'AURORAS ARE HIDING 🙈'),
-                    t('local.noGo7', 'CLOUDS: 1, YOU: 0 ⚽'),
-                    t('local.noGo8', 'TRY AGAIN LATER... 😴'),
-                    t('local.noGo9', 'NICE VIEW OF WATER VAPOR '),
-                    t('local.noGo10', 'NETFLIX & NO CHILL 🍿'),
+                    t('local.noGo1'),
+                    t('local.noGo2'),
+                    t('local.noGo3'),
+                    t('local.noGo4'),
+                    t('local.noGo5'),
+                    t('local.noGo6'),
+                    t('local.noGo7'),
+                    t('local.noGo8'),
+                    t('local.noGo9'),
+                    t('local.noGo10'),
                   ];
 
                   const verdicts = isGood ? goVerdicts : noGoVerdicts;

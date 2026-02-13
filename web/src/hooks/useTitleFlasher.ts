@@ -1,9 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export const useTitleFlasher = (
-  isActive: boolean,
-  messages: string[] = ['🔴 AURORA ALERT!', '🔴 REVONTULIA!'],
-) => {
+export const useTitleFlasher = (isActive: boolean, messages: string[] = ['🔴 ALERT!']) => {
   const originalTitle = useRef(document.title);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 

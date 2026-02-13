@@ -18,12 +18,12 @@ export const LanguageSwitcher = () => {
         {i18n.language === 'en' ? (
           <>
             <span className="text-xl">🇫🇮</span>
-            <span>FI</span>
+            <span>{t('common.fi_label', 'FI')}</span>
           </>
         ) : (
           <>
             <span className="text-xl">🇬🇧</span>
-            <span>EN</span>
+            <span>{t('common.en_label', 'EN')}</span>
           </>
         )}
       </span>

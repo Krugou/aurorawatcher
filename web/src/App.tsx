@@ -26,29 +26,29 @@ import { Location } from './types';
 const LOCATIONS: Record<string, Location> = {
   muonio: {
     id: 'muonio',
-    name: 'Muonio',
-    fullname: 'Muonio, Suomi',
+    name: 'common.loc.muonio',
+    fullname: 'common.loc.muonio_full',
     mapUrl: 'https://maps.app.goo.gl/rmr9YMBuR66GCB2X8',
     image: 'https://space.fmi.fi/MIRACLE/RWC/latest_MUO.jpg',
   },
   nyrola: {
     id: 'nyrola',
-    name: 'Nyrölä',
-    fullname: 'Nyrölän Observatorio, Suomi',
+    name: 'common.loc.nyrola',
+    fullname: 'common.loc.nyrola_full',
     mapUrl: 'https://maps.app.goo.gl/m9AHq8wxAhJyBVUMA',
     image: 'https://space.fmi.fi/MIRACLE/RWC/latest_SIR.jpg',
   },
   hankasalmi: {
     id: 'hankasalmi',
-    name: 'Hankasalmi',
-    fullname: 'Hankasalmen observatorio',
+    name: 'common.loc.hankasalmi',
+    fullname: 'common.loc.hankasalmi_full',
     mapUrl: 'https://maps.app.goo.gl/sDCpGgSkcMKgDojh6',
     image: 'https://space.fmi.fi/MIRACLE/RWC/latest_SIR_AllSky.jpg',
   },
   metsahovi: {
     id: 'metsahovi',
-    name: 'Metsähovi',
-    fullname: 'Metsähovin radio-observatorio',
+    name: 'common.loc.metsahovi',
+    fullname: 'common.loc.metsahovi_full',
     mapUrl: 'https://maps.app.goo.gl/BG3JC7uHLLcdi5C1A',
     image: 'https://space.fmi.fi/MIRACLE/RWC/latest_HOV.jpg',
   },
@@ -62,7 +62,7 @@ const AppContent = () => {
 
   // Aurora Alert Logic
   const isHighActivity = useAuroraAlert();
-  useTitleFlasher(isHighActivity);
+  useTitleFlasher(isHighActivity, [t('common.alert_title')]);
 
   // Tarkista URL-parametrit
   useEffect(() => {
@@ -89,7 +89,13 @@ const AppContent = () => {
   if (mode === 'fullscreen' && activeCam) {
     const loc = LOCATIONS[activeCam];
 
-    return <FullscreenView loc={loc} historyId={activeCam} allLocations={Object.keys(LOCATIONS)} />;
+    return (
+      <FullscreenView
+        loc={{ ...loc, name: t(loc.name), fullname: t(loc.fullname) }}
+        historyId={activeCam}
+        allLocations={Object.keys(LOCATIONS)}
+      />
+    );
   }
 
   if (mode === 'minimal') {
@@ -131,7 +137,7 @@ const AppContent = () => {
           storageKey="space_weather"
           badge={
             <span className="text-sm font-bold font-mono text-black bg-white px-3 py-1 border-2 border-black dark:border-white shadow-neo-sm dark:shadow-neo-sm-dark">
-              NOAA SWPC
+              {t('common.noaa_swpc', 'NOAA SWPC')}
             </span>
           }
         >
@@ -166,7 +172,7 @@ const AppContent = () => {
         </CollapsibleSection>
 
         <footer className="text-center py-12 text-gray-600 font-mono text-xs uppercase tracking-widest">
-          <p title={`Build time: ${__BUILD_TIME__}`}>
+          <p title={`${t('common.build_time', 'Build time')}: ${__BUILD_TIME__}`}>
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </p>
         </footer>

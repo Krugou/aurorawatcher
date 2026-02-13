@@ -172,7 +172,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
           <span
             className={`font-mono font-bold text-base ${isLive ? 'text-red-500 animate-pulse' : 'text-white'}`}
           >
-            {isLive ? `● ${t('grid.live')}` : `↺ ${t('grid.view_history')}`}
+            {isLive ? t('history.live_label') : t('history.hist_label')}
           </span>
           <div className="text-white text-[10px] font-mono">{displayTime}</div>
         </div>

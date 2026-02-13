@@ -13,7 +13,10 @@
     "toast": "Korkea revontuliaktiivisuus havaittu! (Punainen alue)",
     "loading": "Ladataan karttaa...",
     "error": "Kartan lataus epäonnistui",
-    "status_title": "ASEMIEN TILA"
+    "status_title": "ASEMIEN TILA",
+    "saved": "TALLENNETTU",
+    "near": "LÄHELLÄ",
+    "high": "KORKEA AKTIIVISUUS"
   },
   "grid": {
     "title": "Observatoriokamerat",
@@ -28,7 +31,14 @@
     "open_map": "Avaa kartalla"
   },
   "footer": {
-    "copyright": "© {{year}} Revontulivahti. Kuvat: FMI & Observatoriot."
+    "copyright": "© {{year}} Revontulivahti. Kuvat: Ilmatieteen laitos & Observatoriot."
+  },
+  "status": {
+    "quiet": "RAUHALLISTA",
+    "low": "ALHAINEN",
+    "moderate": "KOHTALAINEN",
+    "high": "KORKEA",
+    "unknown": "TUNTEMATON"
   },
   "theme": {
     "switchToLight": "Vaihda vaaleaan tilaan",
@@ -50,6 +60,7 @@
     "outdoors": "Ulkoilu",
     "clouds": "Pilvipeite: {{percent}}%",
     "wind": "Tuuli: {{speed}} m/s",
+    "station_label": "ASEMA",
     "go": "ANNA MENNÄ! 🚀",
     "go1": "ANNA MENNÄ! 🚀",
     "go2": "TAIVAS ON PALJAS! 🌌",
@@ -114,6 +125,8 @@
     "pause": "Tauko",
     "live_alt": "Livenäkymä",
     "hist_alt": "Historianäkymä",
+    "live_label": "● LIVE-NÄKYMÄ",
+    "hist_label": "↺ HISTORIANÄKYMÄ",
     "loading": "/// LADATAAN HISTORIADATAA ///",
     "no_data": "HISTORIADATAA EI SAATAVILLA",
     "range_6h": "6t",
@@ -161,6 +174,29 @@
     "notifications": "Ilmoitukset",
     "unit_mag": "nT",
     "unit_speed": "km/s",
-    "unit_density": "p/cm³"
+    "unit_density": "p/cm³",
+    "alert_title": "🔴 REVONTULIA HAVAITTU!",
+    "build_time": "Rakennusaika",
+    "noaa_swpc": "NOAA SWPC",
+    "loc": {
+      "muonio": "Muonio",
+      "muonio_full": "Muonio, Suomi",
+      "nyrola": "Nyrölä",
+      "nyrola_full": "Nyrölän Observatorio, Suomi",
+      "hankasalmi": "Hankasalmi",
+      "hankasalmi_full": "Hankasalmen observatorio",
+      "metsahovi": "Metsähovi",
+      "metsahovi_full": "Metsähovin radio-observatorio",
+      "kevo": "Kevo",
+      "kilpisjarvi": "Kilpisjärvi",
+      "ivalo": "Ivalo",
+      "sodankyla": "Sodankylä",
+      "pello": "Pello",
+      "ranua": "Ranua",
+      "oulujarvi": "Oulujärvi",
+      "mekrijarvi": "Mekrijärvi",
+      "nurmijarvi": "Nurmijärvi",
+      "tartto": "Tartto"
+    }
   }
 }
