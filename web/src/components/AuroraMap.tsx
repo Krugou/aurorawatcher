@@ -151,11 +151,11 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-display font-bold uppercase text-black dark:text-white">
-              {t('map.status_title', 'STATION STATUS')}
+              {t('map.status_title')}
             </h2>
             {savedStation && (
               <span className="text-xs font-mono font-bold bg-neo-yellow text-black px-2 py-1 border border-black">
-                ★ SAVED: {savedStation}
+                ★ {t('common.saved', 'SAVED')}: {savedStation}
               </span>
             )}
           </div>
@@ -181,7 +181,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                       </span>
                       {isNearest && (
                         <span className="text-[9px] bg-neo-blue text-white px-1 font-mono font-bold">
-                          NEAR
+                          {t('common.near', 'NEAR')}
                         </span>
                       )}
                     </div>
@@ -196,7 +196,11 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                       toggleSavedStation(s.name);
                     }}
                     className={`ml-auto p-1 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors ${isSaved ? 'text-neo-yellow' : 'text-gray-300 hover:text-neo-yellow'}`}
-                    title={isSaved ? 'Unsave Station' : 'Save Station'}
+                    title={
+                      isSaved
+                        ? t('common.unsave', 'Unsave Station')
+                        : t('common.save', 'Save Station')
+                    }
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +218,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
             })}
             {stationStatuses.length === 0 && !isLoading && (
               <div className="col-span-2 text-center text-xs font-mono text-gray-500 py-4">
-                NO DATA DETECTED
+                {t('common.no_data', 'NO DATA DETECTED')}
               </div>
             )}
           </div>

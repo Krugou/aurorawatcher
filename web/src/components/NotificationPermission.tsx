@@ -71,14 +71,14 @@ export const NotificationPermission = ({ savedStation }: NotificationPermissionP
         <div className="flex items-center gap-2">
           <span className="text-lg">🔔</span>
           <span className="text-xs font-mono font-bold text-black dark:text-white uppercase">
-            {t('notifications.enabled', 'NOTIFICATIONS ON')}
+            {t('notifications.enabled')}
           </span>
         </div>
         <button
           onClick={testNotification}
           className="text-xs font-mono font-bold text-black bg-neo-yellow px-2 py-1 border border-black hover:bg-yellow-400 transition-colors"
         >
-          TEST
+          {t('common.test', 'TEST')}
         </button>
       </div>
     );
@@ -90,11 +90,11 @@ export const NotificationPermission = ({ savedStation }: NotificationPermissionP
         <div className="flex items-center gap-2">
           <span className="text-lg">🔕</span>
           <span className="text-xs font-mono font-bold text-black dark:text-white uppercase">
-            {t('notifications.blocked', 'NOTIFICATIONS BLOCKED')}
+            {t('notifications.blocked')}
           </span>
         </div>
         <p className="text-[10px] font-mono text-gray-500 mt-1">
-          {t('notifications.blocked_hint', 'Enable in browser settings')}
+          {t('notifications.blocked_hint')}
         </p>
       </div>
     );
@@ -109,16 +109,11 @@ export const NotificationPermission = ({ savedStation }: NotificationPermissionP
       <div className="flex items-center justify-center gap-3">
         <span className="text-2xl">🔔</span>
         <div className="text-left">
-          <div className="font-bold font-mono uppercase">
-            {t('notifications.enable', 'ENABLE AURORA ALERTS')}
-          </div>
+          <div className="font-bold font-mono uppercase">{t('notifications.enable')}</div>
           <div className="text-xs font-mono opacity-80">
             {savedStation
-              ? t('notifications.for_station', {
-                  station: savedStation,
-                  defaultValue: 'For {{station}} station',
-                })
-              : t('notifications.for_any', 'For any high activity')}
+              ? t('notifications.for_station', { station: savedStation })
+              : t('notifications.for_any')}
           </div>
         </div>
       </div>

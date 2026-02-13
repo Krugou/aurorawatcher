@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { Location } from '../types';
 import { HistorySlider } from './HistorySlider';
 
@@ -8,6 +10,7 @@ interface FullscreenViewProps {
 }
 
 export const FullscreenView = ({ loc, allLocations, historyId }: FullscreenViewProps) => {
+  const { t } = useTranslation();
   const currentIndex = allLocations.indexOf(loc.id);
   const prevId = allLocations[(currentIndex - 1 + allLocations.length) % allLocations.length];
   const nextId = allLocations[(currentIndex + 1) % allLocations.length];
@@ -27,7 +30,7 @@ export const FullscreenView = ({ loc, allLocations, historyId }: FullscreenViewP
       <a
         href="?"
         className="absolute top-4 right-4 z-50 w-12 h-12 flex items-center justify-center bg-red-600 hover:bg-red-500 text-white border-2 border-black dark:border-white shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
-        aria-label="Close"
+        aria-label={t('common.close')}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +53,7 @@ export const FullscreenView = ({ loc, allLocations, historyId }: FullscreenViewP
         <a
           href={`?cam=${prevId}`}
           className="absolute left-0 md:left-4 top-1/2 -translate-y-1/2 z-40 p-4 md:p-4 bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark hover:translate-y-[-50%] hover:scale-110 active:scale-95 transition-all focus:outline-none hidden sm:block"
-          title="Previous Camera"
+          title={t('common.prev_cam')}
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -66,7 +69,7 @@ export const FullscreenView = ({ loc, allLocations, historyId }: FullscreenViewP
         <a
           href={`?cam=${nextId}`}
           className="absolute right-0 md:right-4 top-1/2 -translate-y-1/2 z-40 p-4 md:p-4 bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark hover:translate-y-[-50%] hover:scale-110 active:scale-95 transition-all focus:outline-none hidden sm:block"
-          title="Next Camera"
+          title={t('common.next_cam')}
         >
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={3} d="M9 5l7 7-7 7" />

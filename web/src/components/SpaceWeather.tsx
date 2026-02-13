@@ -51,7 +51,7 @@ export const SpaceWeather = () => {
       {/* Bz */}
       <div className="bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group">
         <p className="text-xs font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-yellow inline-block px-1">
-          {t('space_weather.bz', 'Bz (IMF)')}
+          {t('space_weather.bz')}
         </p>
         <div className="flex items-baseline gap-1 mt-2">
           <span className={`text-4xl font-display font-bold ${getBzColor(data.bz)}`}>
@@ -60,14 +60,14 @@ export const SpaceWeather = () => {
           <span className="text-xs font-mono text-gray-500">nT</span>
         </div>
         <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
-          {t('space_weather.bz_hint', 'Negative is better')}
+          {t('space_weather.bz_hint')}
         </p>
       </div>
 
       {/* Speed */}
       <div className="bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group">
         <p className="text-xs font-mono font-bold uppercase tracking-widest text-white mb-2 bg-neo-blue inline-block px-1">
-          {t('space_weather.speed', 'Solar Wind')}
+          {t('space_weather.speed')}
         </p>
         <div className="flex items-baseline gap-1 mt-2">
           <span className={`text-4xl font-display font-bold ${getSpeedColor(data.speed)}`}>
@@ -76,14 +76,14 @@ export const SpaceWeather = () => {
           <span className="text-xs font-mono text-gray-500">km/s</span>
         </div>
         <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
-          {t('space_weather.speed_hint', 'Faster is better')}
+          {t('space_weather.speed_hint')}
         </p>
       </div>
 
       {/* Density */}
       <div className="bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group">
         <p className="text-xs font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-pink inline-block px-1">
-          {t('space_weather.density', 'Density')}
+          {t('space_weather.density')}
         </p>
         <div className="flex items-baseline gap-1 mt-2">
           <span className={`text-4xl font-display font-bold ${getDensityColor(data.density)}`}>
@@ -92,14 +92,14 @@ export const SpaceWeather = () => {
           <span className="text-xs font-mono text-gray-500">p/cm³</span>
         </div>
         <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
-          {t('space_weather.density_hint', 'Higher is better')}
+          {t('space_weather.density_hint')}
         </p>
       </div>
 
       {/* Kp Index */}
       <div className="bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group">
         <p className="text-xs font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-mint inline-block px-1">
-          {t('space_weather.kp', 'Kp Index')}
+          {t('space_weather.kp')}
         </p>
         <div className="flex flex-col gap-2 mt-2">
           <span className={`text-4xl font-display font-bold ${getKpColor(data.kp)}`}>
@@ -115,7 +115,7 @@ export const SpaceWeather = () => {
           </div>
         </div>
         <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
-          {t('space_weather.kp_hint', 'Planetary Activity')}
+          {t('space_weather.kp_hint')}
         </p>
       </div>
     </div>

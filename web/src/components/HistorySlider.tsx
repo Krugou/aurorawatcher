@@ -127,9 +127,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
     });
   };
 
-  const displayTime = isLive
-    ? t('history.live', 'LIVE NOW')
-    : formatTime(currentEntry?.timestamp || 0);
+  const displayTime = isLive ? t('history.live') : formatTime(currentEntry?.timestamp || 0);
 
   const ranges = [6, 24, 72, 168, 720];
 
@@ -167,7 +165,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
           <span
             className={`font-mono font-bold text-base ${isLive ? 'text-red-500 animate-pulse' : 'text-white'}`}
           >
-            {isLive ? '● LIVE' : '↺ REPLAY'}
+            {isLive ? `● ${t('grid.live')}` : `↺ ${t('grid.view_history')}`}
           </span>
           <div className="text-white text-[10px] font-mono">{displayTime}</div>
         </div>
@@ -210,7 +208,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
             />
 
             <span className="text-xs text-black dark:text-white font-mono w-10 text-left hidden sm:block">
-              LIVE
+              {t('grid.live')}
             </span>
           </div>
 
@@ -223,10 +221,10 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
               disabled={currentIndex === 0}
               className="px-4 py-2 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-xs uppercase hover:bg-gray-200 disabled:opacity-50 min-w-[70px]"
             >
-              &lt; PREV
+              &lt; {t('history.prev')}
             </button>
             <div className="text-xs text-gray-500 font-mono uppercase tracking-widest">
-              {history.length} FRAMES
+              {history.length} {t('history.frames')}
             </div>
             <button
               onClick={() => {
@@ -236,7 +234,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
               disabled={isLive}
               className="px-4 py-2 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-xs uppercase hover:bg-gray-200 disabled:opacity-50 min-w-[70px]"
             >
-              NEXT &gt;
+              {t('history.next')} &gt;
             </button>
           </div>
         </div>
@@ -244,13 +242,13 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
 
       {loading && (
         <div className="text-center font-mono text-black dark:text-white animate-pulse">
-          {'/// LOADING HISTORY DATA ///'}
+          {t('history.loading')}
         </div>
       )}
 
       {!loading && history.length === 0 && (
         <div className="text-center font-mono text-gray-500 border-2 border-dashed border-gray-400 p-4">
-          NO DATA STREAM AVAILABLE
+          {t('history.no_data')}
         </div>
       )}
     </div>

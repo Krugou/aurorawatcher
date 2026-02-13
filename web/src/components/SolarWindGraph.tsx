@@ -108,7 +108,7 @@ export const SolarWindGraph = () => {
               stroke="#FFDE00"
               stokeWidth={2}
               fillOpacity={0.2}
-              name={t('graphs.speed_label', 'SPEED (km/s)')}
+              name={t('graphs.speed_label')}
             />
             <Line
               yAxisId="bz"
@@ -118,16 +118,13 @@ export const SolarWindGraph = () => {
               strokeWidth={3}
               dot={false}
               activeDot={{ r: 6, fill: '#fff', stroke: '#000', strokeWidth: 2 }}
-              name={t('graphs.bz_label', 'Bz (nT)')}
+              name={t('graphs.bz_label')}
             />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
       <p className="text-xs font-mono text-black dark:text-white mt-2 text-center uppercase tracking-wider">
-        {t(
-          'graphs.solar_hint',
-          'Correlation of High Speed + Negative Bz triggers Geomagnetic Storms.',
-        )}
+        {t('graphs.solar_hint')}
       </p>
     </>
   );

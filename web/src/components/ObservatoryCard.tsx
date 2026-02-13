@@ -56,7 +56,7 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
             className={`w-3 h-3 ${hasError ? 'bg-red-500' : 'bg-neo-mint'} border border-black shadow-[0_0_10px_rgba(0,255,157,0.7)] animate-pulse`}
           ></div>
           <span className="bg-black/80 text-white text-[10px] font-mono uppercase px-2 py-0.5 border border-white/50 backdrop-blur-sm">
-            {hasError ? 'OFFLINE' : 'ONLINE'}
+            {hasError ? t('grid.status_offline') : t('grid.status_online')}
           </span>
         </div>
 
@@ -84,7 +84,7 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
             className="flex items-center gap-2 px-3 py-2 bg-neo-yellow text-black border-2 border-black font-bold font-mono text-xs uppercase hover:bg-black hover:text-white transition-colors"
             title={t('grid.view_fullscreen')}
           >
-            <span>HISTORY</span>
+            <span>{t('grid.view_history')}</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="square"
@@ -100,7 +100,7 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
             target="_blank"
             rel="noreferrer"
             className="p-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-black dark:text-white"
-            title="Avaa kartalla"
+            title={t('grid.open_map')}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

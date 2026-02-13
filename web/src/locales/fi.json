@@ -12,7 +12,8 @@
     "linkText": "Avaa FMI:n palvelu",
     "toast": "Korkea revontuliaktiivisuus havaittu! (Punainen alue)",
     "loading": "Ladataan karttaa...",
-    "error": "Kartan lataus epäonnistui"
+    "error": "Kartan lataus epäonnistui",
+    "status_title": "ASEMIEN TILA"
   },
   "grid": {
     "title": "Observatoriokamerat",
@@ -20,7 +21,11 @@
     "loading": "Ladataan...",
     "error": "Kuvan lataus epäonnistui",
     "updated": "Päivitetty",
-    "view_fullscreen": "Koko näyttö"
+    "view_fullscreen": "Koko näyttö",
+    "status_online": "LINJOILLA",
+    "status_offline": "POISSA",
+    "view_history": "HISTORIA",
+    "open_map": "Avaa kartalla"
   },
   "footer": {
     "copyright": "© {{year}} Revontulivahti. Kuvat: FMI & Observatoriot."
@@ -100,6 +105,22 @@
   "cameras": {
     "close": "Sulje [Esc]"
   },
+  "history": {
+    "live": "LIVE NYT",
+    "frames": "KUVAA",
+    "prev": "EDELL.",
+    "next": "SEUR.",
+    "loading": "/// LADATAAN HISTORIATIETOA ///",
+    "no_data": "DATAA EI SAATAVILLA"
+  },
+  "notifications": {
+    "enabled": "ILMOITUKSET PÄÄLLÄ",
+    "blocked": "ILMOITUKSET ESTETTY",
+    "blocked_hint": "Ota käyttöön selaimen asetuksista",
+    "enable": "TILAA REVONTULIHÄLYTYKSET",
+    "for_station": "Asemalle {{station}}",
+    "for_any": "Kaikki korkea aktiivisuus"
+  },
   "data_info": {
     "title": "Miten palvelu toimii & Tietolähteet",
     "fmi_title": "Ilmatieteen laitos (FMI)",
@@ -107,5 +128,22 @@
     "noaa_title": "NOAA Space Weather Prediction Center",
     "noaa_desc": "Aurinkotuulen parametrit (Bz, nopeus, tiheys) ja Kp-indeksi on peräisin NOAA SWPC:ltä. Tiedot mitataan satelliiteilla (kuten DSCOVR) L1-pisteessä, mikä antaa noin 30–60 minuutin varoituksen ennen kuin aurinkotuuli saavuttaa Maan.",
     "disclaimer": "Huom: Tarkka revontulien ennustaminen riippuu monesta muuttujasta. Vaikka data olisi täydellistä, paikallinen näkyvyys ja nopeasti muuttuvat olosuhteet vaikuttavat lopputulokseen. Luota aina omiin silmiisi!"
+  },
+  "common": {
+    "status_online": "JÄRJESTELMÄ: LINJOILLA",
+    "monitoring_solar": "SEURATAAN AURINKOTUULTA",
+    "checking_mag": "TARKISTETAAN MAGNETOMETREJÄ",
+    "kp_stable": "KP-INDEKSI STABIILI",
+    "station": "ASEMA",
+    "saved": "TALLENNETTU",
+    "near": "LÄHELLÄ",
+    "unsave": "Poista tallennus",
+    "save": "Tallenna asema",
+    "no_data": "DATAA EI HAVAITTU",
+    "test": "TESTAA",
+    "switch_lang": "Vaihda kieli",
+    "close": "Sulje",
+    "prev_cam": "Edellinen kamera",
+    "next_cam": "Seuraava kamera"
   }
 }

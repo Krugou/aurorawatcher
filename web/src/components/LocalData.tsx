@@ -110,16 +110,13 @@ export const LocalData = ({
           <span className="text-3xl">📍</span>
         </div>
         <p className="text-black dark:text-white font-mono text-sm mb-6 max-w-md uppercase">
-          {t(
-            'local.prompt',
-            'Enable geolocation to see real-time magnetic field and weather conditions for your exact location.',
-          )}
+          {t('local.prompt')}
         </p>
         <button
           onClick={requestLocation}
           className="bg-neo-mint text-black px-8 py-3 font-bold font-mono uppercase border-2 border-black shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
         >
-          {t('local.button', 'Locate Me & Check Conditions')}
+          {t('local.button')}
         </button>
       </div>
     );
@@ -135,15 +132,11 @@ export const LocalData = ({
         </div>
       ) : geoError ? (
         <div className="bg-neo-pink text-black text-center p-6 border-2 border-black">
-          <p className="font-mono font-bold uppercase">
-            {t('local.geoError', 'Could not determine location. Please allow location access.')}
-          </p>
+          <p className="font-mono font-bold uppercase">{t('local.geoError')}</p>
         </div>
       ) : error ? (
         <div className="bg-neo-yellow text-black text-center p-6 border-2 border-black">
-          <p className="font-mono font-bold uppercase">
-            {t('local.dataError', 'No data available for your area right now.')}
-          </p>
+          <p className="font-mono font-bold uppercase">{t('local.dataError')}</p>
         </div>
       ) : data ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark bg-white dark:bg-black">
@@ -151,10 +144,10 @@ export const LocalData = ({
           <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
             <div>
               <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-pink inline-block px-2">
-                {t('local.magField', 'MAG FIELD')}
+                {t('local.magField')}
               </p>
               <p className="text-xs font-mono text-gray-500 uppercase">
-                STATION: {data.magStation}
+                {t('common.station', 'STATION')}: {data.magStation}
               </p>
             </div>
             <div className="mt-4">
@@ -165,7 +158,7 @@ export const LocalData = ({
                 <span className="text-sm font-mono text-gray-500">nT</span>
               </div>
               <p className="text-xs font-mono text-black dark:text-white mt-1 uppercase">
-                {t('local.intensity', 'RAW INTENSITY')}
+                {t('local.intensity')}
               </p>
             </div>
           </div>
@@ -173,7 +166,7 @@ export const LocalData = ({
           {/* Visibility Card */}
           <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
             <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-blue inline-block px-2">
-              {t('local.visibility', 'VISIBILITY')}
+              {t('local.visibility')}
             </p>
             <div className="mt-4">
               <p className={`text-2xl font-display font-bold text-black dark:text-white uppercase`}>
@@ -182,7 +175,6 @@ export const LocalData = ({
               <p className="text-sm font-mono text-gray-500 mt-1 uppercase">
                 {t('local.clouds', {
                   percent: Math.round((data.cloudCover / 8) * 100),
-                  defaultValue: 'COVERAGE: {{percent}}%',
                 })}
               </p>
             </div>
@@ -191,7 +183,7 @@ export const LocalData = ({
           {/* Conditions Card */}
           <div className="p-6 flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
             <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-yellow inline-block px-2">
-              {t('local.outdoors', 'ENV SENSORS')}
+              {t('local.outdoors')}
             </p>
             <div className="mt-4 flex flex-col justify-between gap-4">
               <div>
@@ -201,7 +193,6 @@ export const LocalData = ({
                 <p className="text-xs font-mono text-gray-500 mt-1 uppercase">
                   {t('local.wind', {
                     speed: data.windSpeed,
-                    defaultValue: 'WIND VELOCITY: {{speed}} M/S',
                   })}
                 </p>
               </div>

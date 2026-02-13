@@ -7,9 +7,7 @@ export const Header = () => {
       <div className="border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark bg-white dark:bg-black p-6 relative overflow-hidden group">
         <div className="absolute top-0 left-0 w-full bg-neo-yellow h-8 border-b-2 border-black dark:border-white flex items-center overflow-hidden">
           <div className="animate-marquee whitespace-nowrap font-mono font-bold text-black text-sm uppercase tracking-widest">
-            {
-              '/// SYSTEM STATUS: ONLINE /// MONITORING SOLAR WIND /// CHECKING MAGNETOMETERS /// KP INDEX STABLE ///'
-            }
+            {`/// ${t('common.status_online')} /// ${t('common.monitoring_solar')} /// ${t('common.checking_mag')} /// ${t('common.kp_stable')} ///`}
           </div>
         </div>
 

@@ -93,7 +93,7 @@ export const MagnetometerGraph = ({
             />
             <ReferenceLine
               y={50000}
-              label={{ value: t('graphs.quiet', 'QUIET'), fill: '#666', fontFamily: 'monospace' }}
+              label={{ value: t('graphs.quiet'), fill: '#666', fontFamily: 'monospace' }}
               stroke="#666"
               strokeDasharray="4 4"
             />
@@ -109,7 +109,7 @@ export const MagnetometerGraph = ({
         </ResponsiveContainer>
       </div>
       <p className="text-xs font-mono text-black dark:text-white mt-2 text-center uppercase tracking-wider">
-        {t('graphs.mag_hint', 'Rapid changes in intensity indicate active auroras overhead.')}
+        {t('graphs.mag_hint')}
       </p>
     </>
   );

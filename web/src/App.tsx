@@ -112,21 +112,21 @@ const AppContent = () => {
         <Header />
 
         <CollapsibleSection
-          title={t('local.title', 'Local Conditions')}
+          title={t('local.title')}
           headerColorClass="bg-neo-pink"
           storageKey="local_data"
         >
           <LocalData />
         </CollapsibleSection>
         <CollapsibleSection
-          title={t('grid.title', 'Observatory Status')}
+          title={t('grid.title')}
           headerColorClass="bg-neo-blue"
           storageKey="observatory_status"
         >
           <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
         </CollapsibleSection>
         <CollapsibleSection
-          title={t('space_weather.title', 'Space Weather (Live)')}
+          title={t('space_weather.title')}
           headerColorClass="bg-neo-orange"
           storageKey="space_weather"
           badge={
@@ -139,7 +139,7 @@ const AppContent = () => {
         </CollapsibleSection>
 
         <CollapsibleSection
-          title={t('graphs.title', 'Real-time Activity Graphs')}
+          title={t('graphs.title')}
           headerColorClass="bg-neo-yellow text-black"
           storageKey="graphs"
         >
@@ -150,7 +150,7 @@ const AppContent = () => {
         </CollapsibleSection>
 
         <CollapsibleSection
-          title={t('map.title', 'Aurora Forecast Map')}
+          title={t('map.title')}
           headerColorClass="bg-neo-mint text-black"
           storageKey="map"
         >
@@ -158,7 +158,7 @@ const AppContent = () => {
         </CollapsibleSection>
 
         <CollapsibleSection
-          title={t('data_info.title', 'How it Works & Data Sources')}
+          title={t('data_info.title')}
           headerColorClass="bg-gray-400 text-black"
           storageKey="data_info"
         >

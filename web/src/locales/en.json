@@ -12,7 +12,8 @@
     "linkText": "Open FMI Service",
     "toast": "High aurora activity detected! (Red area)",
     "loading": "Loading map...",
-    "error": "Failed to load map data"
+    "error": "Failed to load map data",
+    "status_title": "STATION STATUS"
   },
   "grid": {
     "title": "Observatory Cameras",
@@ -20,7 +21,11 @@
     "loading": "Loading...",
     "error": "Image failed to load",
     "updated": "Updated",
-    "view_fullscreen": "Full Screen"
+    "view_fullscreen": "Full Screen",
+    "status_online": "ONLINE",
+    "status_offline": "OFFLINE",
+    "view_history": "HISTORY",
+    "open_map": "Open on map"
   },
   "footer": {
     "copyright": "© {{year}} Aurora Watcher. Images: FMI & Observatories."
@@ -100,6 +105,22 @@
   "cameras": {
     "close": "Close [Esc]"
   },
+  "history": {
+    "live": "LIVE NOW",
+    "frames": "FRAMES",
+    "prev": "PREV",
+    "next": "NEXT",
+    "loading": "/// LOADING HISTORY DATA ///",
+    "no_data": "NO DATA STREAM AVAILABLE"
+  },
+  "notifications": {
+    "enabled": "NOTIFICATIONS ON",
+    "blocked": "NOTIFICATIONS BLOCKED",
+    "blocked_hint": "Enable in browser settings",
+    "enable": "ENABLE AURORA ALERTS",
+    "for_station": "For {{station}} station",
+    "for_any": "For any high activity"
+  },
   "data_info": {
     "title": "How it Works & Data Sources",
     "fmi_title": "FMI (Finnish Meteorological Institute)",
@@ -107,5 +128,22 @@
     "noaa_title": "NOAA Space Weather Prediction Center",
     "noaa_desc": "Solar wind parameters (Bz, Speed, Density) and the Planetary K-index are sourced from NOAA SWPC. This data is measured by satellites like DSCOVR at the L1 Lagrange point, providing a ~30-60 minute warning before solar wind hits Earth.",
     "disclaimer": "Note: Accurate aurora prediction depends on multiple variables. Even with perfect data, local visibility and fast-changing conditions play a huge role. Always trust your own eyes!"
+  },
+  "common": {
+    "status_online": "SYSTEM STATUS: ONLINE",
+    "monitoring_solar": "MONITORING SOLAR WIND",
+    "checking_mag": "CHECKING MAGNETOMETERS",
+    "kp_stable": "KP INDEX STABLE",
+    "station": "STATION",
+    "saved": "SAVED",
+    "near": "NEAR",
+    "unsave": "Unsave Station",
+    "save": "Save Station",
+    "no_data": "NO DATA DETECTED",
+    "test": "TEST",
+    "switch_lang": "Switch Language",
+    "close": "Close",
+    "prev_cam": "Previous Camera",
+    "next_cam": "Next Camera"
   }
 }
