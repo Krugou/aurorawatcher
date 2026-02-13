@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client';
 
 import App from './App.tsx';
 
-console.info(
+console.warn(
   `%c AURORA WATCHER %c Build: ${__BUILD_TIME__} `,
   'background: #00FF9D; color: #000; font-weight: bold;',
   'background: #000; color: #fff;',

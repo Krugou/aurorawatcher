@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { fetchMagneticData, fetchWeatherData } from '../services/fmiService';
 import { fetchNorwayWeather } from '../services/weatherService';
+import { normalizeStationKey } from '../utils/i18nUtils';
 import { Skeleton } from './Skeleton';
 
 interface CombinedData {
@@ -148,13 +149,9 @@ export const LocalData = ({
               </p>
               <p className="text-xs font-mono text-gray-500 uppercase">
                 {t('common.station')}:{' '}
-                {t(
-                  `common.loc.${(data.magStation || '')
-                    .toLowerCase()
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')}`,
-                  { defaultValue: data.magStation },
-                )}
+                {t(`common.loc.${normalizeStationKey(data.magStation)}`, {
+                  defaultValue: data.magStation,
+                })}
               </p>
             </div>
             <div className="mt-4">

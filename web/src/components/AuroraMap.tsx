@@ -9,6 +9,7 @@ import {
   scanStationStatuses,
   StationStatus,
 } from '../utils/auroraUtils';
+import { normalizeStationKey } from '../utils/i18nUtils';
 import { Skeleton } from './Skeleton';
 
 const AURORA_DATA =
@@ -155,7 +156,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
             </h2>
             {savedStation && (
               <span className="text-xs font-mono font-bold bg-neo-yellow text-black px-2 py-1 border border-black">
-                ★ {t('map.saved')}: {t(`common.loc.${savedStation.toLowerCase()}`)}
+                ★ {t('map.saved')}: {t(`common.loc.${normalizeStationKey(savedStation)}`)}
               </span>
             )}
           </div>
@@ -177,7 +178,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                   <div className="flex flex-col min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono font-bold text-black dark:text-white uppercase truncate">
-                        {t(`common.loc.${s.name.toLowerCase()}`)}
+                        {t(`common.loc.${normalizeStationKey(s.name)}`)}
                       </span>
                       {isNearest && (
                         <span className="text-[9px] bg-neo-blue text-white px-1 font-mono font-bold">
