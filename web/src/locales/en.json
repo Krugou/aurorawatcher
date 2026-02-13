@@ -111,7 +111,12 @@
     "prev": "PREV",
     "next": "NEXT",
     "loading": "/// LOADING HISTORY DATA ///",
-    "no_data": "NO DATA STREAM AVAILABLE"
+    "no_data": "NO DATA STREAM AVAILABLE",
+    "range_6h": "6H",
+    "range_24h": "24H",
+    "range_3d": "3D",
+    "range_7d": "7D",
+    "range_30d": "30D"
   },
   "notifications": {
     "enabled": "NOTIFICATIONS ON",

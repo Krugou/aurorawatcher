@@ -147,7 +147,15 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 : 'bg-white text-black border-black border-l-0 first:border-l-2 hover:bg-gray-200 dark:bg-zinc-800 dark:text-white dark:border-white'
             }`}
           >
-            {h === 720 ? '30D' : h === 168 ? '7D' : h === 72 ? '3D' : `${h}H`}
+            {h === 720
+              ? t('history.range_30d')
+              : h === 168
+                ? t('history.range_7d')
+                : h === 72
+                  ? t('history.range_3d')
+                  : h === 24
+                    ? t('history.range_24h')
+                    : t('history.range_6h')}
           </button>
         ))}
       </div>
