@@ -42,7 +42,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './web/dist'
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Summary
         if: success()
         run: |
