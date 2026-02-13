@@ -12,6 +12,12 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+let analytics: ReturnType<typeof getAnalytics> | null = null;
+try {
+  analytics = getAnalytics(app);
+} catch (e) {
+  console.warn('Firebase Analytics initialization failed:', e);
+}
 
 export { analytics, app };
