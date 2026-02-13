@@ -168,6 +168,8 @@
     "no_data": "DATAA EI HAVAITTU",
     "test": "TESTAA",
     "switch_lang": "Vaihda kieli",
+    "en_label": "EN",
+    "fi_label": "FI",
     "close": "Sulje",
     "prev_cam": "Edellinen kamera",
     "next_cam": "Seuraava kamera",

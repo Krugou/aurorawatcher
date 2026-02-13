@@ -15,6 +15,8 @@
     "build": "npm run build --workspaces",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:yaml": "npx yaml-lint .github/workflows/*.yml",
+    "check:i18n": "node devtools/check-i18n.js",
+    "check:hardcoded": "node devtools/find-hardcoded.js",
     "prepare": "husky"
   },
   "lint-staged": {

@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const localesPath = path.join(__dirname, 'web', 'src', 'locales', 'en.json');
-const srcDir = path.join(__dirname, 'web', 'src');
+const localesPath = path.join(__dirname, '..', 'web', 'src', 'locales', 'en.json');
+const srcDir = path.join(__dirname, '..', 'web', 'src');
 
 function flattenObject(obj, prefix = '') {
   return Object.keys(obj).reduce((acc, k) => {
@@ -21,16 +21,20 @@ const flattenedEn = flattenObject(en);
 const enKeys = new Set(Object.keys(flattenedEn));
 
 function walkDir(dir, callback) {
-  fs.readdirSync(dir).forEach(f => {
+  const files = fs.readdirSync(dir);
+  for (const f of files) {
     const dirPath = path.join(dir, f);
-    const isDirectory = fs.statSync(dirPath).isDirectory();
-    isDirectory ? walkDir(dirPath, callback) : callback(dirPath);
-  });
+    if (fs.statSync(dirPath).isDirectory()) {
+      walkDir(dirPath, callback);
+    } else {
+      callback(dirPath);
+    }
+  }
 }
 
 const tPattern = /t\(['"]([^'"]+)['"]/g;
-const missingKeys = new Set();
 const foundKeys = new Set();
+const missingKeys = new Set();
 
 walkDir(srcDir, (filePath) => {
   if (filePath.endsWith('.tsx') || filePath.endsWith('.ts')) {
@@ -38,28 +42,32 @@ walkDir(srcDir, (filePath) => {
     let match;
     while ((match = tPattern.exec(content)) !== null) {
       const key = match[1];
-      foundKeys.add(key);
-      if (!enKeys.has(key)) {
-        missingKeys.add(`${key} (in ${path.relative(__dirname, filePath)})`);
+      // Only check keys that look like i18n keys (e.g. common.save)
+      // and aren't obviously non-i18n strings (like '2d', 'Last-Modified')
+      if (key.includes('.')) {
+        foundKeys.add(key);
+        if (!enKeys.has(key)) {
+          missingKeys.add(`${key} (in ${path.relative(__dirname, filePath)})`);
+        }
       }
     }
   }
 });
 
-console.log('--- FOUND KEYS IN CODE ---');
-console.log([...foundKeys].sort());
+console.log('JSON Keys Count:', enKeys.size);
+console.log('Keys used in Code Count:', foundKeys.size);
 
-console.log('\n--- MISSING IN en.json ---');
+console.log('\n--- MISSING KEYS (Used in code but not in en.json) ---');
 if (missingKeys.size === 0) {
-  console.log('No missing keys found! 🎉');
+  console.log('None! 🎉');
 } else {
-  missingKeys.forEach(k => console.log(k));
+  [...missingKeys].sort().forEach(k => console.log(k));
 }
 
 const unusedKeys = [...enKeys].filter(k => !foundKeys.has(k));
-console.log('\n--- UNUSED IN en.json ---');
+console.log('\n--- UNUSED KEYS (In en.json but not used in code) ---');
 if (unusedKeys.length === 0) {
-  console.log('No unused keys found! 🎉');
+  console.log('None! 🎉');
 } else {
-  unusedKeys.forEach(k => console.log(k));
+  unusedKeys.sort().forEach(k => console.log(k));
 }

@@ -168,6 +168,8 @@
     "no_data": "NO DATA DETECTED",
     "test": "TEST",
     "switch_lang": "Switch Language",
+    "en_label": "EN",
+    "fi_label": "FI",
     "close": "Close",
     "prev_cam": "Previous Camera",
     "next_cam": "Next Camera",
