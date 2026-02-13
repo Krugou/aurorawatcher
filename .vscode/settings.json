@@ -1,3 +1,24 @@
 {
-  "i18n-ally.localesPaths": ["web/src/locales"]
+  "i18n-ally.localesPaths": ["web/src/locales"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.namespace": true,
+  "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
+  "i18n-ally.enabledFrameworks": ["react", "i18next", "general"],
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.displayLanguage": "fi",
+  "i18n-ally.extract.autoDetect": true,
+  "i18n-ally.extract.parsers.html": {
+    "attributes": ["text", "title", "alt", "placeholder", "label", "aria-label"],
+    "ignoredTags": ["script", "style"],
+    "vBind": true,
+    "inlineText": true
+  },
+  "i18n-ally.refactor.templates": [
+    {
+      "source": "html-attribute",
+      "templates": ["i18n.t('{key}'{args})", "custom.t('{key}'{args})"],
+      "include": ["web/src/**/*.{ts,js,tsx,jsx}", "web/index.html"],
+      "exclude": ["web/src/config/**"]
+    }
+  ]
 }

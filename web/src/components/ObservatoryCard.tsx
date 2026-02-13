@@ -71,10 +71,10 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
       <div className="p-4 flex items-center justify-between bg-white dark:bg-black">
         <div>
           <h3 className="text-xl font-display font-bold uppercase text-black dark:text-white">
-            {loc.name}
+            {t(loc.name)}
           </h3>
           <p className="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            {loc.fullname}
+            {t(loc.fullname)}
           </p>
         </div>
         <div className="flex gap-2">

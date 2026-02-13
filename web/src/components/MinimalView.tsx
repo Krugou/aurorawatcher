@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { useImageMetadata } from '../hooks/useImageMetadata';
 import { Location } from '../types';
 
@@ -7,6 +9,7 @@ interface MinimalCardProps {
 }
 
 const MinimalCard = ({ loc, timestamp }: MinimalCardProps) => {
+  const { t } = useTranslation();
   const lastModified = useImageMetadata(loc.image, timestamp);
 
   return (
@@ -19,7 +22,7 @@ const MinimalCard = ({ loc, timestamp }: MinimalCardProps) => {
       />
       <div className="absolute top-2 left-2 flex gap-2">
         <span className="bg-neo-mint text-black font-mono font-bold text-xs px-2 py-0.5 border border-white uppercase">
-          {loc.name}
+          {t(loc.name)}
         </span>
         {lastModified && (
           <span className="bg-black text-white border border-white font-mono text-xs px-2 py-0.5 opacity-75">
@@ -37,8 +40,16 @@ interface MinimalViewProps {
 }
 
 export const MinimalView = ({ locations, timestamp }: MinimalViewProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-black text-white p-4 flex flex-col gap-4">
+      <a
+        href="/"
+        className="fixed bottom-4 right-4 z-50 bg-black/50 backdrop-blur-sm border border-white/30 text-white px-4 py-2 font-mono text-xs uppercase hover:bg-white hover:text-black transition-colors"
+      >
+        {t('minimal.back')}
+      </a>
       {Object.entries(locations).map(([key, loc]) => (
         <MinimalCard key={key} loc={loc} timestamp={timestamp} />
       ))}
