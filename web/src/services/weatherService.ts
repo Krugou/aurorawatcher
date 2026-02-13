@@ -51,9 +51,9 @@ export const fetchNorwayWeather = async (lat: number, lon: number): Promise<Weat
     }
     return {
       temperature: details.air_temperature,
-      description: summary?.symbol_code?.replace(/_/g, ' ') || 'Unknown',
+      description: summary?.symbol_code?.replace(/_/g, ' ') ?? 'Unknown',
       location: `${lat.toFixed(2)}, ${lon.toFixed(2)}`,
-      icon: summary?.symbol_code || '',
+      icon: summary?.symbol_code ?? '',
     };
   } catch (error) {
     if (error instanceof WeatherError) throw error;

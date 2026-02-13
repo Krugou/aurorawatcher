@@ -11,7 +11,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
 
 // Claims clients immediately
-self.skipWaiting();
+void self.skipWaiting();
 clientsClaim();
 
 // SPA navigation - use NetworkFirst for index.html
@@ -89,7 +89,7 @@ async function showAuroraNotification(savedStation: string | null): Promise<void
 self.addEventListener('notificationclick', (event: NotificationEvent) => {
   event.notification.close();
 
-  const urlToOpen = (event.notification.data as { url?: string })?.url || '/aurorawatcher/';
+  const urlToOpen = (event.notification.data as { url?: string } | null)?.url ?? '/aurorawatcher/';
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
@@ -123,14 +123,19 @@ self.addEventListener('periodicsync', ((event: PeriodicSyncEvent) => {
   }
 }) as EventListener);
 
-// Message handler for manual checks from the app
+interface AuroraMessage {
+  type: string;
+  savedStation?: string;
+}
+
 self.addEventListener('message', (event: ExtendableMessageEvent) => {
-  if (event.data?.type === 'CHECK_AURORA') {
+  const data = event.data as AuroraMessage | undefined;
+  if (data?.type === 'CHECK_AURORA') {
     event.waitUntil(
       (async () => {
         const hasActivity = await checkAuroraActivity();
         if (hasActivity) {
-          await showAuroraNotification(event.data.savedStation || null);
+          await showAuroraNotification(data.savedStation ?? null);
         }
         // Respond to the client
         event.ports[0]?.postMessage({ hasActivity });

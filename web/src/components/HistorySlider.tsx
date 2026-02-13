@@ -126,7 +126,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
     });
   };
 
-  const displayTime = isLive ? t('history.live') : formatTime(currentEntry?.timestamp || 0);
+  const displayTime = isLive ? t('history.live') : formatTime(currentEntry?.timestamp ?? 0);
 
   const ranges = [6, 24, 72, 168, 720];
 

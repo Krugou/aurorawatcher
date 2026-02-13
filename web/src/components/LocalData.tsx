@@ -28,7 +28,7 @@ export const LocalData = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const effectiveCoords = manualCoords || coords;
+  const effectiveCoords = manualCoords ?? coords;
 
   useEffect(() => {
     if (effectiveCoords) {

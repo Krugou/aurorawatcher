@@ -59,9 +59,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
         }}
         className="w-full flex items-center gap-4 p-6 text-left hover:brightness-110 transition-all focus:outline-none cursor-pointer"
       >
-        {icon ? (
-          icon
-        ) : (
+        {icon ?? (
           <div
             className={`w-6 h-6 ${headerColorClass} border-2 border-black dark:border-white shadow-neo-sm dark:shadow-neo-sm-dark`}
           ></div>
