@@ -1,3 +1,9 @@
+# [1.19.0](https://github.com/Krugou/aurorawatcher/compare/v1.18.3...v1.19.0) (2026-02-13)
+
+### Features
+
+- **web:** add analytics tracking ([39df4c1](https://github.com/Krugou/aurorawatcher/commit/39df4c11cf88ea60613a9b18c930ceb3c0905f0e))
+
 ## [1.18.3](https://github.com/Krugou/aurorawatcher/compare/v1.18.2...v1.18.3) (2026-02-13)
 
 ### Bug Fixes
