@@ -1,3 +1,13 @@
+# [1.18.0](https://github.com/Krugou/aurorawatcher/compare/v1.17.1...v1.18.0) (2026-02-13)
+
+### Bug Fixes
+
+- **i18n:** internationalize play/pause and implement loop ([29d814e](https://github.com/Krugou/aurorawatcher/commit/29d814ec8da162da2db26c28da0342c8f0364fb0))
+
+### Features
+
+- add build timestamp logging to production ([7e9e3b9](https://github.com/Krugou/aurorawatcher/commit/7e9e3b97e059b731a60c9acfeab7e24808bc722f))
+
 ## [1.17.1](https://github.com/Krugou/aurorawatcher/compare/v1.17.0...v1.17.1) (2026-02-13)
 
 ### Bug Fixes
