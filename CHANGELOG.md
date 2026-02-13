@@ -1,3 +1,13 @@
+# [1.17.0](https://github.com/Krugou/aurorawatcher/compare/v1.16.0...v1.17.0) (2026-02-13)
+
+### Bug Fixes
+
+- **test:** exclude playwright tests from vitest and improve husky checks ([c05fdbb](https://github.com/Krugou/aurorawatcher/commit/c05fdbb18716055e325503d4896d2e293127ac84))
+
+### Features
+
+- setup Playwright testing and fix accessibility issues ([436ecc1](https://github.com/Krugou/aurorawatcher/commit/436ecc12684fcdb0c93e640a16ff7895c470f116))
+
 # [1.16.0](https://github.com/Krugou/aurorawatcher/compare/v1.15.0...v1.16.0) (2026-02-07)
 
 ### Features
