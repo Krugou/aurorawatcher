@@ -172,7 +172,7 @@ const AppContent = () => {
         </CollapsibleSection>
 
         <footer className="text-center py-12 text-gray-600 font-mono text-xs uppercase tracking-widest">
-          <p title={`${t('common.build_time', 'Build time')}: ${__BUILD_TIME__}`}>
+          <p title={`${t('common.build_time')}: ${__BUILD_TIME__}`}>
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </p>
         </footer>

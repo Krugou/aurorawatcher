@@ -37,7 +37,7 @@ walkDir(srcDir, (filePath) => {
          'white', 'black', 'granted', 'denied', 'default', 'unsupported', 'auto', 'module', 'true', 'false',
          'numeric', '2-digit', 'short', 'long', 'narrow', 'timestamp', 'intensity', 'speed', 'bz', 'kp',
          'latitude', 'longitude', 'Enter', ' ', 'nT', 'km/s', 'p/cm³', 't=', 'aurora-check', 'CHECK_AURORA',
-         'section_', 'aurora_saved_station', '6H', '24H', '3D', '7D', '30D'
+         'section_', 'aurora_saved_station', '6H', '24H', '3D', '7D', '30D', 'NFD'
       ];
 
       const isClassName = text.includes(' ') && (text.includes('bg-') || text.includes('text-') || text.includes('p-') || text.includes('m-'));
