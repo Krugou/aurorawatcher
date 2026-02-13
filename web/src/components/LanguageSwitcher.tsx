@@ -1,11 +1,14 @@
 import { useTranslation } from 'react-i18next';
 
+import { Analytics } from '../utils/analytics';
+
 export const LanguageSwitcher = () => {
   const { t, i18n } = useTranslation();
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'fi' : 'en';
     i18n.changeLanguage(newLang);
+    Analytics.trackLanguageChange(newLang);
   };
 
   return (

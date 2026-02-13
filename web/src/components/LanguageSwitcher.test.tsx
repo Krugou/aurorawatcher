@@ -1,9 +1,16 @@
 import '../i18n'; // Ensure i18n is initialized
 
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { LanguageSwitcher } from './LanguageSwitcher';
+
+// Mock analytics to prevent Firebase initialization issues
+vi.mock('../utils/analytics', () => ({
+  Analytics: {
+    trackLanguageChange: vi.fn(),
+  },
+}));
 
 describe('LanguageSwitcher', () => {
   it('renders correctly', () => {

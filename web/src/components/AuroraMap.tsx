@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useGeolocation } from '../hooks/useGeolocation';
+import { Analytics } from '../utils/analytics';
 import {
   checkImageColor,
   findNearestStation,
@@ -57,9 +58,11 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
     if (savedStation === name) {
       setSavedStation(null);
       localStorage.removeItem('aurora_saved_station');
+      Analytics.trackStationInteraction(savedStation, 'unsave');
     } else {
       setSavedStation(name);
       localStorage.setItem('aurora_saved_station', name);
+      Analytics.trackStationInteraction(name, 'save');
     }
   };
 
@@ -227,6 +230,9 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
           </p>
           <a
             href={INFO_URL}
+            onClick={() => {
+              Analytics.trackExternalLink(INFO_URL, 'FMI Service');
+            }}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 bg-neo-mint text-black border-2 border-black px-4 py-2 font-bold font-mono uppercase shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all text-sm"

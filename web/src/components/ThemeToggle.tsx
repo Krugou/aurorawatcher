@@ -1,14 +1,20 @@
 import { useTranslation } from 'react-i18next';
 
 import { useTheme } from '../hooks/useTheme';
+import { Analytics } from '../utils/analytics';
 
 export const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
 
+  const handleToggle = () => {
+    toggleTheme();
+    Analytics.trackThemeChange(theme === 'light' ? 'dark' : 'light');
+  };
+
   return (
     <button
-      onClick={toggleTheme}
+      onClick={handleToggle}
       className="flex items-center justify-center h-12 w-12 bg-white dark:bg-black hover:bg-neo-yellow dark:hover:bg-neo-yellow text-black dark:text-white dark:hover:text-black border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none cursor-pointer"
       aria-label={theme === 'dark' ? t('theme.switchToLight') : t('theme.switchToDark')}
     >

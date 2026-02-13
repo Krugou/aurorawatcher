@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Analytics } from '../utils/analytics';
+
 interface CollapsibleSectionProps {
   title: string;
   icon?: React.ReactNode;
@@ -36,6 +38,9 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
     setIsExpanded(nextValue);
     if (storageKey) {
       localStorage.setItem(`section_${storageKey}`, String(nextValue));
+      Analytics.trackSectionToggle(storageKey || title, nextValue);
+    } else {
+      Analytics.trackSectionToggle(title, nextValue);
     }
   };
 

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useImageMetadata } from '../hooks/useImageMetadata';
 import { Location } from '../types';
+import { Analytics } from '../utils/analytics';
 
 interface MinimalCardProps {
   loc: Location;
@@ -46,6 +47,9 @@ export const MinimalView = ({ locations, timestamp }: MinimalViewProps) => {
     <div className="min-h-screen bg-black text-white p-4 flex flex-col gap-4">
       <a
         href="/"
+        onClick={() => {
+          Analytics.trackNavigation('back_from_minimal');
+        }}
         className="fixed bottom-4 right-4 z-50 bg-black/50 backdrop-blur-sm border border-white/30 text-white px-4 py-2 font-mono text-xs uppercase hover:bg-white hover:text-black transition-colors"
       >
         {t('minimal.back')}

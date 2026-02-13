@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useImageMetadata } from '../hooks/useImageMetadata';
 import { Location } from '../types';
+import { Analytics } from '../utils/analytics';
 import { Skeleton } from './Skeleton';
 
 interface ObservatoryCardProps {
@@ -81,6 +82,9 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
           {/* History / Fullscreen Button - Always visible for accessibility */}
           <a
             href={`?cam=${id}`}
+            onClick={() => {
+              Analytics.trackStationInteraction(id, 'view_history');
+            }}
             className="flex items-center gap-2 px-3 py-2 bg-neo-yellow text-black border-2 border-black font-bold font-mono text-xs uppercase hover:bg-black hover:text-white transition-colors"
             title={t('grid.view_fullscreen')}
           >
@@ -97,6 +101,9 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
 
           <a
             href={loc.mapUrl}
+            onClick={() => {
+              Analytics.trackStationInteraction(id, 'view_map');
+            }}
             target="_blank"
             rel="noreferrer"
             className="p-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-black dark:text-white"

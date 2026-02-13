@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { Analytics } from '../utils/analytics';
+
 interface GeolocationState {
   coords: GeolocationCoordinates | null;
   error: GeolocationPositionError | null;
@@ -15,6 +17,7 @@ export const useGeolocation = () => {
 
   const requestLocation = () => {
     if (!navigator.geolocation) {
+      Analytics.trackLocationRequest('error');
       setState((prev) => ({
         ...prev,
         error: {
@@ -28,10 +31,12 @@ export const useGeolocation = () => {
       return;
     }
 
+    Analytics.trackLocationRequest('requested');
     setState((prev) => ({ ...prev, loading: true, error: null }));
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        Analytics.trackLocationRequest('success');
         setState({
           coords: position.coords,
           error: null,
@@ -39,6 +44,7 @@ export const useGeolocation = () => {
         });
       },
       (error) => {
+        Analytics.trackLocationRequest(error.code === error.PERMISSION_DENIED ? 'denied' : 'error');
         setState({
           coords: null,
           error,

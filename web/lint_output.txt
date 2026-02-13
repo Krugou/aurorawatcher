@@ -3,42 +3,43 @@
 > eslint .
 
 
-C:\Users\moxch\Documents\GitHub\aurorawatcher\web\dev-dist\registerSW.js
-  0:0  error  Parsing error: "parserOptions.project" has been provided for @typescript-eslint/parser.
-The file was not found in any of the provided project(s): dev-dist\registerSW.js
-
-C:\Users\moxch\Documents\GitHub\aurorawatcher\web\playwright.config.ts
-  0:0  error  Parsing error: "parserOptions.project" has been provided for @typescript-eslint/parser.
-The file was not found in any of the provided project(s): playwright.config.ts
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\AuroraMap.tsx
+    1:1   error  Run autofix to sort these imports!                                                                                  simple-import-sort/imports
+  234:28  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\CollapsibleSection.tsx
-  57:10  warning  Prefer using nullish coalescing operator (`??`) instead of a ternary expression, as it is simpler to read                                                                                          @typescript-eslint/prefer-nullish-coalescing
-  69:13  error    Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+  62:10  warning  Prefer using nullish coalescing operator (`??`) instead of a ternary expression, as it is simpler to read  @typescript-eslint/prefer-nullish-coalescing
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\FullscreenView.tsx
-  78:43  warning  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+  81:43  warning  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\HistorySlider.tsx
-  132:42  warning  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+  129:87  warning  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\LanguageSwitcher.tsx
-  8:5  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  10:5  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\LocalData.tsx
-  30:40  warning  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
+  31:40  warning  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\MagnetometerGraph.tsx
   27:40  warning  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator  @typescript-eslint/prefer-nullish-coalescing
   92:53  warning  Unsafe argument of type error typed assigned to a parameter of type `number`                               @typescript-eslint/no-unsafe-argument
 
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\MinimalView.tsx
+   1:1   error  Run autofix to sort these imports!                                                                                  simple-import-sort/imports
+  51:24  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\NotificationPermission.tsx
-   35:19  warning  Unsafe call of a type that could not be resolved                                   @typescript-eslint/no-unsafe-call
-   35:45  warning  Unsafe member access .register on a type that cannot be resolved                   @typescript-eslint/no-unsafe-member-access
-   78:19  warning  Promise-returning function provided to attribute where a void return was expected  @typescript-eslint/no-misused-promises
-  105:15  warning  Promise-returning function provided to attribute where a void return was expected  @typescript-eslint/no-misused-promises
+   39:19  warning  Unsafe call of a type that could not be resolved                                   @typescript-eslint/no-unsafe-call
+   39:45  warning  Unsafe member access .register on a type that cannot be resolved                   @typescript-eslint/no-unsafe-member-access
+   82:19  warning  Promise-returning function provided to attribute where a void return was expected  @typescript-eslint/no-misused-promises
+  109:15  warning  Promise-returning function provided to attribute where a void return was expected  @typescript-eslint/no-misused-promises
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\ObservatoryCard.tsx
-  67:14  warning  Prefer using nullish coalescing operator (`??`) instead of a ternary expression, as it is simpler to read  @typescript-eslint/prefer-nullish-coalescing
+   68:14  warning  Prefer using nullish coalescing operator (`??`) instead of a ternary expression, as it is simpler to read           @typescript-eslint/prefer-nullish-coalescing
+   85:28  error    Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  102:28  error    Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\SolarWindGraph.tsx
   99:53  warning  Unsafe argument of type error typed assigned to a parameter of type `number`  @typescript-eslint/no-unsafe-argument
@@ -50,12 +51,21 @@ C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\SpaceWeather.ts
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\context\ThemeProvider.tsx
   9:9  warning  Unnecessary conditional, value is always truthy  @typescript-eslint/no-unnecessary-condition
 
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\firebase.ts
+   5:3  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+   6:3  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+   7:3  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+   8:3  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+   9:3  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+  10:3  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+  11:3  warning  Unsafe assignment of an `any` value  @typescript-eslint/no-unsafe-assignment
+
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\hooks\useAuroraAlert.ts
   28:5   warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
   29:34  warning  Promise returned in function argument where a void return was expected                                                                                              @typescript-eslint/no-misused-promises
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\hooks\useGeolocation.ts
-  17:9  warning  Unnecessary conditional, value is always falsy  @typescript-eslint/no-unnecessary-condition
+  19:9  warning  Unnecessary conditional, value is always falsy  @typescript-eslint/no-unnecessary-condition
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\hooks\useImageMetadata.ts
   33:5  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
@@ -64,7 +74,7 @@ C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\i18n.ts
   8:1  warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\main.tsx
-  9:12  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
+  16:12  warning  Forbidden non-null assertion  @typescript-eslint/no-non-null-assertion
 
 C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\services\fmiService.ts
    70:5   warning  Expected a `for-of` loop instead of a `for` loop with this simple iteration  @typescript-eslint/prefer-for-of
@@ -147,23 +157,15 @@ C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\sw-custom.ts
   133:51  warning  Unsafe member access .savedStation on an `any` value                                                                                                                @typescript-eslint/no-unsafe-member-access
   133:64  warning  Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator                                                           @typescript-eslint/prefer-nullish-coalescing
 
-C:\Users\moxch\Documents\GitHub\aurorawatcher\web\tests\accessibility.spec.ts
-  0:0  error  Parsing error: "parserOptions.project" has been provided for @typescript-eslint/parser.
-The file was not found in any of the provided project(s): tests\accessibility.spec.ts
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\utils\analytics.ts
+   6:56  error    A record is preferred over an index signature    @typescript-eslint/consistent-indexed-object-style
+   6:73  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+   7:7   warning  Unnecessary conditional, value is always truthy  @typescript-eslint/no-unnecessary-condition
+  19:55  error    A record is preferred over an index signature    @typescript-eslint/consistent-indexed-object-style
+  19:72  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
 
-C:\Users\moxch\Documents\GitHub\aurorawatcher\web\tests\functional.spec.ts
-  0:0  error  Parsing error: "parserOptions.project" has been provided for @typescript-eslint/parser.
-The file was not found in any of the provided project(s): tests\functional.spec.ts
-
-C:\Users\moxch\Documents\GitHub\aurorawatcher\web\tests\responsive.spec.ts
-  0:0  error  Parsing error: "parserOptions.project" has been provided for @typescript-eslint/parser.
-The file was not found in any of the provided project(s): tests\responsive.spec.ts
-
-C:\Users\moxch\Documents\GitHub\aurorawatcher\web\tests\simple.spec.ts
-  0:0  error  Parsing error: "parserOptions.project" has been provided for @typescript-eslint/parser.
-The file was not found in any of the provided project(s): tests\simple.spec.ts
-
-Ô£û 102 problems (7 errors, 95 warnings)
+Ô£û 113 problems (10 errors, 103 warnings)
+  8 errors and 0 warnings potentially fixable with the `--fix` option.
 
 npm error Lifecycle script `lint` failed with error:
 npm error code 1

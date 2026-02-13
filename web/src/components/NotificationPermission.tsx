@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Analytics } from '../utils/analytics';
+
 interface NotificationPermissionProps {
   savedStation: string | null;
 }
@@ -22,11 +24,13 @@ export const NotificationPermission = ({ savedStation }: NotificationPermissionP
     if (!('Notification' in window)) return;
 
     setIsRegistering(true);
+    Analytics.trackNotificationPermission('requested');
     try {
       const result = await Notification.requestPermission();
       setPermission(result);
 
       if (result === 'granted') {
+        Analytics.trackNotificationPermission('granted');
         // Register for periodic sync if supported
         if ('serviceWorker' in navigator && 'periodicSync' in ServiceWorkerRegistration.prototype) {
           const registration = await navigator.serviceWorker.ready;
