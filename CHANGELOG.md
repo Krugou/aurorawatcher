@@ -1,3 +1,11 @@
+## [1.18.1](https://github.com/Krugou/aurorawatcher/compare/v1.18.0...v1.18.1) (2026-02-13)
+
+### Bug Fixes
+
+- **i18n:** exhaustive internationalization of all UI strings and labels ([91df2e3](https://github.com/Krugou/aurorawatcher/commit/91df2e3232eff2101f77d805a7b5162e80ef987b))
+- **i18n:** finalize translations and sync build config ([71d6964](https://github.com/Krugou/aurorawatcher/commit/71d696446b06a174958b6771ea516707ec2d6e62))
+- **i18n:** remove final hardcoded fallbacks and sync translations ([38c965a](https://github.com/Krugou/aurorawatcher/commit/38c965a3b5c3fe8747cdf1d577a95dd942cdbd6d))
+
 # [1.18.0](https://github.com/Krugou/aurorawatcher/compare/v1.17.1...v1.18.0) (2026-02-13)
 
 ### Bug Fixes
