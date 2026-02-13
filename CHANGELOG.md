@@ -1,3 +1,9 @@
+## [1.18.3](https://github.com/Krugou/aurorawatcher/compare/v1.18.2...v1.18.3) (2026-02-13)
+
+### Bug Fixes
+
+- **web:** add missing translations and restore back button in MinimalView ([fd51ca4](https://github.com/Krugou/aurorawatcher/commit/fd51ca46c4f8a2654db23a9e0047d73ac9075bb1))
+
 ## [1.18.2](https://github.com/Krugou/aurorawatcher/compare/v1.18.1...v1.18.2) (2026-02-13)
 
 ### Bug Fixes
