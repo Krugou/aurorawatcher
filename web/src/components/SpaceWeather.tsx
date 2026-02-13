@@ -57,7 +57,7 @@ export const SpaceWeather = () => {
           <span className={`text-4xl font-display font-bold ${getBzColor(data.bz)}`}>
             {data.bz}
           </span>
-          <span className="text-xs font-mono text-gray-500">nT</span>
+          <span className="text-xs font-mono text-gray-500">{t('common.unit_mag')}</span>
         </div>
         <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
           {t('space_weather.bz_hint')}
@@ -73,7 +73,7 @@ export const SpaceWeather = () => {
           <span className={`text-4xl font-display font-bold ${getSpeedColor(data.speed)}`}>
             {Math.round(data.speed)}
           </span>
-          <span className="text-xs font-mono text-gray-500">km/s</span>
+          <span className="text-xs font-mono text-gray-500">{t('common.unit_speed')}</span>
         </div>
         <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
           {t('space_weather.speed_hint')}
@@ -89,7 +89,7 @@ export const SpaceWeather = () => {
           <span className={`text-4xl font-display font-bold ${getDensityColor(data.density)}`}>
             {Math.round(data.density)}
           </span>
-          <span className="text-xs font-mono text-gray-500">p/cm³</span>
+          <span className="text-xs font-mono text-gray-500">{t('common.unit_density')}</span>
         </div>
         <p className="text-[10px] font-mono text-gray-500 mt-2 uppercase">
           {t('space_weather.density_hint')}

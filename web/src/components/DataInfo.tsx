@@ -21,7 +21,7 @@ export const DataInfo = () => {
               rel="noreferrer"
               className="text-xs font-bold font-mono text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors"
             >
-              FMI Open Data
+              {t('data_info.fmi_link')}
             </a>
             <a
               href="https://space.fmi.fi/MIRACLE/RWC/"
@@ -29,7 +29,7 @@ export const DataInfo = () => {
               rel="noreferrer"
               className="text-xs font-bold font-mono text-white bg-neo-blue px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors"
             >
-              MIRACLE Network
+              {t('data_info.miracle_link')}
             </a>
           </div>
         </div>
@@ -49,7 +49,7 @@ export const DataInfo = () => {
               rel="noreferrer"
               className="text-xs font-bold font-mono text-black dark:text-white bg-neo-orange px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors"
             >
-              NOAA SWPC
+              {t('data_info.noaa_link')}
             </a>
             <a
               href="https://services.swpc.noaa.gov/"
@@ -57,7 +57,7 @@ export const DataInfo = () => {
               rel="noreferrer"
               className="text-xs font-bold font-mono text-black dark:text-white bg-neo-orange px-2 py-1 border border-black hover:bg-white hover:text-black transition-colors"
             >
-              JSON Data Services
+              {t('data_info.json_link')}
             </a>
           </div>
         </div>

@@ -138,7 +138,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
           <img
             crossOrigin="anonymous"
             src={`${AURORA_DATA}?t=${timestamp}`}
-            alt="Aurora Data"
+            alt={t('map.title')}
             className={`w-full h-full object-contain transition-all duration-500 bg-gray-200 dark:bg-zinc-800 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
             onLoad={handleImageLoad}
             onError={handleError}

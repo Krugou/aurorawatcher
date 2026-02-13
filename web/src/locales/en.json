@@ -132,6 +132,10 @@
     "fmi_desc": "Ground-level data is fetched directly from FMI Open Data APIs. This includes real-time magnetometer observations from stations across Finland and local weather forecasts (cloud cover, temperature) based on your geolocation.",
     "noaa_title": "NOAA Space Weather Prediction Center",
     "noaa_desc": "Solar wind parameters (Bz, Speed, Density) and the Planetary K-index are sourced from NOAA SWPC. This data is measured by satellites like DSCOVR at the L1 Lagrange point, providing a ~30-60 minute warning before solar wind hits Earth.",
+    "fmi_link": "FMI Open Data",
+    "miracle_link": "MIRACLE Network",
+    "noaa_link": "NOAA SWPC",
+    "json_link": "JSON Data Services",
     "disclaimer": "Note: Accurate aurora prediction depends on multiple variables. Even with perfect data, local visibility and fast-changing conditions play a huge role. Always trust your own eyes!"
   },
   "common": {
@@ -149,6 +153,10 @@
     "switch_lang": "Switch Language",
     "close": "Close",
     "prev_cam": "Previous Camera",
-    "next_cam": "Next Camera"
+    "next_cam": "Next Camera",
+    "notifications": "Notifications",
+    "unit_mag": "nT",
+    "unit_speed": "km/s",
+    "unit_density": "p/cm³"
   }
 }

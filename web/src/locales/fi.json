@@ -132,6 +132,10 @@
     "fmi_desc": "Maanpäälliset tiedot haetaan suoraan Ilmatieteen laitoksen avoimen datan rajapinnoista. Tämä sisältää reaaliaikaiset magnetometrihavainnot ympäri Suomea sekä paikalliset sääennusteet (pilvisyys, lämpötila) perustuen sijaintiisi.",
     "noaa_title": "NOAA Space Weather Prediction Center",
     "noaa_desc": "Aurinkotuulen parametrit (Bz, nopeus, tiheys) ja Kp-indeksi on peräisin NOAA SWPC:ltä. Tiedot mitataan satelliiteilla (kuten DSCOVR) L1-pisteessä, mikä antaa noin 30–60 minuutin varoituksen ennen kuin aurinkotuuli saavuttaa Maan.",
+    "fmi_link": "FMI Avoin data",
+    "miracle_link": "MIRACLE-verkko",
+    "noaa_link": "NOAA SWPC",
+    "json_link": "JSON-tietopalvelut",
     "disclaimer": "Huom: Tarkka revontulien ennustaminen riippuu monesta muuttujasta. Vaikka data olisi täydellistä, paikallinen näkyvyys ja nopeasti muuttuvat olosuhteet vaikuttavat lopputulokseen. Luota aina omiin silmiisi!"
   },
   "common": {
@@ -149,6 +153,10 @@
     "switch_lang": "Vaihda kieli",
     "close": "Sulje",
     "prev_cam": "Edellinen kamera",
-    "next_cam": "Seuraava kamera"
+    "next_cam": "Seuraava kamera",
+    "notifications": "Ilmoitukset",
+    "unit_mag": "nT",
+    "unit_speed": "km/s",
+    "unit_density": "p/cm³"
   }
 }

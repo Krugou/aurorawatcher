@@ -171,7 +171,7 @@ const AppContent = () => {
           </p>
         </footer>
       </div>
-      <ToastContainer position="top-right" theme="dark" aria-label="Ilmoitukset" />
+      <ToastContainer position="top-right" theme="dark" aria-label={t('common.notifications')} />
     </div>
   );
 };

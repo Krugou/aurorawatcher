@@ -155,7 +155,7 @@ export const LocalData = ({
                 <span className="text-4xl font-display font-bold text-black dark:text-white group-hover:text-neo-pink transition-colors">
                   {data.fieldIntensity}
                 </span>
-                <span className="text-sm font-mono text-gray-500">nT</span>
+                <span className="text-sm font-mono text-gray-500">{t('common.unit_mag')}</span>
               </div>
               <p className="text-xs font-mono text-black dark:text-white mt-1 uppercase">
                 {t('local.intensity')}
