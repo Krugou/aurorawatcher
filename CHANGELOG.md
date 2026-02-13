@@ -1,3 +1,9 @@
+## [1.17.1](https://github.com/Krugou/aurorawatcher/compare/v1.17.0...v1.17.1) (2026-02-13)
+
+### Bug Fixes
+
+- **i18n:** internationalize residual hardcoded strings and units ([cb6ce68](https://github.com/Krugou/aurorawatcher/commit/cb6ce68d7fdd6fdf87ae230cae2f64f6f6af1504))
+
 # [1.17.0](https://github.com/Krugou/aurorawatcher/compare/v1.16.0...v1.17.0) (2026-02-13)
 
 ### Bug Fixes
