@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Allsky Aurora Camera</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Live view of the aurora borealis from the Allsky Aurora Camera at the University of Alaska Fairbanks.">
+  <meta name="keywords" content="aurora, borealis, camera, live, University of Alaska Fairbanks, UAF">
+  <meta property="og:title" content="Allsky Aurora Camera - University of Alaska Fairbanks">
+  <meta property="og:description" content="Live view of the aurora borealis from the Allsky Aurora Camera at the University of Alaska Fairbanks.">
+  <meta property="og:image" content="https://allsky.gi.alaska.edu/images/offline-notdark-source.jpg">
+  <meta property="og:url" content="https://allsky.gi.alaska.edu/">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+    <script src="js/EventSource.js"></script>
+    <script src="js/cameraControl.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/local.js"></script>
+    <link rel="stylesheet" href="css/allsky.css" />
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="css/local.css" />
+    <link href="https://vjs.zencdn.net/7.3.0/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E0PL8DMF5J"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-E0PL8DMF5J');
+    </script>
+  </head>
+  <body>
+    <div data-role="page" id="page-current">
+      <header id="site-header">
+        <div id="site-banner">
+          <a href="https://www.uaf.edu/uaf/index.php"><img src="./images/uaflogoBlue.png" width='80' alt="UAF logo"
+              style="margin-left:5px; margin-right:2px;" /></a>
+          <a href="https://www.uaf.edu/uaf/index.php"><img src="./images/uaf-logo-text.png"
+              alt="University of Alaska Fairbanks" width='110' /></a>
+        </div>
+      </header>
+      <main>
+        <!DOCTYPE html>
+<div>
+  <div data-role="header" id="site-menu-banner">
+          <a href="/info" data-transition="flip" data-icon="info" class="ui-btn-left" class="menu-info">
+            <span>Info<span>
+          </a>
+          <h1 class="geo-title">Geophysical Institute</h1>
+          <div class="dropdown-cam-selector">
+            <button type="button" id="camera-selector" data-bs-toggle="dropdown" aria-expanded="false" data-icon="camera">
+              <span>Select Cameras</span>
+            </button>
+            <ul class="dropdown-menu cam-sel-menu" aria-labelledby="camera-selector">
+              <li><a class="dropdown-item" onclick="cameraClicked(`/`)">All Cameras</a></li>
+              <li><a class="dropdown-item" onclick="cameraClicked(`poker flat`)">Poker Flat</a></li><li><a class="dropdown-item" onclick="cameraClicked(`toolik lake`)">Toolik Lake</a></li><li><a class="dropdown-item" onclick="cameraClicked(`gakona`)">Gakona</a></li>
+            </ul>
+          </div>
+          <a href="/setup" data-transition="flip" data-icon="gear" class="ui-btn-right" id="menu-setting">
+            <span>Setup</span>
+          </a>
+      
+        <div class="offcanvas-menu" style="display:none;">
+          <button data-bs-toggle="offcanvas" href="#offcanvas-select-current" aria-controls="offcanvas-select" style="padding: 5px 5px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#000000" class="bi bi-list" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-select-current" >
+            
+            <button data-bs-dismiss="offcanvas" aria-label="Close" style="width:fit-content; padding:2px; margin-left:5px; margin-top:5px; border-radius:25px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </button>
+          
+            <div class="offcanvas-body">
+              <button onclick="cameraClicked(`/`)">All Cameras</button>
+              <button onclick="cameraClicked(`poker flat`)">Poker Flat</button><button onclick="cameraClicked(`toolik lake`)">Toolik Lake</button><button onclick="cameraClicked(`gakona`)">Gakona</button>
+              <button onclick="cameraClicked(`info`)" data-bs-dismiss="offcanvas" aria-label="Close">Info</button>
+              <button onclick="cameraClicked(`setup`)" data-bs-dismiss="offcanvas" aria-label="Close">Setup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+  <div style="margin-bottom:2em;">
+  
+    <div class="compass-rose-img" style="float:left; padding-left: 2.5em; padding-right: 2.5em; padding-top: 1em;">
+      <img src="/images/Compass_2.png" alt="A compass showing East and North."/>
+    </div>
+    <div class="ak-clock-cont">
+      <p>Current Alaska Time:
+      <span class="ak-clock-tik">11:00:14</span>
+      </p>
+    </div>
+  </div>
+  </div>
+
+<!DOCTYPE html>
+<div role="main" class="ui-content">
+  <div id="main-content">
+    <div class="content-wrapper center">
+      <div class="container main-camera-view-cont">
+        <div class="row">
+          <div class="col-sm camera-col">
+        <div class="camera-card" onclick="cameraClicked(`poker flat`)">
+          <div class="camera-title">
+            <p id="camera-name">Poker Flat</p>
+            <div class="weather-app">
+              <div id="weather-info-cont">
+                <p id="weather-temp">
+                  <img id="weather-icon" src="/images/icons/snow.svg" alt="An icon illustrating the weather condition at poker flat." style="margin-bottom: 8px">
+                  7 &#176 F / -14 &#176 C
+                </P>
+                <p id="weather-type">Light snowfall</p>
+              </div>
+            </div>
+          </div>
+          <img class="camera-view-poker-flat" src="/images/initial.jpg" alt="Eye ball showing the live video feeds from the poker flat camera." style="max-width: 100%; height:auto; border-radius: 5px"/>
+          <div class="camera-control">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 1 16 16">
+              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+            </svg>
+            <p>Expand Camera</p>
+          </div>
+        </div>
+      </div><div class="col-sm camera-col">
+        <div class="camera-card" onclick="cameraClicked(`toolik lake`)">
+          <div class="camera-title">
+            <p id="camera-name">Toolik Lake</p>
+            <div class="weather-app">
+              <div id="weather-info-cont">
+                <p id="weather-temp">
+                  <img id="weather-icon" src="/images/icons/cloudy-day.svg" alt="An icon illustrating the weather condition at toolik lake." style="margin-bottom: 8px">
+                  -13 &#176 F / -25 &#176 C
+                </P>
+                <p id="weather-type">Mostly cloudy</p>
+              </div>
+            </div>
+          </div>
+          <img class="camera-view-toolik-lake" src="/images/initial.jpg" alt="Eye ball showing the live video feeds from the toolik lake camera." style="max-width: 100%; height:auto; border-radius: 5px"/>
+          <div class="camera-control">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 1 16 16">
+              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+            </svg>
+            <p>Expand Camera</p>
+          </div>
+        </div>
+      </div><div class="col-sm camera-col">
+        <div class="camera-card" onclick="cameraClicked(`gakona`)">
+          <div class="camera-title">
+            <p id="camera-name">Gakona</p>
+            <div class="weather-app">
+              <div id="weather-info-cont">
+                <p id="weather-temp">
+                  <img id="weather-icon" src="/images/icons/cloudy-day.svg" alt="An icon illustrating the weather condition at gakona." style="margin-bottom: 8px">
+                  -6 &#176 F / -21 &#176 C
+                </P>
+                <p id="weather-type">Mostly cloudy</p>
+              </div>
+            </div>
+          </div>
+          <img class="camera-view-gakona" src="/images/initial.jpg" alt="Eye ball showing the live video feeds from the gakona camera." style="max-width: 100%; height:auto; border-radius: 5px"/>
+          <div class="camera-control">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 1 16 16">
+              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+            </svg>
+            <p>Expand Camera</p>
+          </div>
+        </div>
+      </div>        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      </main>
+      <footer style="position: relative">
+        <!DOCTYPE html>
+
+<div class="site-footer">
+  <p>
+    The <a href="http://www.alaska.edu/alaska">University of Alaska</a> is an equal opportunity/equal access employer and educational institution. The university is committed to a <a href="http://www.alaska.edu/nondiscrimination">policy of nondiscrimination</a> against individuals on the basis of any legally protected status.
+  </p>
+  <p>
+    UA is committed to providing accessible websites. Learn more about UA’s <a class="ua-lan-link"
+      href="https://www.alaska.edu/webaccessibility">notice of web accessibility.</a><br/>
+      <a class="ua-lan-link" href="https://www.alaska.edu/records/records/compliance/gdpr/ua-privacy-statement/" target="_blank">Privacy Statement</a>
+  </p>
+  <p>For inquiries about the cameras and other resources on this website, please contact Don Hampton (<a class="mail-to-link" href="mailto:dhampton@alaska.edu ">dhampton@alaska.edu</a>) and Jason Ahrns (<a class="mail-to-link" href="mailto:mjahrns@alaska.edu">mjahrns@alaska.edu</a>).</p>
+  <p>
+  Please report any problems or feedback regarding the status of this website to <a class="mail-to-link" href="mailto:uaf-rcs@alaska.edu">uaf-rcs@alaska.edu</a>.
+  </p>
+  <p>
+    &#169;2026 Geophysical Institute, University of Alaska Fairbanks.
+  </p>
+</div>      </footer>
+    </div>
+    <!DOCTYPE html>
+
+<div class="container" id="cookies-consent", style="display:none;">
+    <div class="row">
+        <div class="col-xs-6 col-sm-9 col-md-10" style="position: relative;">
+            <p>
+                We use cookies to provide you with the best possible experience.
+                By continuing to use this website, you consent to the use of cookies.
+                <a target="_blank" href='https://www.alaska.edu/records/records/compliance/gdpr/ua-privacy-statement/'>
+                    Privacy Policy
+                </a>
+            </p>
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-2" style="position: relative;" id="cookie-btn-cont">
+            <button onclick="acceptedCookie()">
+                Accept
+            </button>
+        </div>
+    </div>
+</div>    <script type="text/javascript">
+      $('#page-current').on('pagebeforeshow', function (event) {
+        $('#message').innerHTML = "Displaying main";
+        ['gakona', 'poker-flat', 'toolik-lake'].forEach(element => {
+          startSlideshow(element);
+        });
+      });
+    </script>
+  </body>
+</html>

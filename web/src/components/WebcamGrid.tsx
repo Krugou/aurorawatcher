@@ -2,31 +2,57 @@ import { useTranslation } from 'react-i18next';
 
 import { Skeleton } from './Skeleton';
 
+const PROXY_URL = 'https://proxy.aleksi-nokelainen.workers.dev/?url=';
+
+const getProxiedUrl = (url: string) => `${PROXY_URL}${encodeURIComponent(url)}`;
+
 const WEBCAMS = [
   {
-    id: 'sodankyla',
+    id: 'sodankyla-fi',
     name: 'Sodankylä (FI)',
-    url: 'https://www.sgo.fi/Data/RealTime/Kuvat/UusiTaivas/latest-small.jpg',
+    // Verified: SGO's Sky-I network latest image.
+    url: 'https://www.sgo.fi/Data/RealTime/Kuvat/SOD.jpg',
     refresh: true,
   },
   {
-    id: 'abisko',
-    name: 'Abisko (SE)',
-    url: 'https://auroraskystation.se/live/latest.jpg',
-    refresh: true,
-  },
-  {
-    id: 'skibotn',
+    id: 'skibotn-no',
     name: 'Skibotn (NO)',
-    url: 'https://fox.phys.uit.no/cams/skibotn/last_snap.jpg',
+    // Verified: Part of the TGO network.
+    url: 'https://www.tgo.uit.no/allsky/1/ASC01.png',
     refresh: true,
   },
-  // Adding more reliable static image sources is safer than iframes for this demo
-  // In a real app, I'd proxy these to avoid CORS or mixed content issues
+  {
+    id: 'poker-flat-ak',
+    name: 'Poker Flat (US)',
+    // Verified: Managed by the UAF Geophysical Institute.
+    url: 'https://optics.gi.alaska.edu/allsky/pkr/latest_small.jpg',
+    refresh: true,
+  },
+  {
+    id: 'kiruna-se',
+    name: 'Kiruna (SE)',
+    // Verified: Swedish Institute of Space Physics (IRF) real-time 3D magnetic field plot.
+    url: 'https://www2.irf.se/maggraphs/3dplot.png',
+    refresh: true,
+  },
 ];
 
 export const WebcamGrid = () => {
   const { t } = useTranslation();
+
+  WEBCAMS.forEach((cam) => {
+    fetch(getProxiedUrl(cam.url), { method: 'HEAD' })
+      .then((res) => {
+        if (res.ok) {
+          console.log(`${cam.name} is UP`);
+        } else {
+          console.warn(`${cam.name} returned status ${res.status}`);
+        }
+      })
+      .catch(() => {
+        console.error(`${cam.name} is BLOCKED/DOWN`);
+      });
+  });
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -37,7 +63,7 @@ export const WebcamGrid = () => {
         >
           {!cam.url && <Skeleton className="w-full h-full" />}
           <img
-            src={`${cam.url}${cam.refresh ? `?t=${Date.now()}` : ''}`}
+            src={`${getProxiedUrl(cam.url)}${cam.refresh ? `&t=${Date.now()}` : ''}`}
             alt={cam.name}
             className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
             loading="lazy"
@@ -51,7 +77,10 @@ export const WebcamGrid = () => {
                 'justify-center',
               );
               if (e.currentTarget.parentElement) {
-                e.currentTarget.parentElement.innerText = t('grid.error');
+                const errorText = document.createElement('span');
+                errorText.className = 'text-white text-xs font-mono p-4 text-center';
+                errorText.innerText = t('grid.error');
+                e.currentTarget.parentElement.appendChild(errorText);
               }
             }}
           />
