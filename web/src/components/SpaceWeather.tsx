@@ -51,7 +51,7 @@ export const SpaceWeather = () => {
       {/* Bz */}
       <div className="bg-white dark:bg-black p-4 border-2 border-black dark:border-white shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all group">
         <p className="text-xs font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-yellow inline-block px-1">
-          {t('space_weather.bz')}
+          <span className="animate-pulse mr-1">●</span> {t('space_weather.bz')}
         </p>
         <div className="flex items-baseline gap-1 mt-2">
           <span className={`text-4xl font-display font-bold ${getBzColor(data.bz)}`}>

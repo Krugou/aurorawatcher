@@ -14,9 +14,12 @@ import { LocalData } from './components/LocalData';
 import { MagnetometerGraph } from './components/MagnetometerGraph';
 import { MinimalView } from './components/MinimalView';
 import { ObservatoryGrid } from './components/ObservatoryGrid';
+import { SightingButton } from './components/SightingButton';
+import { SightingsFeed } from './components/SightingsFeed';
 import { SolarWindGraph } from './components/SolarWindGraph';
 import { SpaceWeather } from './components/SpaceWeather';
 import { ThemeToggle } from './components/ThemeToggle';
+import { WebcamGrid } from './components/WebcamGrid';
 import { ThemeProvider } from './context/ThemeProvider';
 import { useAuroraAlert } from './hooks/useAuroraAlert';
 import { useTitleFlasher } from './hooks/useTitleFlasher';
@@ -109,6 +112,9 @@ const AppContent = () => {
   // Oletusnäkymä (Työpöytä/Mobiili)
   return (
     <div className="min-h-screen bg-[#f0f0f0] dark:bg-[#050505] text-black dark:text-white font-sans flex flex-col items-center transition-colors duration-300">
+      {/* Sightings Ticker */}
+      <SightingsFeed />
+
       {/* Top Controls Container */}
       <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
         <ThemeToggle />
@@ -123,6 +129,11 @@ const AppContent = () => {
           storageKey="local_data"
         >
           <LocalData />
+
+          {/* Social Reporting */}
+          <div className="flex justify-center mt-8 mb-4">
+            <SightingButton />
+          </div>
         </CollapsibleSection>
         <CollapsibleSection
           title={t('grid.title')}
@@ -130,6 +141,15 @@ const AppContent = () => {
           storageKey="observatory_status"
         >
           <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
+
+          {/* International Webcams directly in grid section for now, or separate */}
+          <div className="mt-8 pt-8 border-t-2 border-black dark:border-white/20">
+            <h3 className="text-xl font-display font-black italic uppercase mb-4 text-black dark:text-white flex items-center gap-2">
+              <span className="w-3 h-3 bg-neo-green block animate-pulse" />
+              {t('webcams.title')}
+            </h3>
+            <WebcamGrid />
+          </div>
         </CollapsibleSection>
         <CollapsibleSection
           title={t('space_weather.title')}

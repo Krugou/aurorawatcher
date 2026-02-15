@@ -8,7 +8,7 @@ declare let self: ServiceWorkerGlobalScope;
 
 // Workbox precaching
 precacheAndRoute(self.__WB_MANIFEST);
-cleanupOutdatedCaches();
+cleanupOutdatedCaches(); // Auto-cleanup old caches
 
 // Claims clients immediately
 void self.skipWaiting();

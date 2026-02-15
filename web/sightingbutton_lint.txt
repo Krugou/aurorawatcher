@@ -1,0 +1,9 @@
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\SightingButton.tsx
+  49:9   warning  Unnecessary conditional, value is always falsy                                                                                                                      @typescript-eslint/no-unnecessary-condition
+  56:9   warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  61:9   warning  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  70:17  warning  Promise-returning function provided to attribute where a void return was expected                                                                                   @typescript-eslint/no-misused-promises
+
+Ô£û 4 problems (0 errors, 4 warnings)
+

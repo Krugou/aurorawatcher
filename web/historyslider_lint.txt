@@ -1,0 +1,8 @@
+
+C:\Users\moxch\Documents\GitHub\aurorawatcher\web\src\components\HistorySlider.tsx
+  229:28  error  Returning a void expression from an arrow function shorthand is forbidden. Please add braces to the arrow function  @typescript-eslint/no-confusing-void-expression
+  233:13  error  Non-interactive elements should not be assigned interactive roles                                                   jsx-a11y/no-noninteractive-element-to-interactive-role
+
+Ô£û 2 problems (2 errors, 0 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

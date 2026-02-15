@@ -53,6 +53,8 @@
     "button": "Paikanna minut ja tarkista olosuhteet",
     "geoError": "Sijaintia ei voitu määrittää. Salli sijaintitietoihin pääsy.",
     "dataError": "Tietoja ei ole tällä hetkellä saatavilla alueellesi.",
+    "daytime_title": "LIIAN KIRKASTA! 😎",
+    "daytime_desc": "Aurinko paistaa. Revontulet ovat arkoja. Palaa pimeällä!",
     "observedAt": "Havaittu asemalla: {{station}}",
     "magField": "Magneettikenttä",
     "intensity": "Magneettikentän voimakkuus",
@@ -82,7 +84,8 @@
     "noGo7": "PILVET: 1, SINÄ: 0 ⚽",
     "noGo8": "YRITÄ MYÖHEMMIN UUDELLEEN... 😴",
     "noGo9": "HIENO NÄKYMÄ VESIHÖYRYSTÄ 💧",
-    "noGo10": "NETFLIX & EI JÄNNITYSTÄ 🍿"
+    "noGo10": "NETFLIX & EI JÄNNITYSTÄ 🍿",
+    "lat_warning": "Leveyspiiri < 62°N: Todennäköisyys pieni ellei Kp > 5."
   },
   "sky": {
     "clear": "Selkeä taivas 🌌",
@@ -133,7 +136,9 @@
     "range_24h": "24t",
     "range_3d": "3pv",
     "range_7d": "7pv",
-    "range_30d": "30pv"
+    "range_30d": "30pv",
+    "oldest": "Historia alkaen: {{time}}",
+    "fullscreen": "Koko näyttö"
   },
   "notifications": {
     "enabled": "ILMOITUKSET PÄÄLLÄ",
@@ -205,5 +210,17 @@
       "mekrijärvi": "Mekrijärvi",
       "nurmijärvi": "Nurmijärvi"
     }
+  },
+  "social": {
+    "button": "NÄEN REVONTULIA! 👀",
+    "sending": "LÄHETETÄÄN...",
+    "cooldown": "ODOTA HETKI ⏱️",
+    "thanks": "Kiitos! Voit ilmoittaa uudelleen 10 min kuluttua.",
+    "scanning": "Skannataan taajuuksia...",
+    "reported": "HAVAINTO RAPORTOITU",
+    "just_now": "JUURI NYT"
+  },
+  "webcams": {
+    "title": "MAAILMAN TAIVAAT"
   }
 }

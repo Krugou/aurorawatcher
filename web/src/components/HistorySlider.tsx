@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { LoadingAurora } from './LoadingAurora';
+
 interface HistoryEntry {
   timestamp: number;
   camId: string;
@@ -88,6 +90,8 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeRange, fullHistory]); // Removed currentIndex to fix logic loop, added logic inside to handle index
 
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
   // Playback logic
   useEffect(() => {
     if (isPlaying) {
@@ -127,36 +131,44 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
   };
 
   const displayTime = isLive ? t('history.live') : formatTime(currentEntry?.timestamp ?? 0);
+  const oldestTime = fullHistory.length > 0 ? formatTime(fullHistory[0].timestamp) : null;
 
   const ranges = [6, 24, 72, 168, 720];
 
   return (
     <div className="flex flex-col gap-4">
       {/* Time Range Selector */}
-      <div className="flex justify-center gap-0">
-        {ranges.map((h) => (
-          <button
-            key={h}
-            onClick={() => {
-              setTimeRange(h);
-            }}
-            className={`px-4 py-3 border-2 text-sm font-bold font-mono transition-colors min-w-[50px] ${
-              timeRange === h
-                ? 'bg-neo-blue border-black text-white shadow-neo-sm z-10'
-                : 'bg-white text-black border-black border-l-0 first:border-l-2 hover:bg-gray-200 dark:bg-zinc-800 dark:text-white dark:border-white'
-            }`}
-          >
-            {h === 720
-              ? t('history.range_30d')
-              : h === 168
-                ? t('history.range_7d')
-                : h === 72
-                  ? t('history.range_3d')
-                  : h === 24
-                    ? t('history.range_24h')
-                    : t('history.range_6h')}
-          </button>
-        ))}
+      <div className="flex flex-col gap-2">
+        {oldestTime && (
+          <div className="text-center text-xs font-mono text-gray-500 dark:text-gray-400">
+            {t('history.oldest', { time: oldestTime })}
+          </div>
+        )}
+        <div className="flex justify-center gap-0 scale-75 sm:scale-100 origin-center transition-transform">
+          {ranges.map((h) => (
+            <button
+              key={h}
+              onClick={() => {
+                setTimeRange(h);
+              }}
+              className={`px-4 py-3 border-2 text-sm font-bold font-mono transition-colors min-w-[50px] ${
+                timeRange === h
+                  ? 'bg-neo-blue border-black text-white shadow-neo-sm z-10'
+                  : 'bg-white text-black border-black border-l-0 first:border-l-2 hover:bg-gray-200 dark:bg-zinc-800 dark:text-white dark:border-white'
+              }`}
+            >
+              {h === 720
+                ? t('history.range_30d')
+                : h === 168
+                  ? t('history.range_7d')
+                  : h === 72
+                    ? t('history.range_3d')
+                    : h === 24
+                      ? t('history.range_24h')
+                      : t('history.range_6h')}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Image Display */}
@@ -168,7 +180,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
         />
 
         {/* Time Overlay */}
-        <div className="absolute top-4 left-4 bg-black/80 px-3 py-1.5 border border-white">
+        <div className="absolute top-4 left-4 bg-black/80 px-3 py-1.5 border border-white max-w-[70%]">
           <span
             className={`font-mono font-bold text-base ${isLive ? 'text-red-500 animate-pulse' : 'text-white'}`}
           >
@@ -176,7 +188,77 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
           </span>
           <div className="text-white text-[10px] font-mono">{displayTime}</div>
         </div>
+
+        {/* Fullscreen Button */}
+        <button
+          onClick={() => {
+            setIsFullscreen(true);
+          }}
+          className="absolute bottom-4 right-4 bg-white text-black p-2 border-2 border-black shadow-neo-sm hover:translate-x-px hover:translate-y-px hover:shadow-none transition-all z-10 opacity-70 hover:opacity-100"
+          title={t('history.fullscreen')}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+            />
+          </svg>
+        </button>
       </div>
+
+      {/* Fullscreen Overlay */}
+      {isFullscreen && (
+        <div className="fixed inset-0 z-100 bg-black flex items-center justify-center p-4">
+          <button
+            onClick={() => {
+              setIsFullscreen(false);
+            }}
+            className="absolute top-4 right-4 z-101 bg-white text-black p-2 border-2 border-black hover:bg-gray-200"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-8 w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
+          <div className="absolute top-4 left-4 z-101 bg-black/80 px-4 py-2 border border-white">
+            <span
+              className={`font-mono font-bold text-xl ${isLive ? 'text-red-500 animate-pulse' : 'text-white'}`}
+            >
+              {isLive ? t('history.live_label') : t('history.hist_label')}
+            </span>
+            <div className="text-white text-sm font-mono">{displayTime}</div>
+          </div>
+
+          <button
+            type="button"
+            className="w-full h-full p-0 border-0 bg-transparent cursor-pointer flex items-center justify-center"
+            onClick={() => {
+              setIsFullscreen(false);
+            }}
+          >
+            <img src={displayImage} alt="Fullscreen" className="w-full h-full object-contain" />
+          </button>
+        </div>
+      )}
 
       {/* Controls */}
       {history.length > 0 && (
@@ -247,11 +329,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
         </div>
       )}
 
-      {loading && (
-        <div className="text-center font-mono text-black dark:text-white animate-pulse">
-          {t('history.loading')}
-        </div>
-      )}
+      {loading && <LoadingAurora />}
 
       {!loading && history.length === 0 && (
         <div className="text-center font-mono text-gray-500 border-2 border-dashed border-gray-400 p-4">

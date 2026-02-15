@@ -3,8 +3,11 @@ import { useTranslation } from 'react-i18next';
 
 import { useGeolocation } from '../hooks/useGeolocation';
 import { fetchMagneticData, fetchWeatherData } from '../services/fmiService';
+import { fetchSolarData, SolarData } from '../services/solarService';
 import { fetchNorwayWeather } from '../services/weatherService';
+import { isDaytime } from '../utils/daytime';
 import { normalizeStationKey } from '../utils/i18nUtils';
+import { AuroraGauge } from './AuroraGauge';
 import { Skeleton } from './Skeleton';
 
 interface CombinedData {
@@ -15,6 +18,7 @@ interface CombinedData {
   cloudCover: number;
   windSpeed: number;
   description?: string;
+  solar: SolarData | null;
 }
 
 export const LocalData = ({
@@ -37,6 +41,7 @@ export const LocalData = ({
       setError(false); // Reset error state on new fetch attempt
       Promise.all([
         fetchMagneticData(effectiveCoords.latitude, effectiveCoords.longitude),
+        fetchSolarData(),
         fetchWeatherData(effectiveCoords.latitude, effectiveCoords.longitude).then(async (res) => {
           if (!res) {
             console.warn('[LocalData] FMI Weather failed, trying MET Norway fallback...');
@@ -61,8 +66,8 @@ export const LocalData = ({
           return res;
         }),
       ])
-        .then(([magResult, weatherResult]) => {
-          console.log('[LocalData] Fetch results:', { magResult, weatherResult });
+        .then(([magResult, solarResult, weatherResult]) => {
+          console.log('[LocalData] Fetch results:', { magResult, solarResult, weatherResult });
           if (magResult && weatherResult) {
             setData({
               magStation: magResult.station,
@@ -72,6 +77,7 @@ export const LocalData = ({
               cloudCover: weatherResult.cloudCover,
               windSpeed: weatherResult.windSpeed,
               description: (weatherResult as { description?: string }).description,
+              solar: solarResult,
             });
           } else {
             console.warn('[LocalData] One or more datasets missing');
@@ -140,111 +146,100 @@ export const LocalData = ({
           <p className="font-mono font-bold uppercase">{t('local.dataError')}</p>
         </div>
       ) : data ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark bg-white dark:bg-black">
-          {/* Magnetic Field Card */}
-          <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
-            <div>
-              <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-pink inline-block px-2">
-                {t('local.magField')}
-              </p>
-              <p className="text-xs font-mono text-gray-500 uppercase">
-                {t('common.station')}:{' '}
-                {t(`common.loc.${normalizeStationKey(data.magStation)}`, {
-                  defaultValue: data.magStation,
-                })}
-              </p>
-            </div>
-            <div className="mt-4">
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-display font-bold text-black dark:text-white group-hover:text-neo-pink transition-colors">
-                  {data.fieldIntensity}
-                </span>
-                <span className="text-sm font-mono text-gray-500">{t('common.unit_mag')}</span>
-              </div>
-              <p className="text-xs font-mono text-black dark:text-white mt-1 uppercase">
-                {t('local.intensity')}
-              </p>
-            </div>
+        effectiveCoords && isDaytime(effectiveCoords.latitude, effectiveCoords.longitude) ? (
+          <div className="bg-yellow-100 dark:bg-yellow-900/20 text-center p-8 border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark">
+            <div className="text-6xl mb-4">☀️</div>
+            <h3 className="text-2xl font-display font-black uppercase mb-2">
+              {t('local.daytime_title')}
+            </h3>
+            <p className="font-mono text-sm uppercase">{t('local.daytime_desc')}</p>
           </div>
-
-          {/* Visibility Card */}
-          <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
-            <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-blue inline-block px-2">
-              {t('local.visibility')}
-            </p>
-            <div className="mt-4">
-              <p className={`text-2xl font-display font-bold text-black dark:text-white uppercase`}>
-                {sky.text}
-              </p>
-              <p className="text-sm font-mono text-gray-500 mt-1 uppercase">
-                {t('local.clouds', {
-                  percent: Math.round((data.cloudCover / 8) * 100),
-                })}
-              </p>
-            </div>
-          </div>
-
-          {/* Conditions Card */}
-          <div className="p-6 flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
-            <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-yellow inline-block px-2">
-              {t('local.outdoors')}
-            </p>
-            <div className="mt-4 flex flex-col justify-between gap-4">
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark bg-white dark:bg-black">
+            {/* Magnetic Field Card */}
+            <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
               <div>
-                <span className="text-4xl font-display font-bold text-black dark:text-white">
-                  {data.temperature}°C
-                </span>
-                <p className="text-xs font-mono text-gray-500 mt-1 uppercase">
-                  {t('local.wind', {
-                    speed: data.windSpeed,
+                <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-pink inline-block px-2">
+                  {t('local.magField')}
+                </p>
+                <p className="text-xs font-mono text-gray-500 uppercase">
+                  {t('common.station')}:{' '}
+                  {t(`common.loc.${normalizeStationKey(data.magStation)}`, {
+                    defaultValue: data.magStation,
                   })}
                 </p>
               </div>
-              <div className="text-left md:text-right">
-                {/* Randomized Funny Verdicts */}
-                {(() => {
-                  const isGood = data.cloudCover <= 3;
-                  const goVerdicts = [
-                    t('local.go1'),
-                    t('local.go2'),
-                    t('local.go3'),
-                    t('local.go4'),
-                    t('local.go5'),
-                    t('local.go6'),
-                    t('local.go7'),
-                    t('local.go8'),
-                    t('local.go9'),
-                    t('local.go10'),
-                  ];
-                  const noGoVerdicts = [
-                    t('local.noGo1'),
-                    t('local.noGo2'),
-                    t('local.noGo3'),
-                    t('local.noGo4'),
-                    t('local.noGo5'),
-                    t('local.noGo6'),
-                    t('local.noGo7'),
-                    t('local.noGo8'),
-                    t('local.noGo9'),
-                    t('local.noGo10'),
-                  ];
+              <div className="mt-4">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-display font-bold text-black dark:text-white group-hover:text-neo-pink transition-colors">
+                    {data.fieldIntensity}
+                  </span>
+                  <span className="text-sm font-mono text-gray-500">{t('common.unit_mag')}</span>
+                </div>
+                <p className="text-xs font-mono text-black dark:text-white mt-1 uppercase">
+                  {t('local.intensity')}
+                </p>
+              </div>
+            </div>
 
-                  const verdicts = isGood ? goVerdicts : noGoVerdicts;
-                  const verdict = verdicts[Math.floor(Math.random() * verdicts.length)];
+            {/* Visibility Card */}
+            <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
+              <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-blue inline-block px-2">
+                {t('local.visibility')}
+              </p>
+              <div className="mt-4">
+                <p
+                  className={`text-2xl font-display font-bold text-black dark:text-white uppercase`}
+                >
+                  {sky.text}
+                </p>
+                <p className="text-sm font-mono text-gray-500 mt-1 uppercase">
+                  {t('local.clouds', {
+                    percent: Math.round((data.cloudCover / 8) * 100),
+                  })}
+                </p>
+              </div>
+            </div>
 
-                  return (
-                    <span
-                      className={`px-3 py-1 ${isGood ? 'bg-neo-mint text-black border-black/10' : 'bg-red-500 text-white border-red-900'} text-xs font-bold font-mono uppercase tracking-wide border-2 border-black inline-block shadow-neo-sm transform -rotate-1`}
-                    >
-                      {verdict}
-                    </span>
-                  );
-                })()}
+            {/* Conditions Card */}
+            <div className="p-6 flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
+              <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-yellow inline-block px-2">
+                {t('local.outdoors')}
+              </p>
+              <div className="mt-4 flex flex-col justify-between gap-4">
+                <div>
+                  <span className="text-4xl font-display font-bold text-black dark:text-white">
+                    {data.temperature}°C
+                  </span>
+                  <p className="text-xs font-mono text-gray-500 mt-1 uppercase">
+                    {t('local.wind', {
+                      speed: data.windSpeed,
+                    })}
+                  </p>
+                </div>
+                <div className="text-left md:text-right">
+                  {/* Randomized Funny Verdicts - REPLACED WITH GAUGE */}
+                  <div className="flex justify-center md:justify-end">
+                    <AuroraGauge
+                      cloudCover={data.cloudCover}
+                      kp={data.solar?.kp ?? 0}
+                      bz={data.solar?.bz ?? 0}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )
       ) : null}
+      {/* Latitude Warning */}
+      {effectiveCoords && effectiveCoords.latitude < 62 && (data?.solar?.kp ?? 0) < 5 && (
+        <div className="mt-4 bg-neo-blue/10 border-2 border-neo-blue p-4 text-center">
+          <p className="font-mono font-bold uppercase text-neo-blue text-sm">
+            ⚠️ {t('local.lat_warning')}
+          </p>
+        </div>
+      )}{' '}
     </>
   );
 };

@@ -53,6 +53,8 @@
     "button": "Locate Me & Check Conditions",
     "geoError": "Could not determine location. Please allow location access.",
     "dataError": "No data available for your area right now.",
+    "daytime_title": "TOO BRIGHT! 😎",
+    "daytime_desc": "The sun is up. Auroras are shy. Come back when it's dark!",
     "observedAt": "Observed at: {{station}}",
     "magField": "Magnetic Field",
     "intensity": "Raw Intensity (Total)",
@@ -82,7 +84,8 @@
     "noGo7": "CLOUDS: 1, YOU: 0 ⚽",
     "noGo8": "TRY AGAIN LATER... 😴",
     "noGo9": "NICE VIEW OF WATER VAPOR 💧",
-    "noGo10": "NETFLIX & NO CHILL 🍿"
+    "noGo10": "NETFLIX & NO CHILL 🍿",
+    "lat_warning": "Latitude < 62°N: Probability low unless Kp > 5."
   },
   "sky": {
     "clear": "Clear Sky 🌌",
@@ -133,7 +136,9 @@
     "range_24h": "24H",
     "range_3d": "3D",
     "range_7d": "7D",
-    "range_30d": "30D"
+    "range_30d": "30D",
+    "oldest": "History from: {{time}}",
+    "fullscreen": "Fullscreen"
   },
   "notifications": {
     "enabled": "NOTIFICATIONS ON",
@@ -205,5 +210,17 @@
       "mekrijärvi": "Mekrijärvi",
       "nurmijärvi": "Nurmijärvi"
     }
+  },
+  "social": {
+    "button": "I SEE IT! 👀",
+    "sending": "SENDING...",
+    "cooldown": "COOLDOWN ⏱️",
+    "thanks": "Thanks! You can report again in 10m.",
+    "scanning": "Scanning frequencies...",
+    "reported": "SIGHTING REPORTED",
+    "just_now": "JUST NOW"
+  },
+  "webcams": {
+    "title": "GLOBAL EYES"
   }
 }

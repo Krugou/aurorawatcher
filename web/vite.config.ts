@@ -20,6 +20,10 @@ export default defineConfig(({ mode }) => ({
         short_name: 'Revontulivahti',
         description: 'Reaaliaikainen revontulien seuranta',
         theme_color: '#0f172a',
+        background_color: '#0f172a',
+        display: 'standalone',
+        orientation: 'portrait',
+        categories: ['weather', 'utilities'],
         icons: [
           {
             src: 'pwa-192x192.png',
@@ -30,6 +34,27 @@ export default defineConfig(({ mode }) => ({
             src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable',
+          },
+        ],
+        screenshots: [
+          {
+            src: 'pwa-512x512.png', // Placeholder, ideally actual screenshots
+            sizes: '512x512',
+            type: 'image/png',
+            form_factor: 'wide',
+            label: 'Real-time Aurora Dashboard',
+          },
+          {
+            src: 'pwa-192x192.png', // Placeholder
+            sizes: '192x192',
+            type: 'image/png',
+            label: 'Mobile View',
           },
         ],
       },

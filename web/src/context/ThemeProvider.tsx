@@ -7,7 +7,8 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     // Check local storage or system preference
     const saved = localStorage.getItem('theme') as Theme;
     if (saved) return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    // Default to dark as per user request ("Night Mode by Default")
+    return 'dark';
   });
 
   useEffect(() => {
