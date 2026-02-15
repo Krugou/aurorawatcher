@@ -1,4 +1,4 @@
-name: Pipeline
+name: 🌌 Aurora Factory
 
 on:
   push:
@@ -19,23 +19,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-web:
+  🔭 Staring-at-the-Stars:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: Preparing the Observatory (Node.js)
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: package-lock.json
-      - name: Install Dependencies
+      - name: Refueling the Telescope (Dependencies)
         run: npm ci
-      - name: Lint (Web)
+      - name: Polishing the Lens (Lint Web)
         run: npm run lint -w aurorawatcher-web
-      - name: Test (Web)
+      - name: Checking the Focus (Test Web)
         run: npm run test -w aurorawatcher-web
-      - name: Build (Web)
+      - name: Capturing the Aurora (Build Web)
         run: npm run build -w aurorawatcher-web
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,81 +46,81 @@ jobs:
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
           VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
-      - name: Upload Web Artifact
+      - name: Bottling the Lights (Upload Artifact)
         if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: './web/dist'
 
-      - name: Summary
+      - name: Post-Observation Report
         if: success()
         run: |
-          echo "## ✅ Web Checks Passed" >> $GITHUB_STEP_SUMMARY
-          echo "Linting, Testing, and Building completed successfully. 🧹✨" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ Observation Successful" >> $GITHUB_STEP_SUMMARY
+          echo "The stars aligned. Everything is shiny and chrome! 🧹✨" >> $GITHUB_STEP_SUMMARY
 
-  check-bot:
+  🤖 Polishing-the-Robot:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: Preparing the Robot Lab
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: package-lock.json
-      - name: Install Dependencies
+      - name: Refueling the Robot
         run: npm ci
-      - name: Build (Bot)
+      - name: Training the AI (Build Bot)
         run: npm run build -w aurorawatcher-bot
 
-      - name: Summary
+      - name: Maintenance Log
         if: success()
         run: |
-          echo "## 🤖 Bot Checks Passed" >> $GITHUB_STEP_SUMMARY
-          echo "Bot compiled and ready to crunch data. 🧠⚡" >> $GITHUB_STEP_SUMMARY
+          echo "## 🤖 Robot Ready for Action" >> $GITHUB_STEP_SUMMARY
+          echo "Bot compiled and ready to crunch space dust. 🧠⚡" >> $GITHUB_STEP_SUMMARY
 
-  deploy-web:
-    needs: check-web
+  🚀 Beaming-to-Satellites:
+    needs: 🔭 Staring-at-the-Stars
     if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Warp Drive to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Summary
+      - name: Transmission Manifest
         if: success()
         run: |
-          echo "## 🚀 Deployment Successful" >> $GITHUB_STEP_SUMMARY
-          echo "The web app is live! [View Site](${{ steps.deployment.outputs.page_url }}) 🌍" >> $GITHUB_STEP_SUMMARY
+          echo "## 🚀 Transmission Complete" >> $GITHUB_STEP_SUMMARY
+          echo "The web app has reached orbit! [View Site](${{ steps.deployment.outputs.page_url }}) 🌍" >> $GITHUB_STEP_SUMMARY
 
-  release:
-    needs: [check-web, check-bot, deploy-web]
+  📢 Universal-Broadcast:
+    needs: [🔭 Staring-at-the-Stars, 🤖 Polishing-the-Robot, 🚀 Beaming-to-Satellites]
     if: github.ref == 'refs/heads/main'
-    name: Semantic Release
+    name: 🎙️ Announcing New Tech
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Retrieving Master Copies
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup Node.js
+      - name: Preparing the Press Room
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
-      - name: Install dependencies
+      - name: Hiring Reporters
         run: npm ci
-      - name: Release
+      - name: Breaking News (Release)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
 
-      - name: Summary
+      - name: Galaxy News Network
         if: success()
         run: |
-          echo "## 🎉 Release Published" >> $GITHUB_STEP_SUMMARY
-          echo "New version released via Semantic Release. 🐙📦" >> $GITHUB_STEP_SUMMARY
+          echo "## 🎉 Broadcast Received" >> $GITHUB_STEP_SUMMARY
+          echo "A new version has been released to the citizens of the galaxy. 🐙📦" >> $GITHUB_STEP_SUMMARY
