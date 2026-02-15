@@ -1,3 +1,9 @@
+## [1.19.1](https://github.com/Krugou/aurorawatcher/compare/v1.19.0...v1.19.1) (2026-02-15)
+
+### Bug Fixes
+
+- resolve lint warnings and improve type safety ([4b5935b](https://github.com/Krugou/aurorawatcher/commit/4b5935b18435c22b30ab4ab72cce517825487aa8))
+
 # [1.19.0](https://github.com/Krugou/aurorawatcher/compare/v1.18.3...v1.19.0) (2026-02-13)
 
 ### Features
