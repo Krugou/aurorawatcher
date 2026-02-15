@@ -19,7 +19,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  🔭 Staring-at-the-Stars:
+  staring-at-the-stars:
+    name: 🔭 Staring-at-the-Stars
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -58,7 +59,8 @@ jobs:
           echo "## ✅ Observation Successful" >> $GITHUB_STEP_SUMMARY
           echo "The stars aligned. Everything is shiny and chrome! 🧹✨" >> $GITHUB_STEP_SUMMARY
 
-  🤖 Polishing-the-Robot:
+  polishing-the-robot:
+    name: 🤖 Polishing-the-Robot
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -79,8 +81,9 @@ jobs:
           echo "## 🤖 Robot Ready for Action" >> $GITHUB_STEP_SUMMARY
           echo "Bot compiled and ready to crunch space dust. 🧠⚡" >> $GITHUB_STEP_SUMMARY
 
-  🚀 Beaming-to-Satellites:
-    needs: 🔭 Staring-at-the-Stars
+  beaming-to-satellites:
+    name: 🚀 Beaming-to-Satellites
+    needs: staring-at-the-stars
     if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
@@ -97,10 +100,10 @@ jobs:
           echo "## 🚀 Transmission Complete" >> $GITHUB_STEP_SUMMARY
           echo "The web app has reached orbit! [View Site](${{ steps.deployment.outputs.page_url }}) 🌍" >> $GITHUB_STEP_SUMMARY
 
-  📢 Universal-Broadcast:
-    needs: [🔭 Staring-at-the-Stars, 🤖 Polishing-the-Robot, 🚀 Beaming-to-Satellites]
+  universal-broadcast:
+    name: 📢 Universal-Broadcast
+    needs: [staring-at-the-stars, polishing-the-robot, beaming-to-satellites]
     if: github.ref == 'refs/heads/main'
-    name: 🎙️ Announcing New Tech
     runs-on: ubuntu-latest
     steps:
       - name: Retrieving Master Copies

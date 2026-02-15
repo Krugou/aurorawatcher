@@ -1,4 +1,4 @@
-name: Schedule Aurora Watcher
+name: 🕵️ Night Watchman
 
 on:
   schedule:
@@ -9,7 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  check-aurora:
+  patrolling-the-sky:
+    name: 🔭 Patrolling-the-Sky
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
