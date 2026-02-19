@@ -40,7 +40,7 @@ export const MagnetometerGraph = ({
 
   if (!effectiveCoords) return null; // Don't show if no location
 
-  if (loading) return <Skeleton className="h-64 w-full bg-slate-900" />;
+  if (loading) return <Skeleton className="h-64 w-full" />;
 
   if (data.length === 0) return null;
 
@@ -52,37 +52,37 @@ export const MagnetometerGraph = ({
 
   return (
     <>
-      <div className="h-[250px] w-full mt-4 overflow-hidden relative bg-gray-100 dark:bg-zinc-900 border-2 border-black dark:border-white shadow-neo-sm">
+      <div className="h-[250px] w-full mt-4 overflow-hidden relative rounded-xl bg-white/[0.03] border border-white/10">
         <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
           <LineChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
             <XAxis
               dataKey="timestamp"
               tickFormatter={formatTime}
-              stroke="#000"
-              tick={{ fill: '#000', fontFamily: 'monospace', fontSize: 10 }}
+              stroke="#444"
+              tick={{ fill: '#888', fontFamily: 'monospace', fontSize: 10 }}
             />
             <YAxis
               domain={['auto', 'auto']}
-              stroke="#000"
-              tick={{ fill: '#000', fontFamily: 'monospace', fontSize: 10 }}
+              stroke="#444"
+              tick={{ fill: '#888', fontFamily: 'monospace', fontSize: 10 }}
               label={{
                 value: t('common.unit_mag'),
                 angle: -90,
                 position: 'insideLeft',
-                fill: '#000',
+                fill: '#888',
                 fontFamily: 'monospace',
               }}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#000',
-                borderColor: '#fff',
-                borderRadius: '0px',
-                border: '2px solid #fff',
+                backgroundColor: 'rgba(10, 10, 15, 0.95)',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderRadius: '12px',
+                border: '1px solid rgba(255,255,255,0.1)',
                 padding: '10px',
-                boxShadow: '4px 4px 0px 0px #fff',
+                boxShadow: '0 0 20px rgba(0, 212, 170, 0.1)',
               }}
-              itemStyle={{ color: '#00FF9D', fontFamily: 'monospace' }}
+              itemStyle={{ color: '#00d4aa', fontFamily: 'monospace' }}
               labelStyle={{
                 color: '#fff',
                 fontWeight: 'bold',
@@ -93,22 +93,22 @@ export const MagnetometerGraph = ({
             />
             <ReferenceLine
               y={50000}
-              label={{ value: t('graphs.quiet'), fill: '#666', fontFamily: 'monospace' }}
-              stroke="#666"
+              label={{ value: t('graphs.quiet'), fill: '#555', fontFamily: 'monospace' }}
+              stroke="#333"
               strokeDasharray="4 4"
             />
             <Line
               type="step"
               dataKey="intensity"
-              stroke="#00FF9D"
+              stroke="#00d4aa"
               strokeWidth={3}
               dot={false}
-              activeDot={{ r: 6, fill: '#fff', stroke: '#000', strokeWidth: 2 }}
+              activeDot={{ r: 6, fill: '#00d4aa', stroke: '#0a0a0f', strokeWidth: 2 }}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <p className="text-xs font-mono text-black dark:text-white mt-2 text-center uppercase tracking-wider">
+      <p className="text-xs font-mono text-white/40 mt-2 text-center uppercase tracking-wider">
         {t('graphs.mag_hint')}
       </p>
     </>

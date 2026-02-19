@@ -8,7 +8,7 @@ export const Skeleton = ({ className = '' }: SkeletonProps) => {
   const { t } = useTranslation();
   return (
     <div
-      className={`bg-gray-200 dark:bg-zinc-800 animate-pulse border-2 border-dashed border-gray-400 dark:border-gray-600 ${className}`}
+      className={`bg-white/5 animate-pulse rounded-xl ${className}`}
       role="status"
       aria-label={t('grid.loading')}
     />

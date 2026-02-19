@@ -14,18 +14,18 @@ export const LanguageSwitcher = () => {
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center justify-center h-12 w-16 bg-white dark:bg-black hover:bg-neo-blue dark:hover:bg-neo-blue hover:text-white dark:hover:text-white text-black dark:text-white border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none cursor-pointer font-bold font-mono"
+      className="flex items-center justify-center h-10 px-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/70 hover:text-white hover:bg-aurora-blue/20 hover:border-aurora-blue/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all duration-300 cursor-pointer font-medium font-mono text-sm"
       aria-label={t('common.switch_lang')}
     >
-      <span className="flex items-center gap-2">
+      <span className="flex items-center gap-1.5">
         {i18n.language === 'en' ? (
           <>
-            <span className="text-xl">🇫🇮</span>
+            <span className="text-base">🇫🇮</span>
             <span>{t('common.fi_label', 'FI')}</span>
           </>
         ) : (
           <>
-            <span className="text-xl">🇬🇧</span>
+            <span className="text-base">🇬🇧</span>
             <span>{t('common.en_label', 'EN')}</span>
           </>
         )}

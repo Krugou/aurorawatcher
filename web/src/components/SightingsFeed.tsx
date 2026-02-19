@@ -45,7 +45,7 @@ export const SightingsFeed = () => {
 
   if (loading)
     return (
-      <div className="font-mono text-xs animate-pulse text-neo-green px-4">
+      <div className="font-mono text-xs animate-pulse text-aurora-teal/60 px-4">
         {t('social.scanning')}
       </div>
     );
@@ -53,10 +53,10 @@ export const SightingsFeed = () => {
   if (sightings.length === 0) return null;
 
   return (
-    <div className="w-full bg-black border-y-2 border-neo-green overflow-hidden py-1">
+    <div className="w-full bg-black/40 backdrop-blur-sm border-y border-aurora-teal/10 overflow-hidden py-1.5">
       <div className="animate-marquee whitespace-nowrap flex gap-8">
         {sightings.map((s) => (
-          <span key={s.id} className="text-neo-green font-mono text-sm font-bold uppercase">
+          <span key={s.id} className="text-aurora-teal/70 font-mono text-sm font-medium">
             📡 {t('social.reported')}{' '}
             {s.timestamp
               ? formatDistanceToNow(s.timestamp.toDate(), { addSuffix: true })
@@ -66,7 +66,6 @@ export const SightingsFeed = () => {
               : ''}
           </span>
         ))}
-        {/* Duplicate for smooth loop if needed, or CSS handle it */}
       </div>
     </div>
   );

@@ -25,13 +25,13 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
   }, [timestamp]);
 
   return (
-    <div className="bg-white dark:bg-black border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark hover:shadow-neo-lg dark:hover:shadow-neo-dark transition-all duration-200">
-      <div className="relative aspect-video bg-gray-200 dark:bg-zinc-900 border-b-2 border-black dark:border-white overflow-hidden">
+    <div className="rounded-xl bg-white/[0.03] border border-white/10 overflow-hidden hover:border-white/20 hover:shadow-[0_0_30px_rgba(0,212,170,0.08)] transition-all duration-500 group">
+      <div className="relative aspect-video bg-black/40 overflow-hidden">
         {isLoading && <Skeleton className="w-full h-full absolute inset-0 z-10" />}
 
         {hasError ? (
-          <div className="w-full h-full flex items-center justify-center text-black dark:text-white bg-white dark:bg-black">
-            <span className="font-mono text-sm uppercase">{t('grid.error')}</span>
+          <div className="w-full h-full flex items-center justify-center text-white/60 bg-white/[0.02]">
+            <span className="font-mono text-sm">{t('grid.error')}</span>
           </div>
         ) : (
           <img
@@ -52,47 +52,41 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
         )}
 
         {/* Status Indicator / LED */}
-        <div className="absolute top-4 left-4 flex items-center gap-2 z-20">
+        <div className="absolute top-3 left-3 flex items-center gap-2 z-20">
           <div
-            className={`w-3 h-3 ${hasError ? 'bg-red-500' : 'bg-neo-mint'} border border-black shadow-[0_0_10px_rgba(0,255,157,0.7)] animate-pulse`}
+            className={`w-2.5 h-2.5 rounded-full ${hasError ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]' : 'bg-aurora-teal shadow-[0_0_8px_rgba(0,212,170,0.6)]'} animate-pulse`}
           ></div>
-          <span className="bg-black/80 text-white text-[10px] font-mono uppercase px-2 py-0.5 border border-white/50 backdrop-blur-sm">
+          <span className="bg-black/60 backdrop-blur-sm text-white/80 text-[10px] font-mono px-2 py-0.5 rounded-full border border-white/10">
             {hasError ? t('grid.status_offline') : t('grid.status_online')}
           </span>
         </div>
 
-        {/* Hover overlay removed for cleaner mobile UX - using footer button instead */}
-
         {!hasError && (
-          <div className="absolute top-4 right-4 bg-black text-white px-2 py-1 font-mono text-xs border border-white shadow-neo-sm dark:shadow-none">
+          <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white/70 px-2.5 py-1 font-mono text-xs rounded-full border border-white/10">
             {lastModified ? lastModified : t('grid.live')}
           </div>
         )}
       </div>
-      <div className="p-4 flex items-center justify-between bg-white dark:bg-black">
+      <div className="p-4 flex items-center justify-between">
         <div>
-          <h3 className="text-xl font-display font-bold uppercase text-black dark:text-white">
-            {t(loc.name)}
-          </h3>
-          <p className="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            {t(loc.fullname)}
-          </p>
+          <h3 className="text-lg font-sans font-bold text-white/90">{t(loc.name)}</h3>
+          <p className="text-xs font-mono text-white/40 tracking-wide">{t(loc.fullname)}</p>
         </div>
         <div className="flex gap-2">
-          {/* History / Fullscreen Button - Always visible for accessibility */}
+          {/* History / Fullscreen Button */}
           <a
             href={`?cam=${id}`}
             onClick={() => {
               Analytics.trackStationInteraction(id, 'view_history');
             }}
-            className="flex items-center gap-2 px-3 py-2 bg-neo-yellow text-black border-2 border-black font-bold font-mono text-xs uppercase hover:bg-black hover:text-white transition-colors"
+            className="flex items-center gap-2 px-3 py-2 bg-aurora-teal/10 border border-aurora-teal/30 rounded-lg text-aurora-teal font-medium font-mono text-xs hover:bg-aurora-teal/20 hover:shadow-[0_0_12px_rgba(0,212,170,0.15)] transition-all duration-300"
             title={t('grid.view_fullscreen')}
           >
             <span>{t('grid.view_history')}</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
-                strokeLinecap="square"
-                strokeLinejoin="miter"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth={2}
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               />
@@ -106,19 +100,19 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
             }}
             target="_blank"
             rel="noreferrer"
-            className="p-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-black dark:text-white"
+            className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-white/60 hover:text-white"
             title={t('grid.open_map')}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
-                strokeLinecap="square"
-                strokeLinejoin="miter"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth={2}
                 d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
               />
               <path
-                strokeLinecap="square"
-                strokeLinejoin="miter"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth={2}
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
               />

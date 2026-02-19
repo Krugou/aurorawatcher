@@ -103,7 +103,7 @@ const AppContent = () => {
 
   if (mode === 'minimal') {
     return (
-      <div className="animate-gradient-xy bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950 min-h-screen">
+      <div className="min-h-screen bg-[#0a0a0f]">
         <MinimalView locations={LOCATIONS} timestamp={timestamp} />
       </div>
     );
@@ -111,21 +111,30 @@ const AppContent = () => {
 
   // Oletusnäkymä (Työpöytä/Mobiili)
   return (
-    <div className="min-h-screen bg-[#f0f0f0] dark:bg-[#050505] text-black dark:text-white font-sans flex flex-col items-center transition-colors duration-300">
+    <div className="min-h-screen bg-[#0a0a0f] text-white/90 font-sans flex flex-col items-center transition-colors duration-500">
+      {/* Ambient aurora background effect */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-aurora-teal/[0.03] rounded-full blur-[150px] animate-aurora-pulse" />
+        <div
+          className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-aurora-violet/[0.03] rounded-full blur-[150px] animate-aurora-pulse"
+          style={{ animationDelay: '1.5s' }}
+        />
+      </div>
+
       {/* Sightings Ticker */}
       <SightingsFeed />
 
       {/* Top Controls Container */}
-      <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
+      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
         <ThemeToggle />
         <LanguageSwitcher />
       </div>
-      <div className="w-full max-w-6xl p-4 md:p-8 space-y-12 md:space-y-16">
+      <div className="w-full max-w-6xl p-4 md:p-8 space-y-10 md:space-y-14 relative z-10">
         <Header />
 
         <CollapsibleSection
           title={t('local.title')}
-          headerColorClass="bg-neo-pink"
+          headerColorClass="bg-aurora-rose"
           storageKey="local_data"
         >
           <LocalData />
@@ -137,15 +146,15 @@ const AppContent = () => {
         </CollapsibleSection>
         <CollapsibleSection
           title={t('grid.title')}
-          headerColorClass="bg-neo-blue"
+          headerColorClass="bg-aurora-blue"
           storageKey="observatory_status"
         >
           <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
 
-          {/* International Webcams directly in grid section for now, or separate */}
-          <div className="mt-8 pt-8 border-t-2 border-black dark:border-white/20">
-            <h3 className="text-xl font-display font-black italic uppercase mb-4 text-black dark:text-white flex items-center gap-2">
-              <span className="w-3 h-3 bg-neo-green block animate-pulse" />
+          {/* International Webcams */}
+          <div className="mt-8 pt-8 border-t border-white/[0.06]">
+            <h3 className="text-lg font-sans font-bold uppercase mb-4 text-white/80 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-aurora-teal shadow-[0_0_8px_rgba(0,212,170,0.5)] animate-pulse" />
               {t('webcams.title')}
             </h3>
             <WebcamGrid />
@@ -153,10 +162,10 @@ const AppContent = () => {
         </CollapsibleSection>
         <CollapsibleSection
           title={t('space_weather.title')}
-          headerColorClass="bg-neo-orange"
+          headerColorClass="bg-aurora-violet"
           storageKey="space_weather"
           badge={
-            <span className="text-sm font-bold font-mono text-black bg-white px-3 py-1 border-2 border-black dark:border-white shadow-neo-sm dark:shadow-neo-sm-dark">
+            <span className="text-xs font-medium font-mono text-white/60 bg-white/[0.06] px-3 py-1 rounded-full border border-white/10">
               {t('common.noaa_swpc', 'NOAA SWPC')}
             </span>
           }
@@ -166,7 +175,7 @@ const AppContent = () => {
 
         <CollapsibleSection
           title={t('graphs.title')}
-          headerColorClass="bg-neo-yellow text-black"
+          headerColorClass="bg-aurora-cyan"
           storageKey="graphs"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -177,7 +186,7 @@ const AppContent = () => {
 
         <CollapsibleSection
           title={t('map.title')}
-          headerColorClass="bg-neo-mint text-black"
+          headerColorClass="bg-aurora-teal"
           storageKey="map"
         >
           <AuroraMap timestamp={timestamp} />
@@ -185,13 +194,13 @@ const AppContent = () => {
 
         <CollapsibleSection
           title={t('data_info.title')}
-          headerColorClass="bg-gray-400 text-black"
+          headerColorClass="bg-white/40"
           storageKey="data_info"
         >
           <DataInfo />
         </CollapsibleSection>
 
-        <footer className="text-center py-12 text-gray-600 font-mono text-xs uppercase tracking-widest">
+        <footer className="text-center py-12 text-white/30 font-mono text-xs uppercase tracking-widest">
           <p title={`${t('common.build_time')}: ${__BUILD_TIME__}`}>
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </p>

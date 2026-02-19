@@ -121,29 +121,34 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
   };
 
   return (
-    <div className="grid md:grid-cols-2 gap-8 items-start border-2 border-black dark:border-white p-6 bg-white dark:bg-black shadow-neo dark:shadow-neo-dark">
+    <div className="grid md:grid-cols-2 gap-8 items-start rounded-xl bg-white/[0.03] border border-white/10 p-6">
       {/* Map Column */}
-      <div className="relative group border-2 border-black dark:border-white overflow-hidden shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all bg-black min-h-[300px]">
+      <div className="relative group rounded-xl border border-white/10 overflow-hidden bg-black/40 min-h-[300px] hover:border-white/20 transition-all duration-300">
         {isLoading && <Skeleton className="w-full h-full absolute inset-0 z-10" />}
 
         {hasError ? (
-          <div className="w-full h-full flex flex-col items-center justify-center text-black dark:text-white p-8 text-center bg-neo-yellow border border-black">
-            <svg className="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-full h-full flex flex-col items-center justify-center text-white/60 p-8 text-center bg-white/[0.02]">
+            <svg
+              className="w-12 h-12 mb-2 text-amber-400/60"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
-                strokeLinecap="square"
-                strokeLinejoin="miter"
-                strokeWidth={3}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
               />
             </svg>
-            <p className="font-mono font-bold uppercase">{t('map.error')}</p>
+            <p className="font-mono font-medium text-white/50">{t('map.error')}</p>
           </div>
         ) : (
           <img
             crossOrigin="anonymous"
             src={`${AURORA_DATA}?t=${timestamp}`}
             alt={t('map.title')}
-            className={`w-full h-full object-contain transition-all duration-500 bg-gray-200 dark:bg-zinc-800 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+            className={`w-full h-full object-contain transition-all duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
             onLoad={handleImageLoad}
             onError={handleError}
           />
@@ -154,11 +159,9 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
       <div className="space-y-6">
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-display font-bold uppercase text-black dark:text-white">
-              {t('map.status_title')}
-            </h2>
+            <h2 className="text-lg font-sans font-bold text-white/90">{t('map.status_title')}</h2>
             {savedStation && (
-              <span className="text-xs font-mono font-bold bg-neo-yellow text-black px-2 py-1 border border-black">
+              <span className="text-xs font-mono font-medium bg-aurora-teal/10 text-aurora-teal px-3 py-1 rounded-full border border-aurora-teal/20">
                 ★ {t('map.saved')}: {t(`common.loc.${normalizeStationKey(savedStation)}`)}
               </span>
             )}
@@ -172,24 +175,24 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
               return (
                 <div
                   key={s.name}
-                  className={`flex items-center gap-2 p-2 border-2 ${isSaved ? 'border-neo-yellow bg-yellow-50 dark:bg-yellow-900/10' : 'border-black dark:border-white bg-gray-50 dark:bg-zinc-900'} relative group transition-all`}
+                  className={`flex items-center gap-2 p-2.5 rounded-lg border ${isSaved ? 'border-aurora-teal/30 bg-aurora-teal/5' : 'border-white/10 bg-white/[0.02]'} relative group transition-all duration-300`}
                 >
                   <div
-                    className="w-3 h-3 border border-black dark:border-white shrink-0"
+                    className="w-2.5 h-2.5 rounded-full shrink-0 shadow-[0_0_6px_currentColor]"
                     style={{ backgroundColor: s.color }}
                   />
                   <div className="flex flex-col min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono font-bold text-black dark:text-white uppercase truncate">
+                      <span className="text-xs font-mono font-medium text-white/80 truncate">
                         {t(`common.loc.${normalizeStationKey(s.name)}`)}
                       </span>
                       {isNearest && (
-                        <span className="text-[9px] bg-neo-blue text-white px-1 font-mono font-bold">
+                        <span className="text-[9px] bg-aurora-blue/20 text-aurora-blue px-1.5 py-0.5 rounded font-mono font-medium">
                           {t('map.near')}
                         </span>
                       )}
                     </div>
-                    <span className="text-[10px] font-mono text-gray-500 uppercase">
+                    <span className="text-[10px] font-mono text-white/40">
                       {t(`status.${s.status.toLowerCase()}`)}
                     </span>
                   </div>
@@ -199,7 +202,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                     onClick={() => {
                       toggleSavedStation(s.name);
                     }}
-                    className={`ml-auto p-1 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors ${isSaved ? 'text-neo-yellow' : 'text-gray-300 hover:text-neo-yellow'}`}
+                    className={`ml-auto p-1 rounded transition-colors duration-200 ${isSaved ? 'text-aurora-teal' : 'text-white/20 hover:text-aurora-teal'}`}
                     title={isSaved ? t('common.unsave') : t('common.save')}
                   >
                     <svg
@@ -217,15 +220,15 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
               );
             })}
             {stationStatuses.length === 0 && !isLoading && (
-              <div className="col-span-2 text-center text-xs font-mono text-gray-500 py-4">
+              <div className="col-span-2 text-center text-xs font-mono text-white/30 py-4">
                 {t('common.no_data', 'NO DATA DETECTED')}
               </div>
             )}
           </div>
         </div>
 
-        <div className="pt-4 border-t-2 border-black dark:border-white">
-          <p className="text-black dark:text-white leading-relaxed font-mono text-xs mb-4">
+        <div className="pt-4 border-t border-white/[0.06]">
+          <p className="text-white/50 leading-relaxed font-mono text-xs mb-4">
             {t('map.description')}
           </p>
           <a
@@ -235,14 +238,14 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
             }}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 bg-neo-mint text-black border-2 border-black px-4 py-2 font-bold font-mono uppercase shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all text-sm"
+            className="inline-flex items-center gap-2 bg-aurora-teal/10 text-aurora-teal border border-aurora-teal/30 px-4 py-2 font-medium font-mono rounded-lg hover:bg-aurora-teal/20 hover:shadow-[0_0_15px_rgba(0,212,170,0.15)] transition-all duration-300 text-sm"
           >
             {t('map.linkText')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
-                strokeLinecap="square"
-                strokeLinejoin="miter"
-                strokeWidth={3}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
               />
             </svg>

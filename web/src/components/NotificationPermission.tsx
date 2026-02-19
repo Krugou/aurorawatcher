@@ -71,16 +71,16 @@ export const NotificationPermission = ({ savedStation }: NotificationPermissionP
   if (permission === 'unsupported') return null;
   if (permission === 'granted') {
     return (
-      <div className="flex items-center justify-between p-3 bg-neo-mint/20 border-2 border-black dark:border-white">
+      <div className="flex items-center justify-between p-3 rounded-xl bg-aurora-teal/5 border border-aurora-teal/20">
         <div className="flex items-center gap-2">
           <span className="text-lg">🔔</span>
-          <span className="text-xs font-mono font-bold text-black dark:text-white uppercase">
+          <span className="text-xs font-mono font-medium text-white/70">
             {t('notifications.enabled')}
           </span>
         </div>
         <button
           onClick={testNotification}
-          className="text-xs font-mono font-bold text-black bg-neo-yellow px-2 py-1 border border-black hover:bg-yellow-400 transition-colors"
+          className="text-xs font-mono font-medium text-aurora-teal bg-aurora-teal/10 px-3 py-1 rounded-lg border border-aurora-teal/20 hover:bg-aurora-teal/20 transition-colors duration-300"
         >
           {t('common.test', 'TEST')}
         </button>
@@ -90,14 +90,14 @@ export const NotificationPermission = ({ savedStation }: NotificationPermissionP
 
   if (permission === 'denied') {
     return (
-      <div className="p-3 bg-neo-pink/20 border-2 border-black dark:border-white">
+      <div className="p-3 rounded-xl bg-red-500/5 border border-red-500/20">
         <div className="flex items-center gap-2">
           <span className="text-lg">🔕</span>
-          <span className="text-xs font-mono font-bold text-black dark:text-white uppercase">
+          <span className="text-xs font-mono font-medium text-white/70">
             {t('notifications.blocked')}
           </span>
         </div>
-        <p className="text-[10px] font-mono text-gray-500 mt-1">
+        <p className="text-[10px] font-mono text-white/30 mt-1">
           {t('notifications.blocked_hint')}
         </p>
       </div>
@@ -108,13 +108,13 @@ export const NotificationPermission = ({ savedStation }: NotificationPermissionP
     <button
       onClick={requestPermission}
       disabled={isRegistering}
-      className="w-full p-4 bg-neo-blue text-white border-2 border-black shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all disabled:opacity-50"
+      className="w-full p-4 rounded-xl bg-gradient-to-r from-aurora-teal to-aurora-blue text-white hover:shadow-[0_0_25px_rgba(0,212,170,0.3)] transition-all duration-300 disabled:opacity-50"
     >
       <div className="flex items-center justify-center gap-3">
         <span className="text-2xl">🔔</span>
         <div className="text-left">
-          <div className="font-bold font-mono uppercase">{t('notifications.enable')}</div>
-          <div className="text-xs font-mono opacity-80">
+          <div className="font-bold font-mono">{t('notifications.enable')}</div>
+          <div className="text-xs font-mono opacity-70">
             {savedStation
               ? t('notifications.for_station', { station: savedStation })
               : t('notifications.for_any')}

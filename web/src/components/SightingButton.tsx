@@ -73,20 +73,19 @@ export const SightingButton = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 relative">
+    <div className="flex flex-col items-center gap-3 relative">
       <button
         onClick={() => {
           void handleSighting();
         }}
         disabled={loading || cooldown}
         className={`
-          relative px-8 py-4 font-black font-display text-xl uppercase tracking-widest
-          border-4 border-black dark:border-white shadow-neo dark:shadow-neo-dark
-          transition-all duration-100 transform active:scale-95
+          relative px-8 py-4 font-bold font-sans text-xl uppercase tracking-wider
+          rounded-xl transition-all duration-300 transform active:scale-95
           ${
             cooldown
-              ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
-              : 'bg-neo-pink text-black hover:-translate-y-1 hover:shadow-neo-lg'
+              ? 'bg-white/10 text-white/40 cursor-not-allowed border border-white/10'
+              : 'bg-gradient-to-r from-aurora-teal to-aurora-blue text-white border-0 shadow-[0_0_30px_rgba(0,212,170,0.25)] hover:shadow-[0_0_50px_rgba(0,212,170,0.4)] hover:-translate-y-0.5'
           }
         `}
       >
@@ -95,13 +94,13 @@ export const SightingButton = () => {
         {/* Confetti / Pulse Effect */}
         {showConfetti && (
           <span className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-none bg-neo-pink opacity-75"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-xl bg-aurora-teal/30"></span>
           </span>
         )}
       </button>
 
       {cooldown && (
-        <p className="text-xs font-mono text-gray-500 animate-pulse">{t('social.thanks')}</p>
+        <p className="text-xs font-mono text-white/40 animate-pulse">{t('social.thanks')}</p>
       )}
     </div>
   );

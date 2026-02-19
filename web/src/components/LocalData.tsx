@@ -101,27 +101,25 @@ export const LocalData = ({
     if (description)
       return {
         text: description.charAt(0).toUpperCase() + description.slice(1),
-        color: 'text-blue-400',
+        color: 'text-aurora-blue',
       };
-    if (octas <= 1) return { text: t('sky.clear'), color: 'text-green-400' };
-    if (octas <= 4) return { text: t('sky.partly'), color: 'text-yellow-400' };
-    return { text: t('sky.overcast'), color: 'text-slate-400' };
+    if (octas <= 1) return { text: t('sky.clear'), color: 'text-aurora-teal' };
+    if (octas <= 4) return { text: t('sky.partly'), color: 'text-amber-400' };
+    return { text: t('sky.overcast'), color: 'text-white/40' };
   };
 
   const sky = data ? getSkyCondition(data.cloudCover, data.description) : { text: '', color: '' };
 
   if (!effectiveCoords && !geoLoading && !geoError) {
     return (
-      <div className="flex flex-col items-center text-center py-8 px-4 border-2 border-black dark:border-white bg-white dark:bg-black shadow-neo dark:shadow-neo-dark">
-        <div className="w-16 h-16 bg-neo-blue flex items-center justify-center mb-4 border-2 border-black">
-          <span className="text-3xl">📍</span>
+      <div className="flex flex-col items-center text-center py-10 px-6 rounded-xl bg-white/[0.03] border border-white/10">
+        <div className="w-14 h-14 rounded-2xl bg-aurora-blue/10 flex items-center justify-center mb-5 border border-aurora-blue/20">
+          <span className="text-2xl">📍</span>
         </div>
-        <p className="text-black dark:text-white font-mono text-sm mb-6 max-w-md uppercase">
-          {t('local.prompt')}
-        </p>
+        <p className="text-white/60 font-mono text-sm mb-6 max-w-md">{t('local.prompt')}</p>
         <button
           onClick={requestLocation}
-          className="bg-neo-mint text-black px-8 py-3 font-bold font-mono uppercase border-2 border-black shadow-neo-sm hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+          className="bg-gradient-to-r from-aurora-teal to-aurora-blue text-white px-8 py-3 font-semibold font-mono rounded-xl hover:shadow-[0_0_25px_rgba(0,212,170,0.3)] transition-all duration-300"
         >
           {t('local.button')}
         </button>
@@ -133,36 +131,37 @@ export const LocalData = ({
     <>
       {geoLoading || loading ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Skeleton className="h-40 w-full bg-slate-800" />
-          <Skeleton className="h-40 w-full bg-slate-800" />
-          <Skeleton className="h-40 w-full bg-slate-800" />
+          <Skeleton className="h-40 w-full" />
+          <Skeleton className="h-40 w-full" />
+          <Skeleton className="h-40 w-full" />
         </div>
       ) : geoError ? (
-        <div className="bg-neo-pink text-black text-center p-6 border-2 border-black">
-          <p className="font-mono font-bold uppercase">{t('local.geoError')}</p>
+        <div className="rounded-xl bg-red-500/10 border border-red-500/20 text-center p-6">
+          <p className="font-mono font-medium text-red-400">{t('local.geoError')}</p>
         </div>
       ) : error ? (
-        <div className="bg-neo-yellow text-black text-center p-6 border-2 border-black">
-          <p className="font-mono font-bold uppercase">{t('local.dataError')}</p>
+        <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 text-center p-6">
+          <p className="font-mono font-medium text-amber-400">{t('local.dataError')}</p>
         </div>
       ) : data ? (
         effectiveCoords && isDaytime(effectiveCoords.latitude, effectiveCoords.longitude) ? (
-          <div className="bg-yellow-100 dark:bg-yellow-900/20 text-center p-8 border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark">
+          <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 text-center p-8">
             <div className="text-6xl mb-4">☀️</div>
-            <h3 className="text-2xl font-display font-black uppercase mb-2">
+            <h3 className="text-2xl font-sans font-bold mb-2 text-white/90">
               {t('local.daytime_title')}
             </h3>
-            <p className="font-mono text-sm uppercase">{t('local.daytime_desc')}</p>
+            <p className="font-mono text-sm text-white/50">{t('local.daytime_desc')}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black dark:border-white shadow-neo dark:shadow-neo-dark bg-white dark:bg-black">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 rounded-xl bg-white/[0.03] border border-white/10 overflow-hidden">
             {/* Magnetic Field Card */}
-            <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
+            <div className="p-6 border-b md:border-b-0 md:border-r border-white/[0.06] flex flex-col justify-between group hover:bg-white/[0.02] transition-colors duration-300">
               <div>
-                <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-pink inline-block px-2">
+                <p className="text-sm font-mono font-medium uppercase tracking-widest text-aurora-rose/80 mb-2 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-aurora-rose shadow-[0_0_6px_rgba(244,63,94,0.5)]" />
                   {t('local.magField')}
                 </p>
-                <p className="text-xs font-mono text-gray-500 uppercase">
+                <p className="text-xs font-mono text-white/40">
                   {t('common.station')}:{' '}
                   {t(`common.loc.${normalizeStationKey(data.magStation)}`, {
                     defaultValue: data.magStation,
@@ -171,29 +170,24 @@ export const LocalData = ({
               </div>
               <div className="mt-4">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-display font-bold text-black dark:text-white group-hover:text-neo-pink transition-colors">
+                  <span className="text-4xl font-sans font-bold text-white group-hover:text-aurora-rose transition-colors duration-300">
                     {data.fieldIntensity}
                   </span>
-                  <span className="text-sm font-mono text-gray-500">{t('common.unit_mag')}</span>
+                  <span className="text-sm font-mono text-white/30">{t('common.unit_mag')}</span>
                 </div>
-                <p className="text-xs font-mono text-black dark:text-white mt-1 uppercase">
-                  {t('local.intensity')}
-                </p>
+                <p className="text-xs font-mono text-white/50 mt-1">{t('local.intensity')}</p>
               </div>
             </div>
 
             {/* Visibility Card */}
-            <div className="p-6 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-white flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
-              <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-blue inline-block px-2">
+            <div className="p-6 border-b md:border-b-0 md:border-r border-white/[0.06] flex flex-col justify-between group hover:bg-white/[0.02] transition-colors duration-300">
+              <p className="text-sm font-mono font-medium uppercase tracking-widest text-aurora-blue/80 mb-2 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-aurora-blue shadow-[0_0_6px_rgba(59,130,246,0.5)]" />
                 {t('local.visibility')}
               </p>
               <div className="mt-4">
-                <p
-                  className={`text-2xl font-display font-bold text-black dark:text-white uppercase`}
-                >
-                  {sky.text}
-                </p>
-                <p className="text-sm font-mono text-gray-500 mt-1 uppercase">
+                <p className={`text-2xl font-sans font-bold text-white/90`}>{sky.text}</p>
+                <p className="text-sm font-mono text-white/40 mt-1">
                   {t('local.clouds', {
                     percent: Math.round((data.cloudCover / 8) * 100),
                   })}
@@ -202,23 +196,24 @@ export const LocalData = ({
             </div>
 
             {/* Conditions Card */}
-            <div className="p-6 flex flex-col justify-between group hover:bg-gray-100 dark:hover:bg-zinc-900 transition-colors">
-              <p className="text-sm font-mono font-bold uppercase tracking-widest text-black dark:text-white mb-2 bg-neo-yellow inline-block px-2">
+            <div className="p-6 flex flex-col justify-between group hover:bg-white/[0.02] transition-colors duration-300">
+              <p className="text-sm font-mono font-medium uppercase tracking-widest text-amber-400/80 mb-2 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.5)]" />
                 {t('local.outdoors')}
               </p>
               <div className="mt-4 flex flex-col justify-between gap-4">
                 <div>
-                  <span className="text-4xl font-display font-bold text-black dark:text-white">
+                  <span className="text-4xl font-sans font-bold text-white">
                     {data.temperature}°C
                   </span>
-                  <p className="text-xs font-mono text-gray-500 mt-1 uppercase">
+                  <p className="text-xs font-mono text-white/40 mt-1">
                     {t('local.wind', {
                       speed: data.windSpeed,
                     })}
                   </p>
                 </div>
                 <div className="text-left md:text-right">
-                  {/* Randomized Funny Verdicts - REPLACED WITH GAUGE */}
+                  {/* Aurora Gauge */}
                   <div className="flex justify-center md:justify-end">
                     <AuroraGauge
                       cloudCover={data.cloudCover}
@@ -234,8 +229,8 @@ export const LocalData = ({
       ) : null}
       {/* Latitude Warning */}
       {effectiveCoords && effectiveCoords.latitude < 62 && (data?.solar?.kp ?? 0) < 5 && (
-        <div className="mt-4 bg-neo-blue/10 border-2 border-neo-blue p-4 text-center">
-          <p className="font-mono font-bold uppercase text-neo-blue text-sm">
+        <div className="mt-4 rounded-xl bg-aurora-blue/5 border border-aurora-blue/20 p-4 text-center">
+          <p className="font-mono font-medium text-aurora-blue text-sm">
             ⚠️ {t('local.lat_warning')}
           </p>
         </div>

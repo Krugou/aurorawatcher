@@ -28,7 +28,7 @@ export const SolarWindGraph = () => {
       });
   }, []);
 
-  if (loading) return <Skeleton className="h-64 w-full bg-slate-900 mb-8" />;
+  if (loading) return <Skeleton className="h-64 w-full mb-8" />;
   if (data.length === 0) return null;
 
   // Filter last 6 hours
@@ -41,26 +41,26 @@ export const SolarWindGraph = () => {
 
   return (
     <>
-      <div className="h-[250px] w-full mt-4 overflow-hidden relative bg-gray-100 dark:bg-zinc-900 border-2 border-black dark:border-white shadow-neo-sm">
+      <div className="h-[250px] w-full mt-4 overflow-hidden relative rounded-xl bg-white/[0.03] border border-white/10">
         <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
           <ComposedChart data={recentData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
             <XAxis
               dataKey="timestamp"
               tickFormatter={formatTime}
-              stroke="#000"
-              tick={{ fill: '#000', fontFamily: 'monospace', fontSize: 10 }}
+              stroke="#444"
+              tick={{ fill: '#888', fontFamily: 'monospace', fontSize: 10 }}
             />
             {/* Left Axis: Speed */}
             <YAxis
               yAxisId="speed"
               orientation="left"
-              stroke="#000"
-              tick={{ fill: '#000', fontFamily: 'monospace', fontSize: 10 }}
+              stroke="#444"
+              tick={{ fill: '#888', fontFamily: 'monospace', fontSize: 10 }}
               label={{
                 value: t('common.unit_speed'),
                 angle: -90,
                 position: 'insideLeft',
-                fill: '#000',
+                fill: '#888',
                 fontFamily: 'monospace',
               }}
               domain={['auto', 'auto']}
@@ -69,25 +69,25 @@ export const SolarWindGraph = () => {
             <YAxis
               yAxisId="bz"
               orientation="right"
-              stroke="#FF4800"
-              tick={{ fill: '#FF4800', fontFamily: 'monospace', fontSize: 10 }}
+              stroke="#8b5cf6"
+              tick={{ fill: '#8b5cf6', fontFamily: 'monospace', fontSize: 10 }}
               label={{
                 value: t('common.unit_mag'),
                 angle: 90,
                 position: 'insideRight',
-                fill: '#FF4800',
+                fill: '#8b5cf6',
                 fontFamily: 'monospace',
               }}
               domain={[-20, 20]}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#000',
-                borderColor: '#fff',
-                borderRadius: '0px',
-                border: '2px solid #fff',
+                backgroundColor: 'rgba(10, 10, 15, 0.95)',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderRadius: '12px',
+                border: '1px solid rgba(255,255,255,0.1)',
                 padding: '10px',
-                boxShadow: '4px 4px 0px 0px #fff',
+                boxShadow: '0 0 20px rgba(0, 212, 170, 0.1)',
               }}
               itemStyle={{ color: '#fff', fontFamily: 'monospace' }}
               labelStyle={{
@@ -98,32 +98,32 @@ export const SolarWindGraph = () => {
               }}
               labelFormatter={(label) => formatTime(label)}
             />
-            <Legend wrapperStyle={{ paddingTop: '10px', fontFamily: 'monospace' }} />
+            <Legend wrapperStyle={{ paddingTop: '10px', fontFamily: 'monospace', color: '#888' }} />
 
             <Area
               yAxisId="speed"
               type="step"
               dataKey="speed"
-              fill="#FFDE00"
-              stroke="#FFDE00"
-              stokeWidth={2}
-              fillOpacity={0.2}
+              fill="#00d4aa"
+              stroke="#00d4aa"
+              strokeWidth={2}
+              fillOpacity={0.1}
               name={t('graphs.speed_label')}
             />
             <Line
               yAxisId="bz"
               type="step"
               dataKey="bz"
-              stroke="#FF4800"
+              stroke="#8b5cf6"
               strokeWidth={3}
               dot={false}
-              activeDot={{ r: 6, fill: '#fff', stroke: '#000', strokeWidth: 2 }}
+              activeDot={{ r: 6, fill: '#8b5cf6', stroke: '#0a0a0f', strokeWidth: 2 }}
               name={t('graphs.bz_label')}
             />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
-      <p className="text-xs font-mono text-black dark:text-white mt-2 text-center uppercase tracking-wider">
+      <p className="text-xs font-mono text-white/40 mt-2 text-center uppercase tracking-wider">
         {t('graphs.solar_hint')}
       </p>
     </>

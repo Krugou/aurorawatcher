@@ -70,9 +70,6 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
 
     const filtered = fullHistory.filter((e) => e.timestamp >= cutoff);
 
-    // Only update state if length changes or we need to reset invalid index
-    // Use a function setter or check current value to avoid loop if adding history as dep?
-    // Actually simplicity is key: checks below break loops
     setHistory((prev) => {
       if (prev.length === filtered.length && prev[0]?.timestamp === filtered[0]?.timestamp) {
         return prev;
@@ -80,15 +77,11 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
       return filtered;
     });
 
-    // Reset to live when changing range if we were live or out of bounds
-    // We check against 'filtered.length' effectively
     if (currentIndex >= filtered.length || currentIndex === -1) {
       setCurrentIndex(filtered.length);
     }
-    // If we are viewing history that still exists in the new filter, keep the index (crudely)
-    // Ideally we'd match timestamps but maintaining "live" is the primary UX goal
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeRange, fullHistory]); // Removed currentIndex to fix logic loop, added logic inside to handle index
+  }, [timeRange, fullHistory]);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -140,21 +133,21 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
       {/* Time Range Selector */}
       <div className="flex flex-col gap-2">
         {oldestTime && (
-          <div className="text-center text-xs font-mono text-gray-500 dark:text-gray-400">
+          <div className="text-center text-xs font-mono text-white/40">
             {t('history.oldest', { time: oldestTime })}
           </div>
         )}
-        <div className="flex justify-center gap-0 scale-75 sm:scale-100 origin-center transition-transform">
+        <div className="flex justify-center gap-1 scale-75 sm:scale-100 origin-center transition-transform">
           {ranges.map((h) => (
             <button
               key={h}
               onClick={() => {
                 setTimeRange(h);
               }}
-              className={`px-4 py-3 border-2 text-sm font-bold font-mono transition-colors min-w-[50px] ${
+              className={`px-4 py-2 text-sm font-bold font-mono transition-all duration-300 rounded-lg min-w-[50px] ${
                 timeRange === h
-                  ? 'bg-neo-blue border-black text-white shadow-neo-sm z-10'
-                  : 'bg-white text-black border-black border-l-0 first:border-l-2 hover:bg-gray-200 dark:bg-zinc-800 dark:text-white dark:border-white'
+                  ? 'bg-aurora-blue border border-aurora-blue/50 text-white shadow-[0_0_12px_rgba(59,130,246,0.3)]'
+                  : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10 hover:text-white'
               }`}
             >
               {h === 720
@@ -172,7 +165,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
       </div>
 
       {/* Image Display */}
-      <div className="relative border-2 border-black dark:border-white bg-black group shadow-neo dark:shadow-neo-dark w-full h-[35vh] max-h-[300px] md:max-h-[400px] flex items-center justify-center overflow-hidden">
+      <div className="relative rounded-xl border border-white/10 bg-black/40 group w-full h-[35vh] max-h-[300px] md:max-h-[400px] flex items-center justify-center overflow-hidden">
         <img
           src={displayImage}
           alt={isLive ? t('history.live_alt') : t('history.hist_alt')}
@@ -180,13 +173,13 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
         />
 
         {/* Time Overlay */}
-        <div className="absolute top-4 left-4 bg-black/80 px-3 py-1.5 border border-white max-w-[70%]">
+        <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/10 max-w-[70%]">
           <span
-            className={`font-mono font-bold text-base ${isLive ? 'text-red-500 animate-pulse' : 'text-white'}`}
+            className={`font-mono font-bold text-base ${isLive ? 'text-red-400 animate-pulse' : 'text-white'}`}
           >
             {isLive ? t('history.live_label') : t('history.hist_label')}
           </span>
-          <div className="text-white text-[10px] font-mono">{displayTime}</div>
+          <div className="text-white/60 text-[10px] font-mono">{displayTime}</div>
         </div>
 
         {/* Fullscreen Button */}
@@ -194,7 +187,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
           onClick={() => {
             setIsFullscreen(true);
           }}
-          className="absolute bottom-4 right-4 bg-white text-black p-2 border-2 border-black shadow-neo-sm hover:translate-x-px hover:translate-y-px hover:shadow-none transition-all z-10 opacity-70 hover:opacity-100"
+          className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-sm text-white p-2 rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300 z-10 opacity-70 hover:opacity-100"
           title={t('history.fullscreen')}
         >
           <svg
@@ -221,7 +214,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
             onClick={() => {
               setIsFullscreen(false);
             }}
-            className="absolute top-4 right-4 z-101 bg-white text-black p-2 border-2 border-black hover:bg-gray-200"
+            className="absolute top-4 right-4 z-101 bg-white/10 backdrop-blur-sm text-white p-2 rounded-full border border-white/20 hover:bg-red-500/80 transition-colors duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -239,13 +232,13 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
             </svg>
           </button>
 
-          <div className="absolute top-4 left-4 z-101 bg-black/80 px-4 py-2 border border-white">
+          <div className="absolute top-4 left-4 z-101 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/10">
             <span
-              className={`font-mono font-bold text-xl ${isLive ? 'text-red-500 animate-pulse' : 'text-white'}`}
+              className={`font-mono font-bold text-xl ${isLive ? 'text-red-400 animate-pulse' : 'text-white'}`}
             >
               {isLive ? t('history.live_label') : t('history.hist_label')}
             </span>
-            <div className="text-white text-sm font-mono">{displayTime}</div>
+            <div className="text-white/60 text-sm font-mono">{displayTime}</div>
           </div>
 
           <button
@@ -262,7 +255,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
 
       {/* Controls */}
       {history.length > 0 && (
-        <div className="bg-white dark:bg-black border-2 border-black dark:border-white p-3 shadow-neo-sm dark:shadow-neo-sm-dark">
+        <div className="rounded-xl bg-white/[0.03] border border-white/10 p-3">
           <div className="flex items-center gap-3">
             {/* Play/Pause */}
             <button
@@ -270,7 +263,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 if (isLive) setCurrentIndex(0); // Restart if at end
                 setIsPlaying(!isPlaying);
               }}
-              className="w-12 h-12 flex items-center justify-center border-2 border-black dark:border-white bg-neo-yellow hover:bg-yellow-400 text-black transition-colors shadow-neo-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-none shrink-0"
+              className="w-12 h-12 flex items-center justify-center rounded-lg bg-aurora-teal/10 border border-aurora-teal/30 text-aurora-teal hover:bg-aurora-teal/20 hover:shadow-[0_0_12px_rgba(0,212,170,0.2)] transition-all duration-300 shrink-0"
               title={isPlaying ? t('history.pause') : t('history.play')}
             >
               {isPlaying ? (
@@ -280,7 +273,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
               )}
             </button>
 
-            <span className="text-xs text-black dark:text-white font-mono w-14 text-right hidden sm:block">
+            <span className="text-xs text-white/40 font-mono w-14 text-right hidden sm:block">
               {history.length > 0 ? formatTime(history[0].timestamp) : '--:--'}
             </span>
 
@@ -293,10 +286,10 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 setIsPlaying(false);
                 setCurrentIndex(parseInt(e.target.value));
               }}
-              className="flex-1 h-10 bg-gray-200 dark:bg-zinc-800 appearance-none border-2 border-black dark:border-white [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-10 [&::-webkit-slider-thumb]:bg-neo-pink [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black [&::-webkit-slider-thumb]:cursor-pointer"
+              className="flex-1 h-2 bg-white/10 appearance-none rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-aurora-teal [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-[0_0_8px_rgba(0,212,170,0.4)]"
             />
 
-            <span className="text-xs text-black dark:text-white font-mono w-10 text-left hidden sm:block">
+            <span className="text-xs text-white/40 font-mono w-10 text-left hidden sm:block">
               {t('grid.live')}
             </span>
           </div>
@@ -308,11 +301,11 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 setCurrentIndex((prev) => Math.max(0, prev - 1));
               }}
               disabled={currentIndex === 0}
-              className="px-4 py-2 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-xs uppercase hover:bg-gray-200 disabled:opacity-50 min-w-[70px]"
+              className="px-4 py-2 rounded-lg border border-white/10 bg-white/5 text-white/70 font-bold font-mono text-xs uppercase hover:bg-white/10 disabled:opacity-30 min-w-[70px] transition-all duration-300"
             >
               &lt; {t('history.prev')}
             </button>
-            <div className="text-xs text-gray-500 font-mono uppercase tracking-widest">
+            <div className="text-xs text-white/30 font-mono uppercase tracking-widest">
               {history.length} {t('history.frames')}
             </div>
             <button
@@ -321,7 +314,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
                 setCurrentIndex((prev) => Math.min(history.length, prev + 1));
               }}
               disabled={isLive}
-              className="px-4 py-2 border-2 border-black dark:border-white bg-gray-100 dark:bg-zinc-800 text-black dark:text-white font-bold font-mono text-xs uppercase hover:bg-gray-200 disabled:opacity-50 min-w-[70px]"
+              className="px-4 py-2 rounded-lg border border-white/10 bg-white/5 text-white/70 font-bold font-mono text-xs uppercase hover:bg-white/10 disabled:opacity-30 min-w-[70px] transition-all duration-300"
             >
               {t('history.next')} &gt;
             </button>
@@ -332,7 +325,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
       {loading && <LoadingAurora />}
 
       {!loading && history.length === 0 && (
-        <div className="text-center font-mono text-gray-500 border-2 border-dashed border-gray-400 p-4">
+        <div className="text-center font-mono text-white/30 border border-white/10 rounded-xl p-6">
           {t('history.no_data')}
         </div>
       )}

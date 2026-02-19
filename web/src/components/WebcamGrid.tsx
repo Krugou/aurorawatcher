@@ -59,33 +59,33 @@ export const WebcamGrid = () => {
       {WEBCAMS.map((cam) => (
         <div
           key={cam.id}
-          className="relative group border-2 border-black dark:border-white shadow-neo-sm bg-black overflow-hidden aspect-video"
+          className="relative group rounded-xl border border-white/10 bg-black/40 overflow-hidden aspect-video hover:border-white/20 transition-all duration-300"
         >
           {!cam.url && <Skeleton className="w-full h-full" />}
           <img
             src={`${getProxiedUrl(cam.url)}${cam.refresh ? `&t=${Date.now()}` : ''}`}
             alt={cam.name}
-            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+            className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500"
             loading="lazy"
             onError={(e) => {
               // Fallback on error
               e.currentTarget.style.display = 'none';
               e.currentTarget.parentElement?.classList.add(
-                'bg-gray-800',
+                'bg-white/[0.02]',
                 'flex',
                 'items-center',
                 'justify-center',
               );
               if (e.currentTarget.parentElement) {
                 const errorText = document.createElement('span');
-                errorText.className = 'text-white text-xs font-mono p-4 text-center';
+                errorText.className = 'text-white/40 text-xs font-mono p-4 text-center';
                 errorText.innerText = t('grid.error');
                 e.currentTarget.parentElement.appendChild(errorText);
               }
             }}
           />
-          <div className="absolute bottom-0 left-0 bg-black/70 px-2 py-1">
-            <span className="text-neo-green font-mono text-xs font-bold uppercase">{cam.name}</span>
+          <div className="absolute bottom-0 left-0 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-tr-lg">
+            <span className="text-aurora-teal/80 font-mono text-xs font-medium">{cam.name}</span>
           </div>
         </div>
       ))}
