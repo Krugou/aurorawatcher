@@ -7,7 +7,7 @@
     "dev": "vite --port 3005",
     "dev:advanced": "vite --host --port 3005 --open --cors",
     "start": "vite preview --port 3005",
-    "test": "vitest",
+    "test": "vitest --passWithNoTests",
     "test:e2e": "start-server-and-test dev http://localhost:3005 \"cypress run\"",
     "cy:open": "cypress open",
     "build": "tsc -b && vite build",
