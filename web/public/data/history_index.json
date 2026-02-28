@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1772299405960,
+  "lastUpdated": 1772300254348,
   "entries": [
     {
       "timestamp": 1769871600000,
@@ -23005,6 +23005,31 @@
       "timestamp": 1772298000000,
       "camId": "auroraData",
       "filename": "history/auroraData_20260228_1700.jpg"
+    },
+    {
+      "timestamp": 1772299800000,
+      "camId": "muonio",
+      "filename": "history/muonio_20260228_1730.jpg"
+    },
+    {
+      "timestamp": 1772299800000,
+      "camId": "nyrola",
+      "filename": "history/nyrola_20260228_1730.jpg"
+    },
+    {
+      "timestamp": 1772299800000,
+      "camId": "hankasalmi",
+      "filename": "history/hankasalmi_20260228_1730.jpg"
+    },
+    {
+      "timestamp": 1772299800000,
+      "camId": "metsahovi",
+      "filename": "history/metsahovi_20260228_1730.jpg"
+    },
+    {
+      "timestamp": 1772299800000,
+      "camId": "auroraData",
+      "filename": "history/auroraData_20260228_1730.jpg"
     },
     {
       "timestamp": 1772299800000,
