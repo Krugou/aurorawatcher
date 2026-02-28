@@ -1,3 +1,9 @@
+# [1.20.0](https://github.com/Krugou/aurorawatcher/compare/v1.19.2...v1.20.0) (2026-02-28)
+
+### Features
+
+- **tests:** add enterprise-level Vitest test suite (172 tests) ([18cad31](https://github.com/Krugou/aurorawatcher/commit/18cad318930e99c93549e876cffd4e35e20a8ec6))
+
 ## [1.19.2](https://github.com/Krugou/aurorawatcher/compare/v1.19.1...v1.19.2) (2026-02-28)
 
 ### Bug Fixes
