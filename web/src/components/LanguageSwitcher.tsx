@@ -18,16 +18,17 @@ export const LanguageSwitcher = () => {
       aria-label={t('common.switch_lang')}
     >
       <span className="flex items-center gap-1.5">
-        {i18n.language === 'en' ? (
-          <>
+        {i18n.language === 'en' && (
+          <span className="flex items-center gap-1.5">
             <span className="text-base">🇫🇮</span>
-            <span>{t('common.fi_label', 'FI')}</span>
-          </>
-        ) : (
-          <>
+            <span>{t('common.fi_label', { defaultValue: 'FI' })}</span>
+          </span>
+        )}
+        {i18n.language !== 'en' && (
+          <span className="flex items-center gap-1.5">
             <span className="text-base">🇬🇧</span>
-            <span>{t('common.en_label', 'EN')}</span>
-          </>
+            <span>{t('common.en_label', { defaultValue: 'EN' })}</span>
+          </span>
         )}
       </span>
     </button>

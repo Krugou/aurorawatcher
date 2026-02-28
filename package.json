@@ -6,6 +6,10 @@
     "bot",
     "web"
   ],
+  "overrides": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
   "scripts": {
     "dev:bot": "npm run dev -w aurorawatcher-bot",
     "start:bot": "npm run start -w aurorawatcher-bot",
