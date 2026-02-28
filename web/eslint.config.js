@@ -9,7 +9,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-config-prettier';
 
 export default tseslint.config(
-  { ignores: ['dist', 'dev-dist', 'eslint.config.js', 'cypress.config.ts', 'cypress/**'] },
+  { ignores: ['dist', 'dev-dist', 'eslint.config.js', 'cypress.config.ts', 'cypress/**', 'src/**/*.test.ts', 'src/**/*.spec.ts'] },
   {
     extends: [
       js.configs.recommended,
