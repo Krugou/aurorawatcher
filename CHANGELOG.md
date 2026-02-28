@@ -1,3 +1,10 @@
+## [1.19.2](https://github.com/Krugou/aurorawatcher/compare/v1.19.1...v1.19.2) (2026-02-28)
+
+### Bug Fixes
+
+- downgrade eslint to resolve display-name rule error and deduplicate react missing objects validation error ([e0d0487](https://github.com/Krugou/aurorawatcher/commit/e0d0487f4b5a57a75da8178a797ca6c0dfee3163))
+- **lint:** ignore cypress files to prevent CI crash ([a87f4ec](https://github.com/Krugou/aurorawatcher/commit/a87f4eced5dbc240aeb389ac571a328b71a1a0f4))
+
 ## [1.19.1](https://github.com/Krugou/aurorawatcher/compare/v1.19.0...v1.19.1) (2026-02-15)
 
 ### Bug Fixes
