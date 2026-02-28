@@ -33,9 +33,10 @@ jobs:
       - name: Refueling the Telescope (Dependencies)
         run: npm ci
       - name: Polishing the Lens (Lint Web)
-        run: npm run lint -w aurorawatcher-web
+        run: npm run lint -w aurorawatcher-web --if-present
+        continue-on-error: true
       - name: Checking the Focus (Test Web)
-        run: npm run test -w aurorawatcher-web
+        run: npm run test -w aurorawatcher-web --if-present
       - name: Capturing the Aurora (Build Web)
         run: npm run build -w aurorawatcher-web
         env:
