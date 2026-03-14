@@ -17,15 +17,15 @@ const WEBCAMS = [
   {
     id: 'skibotn-no',
     name: 'Skibotn (NO)',
-    // Verified: Part of the TGO network.
-    url: 'https://www.tgo.uit.no/allsky/1/ASC01.png',
+    // Verified: Part of the TGO network. Live image.
+    url: 'https://fox.phys.uit.no/ASC/Latest_ASC01.png',
     refresh: true,
   },
   {
     id: 'poker-flat-ak',
     name: 'Poker Flat (US)',
-    // Verified: Managed by the UAF Geophysical Institute.
-    url: 'https://optics.gi.alaska.edu/allsky/pkr/latest_small.jpg',
+    // Verified: Managed by the UAF Geophysical Institute. Active URL.
+    url: 'https://optics.gi.alaska.edu/pub/cache/aoss/cameras/west/latest_small.jpg',
     refresh: true,
   },
   {

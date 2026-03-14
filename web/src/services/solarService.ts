@@ -9,7 +9,7 @@ export interface SolarData {
 }
 
 const URLS = {
-  mag: 'https://services.swpc.noaa.gov/products/solar-wind/mag-1-day.json',
+  mag: 'https://services.swpc.noaa.gov/products/solar-wind/mag-6-hour.json',
   plasma: 'https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json',
   kp: 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json',
 };
