@@ -1,56 +1,6 @@
 {
-  "lastUpdated": 1773689818086,
+  "lastUpdated": 1773691118729,
   "entries": [
-    {
-      "timestamp": 1771098300000,
-      "camId": "muonio",
-      "filename": "history/muonio_20260214_1945.jpg"
-    },
-    {
-      "timestamp": 1771098300000,
-      "camId": "nyrola",
-      "filename": "history/nyrola_20260214_1945.jpg"
-    },
-    {
-      "timestamp": 1771098300000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260214_1945.jpg"
-    },
-    {
-      "timestamp": 1771098300000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260214_1945.jpg"
-    },
-    {
-      "timestamp": 1771098300000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260214_1945.jpg"
-    },
-    {
-      "timestamp": 1771098300000,
-      "camId": "muonio",
-      "filename": "history/muonio_20260214_1945.jpg"
-    },
-    {
-      "timestamp": 1771098300000,
-      "camId": "nyrola",
-      "filename": "history/nyrola_20260214_1945.jpg"
-    },
-    {
-      "timestamp": 1771098300000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260214_1945.jpg"
-    },
-    {
-      "timestamp": 1771098300000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260214_1945.jpg"
-    },
-    {
-      "timestamp": 1771098300000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260214_1945.jpg"
-    },
     {
       "timestamp": 1771099200000,
       "camId": "muonio",
@@ -22825,6 +22775,31 @@
       "timestamp": 1773689400000,
       "camId": "auroraData",
       "filename": "history/auroraData_20260316_1930.jpg"
+    },
+    {
+      "timestamp": 1773691200000,
+      "camId": "muonio",
+      "filename": "history/muonio_20260316_2000.jpg"
+    },
+    {
+      "timestamp": 1773691200000,
+      "camId": "nyrola",
+      "filename": "history/nyrola_20260316_2000.jpg"
+    },
+    {
+      "timestamp": 1773691200000,
+      "camId": "hankasalmi",
+      "filename": "history/hankasalmi_20260316_2000.jpg"
+    },
+    {
+      "timestamp": 1773691200000,
+      "camId": "metsahovi",
+      "filename": "history/metsahovi_20260316_2000.jpg"
+    },
+    {
+      "timestamp": 1773691200000,
+      "camId": "auroraData",
+      "filename": "history/auroraData_20260316_2000.jpg"
     }
   ]
 }
