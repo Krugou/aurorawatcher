@@ -1,46 +1,6 @@
 {
-  "lastUpdated": 1773693954100,
+  "lastUpdated": 1773694993439,
   "entries": [
-    {
-      "timestamp": 1771102800000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260214_2100.jpg"
-    },
-    {
-      "timestamp": 1771102800000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260214_2100.jpg"
-    },
-    {
-      "timestamp": 1771102800000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260214_2100.jpg"
-    },
-    {
-      "timestamp": 1771102800000,
-      "camId": "muonio",
-      "filename": "history/muonio_20260214_2100.jpg"
-    },
-    {
-      "timestamp": 1771102800000,
-      "camId": "nyrola",
-      "filename": "history/nyrola_20260214_2100.jpg"
-    },
-    {
-      "timestamp": 1771102800000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260214_2100.jpg"
-    },
-    {
-      "timestamp": 1771102800000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260214_2100.jpg"
-    },
-    {
-      "timestamp": 1771102800000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260214_2100.jpg"
-    },
     {
       "timestamp": 1771104600000,
       "camId": "muonio",
@@ -22765,6 +22725,31 @@
       "timestamp": 1773693900000,
       "camId": "auroraData",
       "filename": "history/auroraData_20260316_2045.jpg"
+    },
+    {
+      "timestamp": 1773694800000,
+      "camId": "muonio",
+      "filename": "history/muonio_20260316_2100.jpg"
+    },
+    {
+      "timestamp": 1773694800000,
+      "camId": "nyrola",
+      "filename": "history/nyrola_20260316_2100.jpg"
+    },
+    {
+      "timestamp": 1773694800000,
+      "camId": "hankasalmi",
+      "filename": "history/hankasalmi_20260316_2100.jpg"
+    },
+    {
+      "timestamp": 1773694800000,
+      "camId": "metsahovi",
+      "filename": "history/metsahovi_20260316_2100.jpg"
+    },
+    {
+      "timestamp": 1773694800000,
+      "camId": "auroraData",
+      "filename": "history/auroraData_20260316_2100.jpg"
     }
   ]
 }
