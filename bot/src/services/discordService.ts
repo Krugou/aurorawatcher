@@ -16,22 +16,33 @@ export const createLogger = (channel: TextChannel) => {
 /**
  * Sends all aurora observatory images to a Discord channel in a single message using Embeds.
  * @param textChannel - The Discord text channel to send messages to.
+ * @param visibilityMap - Optional map of location keys to cloud cover percentage.
  */
-export const sendAuroraImages = async (textChannel: TextChannel): Promise<void> => {
+export const sendAuroraImages = async (
+	textChannel: TextChannel,
+	visibilityMap?: Record<string, number>
+): Promise<void> => {
 	const embeds: EmbedBuilder[] = [];
 	const files: AttachmentBuilder[] = [];
 
 	// Helper to add location to embeds and files
 	const addLocation = (key: keyof typeof LOCATIONS, imageUrl: string, filename: string) => {
 		const location = LOCATIONS[key];
+		const cloudCover = visibilityMap ? visibilityMap[key] : null;
+
 		files.push(new AttachmentBuilder(imageUrl, { name: filename }));
-		embeds.push(
-			new EmbedBuilder()
-				.setTitle(location.name)
-				.setURL(location.mapUrl)
-				.setImage(`attachment://${filename}`)
-				.setColor(0x0099ff)
-		);
+		
+		const embed = new EmbedBuilder()
+			.setTitle(location.name)
+			.setURL(location.mapUrl)
+			.setImage(`attachment://${filename}`)
+			.setColor(0x0099ff);
+
+		if (typeof cloudCover === 'number') {
+			embed.setDescription(`☁️ Cloud Cover: **${cloudCover}%**`);
+		}
+
+		embeds.push(embed);
 	};
 
 	// Add observatories

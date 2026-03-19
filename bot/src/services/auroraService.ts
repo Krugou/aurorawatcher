@@ -1,8 +1,9 @@
 import { Client, TextChannel, ActivityType } from 'discord.js';
-import { AURORA_CONFIG, IMAGE_URLS } from '../config.js';
+import { AURORA_CONFIG, IMAGE_URLS, LOCATIONS } from '../config.js';
 import { getSunriseSunsetTimes, isDark } from '../utils/sunTimes.js';
 import { hasImageChanged, checkImageColor } from '../utils/imageUtils.js';
 import { createLogger, sendAuroraImages } from './discordService.js';
+import { getCloudCover } from './weatherService.js';
 import { initHistory, saveImageToHistory, pruneOldHistory } from '../utils/historyUtils.js';
 
 export interface ExecutionSummary {
@@ -11,6 +12,7 @@ export interface ExecutionSummary {
 	imagesSaved: number;
 	imageChanged: boolean;
 	outcome: string;
+	visibility?: Record<string, number>;
 }
 
 export const checkAndPostAurora = async (client: Client, log: (msg: string) => void): Promise<ExecutionSummary> => {
@@ -49,6 +51,15 @@ export const checkAndPostAurora = async (client: Client, log: (msg: string) => v
 		}
 
 		summary.isDark = true;
+
+		// Fetch visibility (cloud cover) for each location in parallel
+		const visibilityMap: Record<string, number> = {};
+		await Promise.all(
+			Object.entries(LOCATIONS).map(async ([key, loc]: [string, any]) => {
+				visibilityMap[key] = await getCloudCover(loc.lat, loc.lon);
+			})
+		);
+		summary.visibility = visibilityMap;
 
 		// Initialize history directory
 		await initHistory();
@@ -97,7 +108,7 @@ export const checkAndPostAurora = async (client: Client, log: (msg: string) => v
 		if (await hasImageChanged(IMAGE_URLS.metsahovi)) {
 			log('Image has changed');
 			client.user?.setActivity('Aurora Active! 🟢', { type: ActivityType.Watching });
-			await sendAuroraImages(channel);
+			await sendAuroraImages(channel, visibilityMap);
 			log(`Posting image to channel ${channel.name}...`);
 			summary.imageChanged = true;
 			summary.outcome = 'Posted Aurora Update';

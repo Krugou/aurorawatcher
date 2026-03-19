@@ -12,7 +12,7 @@ interface MagneticData {
 interface WeatherData {
   station: string;
   temperature: number;
-  cloudCover: number; // 0-8 (octas)
+  cloudCover: number; // 0-100%
   windSpeed: number;
 }
 
@@ -297,7 +297,7 @@ export const fetchWeatherData = async (lat: number, lon: number): Promise<Weathe
           maxTime = time;
           latestValid = {
             temperature: t2m,
-            cloudCover: isNaN(n_man) ? 0 : n_man,
+            cloudCover: isNaN(n_man) ? 0 : Math.round((n_man / 8) * 100),
             windSpeed: ws,
           };
         }

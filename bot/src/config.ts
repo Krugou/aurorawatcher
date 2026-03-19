@@ -14,18 +14,26 @@ export const LOCATIONS = {
 	muonio: {
 		name: 'Muonio, Finland',
 		mapUrl: 'https://maps.app.goo.gl/rmr9YMBuR66GCB2X8',
+		lat: 67.96,
+		lon: 23.68,
 	},
 	nyrola: {
 		name: 'Nyrölä Observatory, Finland',
 		mapUrl: 'https://maps.app.goo.gl/m9AHq8wxAhJyBVUMA',
+		lat: 62.34,
+		lon: 25.51,
 	},
 	hankasalmi: {
 		name: 'Hankasalmi observatory Jyväskylän Sirius ry',
 		mapUrl: 'https://maps.app.goo.gl/sDCpGgSkcMKgDojh6',
+		lat: 62.3,
+		lon: 26.65,
 	},
 	metsahovi: {
 		name: 'Metsähovin radiotutkimusasema(Aalto yliopisto)',
 		mapUrl: 'https://maps.app.goo.gl/BG3JC7uHLLcdi5C1A',
+		lat: 60.22,
+		lon: 24.39,
 	},
 } as const;
 

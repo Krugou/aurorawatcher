@@ -5,14 +5,15 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import { fetchMagneticData, fetchWeatherData } from '../services/fmiService';
 import { fetchSolarData, SolarData } from '../services/solarService';
 import { fetchNorwayWeather } from '../services/weatherService';
-import { isDaytime } from '../utils/daytime';
 import { normalizeStationKey } from '../utils/i18nUtils';
 import { AuroraGauge } from './AuroraGauge';
 import { Skeleton } from './Skeleton';
+import { VisibilityDashboard } from './VisibilityDashboard';
 
 interface CombinedData {
   magStation: string;
   fieldIntensity: number;
+  fieldStatus: 'HIGH' | 'MODERATE' | 'LOW' | 'QUIET' | 'UNKNOWN';
   weatherStation: string;
   temperature: number;
   cloudCover: number;
@@ -69,9 +70,20 @@ export const LocalData = ({
         .then(([magResult, solarResult, weatherResult]) => {
           console.log('[LocalData] Fetch results:', { magResult, solarResult, weatherResult });
           if (magResult && weatherResult) {
+            // Determine magnetic status based on intensity delta or absolute value
+            // For simplicity, we use the raw intensity thresholds
+            let status: 'HIGH' | 'MODERATE' | 'LOW' | 'QUIET' = 'QUIET';
+            const intensity = magResult.fieldIntensity;
+            
+            // Note: These are very rough thresholds for Finnish latitudes
+            if (intensity > 52000) status = 'HIGH';
+            else if (intensity > 51000) status = 'MODERATE';
+            else if (intensity > 50500) status = 'LOW';
+
             setData({
               magStation: magResult.station,
               fieldIntensity: magResult.fieldIntensity,
+              fieldStatus: status,
               weatherStation: weatherResult.station,
               temperature: weatherResult.temperature,
               cloudCover: weatherResult.cloudCover,
@@ -96,15 +108,15 @@ export const LocalData = ({
     }
   }, [effectiveCoords]);
 
-  // Cloud cover interpretation (0-8 octas)
-  const getSkyCondition = (octas: number, description?: string) => {
+  // Cloud cover interpretation (0-100%)
+  const getSkyCondition = (percent: number, description?: string) => {
     if (description)
       return {
         text: description.charAt(0).toUpperCase() + description.slice(1),
         color: 'text-aurora-blue',
       };
-    if (octas <= 1) return { text: t('sky.clear'), color: 'text-aurora-teal' };
-    if (octas <= 4) return { text: t('sky.partly'), color: 'text-amber-400' };
+    if (percent <= 15) return { text: t('sky.clear'), color: 'text-aurora-teal' };
+    if (percent <= 50) return { text: t('sky.partly'), color: 'text-amber-400' };
     return { text: t('sky.overcast'), color: 'text-white/40' };
   };
 
@@ -144,15 +156,16 @@ export const LocalData = ({
           <p className="font-mono font-medium text-amber-400">{t('local.dataError')}</p>
         </div>
       ) : data ? (
-        effectiveCoords && isDaytime(effectiveCoords.latitude, effectiveCoords.longitude) ? (
-          <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 text-center p-8">
-            <div className="text-6xl mb-4">☀️</div>
-            <h3 className="text-2xl font-sans font-bold mb-2 text-white/90">
-              {t('local.daytime_title')}
-            </h3>
-            <p className="font-mono text-sm text-white/50">{t('local.daytime_desc')}</p>
-          </div>
-        ) : (
+        <div className="space-y-6">
+          {effectiveCoords && (
+            <VisibilityDashboard 
+              lat={effectiveCoords.latitude} 
+              lon={effectiveCoords.longitude} 
+              cloudCover={data.cloudCover} 
+              magneticStatus={data.fieldStatus}
+            />
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-0 rounded-xl bg-white/[0.03] border border-white/10 overflow-hidden">
             {/* Magnetic Field Card */}
             <div className="p-6 border-b md:border-b-0 md:border-r border-white/[0.06] flex flex-col justify-between group hover:bg-white/[0.02] transition-colors duration-300">
@@ -189,7 +202,7 @@ export const LocalData = ({
                 <p className={`text-2xl font-sans font-bold text-white/90`}>{sky.text}</p>
                 <p className="text-sm font-mono text-white/40 mt-1">
                   {t('local.clouds', {
-                    percent: Math.round((data.cloudCover / 8) * 100),
+                    percent: data.cloudCover,
                   })}
                 </p>
               </div>
@@ -225,7 +238,7 @@ export const LocalData = ({
               </div>
             </div>
           </div>
-        )
+        </div>
       ) : null}
       {/* Latitude Warning */}
       {effectiveCoords && effectiveCoords.latitude < 62 && (data?.solar?.kp ?? 0) < 5 && (

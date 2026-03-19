@@ -161,6 +161,13 @@
     "disclaimer": "Huom: Tarkka revontulien ennustaminen riippuu monesta muuttujasta. Vaikka data olisi täydellistä, paikallinen näkyvyys ja nopeasti muuttuvat olosuhteet vaikuttavat lopputulokseen. Luota aina omiin silmiisi!"
   },
   "common": {
+    "daylight": {
+      "too_bright": "Liian valoisaa",
+      "too_cloudy": "Liian pilvistä",
+      "optimal": "Täydelliset olosuhteet",
+      "clear_sky": "Selkeä taivas",
+      "partly_cloudy": "Puolipilvistä"
+    },
     "status_online": "JÄRJESTELMÄ: LINJOILLA",
     "monitoring_solar": "SEURATAAN AURINKOTUULTA",
     "checking_mag": "TARKISTETAAN MAGNETOMETREJÄ",

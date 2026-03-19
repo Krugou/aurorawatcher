@@ -161,6 +161,13 @@
     "disclaimer": "Note: Accurate aurora prediction depends on multiple variables. Even with perfect data, local visibility and fast-changing conditions play a huge role. Always trust your own eyes!"
   },
   "common": {
+    "daylight": {
+      "too_bright": "Too Bright",
+      "too_cloudy": "Too Cloudy",
+      "optimal": "Optimal Conditions",
+      "clear_sky": "Clear Sky",
+      "partly_cloudy": "Partly Cloudy"
+    },
     "status_online": "SYSTEM STATUS: ONLINE",
     "monitoring_solar": "MONITORING SOLAR WIND",
     "checking_mag": "CHECKING MAGNETOMETERS",

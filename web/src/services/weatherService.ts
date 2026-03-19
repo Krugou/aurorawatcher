@@ -13,6 +13,7 @@ export interface WeatherData {
   description: string;
   location: string;
   icon: string;
+  cloudCover: number; // 0-100%
 }
 
 /**
@@ -54,6 +55,7 @@ export const fetchNorwayWeather = async (lat: number, lon: number): Promise<Weat
       description: summary?.symbol_code?.replace(/_/g, ' ') ?? 'Unknown',
       location: `${lat.toFixed(2)}, ${lon.toFixed(2)}`,
       icon: summary?.symbol_code ?? '',
+      cloudCover: details.cloud_area_fraction ?? 0,
     };
   } catch (error) {
     if (error instanceof WeatherError) throw error;
