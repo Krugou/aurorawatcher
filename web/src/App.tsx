@@ -201,9 +201,14 @@ const AppContent = () => {
         </CollapsibleSection>
 
         <footer className="text-center py-12 text-white/30 font-mono text-xs uppercase tracking-widest space-y-4">
-          <p title={`${t('common.build_time')}: ${__BUILD_TIME__}`}>
-            {t('footer.copyright', { year: new Date().getFullYear() })}
-          </p>
+          <div className="space-y-1">
+            <p title={`${t('common.build_time')}: ${__BUILD_TIME__}`}>
+              {t('footer.copyright', { year: new Date().getFullYear() })}
+            </p>
+            <p className="text-[10px] opacity-60">
+              {t('footer.last_updated')}: {new Date(timestamp).toLocaleTimeString()}
+            </p>
+          </div>
           <div className="flex justify-center">
             <a 
               href="https://github.com/moxch/aurorawatcher" 

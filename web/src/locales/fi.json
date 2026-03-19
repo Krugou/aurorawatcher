@@ -31,7 +31,8 @@
     "open_map": "Avaa kartalla"
   },
   "footer": {
-    "copyright": "© {{year}} Revontulivahti. Kuvat: Ilmatieteen laitos & Observatoriot."
+    "copyright": "© {{year}} Revontulivahti. Kuvat: Ilmatieteen laitos & Observatoriot.",
+    "last_updated": "Tiedot päivitetty"
   },
   "status": {
     "quiet": "RAUHALLISTA",

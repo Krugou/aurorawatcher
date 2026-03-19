@@ -31,7 +31,8 @@
     "open_map": "Open on map"
   },
   "footer": {
-    "copyright": "© {{year}} Aurora Watcher. Images: FMI & Observatories."
+    "copyright": "© {{year}} Aurora Watcher. Images: FMI & Observatories.",
+    "last_updated": "Last Data Update"
   },
   "status": {
     "quiet": "QUIET",
