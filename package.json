@@ -32,6 +32,7 @@
       "node -e \"require('child_process').execSync('npm test -w aurorawatcher-web -- --run', {stdio: 'inherit'})\""
     ],
     "bot/**/*.ts": [
+      "npm run lint:fix -w aurorawatcher-bot",
       "node -e \"require('child_process').execSync('npx tsc -p bot/tsconfig.json --noEmit', {stdio: 'inherit'})\""
     ],
     "**/*.{json,md}": [
