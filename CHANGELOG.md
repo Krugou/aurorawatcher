@@ -1,3 +1,14 @@
+# [1.21.0](https://github.com/Krugou/aurorawatcher/compare/v1.20.1...v1.21.0) (2026-03-19)
+
+### Bug Fixes
+
+- resolve testing library dependency issues after reinstall ([4460ba3](https://github.com/Krugou/aurorawatcher/commit/4460ba37bb6583e459ee60cd2d57dff11f1803b9))
+
+### Features
+
+- add last updated timestamp to web footer ([0fb978f](https://github.com/Krugou/aurorawatcher/commit/0fb978f9f89a3c5b4f75788a30545936d64a8329))
+- enhance aurora monitoring with cloud cover and visibility dashboard ([fdbb0e5](https://github.com/Krugou/aurorawatcher/commit/fdbb0e581dd65a9ca27045c4f65a0be110f96578))
+
 ## [1.20.1](https://github.com/Krugou/aurorawatcher/compare/v1.20.0...v1.20.1) (2026-02-28)
 
 ### Bug Fixes
