@@ -1,31 +1,6 @@
 {
-  "lastUpdated": 1774034172919,
+  "lastUpdated": 1774035183687,
   "entries": [
-    {
-      "timestamp": 1771443000000,
-      "camId": "muonio",
-      "filename": "history/muonio_20260218_1930.jpg"
-    },
-    {
-      "timestamp": 1771443000000,
-      "camId": "nyrola",
-      "filename": "history/nyrola_20260218_1930.jpg"
-    },
-    {
-      "timestamp": 1771443000000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260218_1930.jpg"
-    },
-    {
-      "timestamp": 1771443000000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260218_1930.jpg"
-    },
-    {
-      "timestamp": 1771443000000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260218_1930.jpg"
-    },
     {
       "timestamp": 1771444800000,
       "camId": "muonio",
@@ -21425,6 +21400,31 @@
       "timestamp": 1774034100000,
       "camId": "auroraData",
       "filename": "history/auroraData_20260320_1915.jpg"
+    },
+    {
+      "timestamp": 1774035000000,
+      "camId": "muonio",
+      "filename": "history/muonio_20260320_1930.jpg"
+    },
+    {
+      "timestamp": 1774035000000,
+      "camId": "nyrola",
+      "filename": "history/nyrola_20260320_1930.jpg"
+    },
+    {
+      "timestamp": 1774035000000,
+      "camId": "hankasalmi",
+      "filename": "history/hankasalmi_20260320_1930.jpg"
+    },
+    {
+      "timestamp": 1774035000000,
+      "camId": "metsahovi",
+      "filename": "history/metsahovi_20260320_1930.jpg"
+    },
+    {
+      "timestamp": 1774035000000,
+      "camId": "auroraData",
+      "filename": "history/auroraData_20260320_1930.jpg"
     }
   ]
 }
