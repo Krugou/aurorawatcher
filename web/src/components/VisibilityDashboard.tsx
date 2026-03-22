@@ -58,7 +58,9 @@ export const VisibilityDashboard = ({
   const config = getStatusConfig(report.status);
 
   return (
-    <div className={`mt-6 p-5 rounded-2xl border ${config.border} ${config.bg} transition-all duration-500`}>
+    <div
+      className={`mt-6 p-5 rounded-2xl border ${config.border} ${config.bg} transition-all duration-500`}
+    >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <span className="text-3xl">{config.icon}</span>
@@ -72,27 +74,27 @@ export const VisibilityDashboard = ({
           </div>
         </div>
         <div className="text-right">
-          <div className="text-2xl font-sans font-bold text-white">
-            {report.probability}%
-          </div>
+          <div className="text-2xl font-sans font-bold text-white">{report.probability}%</div>
           <p className="text-[10px] font-mono text-white/30 uppercase tracking-tighter">
             {t('local.visibility')}
           </p>
         </div>
       </div>
-      
+
       {/* Probability Bar */}
       <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
-        <div 
+        <div
           className={`h-full transition-all duration-1000 ease-out rounded-full ${
-            report.status === VisibilityStatus.OPTIMAL ? 'bg-aurora-teal' : 
-            report.status === VisibilityStatus.DAYLIGHT ? 'bg-amber-400' : 
-            'bg-aurora-blue'
+            report.status === VisibilityStatus.OPTIMAL
+              ? 'bg-aurora-teal'
+              : report.status === VisibilityStatus.DAYLIGHT
+                ? 'bg-amber-400'
+                : 'bg-aurora-blue'
           }`}
           style={{ width: `${report.probability}%` }}
         />
       </div>
-      
+
       {report.status === VisibilityStatus.DAYLIGHT && (
         <p className="mt-3 text-xs font-mono text-amber-400/60 leading-relaxed italic">
           {t('local.daytime_desc')}

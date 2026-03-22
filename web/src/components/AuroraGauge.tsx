@@ -4,9 +4,10 @@ interface AuroraGaugeProps {
   cloudCover: number; // 0-8 octas
   kp: number; // 0-9
   bz: number; // nT
+  isTooBright?: boolean;
 }
 
-export const AuroraGauge = ({ cloudCover, kp, bz }: AuroraGaugeProps) => {
+export const AuroraGauge = ({ cloudCover, kp, bz, isTooBright }: AuroraGaugeProps) => {
   const { t } = useTranslation();
 
   // Calculate score (0-100)
@@ -28,13 +29,18 @@ export const AuroraGauge = ({ cloudCover, kp, bz }: AuroraGaugeProps) => {
   // Enhance score logic for edge cases
   if (cloudCover >= 7) score = 0; // Overcast = No Go
   if (cloudCover <= 1 && solarScore > 50) score = Math.max(score, 80); // Clear sky + decent activity = GO
+  if (isTooBright) score = 0; // Too bright to see regardless of score
 
   // Determine Color & Text
   let color = 'text-white/40';
   let gaugeColor = 'bg-white/20';
   let label = t('status.quiet'); // Default text key, should be customized
 
-  if (score >= 80) {
+  if (isTooBright) {
+    color = 'text-amber-400';
+    gaugeColor = 'bg-amber-400';
+    label = t('local.daytime_title') || 'TOO BRIGHT ☀️';
+  } else if (score >= 80) {
     color = 'text-aurora-teal';
     gaugeColor = 'bg-aurora-teal';
     label = 'GO NOW! 🚀';
@@ -90,7 +96,7 @@ export const AuroraGauge = ({ cloudCover, kp, bz }: AuroraGaugeProps) => {
       {/* Stats Mini */}
       <div className="flex gap-4 mt-2 text-[10px] font-mono text-white/30">
         <span title="Cloud Cover">☁️ {Math.round((cloudCover / 8) * 100)}%</span>
-        <span title="Solar Activity">☀️ {Math.round(solarScore)}%</span>
+        <span title="Solar Activity">🌌 {Math.round(solarScore)}%</span>
       </div>
     </div>
   );

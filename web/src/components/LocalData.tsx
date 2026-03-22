@@ -5,6 +5,7 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import { fetchMagneticData, fetchWeatherData } from '../services/fmiService';
 import { fetchSolarData, SolarData } from '../services/solarService';
 import { fetchNorwayWeather } from '../services/weatherService';
+import { getViewingProbability } from '../utils/daylight';
 import { normalizeStationKey } from '../utils/i18nUtils';
 import { AuroraGauge } from './AuroraGauge';
 import { Skeleton } from './Skeleton';
@@ -74,7 +75,7 @@ export const LocalData = ({
             // For simplicity, we use the raw intensity thresholds
             let status: 'HIGH' | 'MODERATE' | 'LOW' | 'QUIET' = 'QUIET';
             const intensity = magResult.fieldIntensity;
-            
+
             // Note: These are very rough thresholds for Finnish latitudes
             if (intensity > 52000) status = 'HIGH';
             else if (intensity > 51000) status = 'MODERATE';
@@ -121,6 +122,15 @@ export const LocalData = ({
   };
 
   const sky = data ? getSkyCondition(data.cloudCover, data.description) : { text: '', color: '' };
+  const report =
+    data && effectiveCoords
+      ? getViewingProbability(
+          effectiveCoords.latitude,
+          effectiveCoords.longitude,
+          data.cloudCover,
+          data.fieldStatus,
+        )
+      : null;
 
   if (!effectiveCoords && !geoLoading && !geoError) {
     return (
@@ -158,10 +168,10 @@ export const LocalData = ({
       ) : data ? (
         <div className="space-y-6">
           {effectiveCoords && (
-            <VisibilityDashboard 
-              lat={effectiveCoords.latitude} 
-              lon={effectiveCoords.longitude} 
-              cloudCover={data.cloudCover} 
+            <VisibilityDashboard
+              lat={effectiveCoords.latitude}
+              lon={effectiveCoords.longitude}
+              cloudCover={data.cloudCover}
               magneticStatus={data.fieldStatus}
             />
           )}
@@ -232,6 +242,7 @@ export const LocalData = ({
                       cloudCover={data.cloudCover}
                       kp={data.solar?.kp ?? 0}
                       bz={data.solar?.bz ?? 0}
+                      isTooBright={report?.isTooBright}
                     />
                   </div>
                 </div>

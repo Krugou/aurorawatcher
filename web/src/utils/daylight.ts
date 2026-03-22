@@ -30,12 +30,12 @@ export const getViewingProbability = (
 ): DaylightReport => {
   const now = new Date();
   const sunPos = SunCalc.getPosition(now, lat, lon);
-  
+
   // Convert -6 degrees to radians: -6 * (Math.PI / 180) ~= -0.1047
   // Civil twilight is when the sun is between 0 and -6 degrees.
   // Auroras are visible when the sun is below -6 degrees.
   const CIVIL_TWILIGHT_HEIGHT = -6 * (Math.PI / 180);
-  
+
   const isTooBright = sunPos.altitude > CIVIL_TWILIGHT_HEIGHT;
 
   if (isTooBright) {
@@ -74,7 +74,7 @@ export const getViewingProbability = (
   // Even if it's clear, if there's no activity, probability is low.
   // Even if there's high activity, if it's 100% cloudy, probability is 0.
   const probability = Math.round(cloudScore * activityMultiplier);
-  
+
   let status = VisibilityStatus.CLEAR;
   let statusMessage = 'common.daylight.clear_sky';
 
