@@ -1,3 +1,9 @@
+# [1.22.0](https://github.com/Krugou/aurorawatcher/compare/v1.21.0...v1.22.0) (2026-03-24)
+
+### Features
+
+- **ui:** update package.json version ([ca1eb1e](https://github.com/Krugou/aurorawatcher/commit/ca1eb1e63c2eea0bac109125ed867fdd95953b03))
+
 # [1.21.0](https://github.com/Krugou/aurorawatcher/compare/v1.20.1...v1.21.0) (2026-03-19)
 
 ### Bug Fixes
