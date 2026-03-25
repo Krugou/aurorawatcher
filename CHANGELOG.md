@@ -1,3 +1,9 @@
+# [1.23.0](https://github.com/Krugou/aurorawatcher/compare/v1.22.0...v1.23.0) (2026-03-25)
+
+### Features
+
+- **admin:** add health check endpoint and display server status in the dashboard ([404a9a7](https://github.com/Krugou/aurorawatcher/commit/404a9a7f4dde7c53c36c171b947091e28eadc040))
+
 # [1.22.0](https://github.com/Krugou/aurorawatcher/compare/v1.21.0...v1.22.0) (2026-03-24)
 
 ### Features
