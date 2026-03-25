@@ -59,7 +59,7 @@ async function migrate() {
                         console.log(`Migrated ${migratedCount} images...`);
                     }
                 } catch (err) {
-                    console.error(`Failed to migrate ${entry.filename}:`, err);
+                    // console.error(`Failed to migrate ${entry.filename}:`, err);
                     skippedCount++;
                 }
             } else {
