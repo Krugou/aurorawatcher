@@ -51,7 +51,7 @@ export const initHistory = async (): Promise<void> => {
  * Detects cloud cover score based on image statistics.
  * Clouds at night are usually brighter than clear sky and have less contrast (lower variance).
  */
-const detectCloudScore = async (image: sharp.Sharp): Promise<number> => {
+export const detectCloudScore = async (image: sharp.Sharp): Promise<number> => {
 	try {
 		const stats = await image.stats();
 		const { channels } = stats;
