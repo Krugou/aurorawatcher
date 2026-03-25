@@ -6,6 +6,7 @@ interface HistoryEntry {
   timestamp: number;
   camId: string;
   filename: string;
+  cloudScore?: number;
 }
 
 interface HistoryIndex {
@@ -19,6 +20,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filterCam, setFilterCam] = useState<string>('');
+  const [showOnlyCloudy, setShowOnlyCloudy] = useState<boolean>(false);
 
   const fetchData = async () => {
     setLoading(true);
@@ -57,9 +59,11 @@ const App: React.FC = () => {
     }
   };
 
-  const filteredEntries = data?.entries.filter(e => 
-    !filterCam || e.camId.toLowerCase().includes(filterCam.toLowerCase())
-  ) || [];
+  const filteredEntries = data?.entries.filter(e => {
+    const matchesCam = !filterCam || e.camId.toLowerCase().includes(filterCam.toLowerCase());
+    const matchesCloudy = !showOnlyCloudy || (e.cloudScore && e.cloudScore > 50);
+    return matchesCam && matchesCloudy;
+  }) || [];
 
   const uniqueCams = Array.from(new Set(data?.entries.map(e => e.camId) || []));
 
@@ -81,14 +85,27 @@ const App: React.FC = () => {
         </p>
       )}
 
-      <div style={{ marginBottom: '20px' }}>
-        <label>{t('filterByCam')}: </label>
-        <select value={filterCam} onChange={(e) => setFilterCam(e.target.value)}>
-          <option value="">All</option>
-          {uniqueCams.map(cam => (
-            <option key={cam} value={cam}>{cam}</option>
-          ))}
-        </select>
+      <div style={{ marginBottom: '20px', display: 'flex', gap: '20px', alignItems: 'center' }}>
+        <div>
+          <label>{t('filterByCam')}: </label>
+          <select value={filterCam} onChange={(e) => setFilterCam(e.target.value)}>
+            <option value="">All</option>
+            {uniqueCams.map(cam => (
+              <option key={cam} value={cam}>{cam}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>
+            <input 
+              type="checkbox" 
+              checked={showOnlyCloudy} 
+              onChange={(e) => setShowOnlyCloudy(e.target.checked)} 
+            />
+            {t('onlyCloudy')}
+          </label>
+        </div>
       </div>
 
       {loading && <p>Loading...</p>}
@@ -106,7 +123,8 @@ const App: React.FC = () => {
             border: '1px solid #ccc', 
             borderRadius: '8px', 
             overflow: 'hidden',
-            padding: '10px'
+            padding: '10px',
+            backgroundColor: (entry.cloudScore || 0) > 70 ? '#fff0f0' : 'inherit'
           }}>
             <img 
               src={`/images/${entry.filename}`} 
@@ -118,6 +136,18 @@ const App: React.FC = () => {
               <strong>{entry.camId}</strong>
               <br />
               <small>{new Date(entry.timestamp).toLocaleString()}</small>
+              {entry.cloudScore !== undefined && (
+                <div style={{ marginTop: '5px' }}>
+                  <small>{t('cloudScore')}: {entry.cloudScore}%</small>
+                  <div style={{ width: '100%', height: '5px', backgroundColor: '#eee', marginTop: '2px' }}>
+                    <div style={{ 
+                      width: `${entry.cloudScore}%`, 
+                      height: '100%', 
+                      backgroundColor: entry.cloudScore > 70 ? 'red' : entry.cloudScore > 40 ? 'orange' : 'green' 
+                    }} />
+                  </div>
+                </div>
+              )}
               <div style={{ marginTop: '10px' }}>
                 <button 
                   onClick={() => handleDelete(entry.camId, entry.timestamp)}

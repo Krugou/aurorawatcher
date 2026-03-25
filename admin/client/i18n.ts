@@ -25,7 +25,10 @@ i18n
           errorLoading: 'Error loading history data.',
           deleted: 'Entry deleted successfully.',
           failedDelete: 'Failed to delete entry.',
-          filterByCam: 'Filter by Camera'
+          filterByCam: 'Filter by Camera',
+          cloudScore: 'Cloud Score',
+          onlyCloudy: 'Only Cloudy',
+          allImages: 'All Images'
         }
       },
       fi: {
@@ -42,7 +45,10 @@ i18n
           errorLoading: 'Virhe ladattaessa historiatietoja.',
           deleted: 'Merkintä poistettu onnistuneesti.',
           failedDelete: 'Merkinnän poisto epäonnistui.',
-          filterByCam: 'Suodata kameran mukaan'
+          filterByCam: 'Suodata kameran mukaan',
+          cloudScore: 'Pilvisyys',
+          onlyCloudy: 'Vain pilviset',
+          allImages: 'Kaikki kuvat'
         }
       }
     }

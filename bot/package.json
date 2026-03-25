@@ -22,7 +22,8 @@
     "jimp": "^1.6.0",
     "jsdom": "^29.0.1",
     "jsonwebtoken": "^9.0.3",
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",

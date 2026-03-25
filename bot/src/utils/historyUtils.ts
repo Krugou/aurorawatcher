@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { IMAGE_URLS } from '../config.js';
+import sharp from 'sharp';
 
 // Get current directory
 const __filename = fileURLToPath(import.meta.url);
@@ -19,6 +20,7 @@ export interface HistoryEntry {
   timestamp: number;
   camId: string;
   filename: string;
+  cloudScore?: number; // 0-100, higher means more clouds
 }
 
 export interface HistoryData {
@@ -46,9 +48,38 @@ export const initHistory = async (): Promise<void> => {
 };
 
 /**
+ * Detects cloud cover score based on image statistics.
+ * Clouds at night are usually brighter than clear sky and have less contrast (lower variance).
+ */
+const detectCloudScore = async (image: sharp.Sharp): Promise<number> => {
+	try {
+		const stats = await image.stats();
+		const { channels } = stats;
+		
+		// Use luminance (approx from RGB)
+		const mean = (channels[0].mean + channels[1].mean + channels[2].mean) / 3;
+		const stdev = (channels[0].stdev + channels[1].stdev + channels[2].stdev) / 3;
+
+		// A very dark image (mean < 10) is likely clear or at least not "cloud-glow" bright
+		// A bright image (mean > 50) with low variance (stdev < 30) is likely cloudy
+		// This is a heuristic that can be tuned.
+		
+		let score = 0;
+		if (mean > 30) {
+			// As mean increases and stdev decreases, cloud score goes up
+			score = Math.min(100, (mean / (stdev + 1)) * 20);
+		}
+		
+		return Math.round(score);
+	} catch (error) {
+		console.error('Error detecting cloud score:', error);
+		return 0;
+	}
+};
+
+/**
  * Downloads an image and saves it to the history directory.
  * Returns the relative path to the saved image or null if failed.
- * Uses cyclic naming (HHmm) to overwrite images from previous days.
  */
 export const saveImageToHistory = async (camId: string, url: string): Promise<string | null> => {
 	try {
@@ -60,6 +91,22 @@ export const saveImageToHistory = async (camId: string, url: string): Promise<st
 
 		const arrayBuffer = await response.arrayBuffer();
 		const buffer = Buffer.from(arrayBuffer);
+
+		// Optimize image for storage while keeping dynamic range
+		// Using high-quality WebP (lossy but high quality) or lossless WebP
+		// WebP at 85 quality is usually much smaller than JPEG but looks identical
+		const image = sharp(buffer);
+		
+		// Only calculate cloud score for camera images, not data maps
+		let cloudScore = 0;
+		if (camId !== 'auroraData') {
+			cloudScore = await detectCloudScore(image);
+		}
+
+		// Compress and save
+		const optimizedBuffer = await image
+			.webp({ quality: 85, smartSubsample: true })
+			.toBuffer();
 
 		const now = new Date();
 		// Round to nearest 15 minutes
@@ -75,14 +122,14 @@ export const saveImageToHistory = async (camId: string, url: string): Promise<st
 		const hours = now.getHours().toString().padStart(2, '0');
 		const mins = now.getMinutes().toString().padStart(2, '0');
 
-		// New format: camId_YYYYMMDD_HHmm.jpg (Unique per day)
-		const filename = `${camId}_${year}${month}${day}_${hours}${mins}.jpg`;
+		// Use .webp extension
+		const filename = `${camId}_${year}${month}${day}_${hours}${mins}.webp`;
 		const filePath = path.join(HISTORY_DIR, filename);
 
-		await fs.writeFile(filePath, buffer);
+		await fs.writeFile(filePath, optimizedBuffer);
 
 		// Update history.json
-		await updateHistoryIndex(camId, filename, now.getTime());
+		await updateHistoryIndex(camId, filename, now.getTime(), cloudScore);
 
 		return filename;
 	} catch (error) {
@@ -94,7 +141,7 @@ export const saveImageToHistory = async (camId: string, url: string): Promise<st
 /**
  * Updates the history.json index with a new entry.
  */
-const updateHistoryIndex = async (camId: string, filename: string, timestamp: number): Promise<void> => {
+const updateHistoryIndex = async (camId: string, filename: string, timestamp: number, cloudScore?: number): Promise<void> => {
 	try {
 		let data: HistoryData;
 		try {
@@ -104,13 +151,11 @@ const updateHistoryIndex = async (camId: string, filename: string, timestamp: nu
 			data = { lastUpdated: Date.now(), entries: [] };
 		}
 
-		// Remove existing entry for this specific timestamp/slot if checking for exact duplicates,
-        // but since we want history to show valid past points, we just add.
-        // Pruning handles the cleanup of the JSON list.
 		data.entries.push({
 			timestamp,
 			camId,
-			filename: `history/${filename}` // Store relative path for web consumption
+			filename: `history/${filename}`,
+			cloudScore
 		});
 
 		data.lastUpdated = Date.now();
