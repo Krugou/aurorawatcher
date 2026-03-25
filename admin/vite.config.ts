@@ -7,6 +7,7 @@ export default defineConfig({
   root: 'client',
   server: {
     port: 3005,
+    host: true,
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:3006',
