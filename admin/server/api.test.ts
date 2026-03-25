@@ -19,6 +19,17 @@ describe('Admin API', () => {
     vi.clearAllMocks();
   });
 
+  it('GET /api/health returns status ok', async () => {
+    const response = await request(app).get('/api/health');
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      status: 'ok',
+      version: '1.0.0'
+    });
+    expect(response.body.uptime).toBeTypeOf('number');
+    expect(response.body.timestamp).toBeTypeOf('number');
+  });
+
   it('GET /api/history returns data', async () => {
     const mockData = {
       lastUpdated: 123,

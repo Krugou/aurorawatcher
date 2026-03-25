@@ -14,6 +14,16 @@ interface HistoryIndex {
 }
 
 export function setupApi(app: Express, indexPath: string, historyDir: string) {
+  // Health check
+  app.get('/api/health', (req, res) => {
+    res.json({
+      status: 'ok',
+      uptime: process.uptime(),
+      timestamp: Date.now(),
+      version: '1.0.0'
+    });
+  });
+
   // Get all history entries
   app.get('/api/history', async (req, res) => {
     try {

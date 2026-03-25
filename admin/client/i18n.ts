@@ -28,7 +28,10 @@ i18n
           filterByCam: 'Filter by Camera',
           cloudScore: 'Cloud Score',
           onlyCloudy: 'Only Cloudy',
-          allImages: 'All Images'
+          allImages: 'All Images',
+          status: 'Status',
+          version: 'Version',
+          uptime: 'Uptime'
         }
       },
       fi: {
@@ -48,7 +51,10 @@ i18n
           filterByCam: 'Suodata kameran mukaan',
           cloudScore: 'Pilvisyys',
           onlyCloudy: 'Vain pilviset',
-          allImages: 'Kaikki kuvat'
+          allImages: 'Kaikki kuvat',
+          status: 'Tila',
+          version: 'Versio',
+          uptime: 'Käyntiaika'
         }
       }
     }

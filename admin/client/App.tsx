@@ -14,9 +14,17 @@ interface HistoryIndex {
   entries: HistoryEntry[];
 }
 
+interface HealthStatus {
+  status: string;
+  uptime: number;
+  timestamp: number;
+  version: string;
+}
+
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [data, setData] = useState<HistoryIndex | null>(null);
+  const [health, setHealth] = useState<HealthStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filterCam, setFilterCam] = useState<string>('');
@@ -25,12 +33,22 @@ const App: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/history');
-      if (!response.ok) throw new Error(t('errorLoading'));
-      const json = await response.json();
+      const [historyRes, healthRes] = await Promise.all([
+        fetch('/api/history'),
+        fetch('/api/health')
+      ]);
+
+      if (!historyRes.ok) throw new Error(t('errorLoading'));
+      const json = await historyRes.json();
       // Sort entries by timestamp descending
       json.entries.sort((a: HistoryEntry, b: HistoryEntry) => b.timestamp - a.timestamp);
       setData(json);
+
+      if (healthRes.ok) {
+        const healthJson = await healthRes.json();
+        setHealth(healthJson);
+      }
+
       setError(null);
     } catch (err: any) {
       setError(err.message);
@@ -70,7 +88,23 @@ const App: React.FC = () => {
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>{t('title')}</h1>
+        <div>
+          <h1 style={{ margin: 0 }}>{t('title')}</h1>
+          {health && (
+            <div style={{ fontSize: '0.8em', color: '#666', display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <span style={{ 
+                display: 'inline-block', 
+                width: '8px', 
+                height: '8px', 
+                borderRadius: '50%', 
+                backgroundColor: health.status === 'ok' ? '#4caf50' : '#f44336' 
+              }}></span>
+              <span>{t('status')}: {health.status}</span>
+              <span>{t('version')}: {health.version}</span>
+              <span>{t('uptime')}: {Math.floor(health.uptime / 60)}m</span>
+            </div>
+          )}
+        </div>
         <div>
           <button onClick={() => i18n.changeLanguage('en')}>EN</button>
           <button onClick={() => i18n.changeLanguage('fi')}>FI</button>

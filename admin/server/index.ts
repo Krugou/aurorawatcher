@@ -14,6 +14,12 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Request logging middleware for debugging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
+
 // Path to the history data in the web project
 const historyIndexPath = path.resolve(__dirname, '../../web/public/data/history_index.json');
 const historyDir = path.resolve(__dirname, '../../web/public/data');
