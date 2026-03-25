@@ -7,6 +7,7 @@ Consists of a **Web Application** for visualization and a **Discord Bot** for no
 
 - `web/`: React + Vite web application.
 - `bot/`: Discord bot (Node.js + TypeScript).
+- `admin/`: Standalone admin tool for managing images.
 - `.github/workflows/`: CI/CD pipelines.
 
 ## 🌐 Web Application
@@ -73,6 +74,29 @@ To register slash commands:
 ```bash
 npm run deploy
 ```
+
+## 🛠️ Admin Tool (Local)
+
+Standalone tool for repository image management.
+
+### Prerequisites
+- Node.js (v18+)
+
+### Setup
+```bash
+npm install
+```
+
+### Running
+```bash
+npm run dev -w admin
+```
+Starts backend on `3001` and frontend on `3000`.
+
+### Features
+- Image preview & deletion.
+- Auto-updates `history_index.json`.
+- Multi-language (EN/FI).
 
 ## 🚀 CI/CD
 
