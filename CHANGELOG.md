@@ -1,3 +1,13 @@
+# [1.24.0](https://github.com/Krugou/aurorawatcher/compare/v1.23.0...v1.24.0) (2026-03-25)
+
+### Bug Fixes
+
+- **admin:** force vite host and port in scripts ([168c685](https://github.com/Krugou/aurorawatcher/commit/168c685f929ca6d82d5b1cad699ff8a8c51cfa18))
+
+### Features
+
+- **admin:** fix vite port/proxy, add health check, and root scripts ([ed1e44f](https://github.com/Krugou/aurorawatcher/commit/ed1e44f103658fd82b8a9ced3c49e269ca820824))
+
 # [1.23.0](https://github.com/Krugou/aurorawatcher/compare/v1.22.0...v1.23.0) (2026-03-25)
 
 ### Features
