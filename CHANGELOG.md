@@ -1,3 +1,10 @@
+## [1.24.1](https://github.com/Krugou/aurorawatcher/compare/v1.24.0...v1.24.1) (2026-04-02)
+
+### Bug Fixes
+
+- replace NodeJS.Timeout with ReturnType<typeof setInterval> ([dbb00f3](https://github.com/Krugou/aurorawatcher/commit/dbb00f3bedd81b31dc94aab7792e591da73fb681))
+- **tsc:** update moduleResolution to bundler and add @types/sharp ([8e00d2c](https://github.com/Krugou/aurorawatcher/commit/8e00d2ca37c49b3e4436df4d4904298226bd5acf))
+
 # [1.24.0](https://github.com/Krugou/aurorawatcher/compare/v1.23.0...v1.24.0) (2026-03-25)
 
 ### Bug Fixes
