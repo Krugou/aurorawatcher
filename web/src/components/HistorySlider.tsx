@@ -31,7 +31,7 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeRange, setTimeRange] = useState<number>(24); // Hours
 
-  const playIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const playIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     fetch(`${RAW_DATA_BASE}data/history_index.json?t=${Date.now()}`)

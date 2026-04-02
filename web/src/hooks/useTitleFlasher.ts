@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 export const useTitleFlasher = (isActive: boolean, messages: string[] = ['🔴 ALERT!']) => {
   const originalTitle = useRef(document.title);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const original = originalTitle.current;
