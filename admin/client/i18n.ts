@@ -31,7 +31,8 @@ i18n
           allImages: 'All Images',
           status: 'Status',
           version: 'Version',
-          uptime: 'Uptime'
+          uptime: 'Uptime',
+          entries: 'entries'
         }
       },
       fi: {
@@ -54,7 +55,8 @@ i18n
           allImages: 'Kaikki kuvat',
           status: 'Tila',
           version: 'Versio',
-          uptime: 'Käyntiaika'
+          uptime: 'Käyntiaika',
+          entries: 'merkintää'
         }
       }
     }

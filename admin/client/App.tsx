@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import './i18n';
+import './App.css';
 
 interface HistoryEntry {
   timestamp: number;
@@ -77,123 +78,162 @@ const App: React.FC = () => {
     }
   };
 
-  const filteredEntries = data?.entries.filter(e => {
-    const matchesCam = !filterCam || e.camId.toLowerCase().includes(filterCam.toLowerCase());
-    const matchesCloudy = !showOnlyCloudy || (e.cloudScore && e.cloudScore > 50);
-    return matchesCam && matchesCloudy;
-  }) || [];
+  const filteredEntries = useMemo(() => {
+    return data?.entries.filter(e => {
+      const matchesCam = !filterCam || e.camId.toLowerCase().includes(filterCam.toLowerCase());
+      const matchesCloudy = !showOnlyCloudy || (e.cloudScore && e.cloudScore > 50);
+      return matchesCam && matchesCloudy;
+    }) || [];
+  }, [data, filterCam, showOnlyCloudy]);
 
-  const uniqueCams = Array.from(new Set(data?.entries.map(e => e.camId) || []));
+  const groupedEntries = useMemo(() => {
+    const groups: Record<string, HistoryEntry[]> = {};
+    filteredEntries.forEach(entry => {
+      if (!groups[entry.camId]) {
+        groups[entry.camId] = [];
+      }
+      groups[entry.camId].push(entry);
+    });
+    return groups;
+  }, [filteredEntries]);
+
+  const uniqueCams = useMemo(() => 
+    Array.from(new Set(data?.entries.map(e => e.camId) || [])).sort()
+  , [data]);
+
+  const getCloudColor = (score: number) => {
+    if (score > 70) return 'var(--danger-color)';
+    if (score > 40) return 'orange';
+    return 'var(--success-color)';
+  };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h1 style={{ margin: 0 }}>{t('title')}</h1>
-          {health && (
-            <div style={{ fontSize: '0.8em', color: '#666', display: 'flex', gap: '10px', alignItems: 'center' }}>
-              <span style={{ 
-                display: 'inline-block', 
-                width: '8px', 
-                height: '8px', 
-                borderRadius: '50%', 
-                backgroundColor: health.status === 'ok' ? '#4caf50' : '#f44336' 
-              }}></span>
-              <span>{t('status')}: {health.status}</span>
-              <span>{t('version')}: {health.version}</span>
-              <span>{t('uptime')}: {Math.floor(health.uptime / 60)}m</span>
-            </div>
-          )}
+    <div className="admin-container">
+      <header className="panel">
+        <div className="header-section">
+          <div>
+            <h1>{t('title')}</h1>
+            {health && (
+              <div className="status-badge">
+                <div className={`status-indicator ${health.status === 'ok' ? 'status-ok' : 'status-error'}`} />
+                <span>{t('status')}: {health.status}</span>
+                <span>{t('version')}: {health.version}</span>
+                <span>{t('uptime')}: {Math.floor(health.uptime / 60)}m</span>
+              </div>
+            )}
+          </div>
+          <div className="button-group">
+            <button onClick={() => i18n.changeLanguage('en')}>EN</button>
+            <button onClick={() => i18n.changeLanguage('fi')}>FI</button>
+            <button className="primary" onClick={fetchData}>{t('refresh')}</button>
+          </div>
         </div>
-        <div>
-          <button onClick={() => i18n.changeLanguage('en')}>EN</button>
-          <button onClick={() => i18n.changeLanguage('fi')}>FI</button>
-          <button onClick={fetchData} style={{ marginLeft: '10px' }}>{t('refresh')}</button>
+
+        <div className="panel-inset">
+          <div className="controls">
+            <div>
+              <label style={{ marginRight: '10px' }}>{t('filterByCam')}: </label>
+              <select value={filterCam} onChange={(e) => setFilterCam(e.target.value)}>
+                <option value="">{t('allImages')}</option>
+                {uniqueCams.map(cam => (
+                  <option key={cam} value={cam}>{cam}</option>
+                ))}
+              </select>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <input 
+                id="cloudy-check"
+                type="checkbox" 
+                checked={showOnlyCloudy} 
+                onChange={(e) => setShowOnlyCloudy(e.target.checked)} 
+                style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+              />
+              <label htmlFor="cloudy-check" style={{ cursor: 'pointer' }}>{t('onlyCloudy')}</label>
+            </div>
+
+            {data && (
+              <div style={{ marginLeft: 'auto', fontSize: '0.9rem', color: '#666' }}>
+                {t('lastUpdated')}: {new Date(data.lastUpdated).toLocaleString()} | {filteredEntries.length} {t('entries')}
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
-      {data && (
-        <p>
-          {t('lastUpdated')}: {new Date(data.lastUpdated).toLocaleString()}
-          | {data.entries.length} entries
-        </p>
+      {loading && (
+        <div className="panel" style={{ textAlign: 'center' }}>
+          <p>Loading...</p>
+        </div>
+      )}
+      
+      {error && (
+        <div className="panel" style={{ color: 'var(--danger-color)', textAlign: 'center' }}>
+          <p>{error}</p>
+        </div>
       )}
 
-      <div style={{ marginBottom: '20px', display: 'flex', gap: '20px', alignItems: 'center' }}>
-        <div>
-          <label>{t('filterByCam')}: </label>
-          <select value={filterCam} onChange={(e) => setFilterCam(e.target.value)}>
-            <option value="">All</option>
-            {uniqueCams.map(cam => (
-              <option key={cam} value={cam}>{cam}</option>
-            ))}
-          </select>
+      {!loading && !error && filteredEntries.length === 0 && (
+        <div className="panel" style={{ textAlign: 'center' }}>
+          <p>{t('empty')}</p>
         </div>
+      )}
 
-        <div>
-          <label>
-            <input 
-              type="checkbox" 
-              checked={showOnlyCloudy} 
-              onChange={(e) => setShowOnlyCloudy(e.target.checked)} 
-            />
-            {t('onlyCloudy')}
-          </label>
-        </div>
-      </div>
-
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      {!loading && !error && filteredEntries.length === 0 && <p>{t('empty')}</p>}
-
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', 
-        gap: '20px' 
-      }}>
-        {filteredEntries.map((entry) => (
-          <div key={`${entry.camId}-${entry.timestamp}`} style={{ 
-            border: '1px solid #ccc', 
-            borderRadius: '8px', 
-            overflow: 'hidden',
-            padding: '10px',
-            backgroundColor: (entry.cloudScore || 0) > 70 ? '#fff0f0' : 'inherit'
-          }}>
-            <img 
-              src={`/images/${entry.filename}`} 
-              alt={entry.camId} 
-              style={{ width: '100%', height: '150px', objectFit: 'cover' }}
-              onError={(e) => (e.currentTarget.src = 'https://via.placeholder.com/250x150?text=Error')}
-            />
-            <div style={{ marginTop: '10px' }}>
-              <strong>{entry.camId}</strong>
-              <br />
-              <small>{new Date(entry.timestamp).toLocaleString()}</small>
-              {entry.cloudScore !== undefined && (
-                <div style={{ marginTop: '5px' }}>
-                  <small>{t('cloudScore')}: {entry.cloudScore}%</small>
-                  <div style={{ width: '100%', height: '5px', backgroundColor: '#eee', marginTop: '2px' }}>
-                    <div style={{ 
-                      width: `${entry.cloudScore}%`, 
-                      height: '100%', 
-                      backgroundColor: entry.cloudScore > 70 ? 'red' : entry.cloudScore > 40 ? 'orange' : 'green' 
-                    }} />
+      {Object.entries(groupedEntries).map(([camId, entries]) => (
+        <section key={camId} className="place-group">
+          <div className="place-header">
+            <h2>{camId}</h2>
+            <span className="card-subtitle">{entries.length} images</span>
+          </div>
+          
+          <div className="entry-grid">
+            {entries.map((entry) => (
+              <article key={`${entry.camId}-${entry.timestamp}`} className="card">
+                <div className="card-image-wrapper">
+                  <img 
+                    src={`/images/${entry.filename}`} 
+                    alt={entry.camId} 
+                    loading="lazy"
+                    onError={(e) => (e.currentTarget.src = 'https://via.placeholder.com/280x180?text=Image+Not+Found')}
+                  />
+                </div>
+                
+                <div className="card-content">
+                  <span className="card-title">{entry.camId}</span>
+                  <span className="card-subtitle">{new Date(entry.timestamp).toLocaleString()}</span>
+                  
+                  {entry.cloudScore !== undefined && (
+                    <div className="cloud-meter">
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                        <span>{t('cloudScore')}</span>
+                        <span style={{ fontWeight: 'bold', color: getCloudColor(entry.cloudScore) }}>
+                          {entry.cloudScore}%
+                        </span>
+                      </div>
+                      <div className="meter-track">
+                        <div className="meter-fill" style={{ 
+                          width: `${entry.cloudScore}%`, 
+                          backgroundColor: getCloudColor(entry.cloudScore)
+                        }} />
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div style={{ marginTop: '15px' }}>
+                    <button 
+                      className="danger"
+                      onClick={() => handleDelete(entry.camId, entry.timestamp)}
+                      style={{ width: '100%' }}
+                    >
+                      {t('delete')}
+                    </button>
                   </div>
                 </div>
-              )}
-              <div style={{ marginTop: '10px' }}>
-                <button 
-                  onClick={() => handleDelete(entry.camId, entry.timestamp)}
-                  style={{ backgroundColor: '#ff4d4d', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer' }}
-                >
-                  {t('delete')}
-                </button>
-              </div>
-            </div>
+              </article>
+            ))}
           </div>
-        ))}
-      </div>
+        </section>
+      ))}
     </div>
   );
 };
