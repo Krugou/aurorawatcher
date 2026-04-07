@@ -15,21 +15,21 @@
   },
   "dependencies": {
     "cors": "^2.8.6",
-    "discord.js": "^14.26.0",
-    "dotenv": "^17.4.0",
+    "discord.js": "^14.26.2",
+    "dotenv": "^17.4.1",
     "ejs": "^5.0.1",
     "express": "^5.2.1",
     "express-validator": "^7.3.2",
     "jimp": "^1.6.0",
-    "jsdom": "^29.0.1",
+    "jsdom": "^29.0.2",
     "jsonwebtoken": "^9.0.3",
     "nodemon": "^3.1.14",
     "sharp": "^0.34.5"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
-    "@types/sharp": "^0.31.1",
-    "oxlint": "^1.58.0",
+    "@types/node": "^25.5.2",
+    "@types/sharp": "^0.32.0",
+    "oxlint": "^1.59.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
