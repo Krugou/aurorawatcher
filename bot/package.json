@@ -20,7 +20,7 @@
     "ejs": "^5.0.1",
     "express": "^5.2.1",
     "express-validator": "^7.3.2",
-    "jimp": "^1.6.0",
+    "jimp": "^1.6.1",
     "jsdom": "^29.0.2",
     "jsonwebtoken": "^9.0.3",
     "nodemon": "^3.1.14",
