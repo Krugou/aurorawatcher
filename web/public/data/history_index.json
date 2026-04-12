@@ -1,35 +1,6 @@
 {
-  "lastUpdated": 1776018177473,
+  "lastUpdated": 1776019579077,
   "entries": [
-    {
-      "timestamp": 1773427500000,
-      "camId": "muonio",
-      "filename": "history/muonio_20260313_1845.webp",
-      "cloudScore": 19
-    },
-    {
-      "timestamp": 1773427500000,
-      "camId": "nyrola",
-      "filename": "history/nyrola_20260313_1845.jpg"
-    },
-    {
-      "timestamp": 1773427500000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260313_1845.webp",
-      "cloudScore": 30
-    },
-    {
-      "timestamp": 1773427500000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260313_1845.webp",
-      "cloudScore": 0
-    },
-    {
-      "timestamp": 1773427500000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260313_1845.webp",
-      "cloudScore": 0
-    },
     {
       "timestamp": 1773429300000,
       "camId": "muonio",
@@ -20112,6 +20083,30 @@
       "camId": "auroraData",
       "filename": "history/auroraData_20260412_1815.webp",
       "cloudScore": 0
+    },
+    {
+      "timestamp": 1776019500000,
+      "camId": "muonio",
+      "filename": "history/muonio_20260412_1845.webp",
+      "cloudScore": 18
+    },
+    {
+      "timestamp": 1776019500000,
+      "camId": "nyrola",
+      "filename": "history/nyrola_20260412_1845.webp",
+      "cloudScore": 16
+    },
+    {
+      "timestamp": 1776019500000,
+      "camId": "hankasalmi",
+      "filename": "history/hankasalmi_20260412_1845.webp",
+      "cloudScore": 19
+    },
+    {
+      "timestamp": 1776019500000,
+      "camId": "metsahovi",
+      "filename": "history/metsahovi_20260412_1845.webp",
+      "cloudScore": 21
     }
   ]
 }
