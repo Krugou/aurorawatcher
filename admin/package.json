@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "express": "^5.2.1",
     "fs-extra": "^11.3.0",
-    "i18next": "^26.0.7",
+    "i18next": "^26.0.8",
     "i18next-browser-languagedetector": "^8.0.2",
     "i18next-fs-backend": "^2.6.5",
     "i18next-http-backend": "^3.0.6",
