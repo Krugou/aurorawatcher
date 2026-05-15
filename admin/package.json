@@ -16,13 +16,13 @@
     "cors": "^2.8.5",
     "express": "^5.2.1",
     "fs-extra": "^11.3.5",
-    "i18next": "^26.1.0",
+    "i18next": "^26.2.0",
     "i18next-browser-languagedetector": "^8.0.2",
     "i18next-fs-backend": "^2.6.5",
     "i18next-http-backend": "^4.0.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-i18next": "^17.0.7"
+    "react-i18next": "^17.0.8"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -31,10 +31,10 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@types/supertest": "^7.2.0",
-    "@vitejs/plugin-react": "^6.0.1",
+    "@vitejs/plugin-react": "^6.0.2",
     "concurrently": "^9.1.2",
     "supertest": "^7.0.0",
-    "tsx": "^4.19.2",
+    "tsx": "^4.22.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.12",
     "vitest": "^4.1.6"
