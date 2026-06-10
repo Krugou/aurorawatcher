@@ -27,9 +27,9 @@
     "sharp": "^0.34.5"
   },
   "devDependencies": {
-    "@types/node": "^25.9.1",
+    "@types/node": "^25.9.2",
     "@types/sharp": "^0.32.0",
-    "oxlint": "^1.68.0",
+    "oxlint": "^1.69.0",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   }
