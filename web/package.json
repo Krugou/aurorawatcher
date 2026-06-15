@@ -17,7 +17,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.0",
+    "@tailwindcss/vite": "^4.3.1",
     "date-fns": "^4.4.0",
     "firebase": "^12.14.0",
     "i18next": "^26.3.1",
@@ -52,7 +52,7 @@
     "vitest": "^4.1.8"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.61.1",
+    "@rollup/rollup-linux-x64-gnu": "^4.62.0",
     "@tailwindcss/oxide-linux-x64-gnu": "*",
     "lightningcss-linux-x64-gnu": "*"
   }
