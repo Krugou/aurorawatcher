@@ -1,54 +1,6 @@
 {
-  "lastUpdated": 1781518017595,
+  "lastUpdated": 1781556088511,
   "entries": [
-    {
-      "timestamp": 1778961600000,
-      "camId": "muonio",
-      "filename": "history/muonio_20260516_2000.webp",
-      "cloudScore": 18
-    },
-    {
-      "timestamp": 1778961600000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260516_2000.webp",
-      "cloudScore": 21
-    },
-    {
-      "timestamp": 1778961600000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260516_2000.webp",
-      "cloudScore": 22
-    },
-    {
-      "timestamp": 1778961600000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260516_2000.webp",
-      "cloudScore": 0
-    },
-    {
-      "timestamp": 1778963400000,
-      "camId": "muonio",
-      "filename": "history/muonio_20260516_2030.webp",
-      "cloudScore": 18
-    },
-    {
-      "timestamp": 1778963400000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260516_2030.webp",
-      "cloudScore": 19
-    },
-    {
-      "timestamp": 1778963400000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260516_2030.webp",
-      "cloudScore": 22
-    },
-    {
-      "timestamp": 1778963400000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260516_2030.webp",
-      "cloudScore": 0
-    },
     {
       "timestamp": 1778964300000,
       "camId": "muonio",
@@ -8088,6 +8040,24 @@
       "camId": "auroraData",
       "filename": "history/auroraData_20260615_1000.webp",
       "cloudScore": 0
+    },
+    {
+      "timestamp": 1781556300000,
+      "camId": "muonio",
+      "filename": "history/muonio_20260615_2045.webp",
+      "cloudScore": 18
+    },
+    {
+      "timestamp": 1781556300000,
+      "camId": "hankasalmi",
+      "filename": "history/hankasalmi_20260615_2045.webp",
+      "cloudScore": 28
+    },
+    {
+      "timestamp": 1781556300000,
+      "camId": "metsahovi",
+      "filename": "history/metsahovi_20260615_2045.webp",
+      "cloudScore": 21
     }
   ]
 }
