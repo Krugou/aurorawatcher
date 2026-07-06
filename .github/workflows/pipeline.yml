@@ -23,7 +23,7 @@ jobs:
     name: 🔭 Staring-at-the-Stars
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Preparing the Observatory (Node.js)
         uses: actions/setup-node@v6
         with:
@@ -64,7 +64,7 @@ jobs:
     name: 🤖 Polishing-the-Robot
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Preparing the Robot Lab
         uses: actions/setup-node@v6
         with:
@@ -108,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Retrieving Master Copies
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Preparing the Press Room
