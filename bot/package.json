@@ -24,13 +24,13 @@
     "jsdom": "^29.1.1",
     "jsonwebtoken": "^9.0.3",
     "nodemon": "^3.1.14",
-    "sharp": "^0.35.1"
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@types/node": "^26.1.0",
     "@types/sharp": "^0.32.0",
-    "oxlint": "^1.70.0",
-    "tsx": "^4.22.4",
+    "oxlint": "^1.73.0",
+    "tsx": "^4.23.0",
     "typescript": "^6.0.3"
   }
 }
