@@ -39,7 +39,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/suncalc": "^1.9.2",
     "@vitejs/plugin-react": "^6.0.3",
-    "cypress": "^15.18.0",
+    "cypress": "^15.18.1",
     "globals": "^17.7.0",
     "jsdom": "^29.1.1",
     "oxlint": "^1.73.0",
