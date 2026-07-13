@@ -27,7 +27,7 @@
     "react-i18next": "^17.0.9",
     "react-toastify": "^11.1.0",
     "recharts": "^3.9.2",
-    "suncalc": "^2.0.0",
+    "suncalc": "^2.0.1",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
