@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Preparing the Observatory (Node.js)
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: 'npm'
@@ -66,7 +66,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Preparing the Robot Lab
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: 'npm'
@@ -112,7 +112,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Preparing the Press Room
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: 'npm'
