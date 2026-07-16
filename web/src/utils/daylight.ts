@@ -1,4 +1,4 @@
-import SunCalc from 'suncalc';
+import * as SunCalc from 'suncalc';
 
 export enum VisibilityStatus {
   CLEAR = 'CLEAR',

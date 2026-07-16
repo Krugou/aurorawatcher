@@ -1,4 +1,4 @@
-import SunCalc from 'suncalc';
+import * as SunCalc from 'suncalc';
 
 export const isDaytime = (lat: number, lon: number): boolean => {
   const now = new Date();

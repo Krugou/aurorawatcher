@@ -2,13 +2,11 @@ import { describe, expect, it, vi } from 'vitest';
 
 // We need to mock SunCalc before importing the module
 vi.mock('suncalc', () => ({
-  default: {
-    getTimes: vi.fn(),
-    getPosition: vi.fn(),
-  },
+  getTimes: vi.fn(),
+  getPosition: vi.fn(),
 }));
 
-import SunCalc from 'suncalc';
+import * as SunCalc from 'suncalc';
 
 import { isDaytime } from '../../utils/daytime';
 
