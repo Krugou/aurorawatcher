@@ -1,54 +1,6 @@
 {
-  "lastUpdated": 1784842976467,
+  "lastUpdated": 1784846293379,
   "entries": [
-    {
-      "timestamp": 1782251100000,
-      "camId": "muonio",
-      "filename": "history/muonio_20260623_2145.webp",
-      "cloudScore": 18
-    },
-    {
-      "timestamp": 1782251100000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260623_2145.webp",
-      "cloudScore": 28
-    },
-    {
-      "timestamp": 1782251100000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260623_2145.webp",
-      "cloudScore": 22
-    },
-    {
-      "timestamp": 1782251100000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260623_2145.webp",
-      "cloudScore": 0
-    },
-    {
-      "timestamp": 1782253800000,
-      "camId": "muonio",
-      "filename": "history/muonio_20260623_2230.webp",
-      "cloudScore": 18
-    },
-    {
-      "timestamp": 1782253800000,
-      "camId": "hankasalmi",
-      "filename": "history/hankasalmi_20260623_2230.webp",
-      "cloudScore": 34
-    },
-    {
-      "timestamp": 1782253800000,
-      "camId": "metsahovi",
-      "filename": "history/metsahovi_20260623_2230.webp",
-      "cloudScore": 22
-    },
-    {
-      "timestamp": 1782253800000,
-      "camId": "auroraData",
-      "filename": "history/auroraData_20260623_2230.webp",
-      "cloudScore": 0
-    },
     {
       "timestamp": 1782255600000,
       "camId": "muonio",
@@ -4841,6 +4793,36 @@
       "timestamp": 1784843100000,
       "camId": "auroraData",
       "filename": "history/auroraData_20260723_2145.webp",
+      "cloudScore": 0
+    },
+    {
+      "timestamp": 1784846700000,
+      "camId": "muonio",
+      "filename": "history/muonio_20260723_2245.webp",
+      "cloudScore": 18
+    },
+    {
+      "timestamp": 1784846700000,
+      "camId": "nyrola",
+      "filename": "history/nyrola_20260723_2245.webp",
+      "cloudScore": 21
+    },
+    {
+      "timestamp": 1784846700000,
+      "camId": "hankasalmi",
+      "filename": "history/hankasalmi_20260723_2245.webp",
+      "cloudScore": 34
+    },
+    {
+      "timestamp": 1784846700000,
+      "camId": "metsahovi",
+      "filename": "history/metsahovi_20260723_2245.webp",
+      "cloudScore": 20
+    },
+    {
+      "timestamp": 1784846700000,
+      "camId": "auroraData",
+      "filename": "history/auroraData_20260723_2245.webp",
       "cloudScore": 0
     }
   ]
