@@ -16,13 +16,13 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "fs-extra": "^11.4.0",
-    "i18next": "^26.4.0",
+    "i18next": "^26.4.1",
     "i18next-browser-languagedetector": "^8.2.1",
     "i18next-fs-backend": "^2.6.7",
     "i18next-http-backend": "^4.0.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-i18next": "^17.0.12"
+    "react-i18next": "^17.0.13"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
