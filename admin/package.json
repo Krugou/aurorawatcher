@@ -22,7 +22,7 @@
     "i18next-http-backend": "^4.0.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-i18next": "^17.0.13"
+    "react-i18next": "^17.0.14"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
