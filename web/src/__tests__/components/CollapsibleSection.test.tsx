@@ -13,6 +13,18 @@ describe('CollapsibleSection', () => {
     expect(screen.getByText('Test Section')).toBeInTheDocument();
   });
 
+  it('exposes the panel state and controlled panel to assistive technology', () => {
+    render(
+      <CollapsibleSection title="Accessible Section">
+        <p>Panel</p>
+      </CollapsibleSection>,
+    );
+    const button = screen.getByRole('button', { name: /Accessible Section/i });
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+    expect(button).toHaveAttribute('aria-controls');
+    expect(document.getElementById(button.getAttribute('aria-controls')!)).toBeInTheDocument();
+  });
+
   it('renders children when expanded by default', () => {
     render(
       <CollapsibleSection title="Section">

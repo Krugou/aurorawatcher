@@ -100,11 +100,11 @@ describe('fetchMagnetometerHistory', () => {
     expect(Array.isArray(result)).toBe(true);
   });
 
-  it('returns empty array on fetch failure', async () => {
+  it('throws on fetch failure so the graph can show an error state', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('Failed')));
-
-    const result = await fetchMagnetometerHistory(60.51, 24.65);
-    expect(result).toEqual([]);
+    await expect(fetchMagnetometerHistory(60.51, 24.65)).rejects.toThrow(
+      'FMI history request failed',
+    );
   });
 });
 

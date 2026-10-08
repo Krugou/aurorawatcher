@@ -44,5 +44,7 @@ describe('SightingsFeed', () => {
     render(React.createElement(SightingsFeed));
     // Should show the sighting (social.reported)
     expect(screen.getByText(/social\.reported/)).toBeInTheDocument();
+    expect(screen.getByText(/social\.stale/)).toBeInTheDocument();
+    expect(screen.getByText(/2024/)).toBeInTheDocument();
   });
 });

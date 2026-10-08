@@ -112,7 +112,34 @@
     "solar_title": "Aurinkotuuli & Bz (Viim. 6h)",
     "solar_hint": "Korkean nopeuden ja negatiivisen Bz-arvon yhteisvaikutus aiheuttaa magneettisia myrskyjä.",
     "speed_label": "Nopeus (km/s)",
-    "bz_label": "Bz (nT)"
+    "bz_label": "Bz (nT)",
+    "useLocation": "Käytä sijaintiani",
+    "locating": "Haetaan sijaintia…",
+    "defaultLocation": "Oletusalue: Helsinki ({{latitude}}, {{longitude}})",
+    "customLocation": "Käytössä on valitsemasi sijainti"
+  },
+  "gallery": {
+    "title": "Revontulivärien galleria",
+    "eyebrow": "KUVIEN VÄRISKANNAUS",
+    "heading": "Tallenna taivaat, jotka pysäyttivät",
+    "description": "Etsi observatorioiden viimeisimmistä arkistokuvista revontulille tyypillisiä vihreitä, violetteja ja punaisia sävyjä. Tunnistus perustuu yksinkertaiseen väriheuristiikkaan, joten tarkista osumat itse.",
+    "localStorageNote": "Tallennuslista säilyy vain tässä selaimessa.",
+    "scanning": "Skannataan arkistoa…",
+    "scanButton": "Skannaa {{count}} uusinta kuvaa",
+    "progress": "Tarkistettu {{current}} / {{total}} · {{found}} osumaa",
+    "scanError": "Kuvasarkistoa ei voitu ladata. Yritä myöhemmin uudelleen.",
+    "scanComplete": "Löytyi {{found}} osumaa {{scanned}} kuvasta; {{unavailable}} kuvaa ei voitu tarkistaa.",
+    "keepList": "Tallennuslista",
+    "savedCount": "{{count}} tallennettua kuvaa",
+    "clear": "Tyhjennä lista",
+    "emptyTitle": "Galleriasi odottaa ensimmäistä revontulikuvaa",
+    "emptyDescription": "Skannaa observatorioiden uusimmat arkistokuvat. Revontulille tyypillisiä värejä sisältävät kuvat lisätään tähän.",
+    "imageAlt": "Revontulikuva kamerasta {{camera}}, {{date}}",
+    "matchScore": "VÄRI {{score}} %",
+    "remove": "Poista kuva kamerasta {{camera}}",
+    "green": "Vihreä",
+    "purple": "Violetti",
+    "red": "Punainen"
   },
   "section": {
     "cameras": "Live-taivaskamerat"
@@ -226,9 +253,22 @@
     "thanks": "Kiitos! Voit ilmoittaa uudelleen 10 min kuluttua.",
     "scanning": "Skannataan taajuuksia...",
     "reported": "HAVAINTO RAPORTOITU",
-    "just_now": "JUURI NYT"
+    "just_now": "JUURI NYT",
+    "stale": "Ei tuoreita havaintoja · viimeisin ilmoitus on yli 24 tuntia vanha",
+    "noRecent": "Tuoreita havaintoja ei ole ilmoitettu"
   },
   "webcams": {
-    "title": "MAAILMAN TAIVAAT"
+    "title": "MAAILMAN TAIVAAT",
+    "unavailable": "Kamerakuva ei ole juuri nyt saatavilla",
+    "retry": "Yritä uudelleen"
+  },
+  "data_state": {
+    "error": "Tietojen lataus lähteestä {{source}} epäonnistui.",
+    "empty": "Lähde {{source}} ei palauttanut havaintoja tältä ajalta.",
+    "retry": "Yritä uudelleen",
+    "lastUpdated": "Viimeisin onnistunut päivitys: {{time}}",
+    "sourceUpdated": "Lähde: {{source}} · Viimeisin onnistunut päivitys: {{time}}",
+    "fmi": "FMI:n magnetometripalvelu",
+    "noaa": "NOAA SWPC"
   }
 }

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 
 import { AuroraMap } from './components/AuroraMap';
+import { AuroraGallery } from './components/AuroraGallery';
 import { CollapsibleSection } from './components/CollapsibleSection';
 import { DataInfo } from './components/DataInfo';
 import { FullscreenView } from './components/FullscreenView';
@@ -143,6 +144,13 @@ const AppContent = () => {
           <div className="flex justify-center mt-8 mb-4">
             <SightingButton />
           </div>
+        </CollapsibleSection>
+        <CollapsibleSection
+          title={t('gallery.title')}
+          headerColorClass="bg-aurora-teal"
+          storageKey="aurora_gallery"
+        >
+          <AuroraGallery />
         </CollapsibleSection>
         <CollapsibleSection
           title={t('grid.title')}

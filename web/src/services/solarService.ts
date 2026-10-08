@@ -1,90 +1,10 @@
-import { buildProxyUrl } from '../utils/proxy';
-
 export interface SolarData {
-  bz: number; // Interplanetary Magnetic Field (nT)
-  speed: number; // Solar wind speed (km/s)
-  density: number; // Proton density (p/cm^3)
-  kp: number; // Planetary K-index
+  bz: number;
+  speed: number;
+  density: number;
+  kp: number;
   timestamp: string;
 }
-
-const URLS = {
-  mag: 'https://services.swpc.noaa.gov/products/solar-wind/mag-6-hour.json',
-  plasma: 'https://services.swpc.noaa.gov/products/solar-wind/plasma-1-day.json',
-  kp: 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json',
-};
-
-export const fetchSolarData = async (): Promise<SolarData | null> => {
-  try {
-    console.log('[Solar Data] Fetching URLs via proxy:', {
-      mag: buildProxyUrl(URLS.mag),
-      plasma: buildProxyUrl(URLS.plasma),
-      kp: buildProxyUrl(URLS.kp),
-    });
-    const [magRes, plasmaRes, kpRes] = await Promise.all([
-      fetch(buildProxyUrl(URLS.mag)),
-      fetch(buildProxyUrl(URLS.plasma)),
-      fetch(buildProxyUrl(URLS.kp)),
-    ]);
-
-    if (!magRes.ok || !plasmaRes.ok || !kpRes.ok) {
-      console.error('[Solar Data] Fetch failed:', {
-        mag: { status: magRes.status, text: magRes.statusText },
-        plasma: { status: plasmaRes.status, text: plasmaRes.statusText },
-        kp: { status: kpRes.status, text: kpRes.statusText },
-      });
-      throw new Error('One or more NOAA endpoints failed');
-    }
-
-    const magData = await magRes.json();
-    const plasmaData = await plasmaRes.json();
-    const kpData = await kpRes.json();
-
-    // Helper to get latest valid row from 2D array [header, row1, row2...]
-    const getLatest = (data: string[][]) => {
-      // Start from end, lookup until valid
-      // Row format depends on file.
-      // Mag: [time_tag, bz_gsm, bt, ...]
-      // Plasma: [time_tag, density, speed, temp]
-      // Kp: [time_tag, kp, ...] - actually Kp is object array or similar? No, usually array of arrays for products.
-      // Let's check format assumptions.
-      // mag-1-day.json: [["time_tag","bx_gsm","by_gsm","bz_gsm","lon_gsm","lat_gsm","bt"],["2023-...",...]]
-      // plasma-1-day.json: [["time_tag","density","speed","temperature"],["2023-...",...]]
-      // noaa-planetary-k-index.json: [["time_tag","kp_index","a_index"],["2023-...",...]]
-
-      if (!Array.isArray(data) || data.length < 2) return null;
-      return data[data.length - 1];
-    };
-
-    const latestMag = getLatest(magData);
-    const latestPlasma = getLatest(plasmaData);
-    const latestKp = getLatest(kpData);
-
-    if (!latestMag || !latestPlasma || !latestKp) return null;
-
-    // Parse values (indices based on header)
-    // Mag: time(0), bx(1), by(2), bz(3), ...
-    const bz = parseFloat(latestMag[3]);
-
-    // Plasma: time(0), density(1), speed(2), ...
-    const density = parseFloat(latestPlasma[1]);
-    const speed = parseFloat(latestPlasma[2]);
-
-    // Kp: time(0), kp(1), ...
-    const kp = parseFloat(latestKp[1]);
-
-    return {
-      bz,
-      speed,
-      density,
-      kp,
-      timestamp: latestMag[0], // Use Mag time as primary reference
-    };
-  } catch (error) {
-    console.error('Error fetching solar data:', error);
-    return null;
-  }
-};
 
 export interface SolarHistoryPoint {
   timestamp: number;
@@ -94,81 +14,72 @@ export interface SolarHistoryPoint {
   kp?: number;
 }
 
+const URLS = {
+  current: 'https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind-1-hour.json',
+  history: 'https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind.json',
+  kp: 'https://services.swpc.noaa.gov/json/planetary_k_index_1m.json',
+};
+
+type NOAARecord = Record<string, unknown>;
+
+const fetchJSON = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`NOAA request failed (${response.status})`);
+  return response.json() as Promise<unknown>;
+};
+
+const getLatestRecord = (records: unknown): NOAARecord | null => {
+  if (!Array.isArray(records)) return null;
+  return (
+    [...records]
+      .filter((row): row is NOAARecord => !!row && typeof row === 'object' && !Array.isArray(row))
+      .sort((a, b) => Date.parse(String(b.time_tag)) - Date.parse(String(a.time_tag)))[0] ?? null
+  );
+};
+
+const getProductRows = (product: unknown): NOAARecord[] => {
+  if (!Array.isArray(product) || !Array.isArray(product[0])) return [];
+  const headers = product[0] as string[];
+  return product.slice(1).flatMap((values) => {
+    if (!Array.isArray(values)) return [];
+    return [Object.fromEntries(headers.map((header, index) => [header, values[index]]))];
+  });
+};
+
+const numeric = (value: unknown) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+};
+
+export const fetchSolarData = async (): Promise<SolarData | null> => {
+  const [solarProduct, kpProduct] = await Promise.all([
+    fetchJSON(URLS.current),
+    fetchJSON(URLS.kp),
+  ]);
+  const solar = getLatestRecord(getProductRows(solarProduct));
+  const kp = getLatestRecord(kpProduct);
+  if (!solar || !kp) return null;
+
+  const bz = numeric(solar.bz);
+  const speed = numeric(solar.speed);
+  const density = numeric(solar.density);
+  const kpValue = numeric(kp.estimated_kp ?? kp.kp_index);
+  if (bz === null || speed === null || density === null || kpValue === null) return null;
+
+  return { bz, speed, density, kp: kpValue, timestamp: String(solar.time_tag) };
+};
+
 export const fetchSolarHistory = async (): Promise<SolarHistoryPoint[]> => {
-  try {
-    console.log('[Solar History] Fetching URLs via proxy:', {
-      mag: buildProxyUrl(URLS.mag),
-      plasma: buildProxyUrl(URLS.plasma),
-    });
-    const [magRes, plasmaRes] = await Promise.all([
-      fetch(buildProxyUrl(URLS.mag)),
-      fetch(buildProxyUrl(URLS.plasma)),
-    ]);
-
-    if (!magRes.ok || !plasmaRes.ok) {
-      console.error('[Solar History] Fetch failed:', {
-        mag: { status: magRes.status, text: magRes.statusText },
-        plasma: { status: plasmaRes.status, text: plasmaRes.statusText },
-      });
-      return [];
-    }
-
-    const magData = await magRes.json();
-    const plasmaData = await plasmaRes.json();
-
-    // Convert to maps for easy joining by timestamp
-    // Data format: [header, row1, row2...]
-    // Mag: time(0), ... bz(3)
-    // Plasma: time(0), density(1), speed(2)
-
-    const map = new Map<string, Partial<SolarHistoryPoint>>();
-
-    // Process Mag
-    if (Array.isArray(magData)) {
-      magData.slice(1).forEach((row) => {
-        const timeStr = row[0];
-        const bz = parseFloat(row[3]);
-        if (!map.has(timeStr)) map.set(timeStr, { timestamp: new Date(timeStr).getTime() });
-        const entry = map.get(timeStr)!;
-        entry.bz = bz;
-      });
-    }
-
-    // Process Plasma
-    if (Array.isArray(plasmaData)) {
-      plasmaData.slice(1).forEach((row) => {
-        const timeStr = row[0];
-        const density = parseFloat(row[1]);
-        const speed = parseFloat(row[2]);
-
-        // Plasma times might not match Mag times exactly (1 min resolution vs 1 min)
-        // But usually they are aligned by SWPC. If not, we might drop some points or need closest match.
-        // For simplicity, we assume exact string match or we rely on 'mag' being the master
-
-        if (map.has(timeStr)) {
-          const entry = map.get(timeStr)!;
-          entry.density = density;
-          entry.speed = speed;
-        }
-      });
-    }
-
-    // Convert map to array and filter incomplete
-    const result: SolarHistoryPoint[] = [];
-    for (const val of map.values()) {
-      if (
-        val.timestamp &&
-        val.bz !== undefined &&
-        val.speed !== undefined &&
-        val.density !== undefined
-      ) {
-        result.push(val as SolarHistoryPoint);
-      }
-    }
-
-    return result.sort((a, b) => a.timestamp - b.timestamp);
-  } catch (e) {
-    console.error('Error fetching solar history', e);
-    return [];
-  }
+  const product = await fetchJSON(URLS.history);
+  return getProductRows(product)
+    .flatMap((row) => {
+      const timestamp = Date.parse(String(row.time_tag));
+      const bz = numeric(row.bz);
+      const speed = numeric(row.speed);
+      const density = numeric(row.density);
+      if (!Number.isFinite(timestamp) || bz === null || speed === null || density === null)
+        return [];
+      return [{ timestamp, bz, speed, density }];
+    })
+    .sort((a, b) => a.timestamp - b.timestamp);
 };

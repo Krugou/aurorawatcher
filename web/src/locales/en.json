@@ -112,7 +112,34 @@
     "solar_title": "Solar Wind & Bz (Last 6h)",
     "solar_hint": "Correlation of High Speed + Negative Bz triggers Geomagnetic Storms.",
     "speed_label": "Speed (km/s)",
-    "bz_label": "Bz (nT)"
+    "bz_label": "Bz (nT)",
+    "useLocation": "Use my location",
+    "locating": "Finding location…",
+    "defaultLocation": "Default area: Helsinki ({{latitude}}, {{longitude}})",
+    "customLocation": "Using your selected location"
+  },
+  "gallery": {
+    "title": "Aurora Color Gallery",
+    "eyebrow": "IMAGE COLOR SCAN",
+    "heading": "Keep the skies that caught your eye",
+    "description": "Scan recent observatory archive images for saturated aurora greens, purples, and reds. Color detection is a simple visual heuristic, so review the matches yourself.",
+    "localStorageNote": "Your keep list is saved only in this browser.",
+    "scanning": "Scanning archive…",
+    "scanButton": "Scan latest {{count}} images",
+    "progress": "Checked {{current}} of {{total}} · {{found}} matches",
+    "scanError": "The image archive could not be loaded. Please try again later.",
+    "scanComplete": "Found {{found}} matches in {{scanned}} images; {{unavailable}} could not be inspected.",
+    "keepList": "Your keep list",
+    "savedCount": "{{count}} saved images",
+    "clear": "Clear list",
+    "emptyTitle": "Your gallery is waiting for its first aurora",
+    "emptyDescription": "Scan the recent observatory archive. Images with strong aurora-like colors will be added here for you to keep.",
+    "imageAlt": "Aurora image from {{camera}}, {{date}}",
+    "matchScore": "COLOR {{score}}%",
+    "remove": "Remove image from {{camera}}",
+    "green": "Green",
+    "purple": "Purple",
+    "red": "Red"
   },
   "section": {
     "cameras": "Live Sky Cameras"
@@ -226,9 +253,22 @@
     "thanks": "Thanks! You can report again in 10m.",
     "scanning": "Scanning frequencies...",
     "reported": "SIGHTING REPORTED",
-    "just_now": "JUST NOW"
+    "just_now": "JUST NOW",
+    "stale": "No recent sightings · latest report is over 24 hours old",
+    "noRecent": "No recent sightings have been reported"
   },
   "webcams": {
-    "title": "GLOBAL EYES"
+    "title": "GLOBAL EYES",
+    "unavailable": "Camera feed is currently unavailable",
+    "retry": "Retry feed"
+  },
+  "data_state": {
+    "error": "Could not load data from {{source}}.",
+    "empty": "{{source}} returned no observations for this period.",
+    "retry": "Try again",
+    "lastUpdated": "Last successful update: {{time}}",
+    "sourceUpdated": "Source: {{source}} · Last successful update: {{time}}",
+    "fmi": "FMI magnetometer service",
+    "noaa": "NOAA SWPC"
   }
 }

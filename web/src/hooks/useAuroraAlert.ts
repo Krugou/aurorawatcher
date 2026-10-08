@@ -20,8 +20,8 @@ export const useAuroraAlert = () => {
 
           setIsHighActivity(highKp || lowBz);
         }
-      } catch (e) {
-        console.error('Failed to check aurora activity for alert', e);
+      } catch {
+        // The dashboard data panels surface upstream availability to the user.
       }
     };
 

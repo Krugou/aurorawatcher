@@ -235,9 +235,8 @@ export const fetchMagnetometerHistory = async (
     });
 
     return data.sort((a, b) => a.timestamp - b.timestamp);
-  } catch (error) {
-    console.error('FMI History Fetch error:', error);
-    return [];
+  } catch {
+    throw new Error('FMI history request failed');
   }
 };
 

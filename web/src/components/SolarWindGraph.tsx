@@ -12,24 +12,44 @@ import {
 } from 'recharts';
 
 import { fetchSolarHistory, SolarHistoryPoint } from '../services/solarService';
+import { DataFreshness, DataStatus } from './DataStatus';
 import { Skeleton } from './Skeleton';
 
 export const SolarWindGraph = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<SolarHistoryPoint[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<number | null>(null);
+  const [requestId, setRequestId] = useState(0);
 
   useEffect(() => {
     fetchSolarHistory()
-      .then(setData)
-      .catch(console.error)
+      .then((result) => {
+        setData(result);
+        setError(false);
+        if (result.length > 0) setLastUpdated(Date.now());
+      })
+      .catch(() => setError(true))
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [requestId]);
 
   if (loading) return <Skeleton className="h-64 w-full mb-8" />;
-  if (data.length === 0) return null;
+  const retry = () => {
+    setLoading(true);
+    setRequestId((id) => id + 1);
+  };
+  if (error || data.length === 0)
+    return (
+      <DataStatus
+        source={t('data_state.noaa')}
+        state={error ? 'error' : 'empty'}
+        lastUpdated={lastUpdated}
+        onRetry={retry}
+      />
+    );
 
   // Filter last 6 hours
   const recentData = data.filter((d) => Date.now() - d.timestamp < 6 * 60 * 60 * 1000);
@@ -40,7 +60,7 @@ export const SolarWindGraph = () => {
   };
 
   return (
-    <>
+    <div className="space-y-2">
       <div className="h-[250px] w-full mt-4 overflow-hidden relative rounded-xl bg-white/[0.03] border border-white/10">
         <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
           <ComposedChart data={recentData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
@@ -126,6 +146,7 @@ export const SolarWindGraph = () => {
       <p className="text-xs font-mono text-white/40 mt-2 text-center uppercase tracking-wider">
         {t('graphs.solar_hint')}
       </p>
-    </>
+      {lastUpdated && <DataFreshness source={t('data_state.noaa')} lastUpdated={lastUpdated} />}
+    </div>
   );
 };

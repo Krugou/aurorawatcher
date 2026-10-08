@@ -1,160 +1,92 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-// Unmock the solarService so we test the actual module
 vi.unmock('../../services/solarService');
-
-// Mock proxy
-vi.mock('../../utils/proxy', () => ({
-  buildProxyUrl: vi.fn((url: string) => url),
-}));
 
 import { fetchSolarData, fetchSolarHistory } from '../../services/solarService';
 
-describe('fetchSolarData', () => {
-  it('returns parsed solar data on successful fetch', async () => {
-    const magData = [
-      ['time_tag', 'bx_gsm', 'by_gsm', 'bz_gsm', 'lon_gsm', 'lat_gsm', 'bt'],
-      ['2024-01-01 00:00:00.000', '1.2', '-0.5', '-3.4', '10', '20', '5.0'],
-    ];
-    const plasmaData = [
-      ['time_tag', 'density', 'speed', 'temperature'],
-      ['2024-01-01 00:00:00.000', '5.2', '420', '50000'],
-    ];
-    const kpData = [
-      ['time_tag', 'kp_index', 'a_index'],
-      ['2024-01-01 00:00:00.000', '3.33', '15'],
-    ];
+afterEach(() => vi.unstubAllGlobals());
 
+describe('fetchSolarData', () => {
+  it('parses current NOAA geospace and Kp observations', async () => {
     vi.stubGlobal(
       'fetch',
       vi
         .fn()
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(magData) })
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(plasmaData) })
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(kpData) }),
+        .mockResolvedValueOnce({
+          ok: true,
+          json: () =>
+            Promise.resolve([
+              ['time_tag', 'speed', 'density', 'temperature', 'bx', 'by', 'bz'],
+              ['2026-10-08T04:00:00Z', 420, 5.2, 50000, 1, 2, -3.4],
+            ]),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          json: () =>
+            Promise.resolve([
+              { time_tag: '2026-10-08T03:59:00Z', estimated_kp: 2.33 },
+              { time_tag: '2026-10-08T04:00:00Z', estimated_kp: 3.33 },
+            ]),
+        }),
     );
 
-    const result = await fetchSolarData();
-
-    expect(result).not.toBeNull();
-    expect(result!.bz).toBe(-3.4);
-    expect(result!.speed).toBe(420);
-    expect(result!.density).toBe(5.2);
-    expect(result!.kp).toBe(3.33);
-    expect(result!.timestamp).toBe('2024-01-01 00:00:00.000');
+    await expect(fetchSolarData()).resolves.toEqual({
+      bz: -3.4,
+      speed: 420,
+      density: 5.2,
+      kp: 3.33,
+      timestamp: '2026-10-08T04:00:00Z',
+    });
   });
 
-  it('returns null when a fetch request fails', async () => {
+  it('returns null for empty NOAA data', async () => {
     vi.stubGlobal(
       'fetch',
       vi
         .fn()
-        .mockResolvedValueOnce({ ok: false, status: 500, statusText: 'Error' })
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) })
+        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([['time_tag']]) })
         .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }),
     );
-
-    const result = await fetchSolarData();
-    expect(result).toBeNull();
+    await expect(fetchSolarData()).resolves.toBeNull();
   });
 
-  it('returns null when data arrays are too short', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi
-        .fn()
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([['header']]) })
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([['header']]) })
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([['header']]) }),
-    );
-
-    const result = await fetchSolarData();
-    expect(result).toBeNull();
-  });
-
-  it('returns null on network error', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('Network error')));
-
-    const result = await fetchSolarData();
-    expect(result).toBeNull();
+  it('throws when an endpoint fails so the UI can show an error and retry', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 404 }));
+    await expect(fetchSolarData()).rejects.toThrow('NOAA request failed (404)');
   });
 });
 
 describe('fetchSolarHistory', () => {
-  it('returns sorted array of solar history points', async () => {
-    const magData = [
-      ['time_tag', 'bx', 'by', 'bz', 'lon', 'lat', 'bt'],
-      ['2024-01-01T00:00:00Z', '1', '2', '-3.0', '0', '0', '5'],
-      ['2024-01-01T00:01:00Z', '1', '2', '-2.5', '0', '0', '5'],
-    ];
-    const plasmaData = [
-      ['time_tag', 'density', 'speed', 'temperature'],
-      ['2024-01-01T00:00:00Z', '5.0', '400', '50000'],
-      ['2024-01-01T00:01:00Z', '6.0', '450', '60000'],
-    ];
-
+  it('parses and sorts NOAA geospace history', async () => {
     vi.stubGlobal(
       'fetch',
-      vi
-        .fn()
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(magData) })
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(plasmaData) }),
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: () =>
+          Promise.resolve([
+            ['time_tag', 'speed', 'density', 'temperature', 'bx', 'by', 'bz'],
+            ['2026-10-08T00:01:00Z', 450, 6, 60000, 1, 2, -2.5],
+            ['2026-10-08T00:00:00Z', 400, 5, 50000, 1, 2, -3],
+          ]),
+      }),
     );
 
     const result = await fetchSolarHistory();
-
     expect(result).toHaveLength(2);
-    expect(result[0].bz).toBe(-3.0);
-    expect(result[0].speed).toBe(400);
-    expect(result[0].density).toBe(5.0);
-    expect(result[1].bz).toBe(-2.5);
-    // Sorted by timestamp
+    expect(result[0]).toMatchObject({ bz: -3, speed: 400, density: 5 });
     expect(result[0].timestamp).toBeLessThan(result[1].timestamp);
   });
 
-  it('returns empty array on fetch failure', async () => {
+  it('filters invalid rows and returns an empty array for a valid empty product', async () => {
     vi.stubGlobal(
       'fetch',
-      vi
-        .fn()
-        .mockResolvedValueOnce({ ok: false, status: 500, statusText: 'Error' })
-        .mockResolvedValueOnce({ ok: false, status: 500, statusText: 'Error' }),
+      vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve([['time_tag', 'speed']]) }),
     );
-
-    const result = await fetchSolarHistory();
-    expect(result).toEqual([]);
+    await expect(fetchSolarHistory()).resolves.toEqual([]);
   });
 
-  it('returns empty array on network error', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('Offline')));
-
-    const result = await fetchSolarHistory();
-    expect(result).toEqual([]);
-  });
-
-  it('filters out incomplete data points', async () => {
-    const magData = [
-      ['time_tag', 'bx', 'by', 'bz', 'lon', 'lat', 'bt'],
-      ['2024-01-01T00:00:00Z', '1', '2', '-3.0', '0', '0', '5'],
-      ['2024-01-01T00:01:00Z', '1', '2', '-2.5', '0', '0', '5'],
-    ];
-    // Only one plasma entry (the other mag entry has no matching plasma)
-    const plasmaData = [
-      ['time_tag', 'density', 'speed', 'temperature'],
-      ['2024-01-01T00:00:00Z', '5.0', '400', '50000'],
-    ];
-
-    vi.stubGlobal(
-      'fetch',
-      vi
-        .fn()
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(magData) })
-        .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(plasmaData) }),
-    );
-
-    const result = await fetchSolarHistory();
-    // Only the matched entry should be included
-    expect(result).toHaveLength(1);
-    expect(result[0].bz).toBe(-3.0);
+  it('throws on fetch failure so the UI can show an error and retry', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 500 }));
+    await expect(fetchSolarHistory()).rejects.toThrow('NOAA request failed (500)');
   });
 });

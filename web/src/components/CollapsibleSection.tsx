@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 
 import { Analytics } from '../utils/analytics';
 
@@ -23,6 +23,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   headerColorClass = 'bg-aurora-teal',
   storageKey,
 }) => {
+  const panelId = useId();
   const [isExpanded, setIsExpanded] = useState(() => {
     if (storageKey) {
       const saved = localStorage.getItem(`section_${storageKey}`);
@@ -48,15 +49,11 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
     <section
       className={`rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/10 overflow-hidden transition-all duration-500 ${className}`}
     >
-      <div
-        role="button"
-        tabIndex={0}
+      <button
+        type="button"
+        aria-expanded={isExpanded}
+        aria-controls={panelId}
         onClick={toggleExpanded}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            toggleExpanded();
-          }
-        }}
         className="w-full flex items-center gap-4 p-6 text-left hover:bg-white/[0.02] transition-all duration-300 focus:outline-none cursor-pointer"
       >
         {icon ?? (
@@ -90,9 +87,12 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
             </svg>
           </div>
         </div>
-      </div>
+      </button>
 
       <div
+        id={panelId}
+        aria-hidden={!isExpanded}
+        inert={!isExpanded}
         className={`transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
           isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
         }`}

@@ -63,6 +63,8 @@ The `pipeline.yml` workflow runs web lint and build, builds the bot, deploys Git
 
 The `schedule_bot.yml` workflow runs the bot every 15 minutes (and supports manual dispatch). It needs the repository secret `DISCORD_TOKEN` and repository write permission to commit collected history images.
 
+To inspect the published site in Chromium, run `npm run test:live`. The check writes a screenshot and JSON report to `output/playwright/`; set `AURORA_WATCHER_URL` to check another deployment. See [the website improvements plan](docs/website-improvements-plan.md) for current findings and prioritized follow-up work.
+
 ### Scheduled image collection
 
 ```mermaid

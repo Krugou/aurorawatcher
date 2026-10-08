@@ -53,16 +53,19 @@ describe('SpaceWeather', () => {
     expect(screen.getByText('space_weather.kp')).toBeInTheDocument();
   });
 
-  it('renders nothing when data is null', async () => {
+  it('shows an explicit empty state when no data is available', async () => {
     vi.mocked(fetchSolarData).mockResolvedValue(null);
 
-    const { container } = render(React.createElement(SpaceWeather));
+    render(React.createElement(SpaceWeather));
+    expect(await screen.findByRole('status')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'data_state.retry' })).toBeInTheDocument();
+  });
 
-    // Wait for loading to complete
-    await vi.waitFor(() => {
-      const skeletons = container.querySelectorAll('[role="status"]');
-      expect(skeletons).toHaveLength(0);
-    });
+  it('shows a retry action when the source request fails', async () => {
+    vi.mocked(fetchSolarData).mockRejectedValue(new Error('offline'));
+    render(React.createElement(SpaceWeather));
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'data_state.retry' })).toBeInTheDocument();
   });
 
   it('renders Kp index bar visual', async () => {
