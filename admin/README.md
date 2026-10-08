@@ -1,45 +1,45 @@
 # AuroraWatcher Admin
 
-Standalone admin application for managing images in the AuroraWatcher repository.
+Local UI and API for viewing observatory image history and deleting selected history entries. The API updates `web/public/data/history_index.json` and removes the corresponding file from `web/public/data`.
 
-## Features
+## Requirements and setup
 
-- View all history entries (images).
-- Filter images by Camera ID.
-- Delete images from the filesystem and update `history_index.json`.
-- Full translation support (English & Finnish).
-- Local only tool.
+Use Node.js 22 and npm. From the repository root, install all workspace dependencies:
 
-## Prerequisites
+```bash
+npm ci
+```
 
-- Node.js (Latest LTS recommended)
-- npm
+## Development
 
-## Setup & Running
+```bash
+npm run dev:admin
+```
 
-1.  Install dependencies from the root:
-    ```bash
-    npm install
-    ```
+This starts the Vite UI at `http://localhost:3005` and the Express API at `http://localhost:3006`. Vite proxies `/api` and `/images` requests to the API. The UI and API ports are configured in `vite.config.ts` and `server/index.ts` respectively.
 
-2.  Run the admin tool in development mode:
-    ```bash
-    npm run dev -w admin
-    ```
-
-    This will start:
-    - Admin Backend: `http://localhost:3001`
-    - Admin Frontend: `http://localhost:3000`
-
-3.  Access the admin UI at `http://localhost:3000`.
+```mermaid
+flowchart LR
+    A[Browser on localhost:3005] -->|UI and /api or /images| B[Vite dev server]
+    B -->|proxy /api and /images| C[Express API on port 3006]
+    C --> D[history_index.json]
+    C --> E[Image history directory]
+    F[Delete action] -->|DELETE camera and timestamp| C
+    C -->|remove image and update index| D
+```
 
 ## Scripts
 
-- `npm run dev`: Starts both backend and frontend for development.
-- `npm run build`: Builds the project for production.
-- `npm start`: Runs the production build.
-- `npm test`: Runs the tests.
+Run these from the repository root:
 
-## Security Note
+```bash
+npm run dev -w aurorawatcher-admin
+npm run build -w aurorawatcher-admin
+npm run test -w aurorawatcher-admin
+```
 
-This tool is intended for **local use only**. It does not include authentication. Ensure it is not exposed to the public internet.
+The build creates the client bundle and compiles the TypeScript server. The admin workspace has Vitest tests for its API.
+
+## Security
+
+This tool has no authentication. The server enables CORS and calls `listen` without an explicit host. Keep it in a trusted local environment; do not expose the API to an untrusted network.
