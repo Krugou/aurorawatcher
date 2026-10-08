@@ -38,6 +38,8 @@ The local verification for this implementation completed on 2026-10-08:
 - Chromium check against the local Vite app passed all 14 checks. NOAA current values and the solar history graph rendered, all nine visible images loaded, the Helsinki bounding box was requested without geolocation, section controls exposed their accessible state, and the browser reported no console errors or failed HTTP requests.
 - FMI returned no observations during the local browser check. The app displayed its source and retry state; a magnetometer chart could not be verified without observations.
 
+After deployment, the public-site Chromium check also passed all 14 checks. NOAA cards/history and all nine images loaded; the Helsinki request and FMI no-observations state appeared, with no browser console errors or failed HTTP requests. FMI still supplied no observations, so a live magnetometer chart could not be verified.
+
 Run the frontend checks from `web/`:
 
 ```bash
@@ -63,4 +65,4 @@ It writes a screenshot and JSON report under `output/playwright/`. It covers the
 
 ## Deployment boundary
 
-These changes are repository changes until the site is built and deployed through the GitHub Pages workflow. The review recorded failures on the previously published build; those results do not establish whether the updated local code is live. The FMI WFS request also failed in the original browser session, so a visible error state is implemented but successful FMI delivery must be verified in the browser after deployment.
+The changes were pushed to `main`; GitHub Actions completed the web lint/build and GitHub Pages deployment, and the public-site browser check passed. The FMI WFS request returned no observations in the post-deployment check, so successful FMI data delivery and magnetometer chart rendering remain dependent on upstream availability.
