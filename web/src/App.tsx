@@ -134,6 +134,23 @@ const AppContent = () => {
         <Header />
 
         <CollapsibleSection
+          title={t('grid.title')}
+          headerColorClass="bg-aurora-blue"
+          storageKey="observatory_status"
+        >
+          <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
+
+          {/* International Webcams */}
+          <div className="mt-8 pt-8 border-t border-white/[0.06]">
+            <h3 className="text-lg font-sans font-bold uppercase mb-4 text-white/80 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-aurora-teal shadow-[0_0_8px_rgba(0,212,170,0.5)] animate-pulse" />
+              {t('webcams.title')}
+            </h3>
+            <WebcamGrid />
+          </div>
+        </CollapsibleSection>
+
+        <CollapsibleSection
           title={t('local.title')}
           headerColorClass="bg-aurora-rose"
           storageKey="local_data"
@@ -151,22 +168,6 @@ const AppContent = () => {
           storageKey="aurora_gallery"
         >
           <AuroraGallery />
-        </CollapsibleSection>
-        <CollapsibleSection
-          title={t('grid.title')}
-          headerColorClass="bg-aurora-blue"
-          storageKey="observatory_status"
-        >
-          <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
-
-          {/* International Webcams */}
-          <div className="mt-8 pt-8 border-t border-white/[0.06]">
-            <h3 className="text-lg font-sans font-bold uppercase mb-4 text-white/80 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-aurora-teal shadow-[0_0_8px_rgba(0,212,170,0.5)] animate-pulse" />
-              {t('webcams.title')}
-            </h3>
-            <WebcamGrid />
-          </div>
         </CollapsibleSection>
         <CollapsibleSection
           title={t('space_weather.title')}

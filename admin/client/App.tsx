@@ -31,6 +31,7 @@ interface GalleryEntry extends HistoryEntry {
 }
 
 const SCAN_LIMIT = 80;
+const BEST_IMAGE_LIMIT = 30;
 const CAMERA_IDS = new Set(['muonio', 'nyrola', 'hankasalmi', 'metsahovi']);
 const imageKey = (entry: HistoryEntry) => `${entry.camId}:${entry.timestamp}`;
 const auroraColorCount = (entry: GalleryEntry) =>
@@ -187,7 +188,9 @@ const App: React.FC = () => {
       }
       const merged = new Map(gallery.map((entry) => [imageKey(entry), entry]));
       matches.forEach((entry) => merged.set(imageKey(entry), entry));
-      await saveGallery([...merged.values()].sort(compareAuroraColor));
+      await saveGallery(
+        [...merged.values()].sort(compareAuroraColor).slice(0, BEST_IMAGE_LIMIT),
+      );
       setGalleryMessage(t('galleryScanComplete', { found: matches.length, scanned: entries.length }));
     } catch (err) {
       setGalleryError(err instanceof Error ? err.message : t('galleryScanFailed'));
