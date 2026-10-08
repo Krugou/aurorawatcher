@@ -1,3 +1,9 @@
+# [1.26.0](https://github.com/Krugou/aurorawatcher/compare/v1.25.0...v1.26.0) (2026-10-08)
+
+### Features
+
+- **admin:** manage aurora gallery curation ([928cb75](https://github.com/Krugou/aurorawatcher/commit/928cb75274dfc1f3ef7927c6d319ceba20b64b73))
+
 # [1.25.0](https://github.com/Krugou/aurorawatcher/compare/v1.24.1...v1.25.0) (2026-10-08)
 
 ### Bug Fixes
