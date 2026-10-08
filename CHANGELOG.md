@@ -1,3 +1,9 @@
+# [1.30.0](https://github.com/Krugou/aurorawatcher/compare/v1.29.0...v1.30.0) (2026-10-08)
+
+### Features
+
+- **web:** automate ranked aurora gallery publishing ([1387d7b](https://github.com/Krugou/aurorawatcher/commit/1387d7b893005e1422a18314ead8d4bbda8fe4ae))
+
 # [1.29.0](https://github.com/Krugou/aurorawatcher/compare/v1.28.0...v1.29.0) (2026-10-08)
 
 ### Features
