@@ -1,3 +1,9 @@
+# [1.27.0](https://github.com/Krugou/aurorawatcher/compare/v1.26.0...v1.27.0) (2026-10-08)
+
+### Features
+
+- rank aurora gallery by color strength ([2e41418](https://github.com/Krugou/aurorawatcher/commit/2e41418cad5b7b1029887e65c62a4ade257c6933))
+
 # [1.26.0](https://github.com/Krugou/aurorawatcher/compare/v1.25.0...v1.26.0) (2026-10-08)
 
 ### Features
