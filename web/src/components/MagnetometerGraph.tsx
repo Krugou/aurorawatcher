@@ -143,7 +143,7 @@ export const MagnetometerGraph = ({
                 marginBottom: '4px',
                 fontFamily: 'monospace',
               }}
-              labelFormatter={(label) => formatTime(label)}
+              labelFormatter={(label) => formatTime(Number(label))}
             />
             <ReferenceLine
               y={50000}

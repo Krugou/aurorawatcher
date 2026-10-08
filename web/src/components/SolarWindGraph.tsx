@@ -116,7 +116,7 @@ export const SolarWindGraph = () => {
                 marginBottom: '4px',
                 fontFamily: 'monospace',
               }}
-              labelFormatter={(label) => formatTime(label)}
+              labelFormatter={(label) => formatTime(Number(label))}
             />
             <Legend wrapperStyle={{ paddingTop: '10px', fontFamily: 'monospace', color: '#888' }} />
 
