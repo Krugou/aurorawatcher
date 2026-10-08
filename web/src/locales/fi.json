@@ -122,7 +122,7 @@
     "title": "Revontulivärien galleria",
     "eyebrow": "VALIKOITU KOKOELMA",
     "heading": "Tallenna taivaat, jotka pysäyttivät",
-    "description": "Observatorioarkistosta ylläpitäjän valitsemat revontulivärikuvat.",
+    "description": "Ylläpitäjän observatorioarkistosta valitsemat revontulikuvat, järjestettynä havaittujen revontulivärien mukaan vahvimmat ensin.",
     "loading": "Ladataan ylläpidon kuratoimaa galleriaa…",
     "loadError": "Revontuligallerian lataus epäonnistui. Yritä myöhemmin uudelleen.",
     "keepList": "Valitut revontulikuvat",

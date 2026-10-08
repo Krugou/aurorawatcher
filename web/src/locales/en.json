@@ -122,7 +122,7 @@
     "title": "Aurora Color Gallery",
     "eyebrow": "CURATED COLLECTION",
     "heading": "Keep the skies that caught your eye",
-    "description": "Aurora color images selected by the observatory archive curator.",
+    "description": "Aurora images selected from the observatory archive, ranked by detected aurora color with the strongest matches first.",
     "loading": "Loading the curated gallery…",
     "loadError": "The aurora gallery could not be loaded. Please try again later.",
     "keepList": "Curated aurora images",

@@ -33,6 +33,10 @@ interface GalleryEntry extends HistoryEntry {
 const SCAN_LIMIT = 80;
 const CAMERA_IDS = new Set(['muonio', 'nyrola', 'hankasalmi', 'metsahovi']);
 const imageKey = (entry: HistoryEntry) => `${entry.camId}:${entry.timestamp}`;
+const auroraColorCount = (entry: GalleryEntry) =>
+  entry.greenPixels + entry.purplePixels + entry.redPixels;
+const compareAuroraColor = (a: GalleryEntry, b: GalleryEntry) =>
+  auroraColorCount(b) - auroraColorCount(a) || b.score - a.score || b.timestamp - a.timestamp;
 
 const inspectImage = async (entry: HistoryEntry): Promise<GalleryEntry | null> => {
   const image = new Image();
@@ -183,7 +187,7 @@ const App: React.FC = () => {
       }
       const merged = new Map(gallery.map((entry) => [imageKey(entry), entry]));
       matches.forEach((entry) => merged.set(imageKey(entry), entry));
-      await saveGallery([...merged.values()]);
+      await saveGallery([...merged.values()].sort(compareAuroraColor));
       setGalleryMessage(t('galleryScanComplete', { found: matches.length, scanned: entries.length }));
     } catch (err) {
       setGalleryError(err instanceof Error ? err.message : t('galleryScanFailed'));
@@ -282,7 +286,7 @@ const App: React.FC = () => {
           <p className="gallery-empty">{t('galleryEmpty')}</p>
         ) : (
           <div className="aurora-entry-grid">
-            {[...gallery].sort((a, b) => b.timestamp - a.timestamp).map((entry) => (
+            {[...gallery].sort(compareAuroraColor).map((entry) => (
               <article className="aurora-entry-card" key={imageKey(entry)}>
                 <img src={`/images/${entry.filename}`} alt={`${entry.camId} ${new Date(entry.timestamp).toLocaleString()}`} loading="lazy" />
                 <div className="aurora-entry-meta">

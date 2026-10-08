@@ -16,6 +16,10 @@ interface GalleryResponse {
 }
 
 const DATA_BASE = `${import.meta.env.BASE_URL}data/`;
+const auroraColorCount = (entry: KeptAuroraImage) =>
+  entry.greenPixels + entry.purplePixels + entry.redPixels;
+const compareAuroraColor = (a: KeptAuroraImage, b: KeptAuroraImage) =>
+  auroraColorCount(b) - auroraColorCount(a) || b.score - a.score || b.timestamp - a.timestamp;
 
 export const AuroraGallery = () => {
   const { t, i18n } = useTranslation();
@@ -44,10 +48,7 @@ export const AuroraGallery = () => {
     };
   }, []);
 
-  const sortedEntries = useMemo(
-    () => [...entries].sort((a, b) => b.timestamp - a.timestamp),
-    [entries],
-  );
+  const sortedEntries = useMemo(() => [...entries].sort(compareAuroraColor), [entries]);
   const formatDate = (timestamp: number) =>
     new Intl.DateTimeFormat(i18n.language, { dateStyle: 'medium', timeStyle: 'short' }).format(
       timestamp,
