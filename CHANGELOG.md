@@ -1,3 +1,13 @@
+# [1.25.0](https://github.com/Krugou/aurorawatcher/compare/v1.24.1...v1.25.0) (2026-10-08)
+
+### Bug Fixes
+
+- **web:** resolve CI typecheck and build failures ([839a783](https://github.com/Krugou/aurorawatcher/commit/839a783b3ce7f5f55ddae0d8a412158868daae51))
+
+### Features
+
+- **web:** restore space-weather data and improve dashboard states ([4e6d485](https://github.com/Krugou/aurorawatcher/commit/4e6d485dfe2e928707eb917b9894c3d8b21089fc))
+
 ## [1.24.1](https://github.com/Krugou/aurorawatcher/compare/v1.24.0...v1.24.1) (2026-04-02)
 
 ### Bug Fixes
