@@ -1,6 +1,6 @@
 # AuroraWatcher Admin
 
-Local UI and API for viewing observatory image history and deleting selected history entries. The API updates `web/public/data/history_index.json` and removes the corresponding file from `web/public/data`.
+Local UI and API for managing observatory image history and curating the public aurora color gallery. The admin UI scans recent archive images for aurora-like colors, saves selected matches to `web/public/data/aurora_gallery.json`, and can remove curated gallery entries. The public website reads that JSON file and displays the curated gallery without scanning or modifying it.
 
 ## Requirements and setup
 
@@ -24,9 +24,16 @@ flowchart LR
     B -->|proxy /api and /images| C[Express API on port 3006]
     C --> D[history_index.json]
     C --> E[Image history directory]
+    C --> G[aurora_gallery.json]
     F[Delete action] -->|DELETE camera and timestamp| C
     C -->|remove image and update index| D
+    H[Admin color scan] -->|inspect latest archive images| B
+    B -->|PUT saved matches| C
+    C -->|persist curated selections| G
+    G -->|static JSON gallery data| I[Public website gallery]
 ```
+
+The gallery API exposes `GET /api/gallery` and `PUT /api/gallery`. Gallery image paths and camera IDs are validated before saving. The gallery file is part of the web project's public data, so include its update in the normal website deployment to publish new selections.
 
 ## Scripts
 

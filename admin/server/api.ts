@@ -13,7 +13,42 @@ interface HistoryIndex {
   entries: HistoryEntry[];
 }
 
-export function setupApi(app: Express, indexPath: string, historyDir: string) {
+interface AuroraGalleryEntry extends HistoryEntry {
+  score: number;
+  greenPixels: number;
+  purplePixels: number;
+  redPixels: number;
+}
+
+interface AuroraGallery {
+  entries: AuroraGalleryEntry[];
+}
+
+const CAMERA_IDS = new Set(['muonio', 'nyrola', 'hankasalmi', 'metsahovi']);
+
+const isGalleryEntry = (entry: unknown): entry is AuroraGalleryEntry => {
+  if (!entry || typeof entry !== 'object') return false;
+  const value = entry as Partial<AuroraGalleryEntry>;
+  return (
+    typeof value.camId === 'string' &&
+    CAMERA_IDS.has(value.camId) &&
+    typeof value.filename === 'string' &&
+    /^history\/[\w.-]+\.(?:webp|jpe?g|png)$/i.test(value.filename) &&
+    typeof value.timestamp === 'number' &&
+    Number.isFinite(value.timestamp) &&
+    ['score', 'greenPixels', 'purplePixels', 'redPixels'].every(
+      (key) => typeof value[key as keyof AuroraGalleryEntry] === 'number' &&
+        Number.isFinite(value[key as keyof AuroraGalleryEntry]),
+    )
+  );
+};
+
+export function setupApi(
+  app: Express,
+  indexPath: string,
+  historyDir: string,
+  galleryPath = path.join(historyDir, 'aurora_gallery.json'),
+) {
   // Health check
   app.get('/api/health', (req, res) => {
     res.json({
@@ -35,6 +70,37 @@ export function setupApi(app: Express, indexPath: string, historyDir: string) {
     } catch (error) {
       console.error('Error reading history index:', error);
       res.status(500).json({ error: 'Failed to read history index' });
+    }
+  });
+
+  // Shared gallery managed from the admin UI and displayed by the public site.
+  app.get('/api/gallery', async (req, res) => {
+    try {
+      if (!(await fs.pathExists(galleryPath))) return res.json({ entries: [] });
+      const gallery: unknown = await fs.readJson(galleryPath);
+      if (!gallery || typeof gallery !== 'object' || !Array.isArray((gallery as AuroraGallery).entries)) {
+        return res.status(500).json({ error: 'Gallery data is invalid' });
+      }
+      res.json(gallery);
+    } catch (error) {
+      console.error('Error reading aurora gallery:', error);
+      res.status(500).json({ error: 'Failed to read aurora gallery' });
+    }
+  });
+
+  app.put('/api/gallery', async (req, res) => {
+    try {
+      const entries: unknown = req.body?.entries;
+      if (!Array.isArray(entries) || entries.length > 5000 || !entries.every(isGalleryEntry)) {
+        return res.status(400).json({ error: 'Gallery entries are invalid' });
+      }
+      await fs.ensureDir(path.dirname(galleryPath));
+      const gallery: AuroraGallery = { entries };
+      await fs.writeJson(galleryPath, gallery, { spaces: 2 });
+      res.json(gallery);
+    } catch (error) {
+      console.error('Error saving aurora gallery:', error);
+      res.status(500).json({ error: 'Failed to save aurora gallery' });
     }
   });
 

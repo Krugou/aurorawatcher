@@ -23,8 +23,9 @@ app.use((req, res, next) => {
 // Path to the history data in the web project
 const historyIndexPath = path.resolve(__dirname, '../../web/public/data/history_index.json');
 const historyDir = path.resolve(__dirname, '../../web/public/data');
+const galleryPath = path.resolve(__dirname, '../../web/public/data/aurora_gallery.json');
 
-setupApi(app, historyIndexPath, historyDir);
+setupApi(app, historyIndexPath, historyDir, galleryPath);
 
 // Serve images from the web project
 app.use('/images', express.static(historyDir));

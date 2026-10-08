@@ -32,7 +32,23 @@ i18n
           status: 'Status',
           version: 'Version',
           uptime: 'Uptime',
-          entries: 'entries'
+          entries: 'entries',
+          galleryEyebrow: 'ADMIN CURATION',
+          galleryTitle: 'Aurora color gallery',
+          galleryDescription: 'Scan recent observatory images for aurora colors. Matches are saved to the gallery shown on the public site.',
+          galleryScan: 'Scan latest {{count}} images',
+          galleryScanning: 'Scanning archive…',
+          galleryProgress: 'Checked {{current}} of {{total}} · {{found}} matches',
+          galleryScanComplete: 'Saved {{found}} matches from {{scanned}} images.',
+          galleryScanFailed: 'Aurora image scan failed.',
+          galleryLoadFailed: 'Failed to load the saved gallery.',
+          gallerySaveFailed: 'Failed to save the gallery.',
+          gallerySaved: 'Gallery updated.',
+          galleryKeepList: 'Saved gallery images',
+          gallerySavedCount: '{{count}} saved images',
+          galleryEmpty: 'No aurora images saved yet. Scan the recent archive to find matches.',
+          galleryScore: 'Color {{score}}%',
+          galleryRemove: 'Remove'
         }
       },
       fi: {
@@ -56,7 +72,23 @@ i18n
           status: 'Tila',
           version: 'Versio',
           uptime: 'Käyntiaika',
-          entries: 'merkintää'
+          entries: 'merkintää',
+          galleryEyebrow: 'HALLINNAN KURATOINTI',
+          galleryTitle: 'Revontulivärien galleria',
+          galleryDescription: 'Etsi revontulivärejä tuoreista observatoriokuvista. Osumat tallentuvat julkisella sivustolla näkyvään galleriaan.',
+          galleryScan: 'Etsi uusimmista {{count}} kuvasta',
+          galleryScanning: 'Käydään arkistoa läpi…',
+          galleryProgress: 'Tarkistettu {{current}} / {{total}} · {{found}} osumaa',
+          galleryScanComplete: 'Tallennettiin {{found}} osumaa {{scanned}} kuvasta.',
+          galleryScanFailed: 'Revontulikuvien haku epäonnistui.',
+          galleryLoadFailed: 'Tallennetun gallerian lataus epäonnistui.',
+          gallerySaveFailed: 'Gallerian tallennus epäonnistui.',
+          gallerySaved: 'Galleria päivitetty.',
+          galleryKeepList: 'Tallennetut gallerian kuvat',
+          gallerySavedCount: '{{count}} tallennettua kuvaa',
+          galleryEmpty: 'Revontulikuvia ei ole vielä tallennettu. Etsi osumia tuoreesta arkistosta.',
+          galleryScore: 'Väri {{score}} %',
+          galleryRemove: 'Poista'
         }
       }
     }

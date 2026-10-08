@@ -224,3 +224,46 @@ select, input[type="text"] {
     gap: 20px;
   }
 }
+
+.aurora-gallery-admin {
+  background: linear-gradient(135deg, #151d20, #20202b);
+  color: #f3f7f6;
+}
+
+.aurora-gallery-admin h2,
+.aurora-gallery-admin h3 {
+  color: #f3f7f6;
+  margin: 0;
+}
+
+.gallery-admin-heading,
+.gallery-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.gallery-admin-heading > div { max-width: 720px; }
+.gallery-admin-heading p:not(.gallery-eyebrow) { color: #aab4b4; line-height: 1.6; }
+.gallery-eyebrow { color: #00d4aa; font: 700 0.75rem monospace; letter-spacing: 0.22em; }
+.aurora-gallery-admin button.primary { color: #00a987; white-space: nowrap; }
+.gallery-progress { margin-top: 20px; color: #aab4b4; font-family: monospace; }
+.gallery-progress progress { display: block; width: 100%; height: 9px; margin-top: 10px; accent-color: #00c9a0; }
+.gallery-error { color: #ff7777; }
+.gallery-message { color: #00b990; }
+.gallery-list-heading { margin: 28px 0 16px; border-bottom: 1px solid rgba(255,255,255,.12); padding-bottom: 12px; }
+.gallery-list-heading span { color: #9ba4a4; font: 0.8rem monospace; }
+.gallery-empty { color: #9ba4a4; }
+.aurora-entry-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+.aurora-entry-card { overflow: hidden; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: #111519; }
+.aurora-entry-card img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.aurora-entry-meta { display: grid; gap: 7px; padding: 13px; color: #aab4b4; font-size: 0.84rem; }
+.aurora-entry-meta strong { color: #f3f7f6; font-size: 1rem; text-transform: capitalize; }
+.aurora-entry-meta span:last-of-type { color: #00c9a0; font-family: monospace; }
+.aurora-entry-meta button { justify-self: start; padding: 7px 12px; }
+
+@media (max-width: 600px) {
+  .gallery-admin-heading { align-items: flex-start; flex-direction: column; }
+  .gallery-list-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
+}
