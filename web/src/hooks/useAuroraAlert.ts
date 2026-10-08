@@ -1,36 +1,6 @@
-import { useEffect, useState } from 'react';
-
-import { fetchSolarData } from '../services/solarService';
+import { useSolarActivity } from './useSolarActivity';
 
 export const useAuroraAlert = () => {
-  const [isHighActivity, setIsHighActivity] = useState(false);
-
-  useEffect(() => {
-    const checkActivity = async () => {
-      try {
-        const data = await fetchSolarData();
-        if (data) {
-          // Alert conditions:
-          // Kp >= 5 (Storm)
-          // Bz <= -10 (Strong southward IMF)
-          // Speed > 600 (Fast wind) - Optional, maybe too noisy
-
-          const highKp = data.kp >= 5;
-          const lowBz = data.bz <= -5; // Lowered threshold slightly to be more responsive to "red" conditions
-
-          setIsHighActivity(highKp || lowBz);
-        }
-      } catch {
-        // The dashboard data panels surface upstream availability to the user.
-      }
-    };
-
-    checkActivity();
-    const interval = setInterval(checkActivity, 60000 * 5); // Check every 5 mins
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  return isHighActivity;
+  const { data } = useSolarActivity();
+  return data !== null && (data.kp >= 5 || data.bz <= -5);
 };

@@ -11,6 +11,8 @@ interface CollapsibleSectionProps {
   className?: string;
   headerColorClass?: string;
   storageKey?: string;
+  sectionId?: string;
+  expandRequest?: number;
 }
 
 export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
@@ -22,6 +24,8 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   className = '',
   headerColorClass = 'bg-aurora-teal',
   storageKey,
+  sectionId,
+  expandRequest = 0,
 }) => {
   const panelId = useId();
   const [isExpanded, setIsExpanded] = useState(() => {
@@ -45,16 +49,26 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
     }
   };
 
+  React.useEffect(() => {
+    if (expandRequest === 0) return;
+    setIsExpanded((expanded) => {
+      if (expanded) return expanded;
+      if (storageKey) localStorage.setItem(`section_${storageKey}`, 'true');
+      return true;
+    });
+  }, [expandRequest, storageKey]);
+
   return (
     <section
-      className={`rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/10 overflow-hidden transition-all duration-500 ${className}`}
+      id={sectionId}
+      className={`neo-panel overflow-hidden transition-all duration-500 ${className}`}
     >
       <button
         type="button"
         aria-expanded={isExpanded}
         aria-controls={panelId}
         onClick={toggleExpanded}
-        className="w-full flex items-center gap-4 p-6 text-left hover:bg-white/[0.02] transition-all duration-300 focus:outline-none cursor-pointer"
+        className="neo-section-trigger w-full flex items-center gap-4 p-6 text-left hover:bg-white/[0.02] transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] cursor-pointer"
       >
         {icon ?? (
           <div

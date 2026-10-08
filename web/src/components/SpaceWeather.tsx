@@ -1,39 +1,12 @@
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { fetchSolarData, SolarData } from '../services/solarService';
+import { useSolarActivity } from '../hooks/useSolarActivity';
 import { DataFreshness, DataStatus } from './DataStatus';
 import { Skeleton } from './Skeleton';
 
 export const SpaceWeather = () => {
   const { t } = useTranslation();
-  const [data, setData] = useState<SolarData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState<number | null>(null);
-  const [requestId, setRequestId] = useState(0);
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const result = await fetchSolarData();
-        setData(result);
-        setError(false);
-        if (result) setLastUpdated(Date.now());
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
-
-    // Refresh every minute
-    const interval = setInterval(load, 60000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [requestId]);
+  const { data, loading, error, lastUpdated, refresh } = useSolarActivity();
 
   if (loading) {
     return (
@@ -51,10 +24,7 @@ export const SpaceWeather = () => {
         source={t('data_state.noaa')}
         state={error ? 'error' : 'empty'}
         lastUpdated={lastUpdated}
-        onRetry={() => {
-          setLoading(true);
-          setRequestId((id) => id + 1);
-        }}
+        onRetry={() => void refresh(true)}
       />
     );
 
@@ -75,15 +45,12 @@ export const SpaceWeather = () => {
           source={t('data_state.noaa')}
           state="error"
           lastUpdated={lastUpdated}
-          onRetry={() => {
-            setLoading(true);
-            setRequestId((id) => id + 1);
-          }}
+          onRetry={() => void refresh(true)}
         />
       )}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Bz */}
-        <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4 hover:border-white/20 transition-all duration-300 group">
+        <div className="neo-card p-4 transition-all duration-300 group">
           <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-teal/80 mb-2 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-aurora-teal shadow-[0_0_6px_rgba(0,212,170,0.5)] animate-pulse" />
             {t('space_weather.bz')}
@@ -96,7 +63,7 @@ export const SpaceWeather = () => {
         </div>
 
         {/* Speed */}
-        <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4 hover:border-white/20 transition-all duration-300 group">
+        <div className="neo-card p-4 transition-all duration-300 group">
           <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-blue/80 mb-2 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-aurora-blue shadow-[0_0_6px_rgba(59,130,246,0.5)]" />
             {t('space_weather.speed')}
@@ -113,7 +80,7 @@ export const SpaceWeather = () => {
         </div>
 
         {/* Density */}
-        <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4 hover:border-white/20 transition-all duration-300 group">
+        <div className="neo-card p-4 transition-all duration-300 group">
           <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-rose/80 mb-2 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-aurora-rose shadow-[0_0_6px_rgba(244,63,94,0.5)]" />
             {t('space_weather.density')}
@@ -130,7 +97,7 @@ export const SpaceWeather = () => {
         </div>
 
         {/* Kp Index */}
-        <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4 hover:border-white/20 transition-all duration-300 group">
+        <div className="neo-card p-4 transition-all duration-300 group">
           <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-cyan/80 mb-2 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-aurora-cyan shadow-[0_0_6px_rgba(34,211,238,0.5)]" />
             {t('space_weather.kp')}

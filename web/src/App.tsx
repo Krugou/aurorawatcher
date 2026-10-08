@@ -10,10 +10,13 @@ import { CollapsibleSection } from './components/CollapsibleSection';
 import { DataInfo } from './components/DataInfo';
 import { FullscreenView } from './components/FullscreenView';
 import { Header } from './components/Header';
+import { HighContrastToggle } from './components/HighContrastToggle';
+import { InstallPrompt } from './components/InstallPrompt';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { LocalData } from './components/LocalData';
 import { MagnetometerGraph } from './components/MagnetometerGraph';
 import { MinimalView } from './components/MinimalView';
+import { MobileNav, DashboardSection } from './components/MobileNav';
 import { ObservatoryGrid } from './components/ObservatoryGrid';
 import { SightingButton } from './components/SightingButton';
 import { SightingsFeed } from './components/SightingsFeed';
@@ -22,6 +25,7 @@ import { SpaceWeather } from './components/SpaceWeather';
 import { ThemeToggle } from './components/ThemeToggle';
 import { WebcamGrid } from './components/WebcamGrid';
 import { ThemeProvider } from './context/ThemeProvider';
+import { SolarActivityProvider } from './context/SolarActivityProvider';
 import { useAuroraAlert } from './hooks/useAuroraAlert';
 import { useTitleFlasher } from './hooks/useTitleFlasher';
 import { Location } from './types';
@@ -63,10 +67,21 @@ const AppContent = () => {
   const [timestamp, setTimestamp] = useState(Date.now());
   const [mode, setMode] = useState<'default' | 'minimal' | 'fullscreen'>('default');
   const [activeCam, setActiveCam] = useState<string | null>(null);
+  const [navigationRequest, setNavigationRequest] = useState({ section: '', sequence: 0 });
 
   // Aurora Alert Logic
   const isHighActivity = useAuroraAlert();
   useTitleFlasher(isHighActivity, [t('common.alert_title')]);
+
+  const navigateToSection = (section: DashboardSection) => {
+    setNavigationRequest((previous) => ({ section, sequence: previous.sequence + 1 }));
+    window.setTimeout(() => {
+      document.getElementById(section)?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start',
+      });
+    }, 80);
+  };
 
   // Tarkista URL-parametrit
   useEffect(() => {
@@ -112,7 +127,7 @@ const AppContent = () => {
 
   // Oletusnäkymä (Työpöytä/Mobiili)
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white/90 font-sans flex flex-col items-center transition-colors duration-500">
+    <div className="neo-app min-h-screen bg-[#0a0a0f] text-white/90 font-sans flex flex-col items-center transition-colors duration-500 pb-24 md:pb-0">
       {/* Ambient aurora background effect */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-aurora-teal/[0.03] rounded-full blur-[150px] animate-aurora-pulse" />
@@ -130,6 +145,10 @@ const AppContent = () => {
         <ThemeToggle />
         <LanguageSwitcher />
       </div>
+      <div className="fixed top-6 left-4 z-50 flex items-center gap-2">
+        <HighContrastToggle />
+        <InstallPrompt />
+      </div>
       <div className="w-full max-w-6xl p-4 md:p-8 space-y-10 md:space-y-14 relative z-10">
         <Header />
 
@@ -137,6 +156,10 @@ const AppContent = () => {
           title={t('grid.title')}
           headerColorClass="bg-aurora-blue"
           storageKey="observatory_status"
+          sectionId="observatory_status"
+          expandRequest={
+            navigationRequest.section === 'observatory_status' ? navigationRequest.sequence : 0
+          }
         >
           <ObservatoryGrid locations={LOCATIONS} timestamp={timestamp} />
 
@@ -186,6 +209,8 @@ const AppContent = () => {
           title={t('graphs.title')}
           headerColorClass="bg-aurora-cyan"
           storageKey="graphs"
+          sectionId="graphs"
+          expandRequest={navigationRequest.section === 'graphs' ? navigationRequest.sequence : 0}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <MagnetometerGraph />
@@ -197,6 +222,8 @@ const AppContent = () => {
           title={t('map.title')}
           headerColorClass="bg-aurora-teal"
           storageKey="map"
+          sectionId="map"
+          expandRequest={navigationRequest.section === 'map' ? navigationRequest.sequence : 0}
         >
           <AuroraMap timestamp={timestamp} />
         </CollapsibleSection>
@@ -237,6 +264,7 @@ const AppContent = () => {
           </div>
         </footer>
       </div>
+      <MobileNav onNavigate={navigateToSection} />
       <ToastContainer position="top-right" theme="dark" aria-label={t('common.notifications')} />
     </div>
   );
@@ -245,7 +273,9 @@ const AppContent = () => {
 const App = () => {
   return (
     <ThemeProvider>
-      <AppContent />
+      <SolarActivityProvider>
+        <AppContent />
+      </SolarActivityProvider>
     </ThemeProvider>
   );
 };

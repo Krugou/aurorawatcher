@@ -65,7 +65,7 @@ const WebcamCard = ({ cam }: { cam: Webcam }) => {
   }, [refreshFeed]);
 
   return (
-    <article className="relative group rounded-xl border border-white/10 bg-black/40 overflow-hidden aspect-video hover:border-white/20 transition-all duration-300">
+    <article className="neo-card relative group overflow-hidden aspect-video transition-all duration-300">
       {!unavailable && sourceUrl ? (
         <img
           key={refreshKey}

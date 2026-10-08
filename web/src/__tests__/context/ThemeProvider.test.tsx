@@ -108,4 +108,28 @@ describe('ThemeProvider', () => {
 
     expect(capturedTheme).toBe('light');
   });
+
+  it('persists and applies the high-contrast preference', () => {
+    const TestConsumer = () => {
+      const context = React.useContext(ThemeContext);
+      return React.createElement(
+        'button',
+        { onClick: () => context?.toggleHighContrast() },
+        'Contrast',
+      );
+    };
+
+    render(React.createElement(ThemeProvider, null, React.createElement(TestConsumer)));
+    act(() => screen.getByRole('button').click());
+    expect(document.documentElement).toHaveClass('high-contrast');
+    expect(localStorage.setItem).toHaveBeenCalledWith('highContrast', 'true');
+  });
+
+  it('restores the high-contrast preference from localStorage', () => {
+    vi.mocked(localStorage.getItem).mockImplementation((key) =>
+      key === 'highContrast' ? 'true' : null,
+    );
+    render(React.createElement(ThemeProvider, null, React.createElement('span')));
+    expect(document.documentElement).toHaveClass('high-contrast');
+  });
 });

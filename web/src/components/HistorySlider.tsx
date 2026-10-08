@@ -279,6 +279,8 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
 
             <input
               type="range"
+              aria-label={t('graphs.historySlider')}
+              aria-valuetext={t('graphs.historySliderValue', { time: displayTime })}
               min={0}
               max={history.length}
               value={currentIndex}

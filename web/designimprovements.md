@@ -1,5 +1,7 @@
 # Design Improvements & Feature Proposals
 
+**Implementation status:** Implemented for the bilingual public dashboard and verified locally on 2026-10-08. See `docs/website-improvements-plan.md` for browser and test evidence. Deployment verification is recorded there after publishing.
+
 ## 1. Neobrutalist Aesthetic Refinements
 
 The current design uses smooth gradients (`from-slate-950 via-slate-900`) which leans towards "Glassmorphism" or standard "Dark Mode". To fully embrace **Neobrutalism**, we should introduce:
@@ -38,3 +40,14 @@ Transform the observatory data into a mission-control style interface:
 
 - **High Contrast Toggle**: A specific toggle for a B&W high-contrast mode for maximum readability.
 - **Reduced Motion**: Respect `prefers-reduced-motion` to disable glitch effects and heavy animations.
+
+## Delivery status
+
+- [x] Aurora hybrid styling: solid surfaces, strong borders, offset card shadows, clearer data typography, tactile button states, and inverted hover styling while retaining the teal/violet brand colors.
+- [x] Live NOAA status board: current Kp, solar-wind speed, and Bz share a five-minute snapshot with the alert state; statuses distinguish loading, stale, and unavailable data.
+- [x] Space-weather graphs expose collapsed recent raw samples; webcam LEDs distinguish checking, online, and offline.
+- [x] Crosshair pointer on fine-pointer devices and Kp > 5 heading glitch; reduced-motion rules suppress marquee, glitch, aurora animation, and transitions; keyboard focus remains visible.
+- [x] Mobile Cams, Stats, and Map bar expands and scrolls to its target; fullscreen cameras support horizontal swipes and keep visible labeled controls.
+- [x] PWA install action uses the browser install event and presents localized manual guidance when unavailable.
+- [x] Existing history scrubber and 6-hour through 30-day presets retained with accessible labels.
+- [x] Persistent black-and-white high-contrast mode and English/Finnish labels.

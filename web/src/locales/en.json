@@ -27,6 +27,7 @@
     "view_fullscreen": "Full Screen",
     "status_online": "ONLINE",
     "status_offline": "OFFLINE",
+    "status_checking": "CHECKING",
     "view_history": "HISTORY",
     "open_map": "Open on map"
   },
@@ -39,11 +40,33 @@
     "low": "LOW",
     "moderate": "MODERATE",
     "high": "HIGH",
-    "unknown": "UNKNOWN"
+    "unknown": "UNKNOWN",
+    "kp": "Kp",
+    "speed": "Solar wind",
+    "bz": "Bz",
+    "loading": "Loading NOAA space-weather data",
+    "unavailable": "NOAA space-weather data unavailable",
+    "stale": "Showing last successful reading"
   },
   "theme": {
     "switchToLight": "Switch to Light Mode",
     "switchToDark": "Switch to Dark Mode"
+  },
+  "contrast": {
+    "enable": "Enable high-contrast black-and-white mode",
+    "disable": "Disable high-contrast mode"
+  },
+  "pwa": {
+    "install": "Install app",
+    "installing": "Opening install prompt…",
+    "installFailed": "The install prompt could not be opened. Use your browser’s install menu.",
+    "manualInstall": "To install, use your browser menu and choose Install app or Add to Home Screen. On iPhone or iPad, open Share and choose Add to Home Screen."
+  },
+  "mobileNav": {
+    "label": "Dashboard navigation",
+    "cameras": "Cams",
+    "stats": "Stats",
+    "map": "Map"
   },
   "minimal": {
     "back": "Back to default view"
@@ -116,7 +139,10 @@
     "useLocation": "Use my location",
     "locating": "Finding location…",
     "defaultLocation": "Default area: Helsinki ({{latitude}}, {{longitude}})",
-    "customLocation": "Using your selected location"
+    "customLocation": "Using your selected location",
+    "rawData": "Latest raw samples",
+    "historySlider": "Camera history position",
+    "historySliderValue": "{{time}}"
   },
   "gallery": {
     "title": "Aurora Color Gallery",

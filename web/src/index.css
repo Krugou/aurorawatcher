@@ -160,3 +160,327 @@ button:active {
     0 0 20px rgba(0, 212, 170, 0.5),
     0 0 40px rgba(0, 212, 170, 0.2);
 }
+
+/* Aurora-brutalist dashboard surfaces */
+.neo-panel {
+  border: 2px solid rgba(226, 255, 248, 0.75);
+  border-radius: 0.75rem;
+  background: #11161b;
+  box-shadow:
+    5px 5px 0 #000,
+    8px 8px 0 rgba(0, 212, 170, 0.5);
+}
+
+.neo-section-trigger {
+  background: #141b21;
+  border-bottom: 3px solid #00d4aa;
+}
+
+.neo-card {
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  border-radius: 0.6rem;
+  background: #11161b;
+  box-shadow:
+    4px 4px 0 #000,
+    7px 7px 0 rgba(0, 212, 170, 0.45);
+}
+
+.neo-app button:not(:disabled) {
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 100ms ease,
+    transform 100ms ease;
+}
+
+.neo-app button:hover:not(:disabled) {
+  color: #050807;
+  background-color: #00d4aa;
+  border-color: #fff;
+}
+
+.neo-app button:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+.neo-app :focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.control-button {
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 2px solid #fff;
+  border-radius: 0.4rem;
+  padding: 0.45rem 0.65rem;
+  background: #10151a;
+  color: #fff;
+  font:
+    700 0.75rem 'JetBrains Mono',
+    monospace;
+  box-shadow:
+    3px 3px 0 #000,
+    4px 4px 0 #00d4aa;
+}
+
+.control-button > span[aria-hidden='true'] {
+  font-size: 1.1rem;
+}
+
+.status-led {
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.status-led-online {
+  background: #00d4aa;
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 9px #00d4aa;
+}
+
+.status-led-offline {
+  background: #f43f5e;
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 9px #f43f5e;
+}
+
+.status-led-unknown {
+  background: #fbbf24;
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 9px #fbbf24;
+}
+
+.status-board {
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.raw-data-details {
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  background: #080b0e;
+  color: #fff;
+  font:
+    0.75rem 'JetBrains Mono',
+    monospace;
+}
+
+.raw-data-details summary {
+  cursor: pointer;
+  padding: 0.65rem 0.8rem;
+  font-weight: 700;
+}
+
+.raw-data-details pre {
+  max-height: 16rem;
+  overflow: auto;
+  border-top: 1px solid #fff;
+  margin: 0;
+  padding: 0.8rem;
+  color: #e5fff8;
+  white-space: pre-wrap;
+}
+
+.install-help {
+  position: relative;
+}
+
+.install-help summary {
+  list-style: none;
+}
+
+.install-help summary::-webkit-details-marker {
+  display: none;
+}
+
+.install-help p {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  width: min(18rem, calc(100vw - 2rem));
+  border: 2px solid #fff;
+  background: #050709;
+  padding: 0.8rem;
+  color: #fff;
+  font:
+    0.75rem/1.5 'JetBrains Mono',
+    monospace;
+  box-shadow: 4px 4px 0 #00d4aa;
+}
+
+.install-error {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  width: max-content;
+  max-width: 18rem;
+  color: #fff;
+  background: #7f1d1d;
+  font-size: 0.7rem;
+}
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+.camera-swipe-surface {
+  touch-action: pan-y;
+}
+
+.glitch-heading {
+  position: relative;
+}
+
+.glitch-heading.is-glitching::before,
+.glitch-heading.is-glitching::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glitch-heading.is-glitching::before {
+  color: #00d4aa;
+  clip-path: inset(0 0 68% 0);
+  animation: glitch-slice 1.8s steps(2, end) infinite;
+}
+
+.glitch-heading.is-glitching::after {
+  color: #a78bfa;
+  clip-path: inset(72% 0 0 0);
+  animation: glitch-slice 2.2s steps(2, end) infinite reverse;
+}
+
+@keyframes glitch-slice {
+  0%,
+  88%,
+  100% {
+    transform: translate(0);
+  }
+  90% {
+    transform: translate(2px, -1px);
+  }
+  94% {
+    transform: translate(-2px, 1px);
+  }
+}
+
+@media (pointer: fine) and (hover: hover) {
+  .neo-app {
+    cursor: crosshair;
+  }
+  .neo-app :is(a, button, input, summary, select, [role='button']) {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-bottom-nav {
+    position: fixed;
+    z-index: 80;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
+    border-top: 2px solid #fff;
+    background: #07090c;
+    padding: 0.45rem 0.75rem max(0.55rem, env(safe-area-inset-bottom));
+  }
+
+  .mobile-bottom-nav button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    min-height: 3.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: #11161b;
+    color: #fff;
+    font:
+      700 0.68rem 'JetBrains Mono',
+      monospace;
+  }
+
+  .mobile-nav-icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .neo-panel {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
+html.high-contrast body {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+html.high-contrast #root,
+html.high-contrast
+  #root
+  :is(div, header, section, article, footer, details, button, input, select, textarea) {
+  background-color: #000 !important;
+  color: #fff !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+}
+
+html.high-contrast
+  #root
+  :is(h1, h2, h3, h4, p, span, a, button, label, small, strong, li, summary) {
+  color: #fff !important;
+  opacity: 1 !important;
+}
+
+html.high-contrast
+  #root
+  :is(section, article, details, button, input, select, textarea, .raw-data-details) {
+  border-color: #fff !important;
+  box-shadow: 3px 3px 0 #fff !important;
+  backdrop-filter: none !important;
+}
+
+html.high-contrast #root :is(img, svg) {
+  filter: grayscale(1) contrast(1.25);
+}
+
+html.high-contrast #root :is(button, a, input, select, summary):focus-visible {
+  outline: 3px solid #fff !important;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .animate-marquee,
+  .animate-aurora-pulse,
+  .animate-shimmer,
+  .glitch-heading::before,
+  .glitch-heading::after {
+    animation: none !important;
+  }
+}

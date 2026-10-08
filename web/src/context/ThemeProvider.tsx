@@ -10,6 +10,9 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     // Default to dark as per user request ("Night Mode by Default")
     return 'dark';
   });
+  const [highContrast, setHighContrast] = useState(
+    () => localStorage.getItem('highContrast') === 'true',
+  );
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -21,9 +24,21 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.toggle('high-contrast', highContrast);
+    localStorage.setItem('highContrast', String(highContrast));
+  }, [highContrast]);
+
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  const toggleHighContrast = () => setHighContrast((enabled) => !enabled);
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme, highContrast, toggleHighContrast }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };

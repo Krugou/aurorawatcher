@@ -106,7 +106,7 @@ export const MagnetometerGraph = ({
         {locationHint}
         {locationButton}
       </div>
-      <div className="h-[250px] w-full mt-4 overflow-hidden relative rounded-xl bg-white/[0.03] border border-white/10">
+      <div className="neo-card h-[250px] w-full mt-4 overflow-hidden relative">
         <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
           <LineChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
             <XAxis
@@ -165,6 +165,19 @@ export const MagnetometerGraph = ({
       <p className="text-xs font-mono text-white/40 mt-2 text-center uppercase tracking-wider">
         {t('graphs.mag_hint')}
       </p>
+      <details className="raw-data-details">
+        <summary>{t('graphs.rawData')}</summary>
+        <pre>
+          {JSON.stringify(
+            [...data]
+              .sort((a, b) => a.timestamp - b.timestamp)
+              .slice(-5)
+              .map((point) => ({ ...point, time: new Date(point.timestamp).toISOString() })),
+            null,
+            2,
+          )}
+        </pre>
+      </details>
       {lastUpdated && <DataFreshness source={t('data_state.fmi')} lastUpdated={lastUpdated} />}
     </div>
   );

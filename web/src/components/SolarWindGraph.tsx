@@ -61,7 +61,7 @@ export const SolarWindGraph = () => {
 
   return (
     <div className="space-y-2">
-      <div className="h-[250px] w-full mt-4 overflow-hidden relative rounded-xl bg-white/[0.03] border border-white/10">
+      <div className="neo-card h-[250px] w-full mt-4 overflow-hidden relative">
         <ResponsiveContainer width="100%" height="100%" minHeight={0} minWidth={0}>
           <ComposedChart data={recentData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
             <XAxis
@@ -146,6 +146,10 @@ export const SolarWindGraph = () => {
       <p className="text-xs font-mono text-white/40 mt-2 text-center uppercase tracking-wider">
         {t('graphs.solar_hint')}
       </p>
+      <details className="raw-data-details">
+        <summary>{t('graphs.rawData')}</summary>
+        <pre>{JSON.stringify(recentData.slice(-5), null, 2)}</pre>
+      </details>
       {lastUpdated && <DataFreshness source={t('data_state.noaa')} lastUpdated={lastUpdated} />}
     </div>
   );

@@ -38,7 +38,11 @@ flowchart LR
 
 ## Latest improvement verification
 
-The admin and web production builds passed after the gallery and section-order changes. The commit hook also passed web lint, formatting, TypeScript, and tests. These checks do not include a new live browser inspection of the updated page layout.
+The additional bilingual dashboard improvements from `web/designimprovements.md` are implemented in the web app. A shared five-minute NOAA snapshot supplies the header status and alert state; Space Weather uses the same snapshot. The mobile Cams/Stats/Map bar expands and scrolls to its section, the install action supports native and manual paths, and contrast mode is persisted.
+
+The web lint and production build pass. The full unit suite passes with **186 tests across 34 files**. Chromium inspection at desktop and 390×844 mobile sizes confirmed the live NOAA status board, camera-first layout, mobile navigation and scroll to Stats, install guidance, and high-contrast rendering. The high-contrast screenshot showed readable black-and-white chart and status controls. The automated local Chromium check passed all 14 checks with no console errors or failed requests. The manual local browser inspection separately showed FMI WFS 400 timestamp-conversion errors and Firebase Analytics initialization errors; the dashboard remained usable and presented FMI's retry state. NOAA status data loaded successfully.
+
+Specific regression coverage includes solar loading/unavailable behavior, high-contrast persistence, navigation section expansion, native and fallback install flows, and swipe direction/threshold handling. Reduced-motion behavior is enforced in CSS media queries and was source-checked; no OS-level reduced-motion browser emulation was available in this browser CLI session.
 
 ## Verification
 
@@ -77,4 +81,4 @@ It writes a screenshot and JSON report under `output/playwright/`. It covers the
 
 ## Deployment boundary
 
-The changes were pushed to `main`; GitHub Actions completed the web lint/build and GitHub Pages deployment, and the public-site browser check passed. The FMI WFS request returned no observations in the post-deployment check, so successful FMI data delivery and magnetometer chart rendering remain dependent on upstream availability.
+The previously completed improvements were pushed to `main`; GitHub Actions completed the web lint/build and GitHub Pages deployment, and the earlier public-site browser check passed. This latest improvement set has not yet been pushed or checked on the public site. After deployment, rerun `npm run test:live` against the published site before marking its deployment evidence complete. FMI data delivery remains dependent on upstream availability.

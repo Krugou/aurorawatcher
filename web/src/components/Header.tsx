@@ -1,29 +1,51 @@
 import { useTranslation } from 'react-i18next';
 
+import { useSolarActivity } from '../hooks/useSolarActivity';
+
 export const Header = () => {
   const { t } = useTranslation();
-  return (
-    <header className="text-center relative mb-8">
-      <div className="relative overflow-hidden rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/10 p-8 group">
-        {/* Subtle aurora gradient line at top */}
-        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-aurora-teal/60 to-transparent" />
+  const { data, loading, error, lastUpdated } = useSolarActivity();
+  const activityLevel = data
+    ? data.kp >= 5
+      ? t('status.high')
+      : data.kp >= 3
+        ? t('status.moderate')
+        : data.kp >= 1
+          ? t('status.low')
+          : t('status.quiet')
+    : t('status.unknown');
+  const liveStatus = data
+    ? `${t('status.kp')}: ${data.kp.toFixed(1)} · ${t('status.speed')}: ${Math.round(data.speed)} km/s · ${t('status.bz')}: ${data.bz.toFixed(1)} nT · ${activityLevel}`
+    : loading
+      ? t('status.loading')
+      : t('status.unavailable');
 
-        {/* Ambient aurora glow background */}
-        <div className="absolute inset-0 opacity-[0.03] bg-gradient-to-br from-aurora-teal via-transparent to-aurora-violet pointer-events-none" />
+  return (
+    <header className="text-center relative mb-8 neo-panel">
+      <div className="relative overflow-hidden bg-[#10151a] border-b-2 border-aurora-teal p-8 group">
+        <div className="absolute top-0 left-0 w-full h-1 bg-aurora-teal" />
 
         <div className="relative z-10">
-          <h1 className="text-6xl md:text-8xl font-sans font-extrabold uppercase tracking-tighter text-white mb-3 transition-all duration-700 group-hover:text-glow">
+          <h1
+            className={`glitch-heading text-6xl md:text-8xl font-sans font-extrabold uppercase tracking-tighter text-white mb-3 transition-all duration-700 group-hover:text-glow ${data && data.kp > 5 ? 'is-glitching' : ''}`}
+            data-text={t('app.title')}
+          >
             {t('app.title')}
           </h1>
-          <div className="inline-block bg-white/[0.06] backdrop-blur-sm text-white/70 px-5 py-1.5 rounded-full font-mono text-sm uppercase font-medium tracking-widest border border-white/10">
+          <div className="inline-block bg-[#07090c] text-white px-5 py-1.5 font-mono text-sm uppercase font-bold tracking-widest border-2 border-white">
             {t('header.subtitle')}
           </div>
         </div>
 
-        {/* Scrolling status text — subtle and cinematic */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden opacity-30">
-          <div className="animate-marquee whitespace-nowrap font-mono text-aurora-teal/60 text-[10px] uppercase tracking-widest py-1">
-            {`/// ${t('common.status_online')} /// ${t('common.monitoring_solar')} /// ${t('common.checking_mag')} /// ${t('common.kp_stable')} ///`}
+        <div className="status-board border-t-2 border-white/30 bg-black text-left">
+          <p className="sr-only" role="status" aria-live="polite">
+            {liveStatus}
+            {error && lastUpdated ? ` · ${t('status.stale')}` : ''}
+          </p>
+          <div className="status-marquee overflow-hidden" aria-hidden="true">
+            <div className="animate-marquee whitespace-nowrap font-mono text-white text-xs uppercase tracking-widest py-2">
+              {`● ${liveStatus}${error && lastUpdated ? ` · ${t('status.stale')}` : ''}　///　${liveStatus}${error && lastUpdated ? ` · ${t('status.stale')}` : ''}`}
+            </div>
           </div>
         </div>
       </div>

@@ -8,12 +8,20 @@ vi.mock('../../services/solarService', () => ({
 }));
 
 import { SpaceWeather } from '../../components/SpaceWeather';
+import { SolarActivityProvider } from '../../context/SolarActivityProvider';
 import { fetchSolarData } from '../../services/solarService';
+
+const renderSpaceWeather = () =>
+  render(
+    <SolarActivityProvider>
+      <SpaceWeather />
+    </SolarActivityProvider>,
+  );
 
 describe('SpaceWeather', () => {
   it('shows skeletons while loading', () => {
     vi.mocked(fetchSolarData).mockReturnValue(new Promise(vi.fn())); // never resolves
-    render(React.createElement(SpaceWeather));
+    renderSpaceWeather();
     const skeletons = screen.getAllByRole('status');
     expect(skeletons).toHaveLength(4);
   });
@@ -27,7 +35,7 @@ describe('SpaceWeather', () => {
       timestamp: '2024-01-01T00:00:00Z',
     });
 
-    render(React.createElement(SpaceWeather));
+    renderSpaceWeather();
 
     // Wait for data to load
     expect(await screen.findByText('-3.4')).toBeInTheDocument();
@@ -45,7 +53,7 @@ describe('SpaceWeather', () => {
       timestamp: '2024-01-01T00:00:00Z',
     });
 
-    render(React.createElement(SpaceWeather));
+    renderSpaceWeather();
 
     expect(await screen.findByText('space_weather.bz')).toBeInTheDocument();
     expect(screen.getByText('space_weather.speed')).toBeInTheDocument();
@@ -53,17 +61,17 @@ describe('SpaceWeather', () => {
     expect(screen.getByText('space_weather.kp')).toBeInTheDocument();
   });
 
-  it('shows an explicit empty state when no data is available', async () => {
+  it('shows an error state and retry when NOAA has no current data', async () => {
     vi.mocked(fetchSolarData).mockResolvedValue(null);
 
-    render(React.createElement(SpaceWeather));
-    expect(await screen.findByRole('status')).toBeInTheDocument();
+    renderSpaceWeather();
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'data_state.retry' })).toBeInTheDocument();
   });
 
   it('shows a retry action when the source request fails', async () => {
     vi.mocked(fetchSolarData).mockRejectedValue(new Error('offline'));
-    render(React.createElement(SpaceWeather));
+    renderSpaceWeather();
     expect(await screen.findByRole('alert')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'data_state.retry' })).toBeInTheDocument();
   });
@@ -77,7 +85,11 @@ describe('SpaceWeather', () => {
       timestamp: '2024-01-01T00:00:00Z',
     });
 
-    const { container } = render(React.createElement(SpaceWeather));
+    const { container } = render(
+      <SolarActivityProvider>
+        <SpaceWeather />
+      </SolarActivityProvider>,
+    );
 
     await screen.findByText('6');
     // Kp bar should have 10 segments

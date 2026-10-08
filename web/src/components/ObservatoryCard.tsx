@@ -24,8 +24,14 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
     setHasError(false);
   }, [timestamp]);
 
+  const statusLabel = isLoading
+    ? t('grid.status_checking')
+    : hasError
+      ? t('grid.status_offline')
+      : t('grid.status_online');
+
   return (
-    <div className="rounded-xl bg-white/[0.03] border border-white/10 overflow-hidden hover:border-white/20 hover:shadow-[0_0_30px_rgba(0,212,170,0.08)] transition-all duration-500 group">
+    <div className="neo-card overflow-hidden transition-all duration-300 group">
       <div className="relative aspect-video bg-black/40 overflow-hidden">
         {isLoading && <Skeleton className="w-full h-full absolute inset-0 z-10" />}
 
@@ -52,12 +58,16 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
         )}
 
         {/* Status Indicator / LED */}
-        <div className="absolute top-3 left-3 flex items-center gap-2 z-20">
+        <div
+          className="absolute top-3 left-3 flex items-center gap-2 z-20"
+          role="img"
+          aria-label={statusLabel}
+        >
           <div
-            className={`w-2.5 h-2.5 rounded-full ${hasError ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]' : 'bg-aurora-teal shadow-[0_0_8px_rgba(0,212,170,0.6)]'} animate-pulse`}
+            className={`status-led ${isLoading ? 'status-led-unknown' : hasError ? 'status-led-offline' : 'status-led-online'}`}
           ></div>
-          <span className="bg-black/60 backdrop-blur-sm text-white/80 text-[10px] font-mono px-2 py-0.5 rounded-full border border-white/10">
-            {hasError ? t('grid.status_offline') : t('grid.status_online')}
+          <span className="bg-black text-white text-[10px] font-mono px-2 py-0.5 border border-white/50">
+            {statusLabel}
           </span>
         </div>
 

@@ -27,6 +27,7 @@
     "view_fullscreen": "Koko näyttö",
     "status_online": "LINJOILLA",
     "status_offline": "POISSA",
+    "status_checking": "TARKISTETAAN",
     "view_history": "HISTORIA",
     "open_map": "Avaa kartalla"
   },
@@ -39,11 +40,33 @@
     "low": "ALHAINEN",
     "moderate": "KOHTALAINEN",
     "high": "KORKEA",
-    "unknown": "TUNTEMATON"
+    "unknown": "TUNTEMATON",
+    "kp": "Kp",
+    "speed": "Aurinkotuuli",
+    "bz": "Bz",
+    "loading": "Ladataan NOAA:n avaruussäätietoja",
+    "unavailable": "NOAA:n avaruussäätiedot eivät ole saatavilla",
+    "stale": "Näytetään viimeisin onnistunut mittaus"
   },
   "theme": {
     "switchToLight": "Vaihda vaaleaan tilaan",
     "switchToDark": "Vaihda tummaan tilaan"
+  },
+  "contrast": {
+    "enable": "Ota käyttöön mustavalkoinen suuren kontrastin tila",
+    "disable": "Poista suuren kontrastin tila käytöstä"
+  },
+  "pwa": {
+    "install": "Asenna sovellus",
+    "installing": "Avataan asennusvalintaa…",
+    "installFailed": "Asennusvalintaa ei voitu avata. Käytä selaimen asennusvalikkoa.",
+    "manualInstall": "Asenna sovellus selaimen valikosta valitsemalla Asenna sovellus tai Lisää aloitusnäyttöön. iPhonessa ja iPadissa avaa Jaa-valikko ja valitse Lisää aloitusnäyttöön."
+  },
+  "mobileNav": {
+    "label": "Hallintapaneelin navigointi",
+    "cameras": "Kamerat",
+    "stats": "Tilastot",
+    "map": "Kartta"
   },
   "minimal": {
     "back": "Takaisin oletusnäkymään"
@@ -116,7 +139,10 @@
     "useLocation": "Käytä sijaintiani",
     "locating": "Haetaan sijaintia…",
     "defaultLocation": "Oletusalue: Helsinki ({{latitude}}, {{longitude}})",
-    "customLocation": "Käytössä on valitsemasi sijainti"
+    "customLocation": "Käytössä on valitsemasi sijainti",
+    "rawData": "Viimeisimmät raakadata-arvot",
+    "historySlider": "Kamerahistorian kohta",
+    "historySliderValue": "{{time}}"
   },
   "gallery": {
     "title": "Revontulivärien galleria",

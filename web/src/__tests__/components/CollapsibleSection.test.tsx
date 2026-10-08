@@ -145,4 +145,30 @@ describe('CollapsibleSection', () => {
     );
     expect(container.querySelector('section')).toBeInTheDocument();
   });
+
+  it('expands when requested by dashboard navigation', () => {
+    const { rerender } = render(
+      <CollapsibleSection
+        title="Cameras"
+        sectionId="observatory_status"
+        expandRequest={0}
+        defaultExpanded={false}
+      >
+        <p>Camera content</p>
+      </CollapsibleSection>,
+    );
+    const button = screen.getByRole('button', { name: /Cameras/i });
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    rerender(
+      <CollapsibleSection
+        title="Cameras"
+        sectionId="observatory_status"
+        expandRequest={1}
+        defaultExpanded={false}
+      >
+        <p>Camera content</p>
+      </CollapsibleSection>,
+    );
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+  });
 });

@@ -30,6 +30,6 @@ describe('LanguageSwitcher', () => {
   it('is a clickable button with cursor-pointer', () => {
     const { container } = render(React.createElement(LanguageSwitcher));
     const button = container.querySelector('button');
-    expect(button?.className).toContain('cursor-pointer');
+    expect(button?.className).toContain('control-button');
   });
 });
