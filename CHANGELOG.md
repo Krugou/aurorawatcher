@@ -1,3 +1,9 @@
+# [1.29.0](https://github.com/Krugou/aurorawatcher/compare/v1.28.0...v1.29.0) (2026-10-08)
+
+### Features
+
+- **web:** implement remaining dashboard improvements ([2f672b5](https://github.com/Krugou/aurorawatcher/commit/2f672b5bb4e52b2f213098cea0735e125759696c))
+
 # [1.28.0](https://github.com/Krugou/aurorawatcher/compare/v1.27.0...v1.28.0) (2026-10-08)
 
 ### Features
