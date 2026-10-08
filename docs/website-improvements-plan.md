@@ -13,6 +13,8 @@
 | Sightings               | The ticker showed reports 7–8 months old without making staleness clear.                                                   | Each report displays its local date/time and relative age. The feed labels itself stale when the newest report is over 24 hours old and shows an explicit empty state when there are no reports.                                                     |
 | Favicon                 | The HTML referenced the missing Vite starter icon.                                                                         | Removed the Vite icon reference; the shipped Aurora Watcher PWA PNG is used.                                                                                                                                                                         |
 | Section controls        | A clickable `div` did not expose expanded state or a controlled panel.                                                     | Uses a native button with `aria-expanded` and `aria-controls`; collapsed content is hidden from assistive technology and keyboard focus.                                                                                                             |
+| Aurora color gallery    | Scanning ran on the public site and saved keep lists only in each visitor's browser.                                       | Admin scans the latest 80 archive images on request, saves the 30 strongest color matches to shared gallery data, and sorts by detected aurora-colored pixels. The public site only displays the curated gallery.                                    |
+| Observatory cameras     | The observatory camera section appeared below local data and the gallery.                                                  | Observatory cameras and international webcams now appear immediately after the page header.                                                                                                                                                          |
 
 ## Data flow
 
@@ -26,7 +28,17 @@ flowchart LR
     UAF[UAF Poker Flat event stream] --> PKR[Current Poker Flat image]
     CAM[Direct observatory image URLs] --> WG[Global webcam cards]
     FS[Firestore sightings] --> SF[Sighting ticker with date and age]
+    HI[Latest 80 archive images] --> ADM[Admin color scan]
+    ADM --> SCORE[Rank by aurora-colored pixels]
+    SCORE --> TOP[Save 30 strongest matches]
+    TOP --> GJSON[aurora_gallery.json]
+    GJSON --> PUB[Read-only public gallery]
+    OBS[Observatory camera cards] --> CAMTOP[First section after header]
 ```
+
+## Latest improvement verification
+
+The admin and web production builds passed after the gallery and section-order changes. The commit hook also passed web lint, formatting, TypeScript, and tests. These checks do not include a new live browser inspection of the updated page layout.
 
 ## Verification
 
