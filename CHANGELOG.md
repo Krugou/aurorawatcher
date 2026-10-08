@@ -1,3 +1,9 @@
+# [1.28.0](https://github.com/Krugou/aurorawatcher/compare/v1.27.0...v1.28.0) (2026-10-08)
+
+### Features
+
+- curate top aurora images and prioritize cameras ([b9b9668](https://github.com/Krugou/aurorawatcher/commit/b9b9668c5f4a7479c58fcaf78e4c8aabe4333900))
+
 # [1.27.0](https://github.com/Krugou/aurorawatcher/compare/v1.26.0...v1.27.0) (2026-10-08)
 
 ### Features
