@@ -48,7 +48,13 @@ i18n
           gallerySavedCount: '{{count}} saved images',
           galleryEmpty: 'No aurora images saved yet. Scan the recent archive to find matches.',
           galleryScore: 'Color {{score}}%',
-          galleryRemove: 'Remove'
+          galleryRemove: 'Remove',
+          galleryPlaces: {
+            muonio: 'Muonio, Finland',
+            nyrola: 'Nyrölä Observatory, Finland',
+            hankasalmi: 'Hankasalmi Observatory, Finland',
+            metsahovi: 'Metsähovi Radio Observatory, Finland'
+          }
         }
       },
       fi: {
@@ -88,7 +94,13 @@ i18n
           gallerySavedCount: '{{count}} tallennettua kuvaa',
           galleryEmpty: 'Revontulikuvia ei ole vielä tallennettu. Etsi osumia tuoreesta arkistosta.',
           galleryScore: 'Väri {{score}} %',
-          galleryRemove: 'Poista'
+          galleryRemove: 'Poista',
+          galleryPlaces: {
+            muonio: 'Muonio, Suomi',
+            nyrola: 'Nyrölän observatorio, Suomi',
+            hankasalmi: 'Hankasalmen observatorio, Suomi',
+            metsahovi: 'Metsähovin radio-observatorio, Suomi'
+          }
         }
       }
     }

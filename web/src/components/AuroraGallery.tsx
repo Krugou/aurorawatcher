@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { rankAuroraGallery } from '../utils/auroraGalleryRanking';
 
 interface KeptAuroraImage {
   timestamp: number;
@@ -16,11 +17,6 @@ interface GalleryResponse {
 }
 
 const DATA_BASE = `${import.meta.env.BASE_URL}data/`;
-const auroraColorCount = (entry: KeptAuroraImage) =>
-  entry.greenPixels + entry.purplePixels + entry.redPixels;
-const compareAuroraColor = (a: KeptAuroraImage, b: KeptAuroraImage) =>
-  auroraColorCount(b) - auroraColorCount(a) || b.score - a.score || b.timestamp - a.timestamp;
-
 export const AuroraGallery = () => {
   const { t, i18n } = useTranslation();
   const [entries, setEntries] = useState<KeptAuroraImage[]>([]);
@@ -48,11 +44,15 @@ export const AuroraGallery = () => {
     };
   }, []);
 
-  const sortedEntries = useMemo(() => [...entries].sort(compareAuroraColor), [entries]);
+  const sortedEntries = useMemo(() => rankAuroraGallery(entries), [entries]);
   const formatDate = (timestamp: number) =>
     new Intl.DateTimeFormat(i18n.language, { dateStyle: 'medium', timeStyle: 'short' }).format(
       timestamp,
     );
+  const getPlaceName = (camId: string) =>
+    t(`common.loc.${camId}_full`, {
+      defaultValue: t(`common.loc.${camId}`, { defaultValue: camId }),
+    });
 
   return (
     <div className="space-y-6">
@@ -106,7 +106,7 @@ export const AuroraGallery = () => {
                 <img
                   src={`${DATA_BASE}${entry.filename}`}
                   alt={t('gallery.imageAlt', {
-                    camera: t(`common.loc.${entry.camId}`, { defaultValue: entry.camId }),
+                    camera: getPlaceName(entry.camId),
                     date: formatDate(entry.timestamp),
                   })}
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
@@ -117,9 +117,7 @@ export const AuroraGallery = () => {
                   {t('gallery.matchScore', { score: entry.score })}
                 </span>
                 <div className="absolute inset-x-4 bottom-4">
-                  <p className="font-semibold text-white">
-                    {t(`common.loc.${entry.camId}`, { defaultValue: entry.camId })}
-                  </p>
+                  <p className="font-semibold text-white">{getPlaceName(entry.camId)}</p>
                   <p className="mt-1 font-mono text-xs text-white/65">
                     {formatDate(entry.timestamp)}
                   </p>

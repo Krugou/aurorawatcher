@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import './i18n';
 import './App.css';
 import { analyzeAuroraImage } from '../../web/src/utils/auroraColorDetection';
+import { rankAuroraGallery } from '../../web/src/utils/auroraGalleryRanking';
 
 interface HistoryEntry {
   timestamp: number;
@@ -34,10 +35,6 @@ const SCAN_LIMIT = 80;
 const BEST_IMAGE_LIMIT = 30;
 const CAMERA_IDS = new Set(['muonio', 'nyrola', 'hankasalmi', 'metsahovi']);
 const imageKey = (entry: HistoryEntry) => `${entry.camId}:${entry.timestamp}`;
-const auroraColorCount = (entry: GalleryEntry) =>
-  entry.greenPixels + entry.purplePixels + entry.redPixels;
-const compareAuroraColor = (a: GalleryEntry, b: GalleryEntry) =>
-  auroraColorCount(b) - auroraColorCount(a) || b.score - a.score || b.timestamp - a.timestamp;
 
 const inspectImage = async (entry: HistoryEntry): Promise<GalleryEntry | null> => {
   const image = new Image();
@@ -189,7 +186,7 @@ const App: React.FC = () => {
       const merged = new Map(gallery.map((entry) => [imageKey(entry), entry]));
       matches.forEach((entry) => merged.set(imageKey(entry), entry));
       await saveGallery(
-        [...merged.values()].sort(compareAuroraColor).slice(0, BEST_IMAGE_LIMIT),
+        rankAuroraGallery([...merged.values()], BEST_IMAGE_LIMIT),
       );
       setGalleryMessage(t('galleryScanComplete', { found: matches.length, scanned: entries.length }));
     } catch (err) {
@@ -289,11 +286,11 @@ const App: React.FC = () => {
           <p className="gallery-empty">{t('galleryEmpty')}</p>
         ) : (
           <div className="aurora-entry-grid">
-            {[...gallery].sort(compareAuroraColor).map((entry) => (
+            {rankAuroraGallery(gallery).map((entry) => (
               <article className="aurora-entry-card" key={imageKey(entry)}>
                 <img src={`/images/${entry.filename}`} alt={`${entry.camId} ${new Date(entry.timestamp).toLocaleString()}`} loading="lazy" />
                 <div className="aurora-entry-meta">
-                  <strong>{entry.camId}</strong>
+                  <strong>{t(`galleryPlaces.${entry.camId}`, { defaultValue: entry.camId })}</strong>
                   <span>{new Date(entry.timestamp).toLocaleString()}</span>
                   <span>{t('galleryScore', { score: entry.score })}</span>
                   <button className="danger" onClick={() => removeGalleryEntry(entry)}>{t('galleryRemove')}</button>

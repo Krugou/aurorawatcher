@@ -57,6 +57,48 @@ try {
     heading: await page.locator('h1').first().textContent(),
   });
 
+  const galleryResponse = await page.request.get(new URL('data/aurora_gallery.json', baseUrl).href);
+  const galleryData = galleryResponse.ok() ? await galleryResponse.json() : { entries: [] };
+  const galleryEntries = Array.isArray(galleryData.entries) ? galleryData.entries : [];
+  const colorCount = (entry) => entry.greenPixels + entry.purplePixels + entry.redPixels;
+  const galleryIsRanked = galleryEntries.every((entry, index) => {
+    if (index === 0) return true;
+    const previous = galleryEntries[index - 1];
+    return (
+      colorCount(previous) > colorCount(entry) ||
+      (colorCount(previous) === colorCount(entry) &&
+        (previous.score > entry.score ||
+          (previous.score === entry.score && previous.timestamp >= entry.timestamp)))
+    );
+  });
+  const gallerySection = page
+    .locator('section')
+    .filter({ has: page.getByRole('heading', { name: /Aurora Color Gallery|Revontulivärien galleria/i }) })
+    .first();
+  const galleryText = await gallerySection.innerText().catch(() => '');
+  const placeNames = {
+    muonio: ['Muonio, Finland', 'Muonio, Suomi'],
+    nyrola: ['Nyrölä Observatory, Finland', 'Nyrölän Observatorio, Suomi'],
+    hankasalmi: ['Hankasalmi Observatory', 'Hankasalmen observatorio'],
+    metsahovi: ['Metsähovi Radio Observatory', 'Metsähovin radio-observatorio'],
+  };
+  const firstPlaceName = galleryEntries[0] ? placeNames[galleryEntries[0].camId] : null;
+  const galleryPlaceIsVisible =
+    galleryEntries.length > 0 &&
+    Array.isArray(firstPlaceName) &&
+    firstPlaceName.some((name) => galleryText.includes(name));
+  record(
+    'Curated gallery data is saved in aurora-color order and displays the full place name',
+    galleryResponse.ok() && galleryEntries.length > 0 && galleryIsRanked && galleryPlaceIsVisible,
+    {
+      status: galleryResponse.status(),
+      count: galleryEntries.length,
+      firstMatch: galleryEntries[0] ?? null,
+      ranked: galleryIsRanked,
+      placeNameVisible: galleryPlaceIsVisible,
+    },
+  );
+
   const accessibleSectionToggles = await page.locator(
     'section > button[aria-expanded][aria-controls]',
   ).count();

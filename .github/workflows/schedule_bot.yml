@@ -7,11 +7,20 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   patrolling-the-sky:
     name: 🔭 Patrolling-the-Sky
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -51,3 +60,42 @@ jobs:
         run: |
           chmod +x scripts/save_images.sh
           ./scripts/save_images.sh
+
+      - name: Install Chromium for gallery color analysis
+        run: npx playwright install --with-deps chromium
+
+      - name: Scan and rank the recent aurora archive
+        run: npx tsx scripts/scan_aurora_gallery.ts
+
+      - name: Commit the ranked gallery data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/public/data/aurora_gallery.json
+          if git diff --cached --quiet; then
+            echo "No gallery ranking changes to commit."
+          else
+            git commit -m "chore: update ranked aurora gallery [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Build website with the ranked gallery
+        run: npm run build -w aurorawatcher-web
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./web/dist
+
+      - name: Deploy refreshed gallery to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

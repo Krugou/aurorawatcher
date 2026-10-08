@@ -51,3 +51,4 @@ Transform the observatory data into a mission-control style interface:
 - [x] PWA install action uses the browser install event and presents localized manual guidance when unavailable.
 - [x] Existing history scrubber and 6-hour through 30-day presets retained with accessible labels.
 - [x] Persistent black-and-white high-contrast mode and English/Finnish labels.
+- [x] Admin and the scheduled GitHub Action scan the latest 80 archive images, rank by detected aurora-colored pixels, retain up to 30 strongest matches in `aurora_gallery.json`, and deploy the public gallery with full localized place names.

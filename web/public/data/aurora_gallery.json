@@ -1,3 +1,14 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "timestamp": 1791137700000,
+      "camId": "hankasalmi",
+      "filename": "history/hankasalmi_20261004_1815.webp",
+      "cloudScore": 21,
+      "score": 4,
+      "greenPixels": 244,
+      "purplePixels": 0,
+      "redPixels": 0
+    }
+  ]
 }
