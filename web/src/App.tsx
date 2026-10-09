@@ -238,8 +238,9 @@ const AppContent = () => {
 
         <footer className="text-center py-12 text-white/30 font-mono text-xs uppercase tracking-widest space-y-4">
           <div className="space-y-1">
-            <p title={`${t('common.build_time')}: ${__BUILD_TIME__}`}>
-              {t('footer.copyright', { year: new Date().getFullYear() })}
+            <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
+            <p className="text-[10px] opacity-60">
+              {t('common.build_time')}: {__BUILD_TIME__}
             </p>
             <p className="text-[10px] opacity-60">
               {t('footer.last_updated')}: {new Date(timestamp).toLocaleTimeString()}

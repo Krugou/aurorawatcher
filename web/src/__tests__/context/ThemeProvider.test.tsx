@@ -109,6 +109,16 @@ describe('ThemeProvider', () => {
     expect(capturedTheme).toBe('light');
   });
 
+  it('keeps a saved light theme active when the system prefers dark', () => {
+    vi.mocked(localStorage.getItem).mockImplementation((key) => (key === 'theme' ? 'light' : null));
+    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true } as MediaQueryList));
+
+    render(React.createElement(ThemeProvider, null, React.createElement('span')));
+
+    expect(document.documentElement).toHaveClass('light');
+    expect(document.documentElement).not.toHaveClass('dark');
+  });
+
   it('persists and applies the high-contrast preference', () => {
     const TestConsumer = () => {
       const context = React.useContext(ThemeContext);
