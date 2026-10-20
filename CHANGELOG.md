@@ -1,3 +1,9 @@
+## [1.30.1](https://github.com/Krugou/aurorawatcher/compare/v1.30.0...v1.30.1) (2026-10-20)
+
+### Bug Fixes
+
+- **deps:** update compatible dependencies and audit fixes ([e044aae](https://github.com/Krugou/aurorawatcher/commit/e044aae121ae8035d9074b846e5a9277b50f1a89))
+
 # [1.30.0](https://github.com/Krugou/aurorawatcher/compare/v1.29.0...v1.30.0) (2026-10-08)
 
 ### Features
