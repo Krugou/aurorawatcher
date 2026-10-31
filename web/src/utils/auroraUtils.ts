@@ -21,15 +21,15 @@ export const STATION_COORDINATES: Record<string, Coords> = {
   Kevo: { x: 0.6, y: 0.12, lat: 69.76, lon: 27.01 },
   Kilpisjärvi: { x: 0.28, y: 0.18, lat: 69.02, lon: 20.79 },
   Ivalo: { x: 0.62, y: 0.2, lat: 68.56, lon: 27.29 },
-  Muonio: { x: 0.38, y: 0.26, lat: 67.96, lon: 23.68 },
+  Muonio: { x: 0.44, y: 0.27, lat: 67.96, lon: 23.68 },
   Sodankylä: { x: 0.61, y: 0.3, lat: 67.37, lon: 26.63 },
-  Pello: { x: 0.4, y: 0.36, lat: 66.77, lon: 23.97 },
+  Pello: { x: 0.48, y: 0.353, lat: 66.77, lon: 23.97 },
   Ranua: { x: 0.61, y: 0.42, lat: 65.93, lon: 26.5 },
-  Oulujärvi: { x: 0.65, y: 0.52, lat: 64.3, lon: 27.1 },
-  Mekrijärvi: { x: 0.88, y: 0.63, lat: 62.77, lon: 30.97 },
-  Hankasalmi: { x: 0.65, y: 0.68, lat: 62.3, lon: 26.65 },
+  Oulujärvi: { x: 0.68, y: 0.517, lat: 64.3, lon: 27.1 },
+  Mekrijärvi: { x: 0.916, y: 0.626, lat: 62.77, lon: 30.97 },
+  Hankasalmi: { x: 0.676, y: 0.68, lat: 62.3, lon: 26.65 },
   Nurmijärvi: { x: 0.58, y: 0.82, lat: 60.51, lon: 24.65 },
-  Tartto: { x: 0.68, y: 0.95, lat: 58.26, lon: 26.46 },
+  Tartto: { x: 0.718, y: 0.95, lat: 58.26, lon: 26.46 },
 };
 
 // FMI Map Colors to Meaning
