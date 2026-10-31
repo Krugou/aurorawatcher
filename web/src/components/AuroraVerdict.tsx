@@ -11,9 +11,10 @@ const STYLES = {
 
 interface AuroraVerdictProps {
   onNavigate?: (section: 'map' | 'graphs' | 'observatory_status') => void;
+  compact?: boolean;
 }
 
-export const AuroraVerdict = ({ onNavigate }: AuroraVerdictProps) => {
+export const AuroraVerdict = ({ onNavigate, compact = false }: AuroraVerdictProps) => {
   const { t } = useTranslation();
   const { data, loading, error } = useSolarActivity();
 
@@ -50,7 +51,7 @@ export const AuroraVerdict = ({ onNavigate }: AuroraVerdictProps) => {
       </div>
       <div className="text-right">
         <div className="text-5xl font-sans font-extrabold">{score}%</div>
-        <div className="mt-3 flex flex-wrap justify-end gap-2">
+        <div className={`mt-3 flex-wrap justify-end gap-2 ${compact ? 'hidden' : 'flex'}`}>
           {(['observatory_status', 'graphs', 'map'] as const).map((section) => (
             <button
               key={section}

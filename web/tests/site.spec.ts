@@ -58,4 +58,18 @@ test.describe('Whole site', () => {
     await page.waitForTimeout(1500);
     expect(errors).toEqual([]);
   });
+
+  test('quick view toggles and persists', async ({ page }) => {
+    await page.goto('/aurorawatcher/');
+    await page.getByRole('button', { name: /quick view|pikanäkymä/i }).click();
+    await expect(
+      page.getByRole('heading', { name: /active stations|aktiiviset asemat/i }),
+    ).toBeVisible();
+    await page.reload();
+    await expect(
+      page.getByRole('heading', { name: /active stations|aktiiviset asemat/i }),
+    ).toBeVisible();
+    await page.getByRole('button', { name: /back to default|takaisin/i }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  });
 });

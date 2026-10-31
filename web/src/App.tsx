@@ -66,7 +66,14 @@ const LOCATIONS: Record<string, Location> = {
 const AppContent = () => {
   const { t } = useTranslation();
   const [timestamp, setTimestamp] = useState(Date.now());
-  const [mode, setMode] = useState<'default' | 'minimal' | 'fullscreen'>('default');
+  const [mode, setMode] = useState<'default' | 'minimal' | 'fullscreen'>(() =>
+    localStorage.getItem('view_mode') === 'minimal' ? 'minimal' : 'default',
+  );
+
+  const changeMode = (next: 'default' | 'minimal') => {
+    localStorage.setItem('view_mode', next);
+    setMode(next);
+  };
   const [activeCam, setActiveCam] = useState<string | null>(null);
   const [navigationRequest, setNavigationRequest] = useState({ section: '', sequence: 0 });
 
@@ -89,6 +96,8 @@ const AppContent = () => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('mode') === 'minimal') {
       setMode('minimal');
+    } else if (params.get('mode') === 'default') {
+      changeMode('default');
     }
     const cam = params.get('cam');
     if (cam && Object.keys(LOCATIONS).includes(cam)) {
@@ -121,7 +130,13 @@ const AppContent = () => {
   if (mode === 'minimal') {
     return (
       <div className="min-h-screen bg-[#0a0a0f]">
-        <MinimalView locations={LOCATIONS} timestamp={timestamp} />
+        <MinimalView
+          locations={LOCATIONS}
+          timestamp={timestamp}
+          onBack={() => {
+            changeMode('default');
+          }}
+        />
       </div>
     );
   }
@@ -143,6 +158,15 @@ const AppContent = () => {
 
       {/* Top Controls Container */}
       <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() => {
+            changeMode('minimal');
+          }}
+          className="border-2 border-white/40 px-3 py-1.5 font-mono text-xs uppercase text-white hover:bg-white hover:text-black"
+        >
+          {t('minimal.enter')}
+        </button>
         <ThemeToggle />
         <LanguageSwitcher />
       </div>

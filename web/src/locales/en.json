@@ -69,7 +69,11 @@
     "map": "Map"
   },
   "minimal": {
-    "back": "Back to default view"
+    "back": "Back to default view",
+    "enter": "Quick view",
+    "active_stations": "Active stations",
+    "quiet": "All stations quiet",
+    "show_cams": "Show cameras"
   },
   "local": {
     "title": "Local Aurora Hunter",

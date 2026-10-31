@@ -8,7 +8,7 @@ test.describe('Functional Tests', () => {
 
   test('should toggle theme', async ({ page }) => {
     // Find the theme toggle button (first button in the top controls)
-    const themeButton = page.locator('button').first();
+    const themeButton = page.getByRole('button', { name: /switch to (light|dark)|vaihda/i });
     await expect(themeButton).toBeVisible();
 
     // Get initial state

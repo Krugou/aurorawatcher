@@ -69,7 +69,11 @@
     "map": "Kartta"
   },
   "minimal": {
-    "back": "Takaisin oletusnäkymään"
+    "back": "Takaisin oletusnäkymään",
+    "enter": "Pikanäkymä",
+    "active_stations": "Aktiiviset asemat",
+    "quiet": "Kaikki asemat rauhallisia",
+    "show_cams": "Näytä kamerat"
   },
   "local": {
     "title": "Paikallinen revontulivahti",
