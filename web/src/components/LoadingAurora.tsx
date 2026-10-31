@@ -8,7 +8,7 @@ export const LoadingAurora = () => {
 
       <div className="relative z-10 flex flex-col items-center gap-3">
         <div className="w-14 h-14 rounded-full border-4 border-t-aurora-teal border-r-aurora-rose border-b-aurora-blue border-l-transparent animate-spin" />
-        <span className="font-mono text-aurora-teal animate-pulse font-bold tracking-widest text-sm">
+        <span className="font-mono text-aurora-teal font-bold tracking-widest text-sm">
           SEARCHING SKIES...
         </span>
       </div>

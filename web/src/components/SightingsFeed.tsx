@@ -48,7 +48,7 @@ export const SightingsFeed = () => {
 
   if (loading)
     return (
-      <div className="font-mono text-xs animate-pulse text-aurora-teal/60 px-4">
+      <div className="font-mono text-xs text-aurora-teal px-4">
         {t('social.scanning')}
       </div>
     );
@@ -64,17 +64,14 @@ export const SightingsFeed = () => {
         </p>
       )}
       {sightings.length === 0 ? (
-        <p className="px-4 text-center font-mono text-xs text-white/45">{t('social.noRecent')}</p>
+        <p className="px-4 text-center font-mono text-xs text-white/65">{t('social.noRecent')}</p>
       ) : (
         <div className="overflow-hidden">
           <div className="animate-marquee whitespace-nowrap flex gap-8">
             {sightings.map((sighting) => {
               const date = sighting.timestamp?.toDate();
               return (
-                <span
-                  key={sighting.id}
-                  className="text-aurora-teal/70 font-mono text-xs font-medium"
-                >
+                <span key={sighting.id} className="text-aurora-teal font-mono text-xs font-medium">
                   📡 {t('social.reported')} · {date ? date.toLocaleString() : t('social.just_now')}{' '}
                   · {date ? formatDistanceToNow(date, { addSuffix: true }) : t('social.just_now')}
                   {sighting.location

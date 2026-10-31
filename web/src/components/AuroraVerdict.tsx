@@ -33,7 +33,7 @@ export const AuroraVerdict = ({ onNavigate }: AuroraVerdictProps) => {
       aria-labelledby="aurora-verdict-title"
     >
       <div className="flex-1">
-        <p className="font-mono text-xs uppercase tracking-widest text-white/50">
+        <p className="font-mono text-xs uppercase tracking-widest text-white/65">
           {t('verdict.label')}
         </p>
         <h2
@@ -43,7 +43,7 @@ export const AuroraVerdict = ({ onNavigate }: AuroraVerdictProps) => {
           {t(`verdict.${level}`)}
         </h2>
         <p className="mt-1 text-sm text-white/70">{t(`verdict.${level}_desc`)}</p>
-        <p className="mt-2 font-mono text-xs text-white/50">
+        <p className="mt-2 font-mono text-xs text-white/65">
           {t('status.kp')} {data.kp.toFixed(1)} · {t('status.bz')} {data.bz.toFixed(1)} nT ·{' '}
           {Math.round(data.speed)} km/s{error ? ` · ${t('status.stale')}` : ''}
         </p>

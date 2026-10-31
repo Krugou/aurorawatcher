@@ -128,7 +128,7 @@ export const LocalData = ({
       };
     if (percent <= 15) return { text: t('sky.clear'), color: 'text-aurora-teal' };
     if (percent <= 50) return { text: t('sky.partly'), color: 'text-amber-400' };
-    return { text: t('sky.overcast'), color: 'text-white/40' };
+    return { text: t('sky.overcast'), color: 'text-white/65' };
   };
 
   const sky = data ? getSkyCondition(data.cloudCover, data.description) : { text: '', color: '' };
@@ -190,11 +190,11 @@ export const LocalData = ({
             {/* Magnetic Field Card */}
             <div className="p-6 border-b md:border-b-0 md:border-r border-white/[0.06] flex flex-col justify-between group hover:bg-white/[0.02] transition-colors duration-300">
               <div>
-                <p className="text-sm font-mono font-medium uppercase tracking-widest text-aurora-rose/80 mb-2 flex items-center gap-1.5">
+                <p className="text-sm font-mono font-medium uppercase tracking-widest text-aurora-rose mb-2 flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-aurora-rose shadow-[0_0_6px_rgba(244,63,94,0.5)]" />
                   {t('local.magField')}
                 </p>
-                <p className="text-xs font-mono text-white/40">
+                <p className="text-xs font-mono text-white/65">
                   {t('common.station')}:{' '}
                   {t(`common.loc.${normalizeStationKey(data.magStation)}`, {
                     defaultValue: data.magStation,
@@ -206,21 +206,21 @@ export const LocalData = ({
                   <span className="text-4xl font-sans font-bold text-white group-hover:text-aurora-rose transition-colors duration-300">
                     {data.fieldIntensity}
                   </span>
-                  <span className="text-sm font-mono text-white/30">{t('common.unit_mag')}</span>
+                  <span className="text-sm font-mono text-white/65">{t('common.unit_mag')}</span>
                 </div>
-                <p className="text-xs font-mono text-white/50 mt-1">{t('local.intensity')}</p>
+                <p className="text-xs font-mono text-white/65 mt-1">{t('local.intensity')}</p>
               </div>
             </div>
 
             {/* Visibility Card */}
             <div className="p-6 border-b md:border-b-0 md:border-r border-white/[0.06] flex flex-col justify-between group hover:bg-white/[0.02] transition-colors duration-300">
-              <p className="text-sm font-mono font-medium uppercase tracking-widest text-aurora-blue/80 mb-2 flex items-center gap-1.5">
+              <p className="text-sm font-mono font-medium uppercase tracking-widest text-aurora-blue mb-2 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-aurora-blue shadow-[0_0_6px_rgba(59,130,246,0.5)]" />
                 {t('local.visibility')}
               </p>
               <div className="mt-4">
                 <p className={`text-2xl font-sans font-bold text-white/90`}>{sky.text}</p>
-                <p className="text-sm font-mono text-white/40 mt-1">
+                <p className="text-sm font-mono text-white/65 mt-1">
                   {t('local.clouds', {
                     percent: data.cloudCover,
                   })}
@@ -239,7 +239,7 @@ export const LocalData = ({
                   <span className="text-4xl font-sans font-bold text-white">
                     {data.temperature}°C
                   </span>
-                  <p className="text-xs font-mono text-white/40 mt-1">
+                  <p className="text-xs font-mono text-white/65 mt-1">
                     {t('local.wind', {
                       speed: data.windSpeed,
                     })}

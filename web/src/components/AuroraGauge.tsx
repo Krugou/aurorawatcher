@@ -32,7 +32,7 @@ export const AuroraGauge = ({ cloudCover, kp, bz, isTooBright }: AuroraGaugeProp
   if (isTooBright) score = 0; // Too bright to see regardless of score
 
   // Determine Color & Text
-  let color = 'text-white/40';
+  let color = 'text-white/65';
   let gaugeColor = 'bg-white/20';
   let label = t('status.quiet'); // Default text key, should be customized
 
@@ -87,13 +87,13 @@ export const AuroraGauge = ({ cloudCover, kp, bz, isTooBright }: AuroraGaugeProp
 
       <div className="text-center z-20 mt-4">
         <h3 className={`text-2xl font-sans font-bold ${color}`}>{label}</h3>
-        <p className="text-xs font-mono font-medium text-white/40 mt-1 uppercase tracking-widest">
+        <p className="text-xs font-mono font-medium text-white/65 mt-1 uppercase tracking-widest">
           {t('gauge.odds')}: {Math.round(score)}%
         </p>
       </div>
 
       {/* Stats Mini */}
-      <div className="flex gap-4 mt-2 text-[10px] font-mono text-white/30">
+      <div className="flex gap-4 mt-2 text-[10px] font-mono text-white/65">
         <span title={t('gauge.cloud_cover')}>☁️ {Math.round((cloudCover / 8) * 100)}%</span>
         <span title={t('gauge.solar_activity')}>🌌 {Math.round(solarScore)}%</span>
       </div>

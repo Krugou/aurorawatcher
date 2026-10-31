@@ -84,7 +84,7 @@ export const SightingButton = () => {
           rounded-xl transition-all duration-300 transform active:scale-95
           ${
             cooldown
-              ? 'bg-white/10 text-white/40 cursor-not-allowed border border-white/10'
+              ? 'bg-white/10 text-white/65 cursor-not-allowed border border-white/10'
               : 'bg-gradient-to-r from-aurora-teal to-aurora-blue text-white border-0 shadow-[0_0_30px_rgba(0,212,170,0.25)] hover:shadow-[0_0_50px_rgba(0,212,170,0.4)] hover:-translate-y-0.5'
           }
         `}
@@ -100,7 +100,7 @@ export const SightingButton = () => {
       </button>
 
       {cooldown && (
-        <p className="text-xs font-mono text-white/40 animate-pulse">{t('social.thanks')}</p>
+        <p className="text-xs font-mono text-white/65">{t('social.thanks')}</p>
       )}
     </div>
   );

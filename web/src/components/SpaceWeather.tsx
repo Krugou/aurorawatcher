@@ -30,11 +30,11 @@ export const SpaceWeather = () => {
 
   // Helpers for coloring
   const getBzColor = (val: number) =>
-    val < -5 ? 'text-red-400' : val < 0 ? 'text-aurora-teal' : 'text-white/50';
+    val < -5 ? 'text-red-400' : val < 0 ? 'text-aurora-teal' : 'text-white/65';
   const getSpeedColor = (val: number) =>
-    val > 600 ? 'text-red-400' : val > 500 ? 'text-amber-400' : 'text-white/50';
+    val > 600 ? 'text-red-400' : val > 500 ? 'text-amber-400' : 'text-white/65';
   const getDensityColor = (val: number) =>
-    val > 20 ? 'text-red-400' : val > 10 ? 'text-amber-400' : 'text-white/50';
+    val > 20 ? 'text-red-400' : val > 10 ? 'text-amber-400' : 'text-white/65';
   const getKpColor = (val: number) =>
     val >= 5 ? 'text-red-400' : val >= 4 ? 'text-amber-400' : 'text-aurora-teal';
 
@@ -51,20 +51,20 @@ export const SpaceWeather = () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Bz */}
         <div className="neo-card p-4 transition-all duration-300 group">
-          <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-teal/80 mb-2 flex items-center gap-1.5">
+          <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-teal mb-2 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-aurora-teal shadow-[0_0_6px_rgba(0,212,170,0.5)] animate-pulse" />
             {t('space_weather.bz')}
           </p>
           <div className="flex items-baseline gap-1 mt-2">
             <span className={`text-4xl font-sans font-bold ${getBzColor(data.bz)}`}>{data.bz}</span>
-            <span className="text-xs font-mono text-white/30">{t('common.unit_mag')}</span>
+            <span className="text-xs font-mono text-white/65">{t('common.unit_mag')}</span>
           </div>
-          <p className="text-[10px] font-mono text-white/30 mt-2">{t('space_weather.bz_hint')}</p>
+          <p className="text-[10px] font-mono text-white/65 mt-2">{t('space_weather.bz_hint')}</p>
         </div>
 
         {/* Speed */}
         <div className="neo-card p-4 transition-all duration-300 group">
-          <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-blue/80 mb-2 flex items-center gap-1.5">
+          <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-blue mb-2 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-aurora-blue shadow-[0_0_6px_rgba(59,130,246,0.5)]" />
             {t('space_weather.speed')}
           </p>
@@ -72,16 +72,16 @@ export const SpaceWeather = () => {
             <span className={`text-4xl font-sans font-bold ${getSpeedColor(data.speed)}`}>
               {Math.round(data.speed)}
             </span>
-            <span className="text-xs font-mono text-white/30">{t('common.unit_speed')}</span>
+            <span className="text-xs font-mono text-white/65">{t('common.unit_speed')}</span>
           </div>
-          <p className="text-[10px] font-mono text-white/30 mt-2">
+          <p className="text-[10px] font-mono text-white/65 mt-2">
             {t('space_weather.speed_hint')}
           </p>
         </div>
 
         {/* Density */}
         <div className="neo-card p-4 transition-all duration-300 group">
-          <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-rose/80 mb-2 flex items-center gap-1.5">
+          <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-rose mb-2 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-aurora-rose shadow-[0_0_6px_rgba(244,63,94,0.5)]" />
             {t('space_weather.density')}
           </p>
@@ -89,16 +89,16 @@ export const SpaceWeather = () => {
             <span className={`text-4xl font-sans font-bold ${getDensityColor(data.density)}`}>
               {Math.round(data.density)}
             </span>
-            <span className="text-xs font-mono text-white/30">{t('common.unit_density')}</span>
+            <span className="text-xs font-mono text-white/65">{t('common.unit_density')}</span>
           </div>
-          <p className="text-[10px] font-mono text-white/30 mt-2">
+          <p className="text-[10px] font-mono text-white/65 mt-2">
             {t('space_weather.density_hint')}
           </p>
         </div>
 
         {/* Kp Index */}
         <div className="neo-card p-4 transition-all duration-300 group">
-          <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-cyan/80 mb-2 flex items-center gap-1.5">
+          <p className="text-xs font-mono font-medium uppercase tracking-widest text-aurora-cyan mb-2 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-aurora-cyan shadow-[0_0_6px_rgba(34,211,238,0.5)]" />
             {t('space_weather.kp')}
           </p>
@@ -113,7 +113,7 @@ export const SpaceWeather = () => {
               ))}
             </div>
           </div>
-          <p className="text-[10px] font-mono text-white/30 mt-2">{t('space_weather.kp_hint')}</p>
+          <p className="text-[10px] font-mono text-white/65 mt-2">{t('space_weather.kp_hint')}</p>
         </div>
       </div>
       {lastUpdated && <DataFreshness source={t('data_state.noaa')} lastUpdated={lastUpdated} />}

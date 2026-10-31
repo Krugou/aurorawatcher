@@ -68,14 +68,14 @@ export const VisibilityDashboard = ({
             <h4 className={`font-sans font-bold text-lg leading-tight ${config.text}`}>
               {config.label}
             </h4>
-            <p className="text-xs font-mono text-white/40 uppercase tracking-widest mt-0.5">
+            <p className="text-xs font-mono text-white/65 uppercase tracking-widest mt-0.5">
               {t(report.statusMessage)}
             </p>
           </div>
         </div>
         <div className="text-right">
           <div className="text-2xl font-sans font-bold text-white">{report.probability}%</div>
-          <p className="text-[10px] font-mono text-white/30 uppercase tracking-tighter">
+          <p className="text-[10px] font-mono text-white/65 uppercase tracking-tighter">
             {t('local.visibility')}
           </p>
         </div>

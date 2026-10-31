@@ -12,7 +12,7 @@ describe('LanguageSwitcher', () => {
 
   it('shows correct aria-label', () => {
     render(React.createElement(LanguageSwitcher));
-    expect(screen.getByRole('button')).toHaveAttribute('aria-label', 'common.switch_lang');
+    expect(screen.getByRole('button')).toHaveAttribute('aria-label', 'common.switch_lang: FI');
   });
 
   it('displays FI label when current language is en', () => {

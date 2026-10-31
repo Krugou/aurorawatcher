@@ -18,7 +18,7 @@ export const DataStatus = ({ source, state, onRetry, lastUpdated }: DataStatusPr
         {state === 'error' ? t('data_state.error', { source }) : t('data_state.empty', { source })}
       </p>
       {lastUpdated ? (
-        <p className="mt-1 font-mono text-xs text-white/40">
+        <p className="mt-1 font-mono text-xs text-white/65">
           {t('data_state.lastUpdated', {
             time: new Intl.DateTimeFormat(i18n.language, {
               dateStyle: 'short',
@@ -41,7 +41,7 @@ export const DataStatus = ({ source, state, onRetry, lastUpdated }: DataStatusPr
 export const DataFreshness = ({ source, lastUpdated }: { source: string; lastUpdated: number }) => {
   const { t, i18n } = useTranslation();
   return (
-    <p className="text-center font-mono text-[10px] text-white/35">
+    <p className="text-center font-mono text-[10px] text-white/65">
       {t('data_state.sourceUpdated', {
         source,
         time: new Intl.DateTimeFormat(i18n.language, {

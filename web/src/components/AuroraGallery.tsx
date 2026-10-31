@@ -63,21 +63,21 @@ export const AuroraGallery = () => {
             {t('gallery.eyebrow')}
           </p>
           <h3 className="text-2xl font-bold text-white md:text-3xl">{t('gallery.heading')}</h3>
-          <p className="mt-2 text-sm leading-relaxed text-white/55">{t('gallery.description')}</p>
+          <p className="mt-2 text-sm leading-relaxed text-white/65">{t('gallery.description')}</p>
         </div>
       </div>
 
       <div className="flex items-end justify-between gap-4">
         <div>
           <h3 className="text-xl font-bold text-white">{t('gallery.keepList')}</h3>
-          <p className="mt-1 font-mono text-xs text-white/40">
+          <p className="mt-1 font-mono text-xs text-white/65">
             {t('gallery.savedCount', { count: sortedEntries.length })}
           </p>
         </div>
       </div>
 
       {loading ? (
-        <p className="py-12 text-center text-sm text-white/50" role="status">
+        <p className="py-12 text-center text-sm text-white/65" role="status">
           {t('gallery.loading')}
         </p>
       ) : loadError ? (
@@ -93,7 +93,7 @@ export const AuroraGallery = () => {
             ✦
           </div>
           <p className="font-semibold text-white/80">{t('gallery.emptyTitle')}</p>
-          <p className="mt-2 max-w-md text-sm text-white/45">{t('gallery.emptyDescription')}</p>
+          <p className="mt-2 max-w-md text-sm text-white/65">{t('gallery.emptyDescription')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

@@ -15,7 +15,7 @@ export const LanguageSwitcher = () => {
     <button
       onClick={toggleLanguage}
       className="control-button language-button"
-      aria-label={t('common.switch_lang')}
+      aria-label={`${t('common.switch_lang')}: ${i18n.language === 'en' ? 'FI' : 'EN'}`}
     >
       <span className="flex items-center gap-1.5">
         {i18n.language === 'en' && (

@@ -80,7 +80,7 @@ export const ObservatoryCard = ({ id, loc, timestamp }: ObservatoryCardProps) =>
       <div className="p-4 flex items-center justify-between">
         <div>
           <h3 className="text-lg font-sans font-bold text-white/90">{t(loc.name)}</h3>
-          <p className="text-xs font-mono text-white/40 tracking-wide">{t(loc.fullname)}</p>
+          <p className="text-xs font-mono text-white/65 tracking-wide">{t(loc.fullname)}</p>
         </div>
         <div className="flex gap-2">
           {/* History / Fullscreen Button */}

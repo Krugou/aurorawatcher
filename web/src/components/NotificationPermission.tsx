@@ -97,7 +97,7 @@ export const NotificationPermission = ({ savedStation }: NotificationPermissionP
             {t('notifications.blocked')}
           </span>
         </div>
-        <p className="text-[10px] font-mono text-white/30 mt-1">
+        <p className="text-[10px] font-mono text-white/65 mt-1">
           {t('notifications.blocked_hint')}
         </p>
       </div>

@@ -141,7 +141,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
               />
             </svg>
-            <p className="font-mono font-medium text-white/50">{t('map.error')}</p>
+            <p className="font-mono font-medium text-white/65">{t('map.error')}</p>
           </div>
         ) : (
           <img
@@ -192,7 +192,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                         </span>
                       )}
                     </div>
-                    <span className="text-[10px] font-mono text-white/40">
+                    <span className="text-[10px] font-mono text-white/65">
                       {t(`status.${s.status.toLowerCase()}`)}
                     </span>
                   </div>
@@ -202,7 +202,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                     onClick={() => {
                       toggleSavedStation(s.name);
                     }}
-                    className={`ml-auto p-1 rounded transition-colors duration-200 ${isSaved ? 'text-aurora-teal' : 'text-white/20 hover:text-aurora-teal'}`}
+                    className={`ml-auto p-1 rounded transition-colors duration-200 ${isSaved ? 'text-aurora-teal' : 'text-white/65 hover:text-aurora-teal'}`}
                     title={isSaved ? t('common.unsave') : t('common.save')}
                   >
                     <svg
@@ -220,7 +220,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
               );
             })}
             {stationStatuses.length === 0 && !isLoading && (
-              <div className="col-span-2 text-center text-xs font-mono text-white/30 py-4">
+              <div className="col-span-2 text-center text-xs font-mono text-white/65 py-4">
                 {t('common.no_data', 'NO DATA DETECTED')}
               </div>
             )}
@@ -228,7 +228,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
         </div>
 
         <div className="pt-4 border-t border-white/[0.06]">
-          <p className="text-white/50 leading-relaxed font-mono text-xs mb-4">
+          <p className="text-white/65 leading-relaxed font-mono text-xs mb-4">
             {t('map.description')}
           </p>
           <a

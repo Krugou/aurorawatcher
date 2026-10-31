@@ -143,7 +143,7 @@ export const SolarWindGraph = () => {
           </ComposedChart>
         </ResponsiveContainer>
       </div>
-      <p className="text-xs font-mono text-white/40 mt-2 text-center uppercase tracking-wider">
+      <p className="text-xs font-mono text-white/65 mt-2 text-center uppercase tracking-wider">
         {t('graphs.solar_hint')}
       </p>
       <details className="raw-data-details">

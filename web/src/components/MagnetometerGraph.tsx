@@ -60,7 +60,7 @@ export const MagnetometerGraph = ({
     </button>
   );
   const locationHint = (
-    <p className="font-mono text-[10px] text-white/40">
+    <p className="font-mono text-[10px] text-white/65">
       {coords || manualCoords
         ? t('graphs.customLocation')
         : t('graphs.defaultLocation', {
@@ -84,7 +84,7 @@ export const MagnetometerGraph = ({
       <div className="space-y-3">
         {locationButton}
         {locationHint}
-        {locationError && <p className="text-xs text-white/45">{t('local.geoError')}</p>}
+        {locationError && <p className="text-xs text-white/65">{t('local.geoError')}</p>}
         <DataStatus
           source={t('data_state.fmi')}
           state={error ? 'error' : 'empty'}
@@ -162,7 +162,7 @@ export const MagnetometerGraph = ({
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <p className="text-xs font-mono text-white/40 mt-2 text-center uppercase tracking-wider">
+      <p className="text-xs font-mono text-white/65 mt-2 text-center uppercase tracking-wider">
         {t('graphs.mag_hint')}
       </p>
       <details className="raw-data-details">
