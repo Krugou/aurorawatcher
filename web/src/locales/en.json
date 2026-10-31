@@ -209,6 +209,18 @@
     "json_link": "JSON Data Services",
     "disclaimer": "Note: Accurate aurora prediction depends on multiple variables. Even with perfect data, local visibility and fast-changing conditions play a huge role. Always trust your own eyes!"
   },
+  "verdict": {
+    "label": "Aurora chance right now",
+    "go": "Go!",
+    "maybe": "Maybe",
+    "nogo": "Not now",
+    "go_desc": "Geomagnetic activity is high. Head somewhere dark and look north.",
+    "maybe_desc": "Activity is moderate. Auroras are possible in the far north.",
+    "nogo_desc": "Space weather is quiet. Check back later.",
+    "go_to_observatory_status": "Cams",
+    "go_to_graphs": "Graphs",
+    "go_to_map": "Map"
+  },
   "common": {
     "daylight": {
       "too_bright": "Too Bright",

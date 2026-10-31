@@ -209,6 +209,18 @@
     "json_link": "JSON-tietopalvelut",
     "disclaimer": "Huom: Tarkka revontulien ennustaminen riippuu monesta muuttujasta. Vaikka data olisi täydellistä, paikallinen näkyvyys ja nopeasti muuttuvat olosuhteet vaikuttavat lopputulokseen. Luota aina omiin silmiisi!"
   },
+  "verdict": {
+    "label": "Revontulien todennäköisyys nyt",
+    "go": "Mene!",
+    "maybe": "Ehkä",
+    "nogo": "Ei nyt",
+    "go_desc": "Geomagneettinen aktiivisuus on korkea. Suuntaa pimeään paikkaan ja katso pohjoiseen.",
+    "maybe_desc": "Aktiivisuus on kohtalainen. Revontulia voi näkyä pohjoisessa.",
+    "nogo_desc": "Avaruussää on rauhallinen. Tarkista myöhemmin uudelleen.",
+    "go_to_observatory_status": "Kamerat",
+    "go_to_graphs": "Kuvaajat",
+    "go_to_map": "Kartta"
+  },
   "common": {
     "daylight": {
       "too_bright": "Liian valoisaa",

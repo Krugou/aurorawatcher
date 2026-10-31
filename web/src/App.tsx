@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { AuroraMap } from './components/AuroraMap';
 import { AuroraGallery } from './components/AuroraGallery';
+import { AuroraVerdict } from './components/AuroraVerdict';
 import { CollapsibleSection } from './components/CollapsibleSection';
 import { DataInfo } from './components/DataInfo';
 import { FullscreenView } from './components/FullscreenView';
@@ -151,6 +152,7 @@ const AppContent = () => {
       </div>
       <div className="w-full max-w-6xl p-4 md:p-8 space-y-10 md:space-y-14 relative z-10">
         <Header />
+        <AuroraVerdict onNavigate={navigateToSection} />
 
         <CollapsibleSection
           title={t('grid.title')}
