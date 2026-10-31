@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/Krugou/aurorawatcher/compare/v1.30.1...v1.31.0) (2026-10-31)
+
+### Features
+
+- add Go/No-go aurora verdict card ([9b1a549](https://github.com/Krugou/aurorawatcher/commit/9b1a549744a3adaa307fd3e803bd48f7c7b3e4a0))
+- prioritize fully red aurora in gallery ranking ([08d4983](https://github.com/Krugou/aurorawatcher/commit/08d49833f4978754e193a3fa7904df064ecf594d))
+
 ## [1.30.1](https://github.com/Krugou/aurorawatcher/compare/v1.30.0...v1.30.1) (2026-10-20)
 
 ### Bug Fixes
