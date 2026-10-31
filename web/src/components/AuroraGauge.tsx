@@ -74,16 +74,15 @@ export const AuroraGauge = ({ cloudCover, kp, bz, isTooBright }: AuroraGaugeProp
           className={`w-48 h-48 rounded-full ${score >= 80 ? 'border-aurora-teal' : score >= 50 ? 'border-amber-400' : 'border-red-400'} absolute top-0 opacity-20`}
           style={{ borderWidth: '10px' }}
         />
-      </div>
-
-      {/* Needle */}
-      <div
-        className="absolute top-[calc(50%+1rem)] left-1/2 w-0.5 h-24 bg-white/80 origin-bottom transition-transform duration-1000 ease-out z-10"
-        style={{ transform: `translateX(-50%) rotate(${angle}deg) translateY(-50%)` }}
-      >
+        {/* Needle */}
         <div
-          className={`w-3 h-3 rounded-full ${gaugeColor} absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 shadow-[0_0_10px_currentColor]`}
-        />
+          className="absolute bottom-0 left-1/2 w-0.5 h-[5.5rem] bg-white/80 origin-bottom transition-transform duration-1000 ease-out z-10"
+          style={{ transform: `translateX(-50%) rotate(${angle}deg)` }}
+        >
+          <div
+            className={`w-3 h-3 rounded-full ${gaugeColor} absolute -top-1 left-1/2 -translate-x-1/2`}
+          />
+        </div>
       </div>
 
       <div className="text-center z-20 mt-4">
