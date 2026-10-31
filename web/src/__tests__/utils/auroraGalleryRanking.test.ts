@@ -23,6 +23,14 @@ describe('rankAuroraGallery', () => {
     ).toEqual(['most-pixels', 'recent-tiebreak', 'score-tiebreak', 'score-tiebreak-lower']);
   });
 
+  it('ranks fully red aurora above stronger green matches', () => {
+    const red = { ...entry('red', 0, 5), redPixels: 30 };
+    expect(rankAuroraGallery([entry('green', 500, 90), red]).map((item) => item.camId)).toEqual([
+      'red',
+      'green',
+    ]);
+  });
+
   it('returns a new array and limits the saved best matches', () => {
     const input = [entry('weaker', 2, 10), entry('stronger', 9, 20)];
     const ranked = rankAuroraGallery(input, 1);
