@@ -248,7 +248,11 @@ export const HistorySlider = ({ camId, currentImageUrl }: HistorySliderProps) =>
               setIsFullscreen(false);
             }}
           >
-            <img src={displayImage} alt="Fullscreen" className="w-full h-full object-contain" />
+            <img
+              src={displayImage}
+              alt={t('history_fullscreen')}
+              className="w-full h-full object-contain"
+            />
           </button>
         </div>
       )}

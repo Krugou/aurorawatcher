@@ -109,11 +109,21 @@ export const LocalData = ({
     }
   }, [effectiveCoords]);
 
+  const translateWeather = (description: string) => {
+    const key = description
+      .toLowerCase()
+      .replace(/ (day|night|polartwilight)$/, '')
+      .replace(/ /g, '');
+    return t(`weather.${key}`, {
+      defaultValue: description.charAt(0).toUpperCase() + description.slice(1),
+    });
+  };
+
   // Cloud cover interpretation (0-100%)
   const getSkyCondition = (percent: number, description?: string) => {
     if (description)
       return {
-        text: description.charAt(0).toUpperCase() + description.slice(1),
+        text: translateWeather(description),
         color: 'text-aurora-blue',
       };
     if (percent <= 15) return { text: t('sky.clear'), color: 'text-aurora-teal' };

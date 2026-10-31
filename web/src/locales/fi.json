@@ -303,5 +303,48 @@
     "sourceUpdated": "Lähde: {{source}} · Viimeisin onnistunut päivitys: {{time}}",
     "fmi": "FMI:n magnetometripalvelu",
     "noaa": "NOAA SWPC"
-  }
+  },
+  "gauge": {
+    "go": "MENE NYT! 🚀",
+    "possible": "MAHDOLLISTA 👀",
+    "maybe": "MYÖHEMMIN 🤷",
+    "nope": "EI NYT ☁️",
+    "odds": "TODENNÄKÖISYYS",
+    "cloud_cover": "Pilvisyys",
+    "solar_activity": "Aurinkoaktiivisuus"
+  },
+  "sighting": {
+    "button": "NÄEN SEN! 👀",
+    "sending": "LÄHETETÄÄN...",
+    "cooldown": "ODOTA ⏱️",
+    "error": "Havainnon lähetys epäonnistui. Yritä uudelleen."
+  },
+  "weather": {
+    "clearsky": "Selkeää",
+    "fair": "Poutaa",
+    "partlycloudy": "Puolipilvistä",
+    "cloudy": "Pilvistä",
+    "fog": "Sumua",
+    "lightrain": "Heikkoa sadetta",
+    "rain": "Sadetta",
+    "heavyrain": "Kovaa sadetta",
+    "lightrainshowers": "Heikkoja sadekuuroja",
+    "rainshowers": "Sadekuuroja",
+    "heavyrainshowers": "Kovia sadekuuroja",
+    "lightsleet": "Heikkoa räntää",
+    "sleet": "Räntää",
+    "heavysleet": "Kovaa räntää",
+    "lightsnow": "Heikkoa lumisadetta",
+    "snow": "Lumisadetta",
+    "heavysnow": "Kovaa lumisadetta",
+    "lightsnowshowers": "Heikkoja lumikuuroja",
+    "snowshowers": "Lumikuuroja",
+    "heavysnowshowers": "Kovia lumikuuroja",
+    "rainandthunder": "Sadetta ja ukkosta",
+    "lightrainandthunder": "Heikkoa sadetta ja ukkosta",
+    "heavyrainandthunder": "Kovaa sadetta ja ukkosta",
+    "snowandthunder": "Lumisadetta ja ukkosta",
+    "unknown": "Tuntematon"
+  },
+  "history_fullscreen": "Koko näytön kuva"
 }

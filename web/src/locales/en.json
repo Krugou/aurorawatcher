@@ -303,5 +303,48 @@
     "sourceUpdated": "Source: {{source}} · Last successful update: {{time}}",
     "fmi": "FMI magnetometer service",
     "noaa": "NOAA SWPC"
-  }
+  },
+  "gauge": {
+    "go": "GO NOW! 🚀",
+    "possible": "POSSIBLE 👀",
+    "maybe": "MAYBE LATER 🤷",
+    "nope": "NOPE ☁️",
+    "odds": "ODDS",
+    "cloud_cover": "Cloud cover",
+    "solar_activity": "Solar activity"
+  },
+  "sighting": {
+    "button": "I SEE IT! 👀",
+    "sending": "SENDING...",
+    "cooldown": "COOLDOWN ⏱️",
+    "error": "Failed to report sighting. Please try again."
+  },
+  "weather": {
+    "clearsky": "Clear sky",
+    "fair": "Fair",
+    "partlycloudy": "Partly cloudy",
+    "cloudy": "Cloudy",
+    "fog": "Fog",
+    "lightrain": "Light rain",
+    "rain": "Rain",
+    "heavyrain": "Heavy rain",
+    "lightrainshowers": "Light rain showers",
+    "rainshowers": "Rain showers",
+    "heavyrainshowers": "Heavy rain showers",
+    "lightsleet": "Light sleet",
+    "sleet": "Sleet",
+    "heavysleet": "Heavy sleet",
+    "lightsnow": "Light snow",
+    "snow": "Snow",
+    "heavysnow": "Heavy snow",
+    "lightsnowshowers": "Light snow showers",
+    "snowshowers": "Snow showers",
+    "heavysnowshowers": "Heavy snow showers",
+    "rainandthunder": "Rain and thunder",
+    "lightrainandthunder": "Light rain and thunder",
+    "heavyrainandthunder": "Heavy rain and thunder",
+    "snowandthunder": "Snow and thunder",
+    "unknown": "Unknown"
+  },
+  "history_fullscreen": "Fullscreen view"
 }

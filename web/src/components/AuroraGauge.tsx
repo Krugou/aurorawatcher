@@ -39,23 +39,23 @@ export const AuroraGauge = ({ cloudCover, kp, bz, isTooBright }: AuroraGaugeProp
   if (isTooBright) {
     color = 'text-amber-400';
     gaugeColor = 'bg-amber-400';
-    label = t('local.daytime_title') || 'TOO BRIGHT ☀️';
+    label = t('local.daytime_title');
   } else if (score >= 80) {
     color = 'text-aurora-teal';
     gaugeColor = 'bg-aurora-teal';
-    label = 'GO NOW! 🚀';
+    label = t('gauge.go');
   } else if (score >= 50) {
     color = 'text-amber-400';
     gaugeColor = 'bg-amber-400';
-    label = 'POSSIBLE 👀';
+    label = t('gauge.possible');
   } else if (score >= 20) {
     color = 'text-aurora-rose';
     gaugeColor = 'bg-aurora-rose';
-    label = 'MAYBE LATER 🤷';
+    label = t('gauge.maybe');
   } else {
     color = 'text-red-400';
     gaugeColor = 'bg-red-400';
-    label = 'NOPE ☁️';
+    label = t('gauge.nope');
   }
 
   // Angle for gauge needle (-90 to 90)
@@ -88,14 +88,14 @@ export const AuroraGauge = ({ cloudCover, kp, bz, isTooBright }: AuroraGaugeProp
       <div className="text-center z-20 mt-4">
         <h3 className={`text-2xl font-sans font-bold ${color}`}>{label}</h3>
         <p className="text-xs font-mono font-medium text-white/40 mt-1 uppercase tracking-widest">
-          ODDS: {Math.round(score)}%
+          {t('gauge.odds')}: {Math.round(score)}%
         </p>
       </div>
 
       {/* Stats Mini */}
       <div className="flex gap-4 mt-2 text-[10px] font-mono text-white/30">
-        <span title="Cloud Cover">☁️ {Math.round((cloudCover / 8) * 100)}%</span>
-        <span title="Solar Activity">🌌 {Math.round(solarScore)}%</span>
+        <span title={t('gauge.cloud_cover')}>☁️ {Math.round((cloudCover / 8) * 100)}%</span>
+        <span title={t('gauge.solar_activity')}>🌌 {Math.round(solarScore)}%</span>
       </div>
     </div>
   );

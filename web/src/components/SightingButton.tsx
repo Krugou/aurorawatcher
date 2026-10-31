@@ -40,7 +40,7 @@ export const SightingButton = () => {
         ); // 10 min cooldown
       } catch (error) {
         console.error('Error reporting sighting:', error);
-        alert('Failed to report sighting. Check console.');
+        alert(t('sighting.error'));
       } finally {
         setLoading(false);
       }
@@ -89,7 +89,7 @@ export const SightingButton = () => {
           }
         `}
       >
-        {loading ? 'SENDING...' : cooldown ? 'COOLDOWN ⏱️' : 'I SEE IT! 👀'}
+        {loading ? t('sighting.sending') : cooldown ? t('sighting.cooldown') : t('sighting.button')}
 
         {/* Confetti / Pulse Effect */}
         {showConfetti && (

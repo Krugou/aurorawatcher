@@ -17,7 +17,7 @@ import { SightingButton } from '../../components/SightingButton';
 describe('SightingButton', () => {
   it('renders the sighting button', () => {
     render(React.createElement(SightingButton));
-    expect(screen.getByText('I SEE IT! 👀')).toBeInTheDocument();
+    expect(screen.getByText('sighting.button')).toBeInTheDocument();
   });
 
   it('renders as a button element', () => {
