@@ -23,6 +23,7 @@ import { SightingButton } from './components/SightingButton';
 import { SightingsFeed } from './components/SightingsFeed';
 import { SolarWindGraph } from './components/SolarWindGraph';
 import { SpaceWeather } from './components/SpaceWeather';
+import { StationDisturbanceCharts } from './components/StationDisturbanceCharts';
 import { ThemeToggle } from './components/ThemeToggle';
 import { WebcamGrid } from './components/WebcamGrid';
 import { ThemeProvider } from './context/ThemeProvider';
@@ -241,6 +242,9 @@ const AppContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <MagnetometerGraph />
             <SolarWindGraph />
+          </div>
+          <div className="mt-10">
+            <StationDisturbanceCharts />
           </div>
         </CollapsibleSection>
 

@@ -146,7 +146,11 @@
     "customLocation": "Käytössä on valitsemasi sijainti",
     "rawData": "Viimeisimmät raakadata-arvot",
     "historySlider": "Kamerahistorian kohta",
-    "historySliderValue": "{{time}}"
+    "historySliderValue": "{{time}}",
+    "stations_title": "Asemien häiriö (viimeiset 24 h)",
+    "stations_hint": "Vaakasuuntaisen magneettikentän poikkeama aseman 24 tunnin mediaanista. Katkoviiva: kohtalainen aktiivisuus.",
+    "stations_missing": "Ei avoimessa datassa (vain karttakuva): {{stations}}",
+    "stationChartLabel": "{{station}}: 24 tunnin häiriö, huippu {{peak}} {{unit}}"
   },
   "gallery": {
     "title": "Revontulivärien galleria",
@@ -229,7 +233,51 @@
     "nogo_desc": "Avaruussää on rauhallinen. Tarkista myöhemmin uudelleen.",
     "go_to_observatory_status": "Kamerat",
     "go_to_graphs": "Kuvaajat",
-    "go_to_map": "Kartta"
+    "go_to_map": "Kartta",
+    "level": {
+      "go": "LÄHDE KATSOMAAN! 🚀",
+      "maybe": "KANNATTAA KURKATA 👀",
+      "wait": "ODOTA AKTIIVISUUTTA ⏳",
+      "nogo": "PILVET PEITTÄVÄT ☁️",
+      "daylight": "LIIAN VALOISAA! 😎"
+    },
+    "odds": "Todennäköisyys {{percent}} %",
+    "reason": {
+      "none": "Pimeää, selkeää ja aktiivista – kaikki on kohdallaan.",
+      "darkness": "Taivas ei ole vielä tarpeeksi tumma.",
+      "cloud": "Pilvet ovat tiellä.",
+      "moon": "Kirkas kuu vaalentaa taivaan.",
+      "activity": "Taivas on kunnossa, mutta revontulet ovat hiljaa."
+    },
+    "factors": {
+      "title": "Mistä arvio muodostuu",
+      "darkness": "Pimeys",
+      "cloud": "Selkeys",
+      "moon": "Kuu",
+      "activity": "Aktiivisuus"
+    },
+    "trend": {
+      "rising": "Aktiivisuus nousee",
+      "falling": "Aktiivisuus laskee",
+      "steady": "Aktiivisuus pysyy ennallaan",
+      "unknown": "Suuntaa ei saatavilla",
+      "hint": "{{station}}, viimeiset 30 min vs. edelliset 30 min"
+    },
+    "best": {
+      "title": "Paras aika tänä yönä",
+      "window": "{{start}}–{{end}}",
+      "none": "Ei hyvää ajankohtaa seuraavan 18 tunnin aikana",
+      "note": "Tuntikohtainen pilviennuste ja pimeys; olettaa aktiivisuuden pysyvän nykyisellään.",
+      "slot": "{{time}}: {{level}}, todennäköisyys {{percent}} %"
+    },
+    "share": {
+      "button": "Jaa arvio",
+      "heading": "Revontulivahti",
+      "text": "Revontuliarvio: {{level}} (todennäköisyys {{percent}} %)",
+      "shared": "Jaettu!",
+      "saved": "Kortti tallennettu laitteelle",
+      "failed": "Korttia ei voitu luoda"
+    }
   },
   "common": {
     "daylight": {

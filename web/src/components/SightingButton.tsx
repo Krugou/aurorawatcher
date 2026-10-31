@@ -99,9 +99,7 @@ export const SightingButton = () => {
         )}
       </button>
 
-      {cooldown && (
-        <p className="text-xs font-mono text-white/65">{t('social.thanks')}</p>
-      )}
+      {cooldown && <p className="text-xs font-mono text-white/65">{t('social.thanks')}</p>}
     </div>
   );
 };

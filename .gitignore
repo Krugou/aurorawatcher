@@ -136,3 +136,4 @@ dist
 .pnp.*
 output/playwright/
 .playwright-cli/
+.lighthouseci

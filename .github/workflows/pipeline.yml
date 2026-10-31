@@ -73,6 +73,74 @@ jobs:
           echo "## ✅ Observation Successful" >> $GITHUB_STEP_SUMMARY
           echo "The stars aligned. Everything is shiny and chrome! 🧹✨" >> $GITHUB_STEP_SUMMARY
 
+  scanning-the-skies:
+    name: 🛰️ Scanning-the-Skies (${{ matrix.project }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: firefox
+            browser: firefox
+          - project: webkit
+            browser: webkit
+          - project: Mobile Chrome
+            browser: chromium
+          - project: Mobile Safari
+            browser: webkit
+    steps:
+      - uses: actions/checkout@v7
+      - name: Preparing the Observatory (Node.js)
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Refueling the Telescope (Dependencies)
+        run: npm ci
+      - name: Installing the Lenses (Playwright browser)
+        run: npx playwright install --with-deps "$BROWSER"
+        env:
+          BROWSER: ${{ matrix.browser }}
+      - name: Scanning the Skies (E2E)
+        working-directory: web
+        run: npx playwright test --project="$PROJECT"
+        env:
+          PROJECT: ${{ matrix.project }}
+      - name: Keeping the Star Charts (Report)
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report-${{ strategy.job-index }}
+          path: web/playwright-report
+          retention-days: 7
+
+  measuring-the-glow:
+    name: 💡 Measuring-the-Glow (Lighthouse)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Preparing the Observatory (Node.js)
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Refueling the Telescope (Dependencies)
+        run: npm ci
+      - name: Capturing the Aurora (Build Web)
+        run: npm run build -w aurorawatcher-web
+      - name: Measuring the Glow (Lighthouse CI)
+        working-directory: web
+        run: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json
+      - name: Keeping the Light Curves (Reports)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-reports
+          path: web/.lighthouseci
+          retention-days: 7
+
   polishing-the-robot:
     name: 🤖 Polishing-the-Robot
     runs-on: ubuntu-latest

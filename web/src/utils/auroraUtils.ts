@@ -82,7 +82,8 @@ export const findNearestStation = (userLat: number, userLon: number): string | n
   return nearestStation;
 };
 
-export const scanStationStatuses = (img: HTMLImageElement): StationStatus[] => {
+/** Reads station dots from the FMI map image; `only` limits which stations are read. */
+export const scanStationStatuses = (img: HTMLImageElement, only?: string[]): StationStatus[] => {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
 
@@ -101,17 +102,20 @@ export const scanStationStatuses = (img: HTMLImageElement): StationStatus[] => {
     return [];
   }
 
-  return scanStationPixels(imageData, img.width, img.height);
+  return scanStationPixels(imageData, img.width, img.height, only);
 };
 
+/** Reads station dots from raw RGBA pixels of the FMI map; `only` limits which stations are read. */
 export const scanStationPixels = (
   imageData: ArrayLike<number>,
   width: number,
   height: number,
+  only?: string[],
 ): StationStatus[] => {
   const results: StationStatus[] = [];
 
   Object.entries(STATION_COORDINATES).forEach(([name, coords]) => {
+    if (only && !only.includes(name)) return;
     // Sample a 3x3 area to find the colored dot
     const cx = Math.floor(coords.x * width);
     const cy = Math.floor(coords.y * height);

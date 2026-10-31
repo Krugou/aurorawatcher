@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useGeolocation } from '../hooks/useGeolocation';
 import { Analytics } from '../utils/analytics';
+import { getStationFeed, StationSeries } from '../services/stationFeed';
 import {
-  checkImageColor,
   findNearestStation,
   scanStationStatuses,
+  STATION_COORDINATES,
   StationStatus,
 } from '../utils/auroraUtils';
 import { normalizeStationKey } from '../utils/i18nUtils';
@@ -17,6 +18,12 @@ import { Skeleton } from './Skeleton';
 
 const AURORA_DATA =
   'https://cdn.fmi.fi/weather-observations/products/magnetic-disturbance-observations/map-latest-fi.png';
+const FEED_COLORS = {
+  QUIET: '#D7D7D7',
+  LOW: '#66CCEE',
+  MODERATE: '#228833',
+  HIGH: '#EE6677',
+} as const;
 const INFO_URL = 'https://www.ilmatieteenlaitos.fi/revontulet-ja-avaruussaa';
 
 interface AuroraMapProps {
@@ -28,7 +35,10 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
   const { coords } = useGeolocation();
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [stationStatuses, setStationStatuses] = useState<StationStatus[]>([]);
+  const [imageStatuses, setImageStatuses] = useState<StationStatus[]>([]);
+  const [imageSettled, setImageSettled] = useState(false);
+  // null while loading; an empty list means the open feed failed and the image covers everything
+  const [feed, setFeed] = useState<StationSeries[] | null>(null);
   const [nearestStation, setNearestStation] = useState<string | null>(null);
   const [savedStation, setSavedStation] = useState<string | null>(() => {
     return localStorage.getItem('aurora_saved_station');
@@ -41,8 +51,88 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
   useEffect(() => {
     setIsLoading(true);
     setHasError(false);
-    setStationStatuses([]);
+    setImageStatuses([]);
+    setImageSettled(false);
+    let cancelled = false;
+    getStationFeed()
+      .then((series) => {
+        if (!cancelled) setFeed(series);
+      })
+      .catch(() => {
+        if (!cancelled) setFeed([]);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [timestamp]);
+
+  // Open magnetometer feed is authoritative; the map image only fills in stations it lacks.
+  const stationStatuses = useMemo<StationStatus[]>(() => {
+    if (feed === null) return [];
+    const fromFeed = new Map(feed.map((s) => [s.name, s]));
+    const fromImage = new Map(imageStatuses.map((s) => [s.name, s]));
+    return Object.keys(STATION_COORDINATES).flatMap((name) => {
+      const live = fromFeed.get(name);
+      if (live) return [{ name, status: live.status, color: FEED_COLORS[live.status] }];
+      const scanned = fromImage.get(name);
+      return scanned ? [scanned] : [];
+    });
+  }, [feed, imageStatuses]);
+
+  // Alerts once both sources have settled
+  useEffect(() => {
+    if (feed === null || !imageSettled) return;
+    const now = Date.now();
+    const COOLDOWN = 5 * 60 * 1000;
+
+    // PWA push notification, driven by the user's notification settings
+    if (
+      now - lastPushTimeRef.current > COOLDOWN * 6 &&
+      'Notification' in window &&
+      Notification.permission === 'granted' &&
+      'serviceWorker' in navigator
+    ) {
+      const stations = getTriggeredStations(stationStatuses, {
+        ...loadNotifyPrefs(),
+        station: savedStation,
+      });
+      if (stations.length > 0) {
+        lastPushTimeRef.current = now;
+        void navigator.serviceWorker.ready.then((reg) =>
+          reg.showNotification(
+            `🌌 ${stations.slice(0, 3).join(', ').toUpperCase()}: ${t('map.toast')}`,
+            {
+              icon: '/aurorawatcher/pwa-192x192.png',
+              badge: '/aurorawatcher/pwa-192x192.png',
+              tag: 'aurora-alert',
+              data: { url: '/aurorawatcher/' },
+            },
+          ),
+        );
+      }
+    }
+
+    if (now - lastToastTimeRef.current <= COOLDOWN) return;
+
+    const shouldAlert = savedStation
+      ? // If user has a favorite, ONLY alert if that specific station is HIGH
+        stationStatuses.find((s) => s.name === savedStation)?.status === 'HIGH'
+      : stationStatuses.some((s) => s.status === 'HIGH');
+    if (!shouldAlert) return;
+
+    toast.error(
+      savedStation ? `${savedStation.toUpperCase()}: ${t('map.toast')}` : t('map.toast'),
+      {
+        position: 'top-right',
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      },
+    );
+    lastToastTimeRef.current = now;
+  }, [feed, imageSettled, stationStatuses, savedStation, t]);
 
   // Find nearest station when coords change and auto-save it
   useEffect(() => {
@@ -71,83 +161,18 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
 
   const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
     setIsLoading(false);
-    const img = event.currentTarget;
     try {
-      // 1. Scan specific stations
-      const scanned = scanStationStatuses(img);
-      setStationStatuses(scanned);
-
-      // 2. Alerts Logic
-      const now = Date.now();
-      const COOLDOWN = 5 * 60 * 1000;
-
-      // PWA push notification, driven by the user's notification settings
-      if (
-        now - lastPushTimeRef.current > COOLDOWN * 6 &&
-        'Notification' in window &&
-        Notification.permission === 'granted' &&
-        'serviceWorker' in navigator
-      ) {
-        const stations = getTriggeredStations(scanned, {
-          ...loadNotifyPrefs(),
-          station: savedStation,
-        });
-        if (stations.length > 0) {
-          lastPushTimeRef.current = now;
-          void navigator.serviceWorker.ready.then((reg) =>
-            reg.showNotification(
-              `🌌 ${stations.slice(0, 3).join(', ').toUpperCase()}: ${t('map.toast')}`,
-              {
-                icon: '/aurorawatcher/pwa-192x192.png',
-                badge: '/aurorawatcher/pwa-192x192.png',
-                tag: 'aurora-alert',
-                data: { url: '/aurorawatcher/' },
-              },
-            ),
-          );
-        }
-      }
-
-      if (now - lastToastTimeRef.current > COOLDOWN) {
-        let shouldAlert = false;
-
-        if (savedStation) {
-          // If user has a favorite, ONLY alert if that specific station is HIGH
-          const favorite = scanned.find((s) => s.name === savedStation);
-          if (favorite?.status === 'HIGH') {
-            shouldAlert = true;
-          }
-        } else {
-          // Default: Check for overall high activity
-          const { hasHigh } = checkImageColor(img);
-          if (hasHigh) {
-            shouldAlert = true;
-          }
-        }
-
-        if (shouldAlert) {
-          toast.error(
-            savedStation ? `${savedStation.toUpperCase()}: ${t('map.toast')}` : t('map.toast'),
-            {
-              position: 'top-right',
-              autoClose: 10000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-            },
-          );
-          lastToastTimeRef.current = now;
-        }
-      }
+      setImageStatuses(scanStationStatuses(event.currentTarget));
     } catch (e) {
       console.error('Failed to analyze aurora image colors:', e);
     }
+    setImageSettled(true);
   };
 
   const handleError = () => {
     setIsLoading(false);
     setHasError(true);
+    setImageSettled(true);
   };
 
   return (
@@ -249,7 +274,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
                 </div>
               );
             })}
-            {stationStatuses.length === 0 && !isLoading && (
+            {stationStatuses.length === 0 && !isLoading && feed !== null && (
               <div className="col-span-2 text-center text-xs font-mono text-white/65 py-4">
                 {t('common.no_data', 'NO DATA DETECTED')}
               </div>

@@ -1,20 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useGeolocation } from '../hooks/useGeolocation';
 import { fetchMagneticData, fetchWeatherData } from '../services/fmiService';
 import { fetchSolarData, SolarData } from '../services/solarService';
-import { fetchNorwayWeather } from '../services/weatherService';
-import { getViewingProbability } from '../utils/daylight';
+import { findNearestFeedStation, getStationFeed } from '../services/stationFeed';
+import {
+  CloudForecastPoint,
+  fetchCloudForecast,
+  fetchNorwayWeather,
+} from '../services/weatherService';
+import { computeTrend, Trend } from '../utils/disturbance';
 import { normalizeStationKey } from '../utils/i18nUtils';
-import { AuroraGauge } from './AuroraGauge';
+import { buildNightTimeline, computeVerdict, FieldStatus } from '../utils/verdict';
 import { Skeleton } from './Skeleton';
-import { VisibilityDashboard } from './VisibilityDashboard';
+import { VerdictCard } from './VerdictCard';
 
 interface CombinedData {
   magStation: string;
   fieldIntensity: number;
-  fieldStatus: 'HIGH' | 'MODERATE' | 'LOW' | 'QUIET' | 'UNKNOWN';
+  fieldStatus: FieldStatus;
+  /** Nearest station in the open magnetometer feed, with its 30 min trend. */
+  feedStation: string | null;
+  trend: Trend | null;
+  forecast: CloudForecastPoint[];
   weatherStation: string;
   temperature: number;
   cloudCover: number;
@@ -44,6 +53,8 @@ export const LocalData = ({
       Promise.all([
         fetchMagneticData(effectiveCoords.latitude, effectiveCoords.longitude),
         fetchSolarData(),
+        getStationFeed().catch(() => []),
+        fetchCloudForecast(effectiveCoords.latitude, effectiveCoords.longitude).catch(() => []),
         fetchWeatherData(effectiveCoords.latitude, effectiveCoords.longitude).then(async (res) => {
           if (!res) {
             console.warn('[LocalData] FMI Weather failed, trying MET Norway fallback...');
@@ -68,23 +79,24 @@ export const LocalData = ({
           return res;
         }),
       ])
-        .then(([magResult, solarResult, weatherResult]) => {
+        .then(([magResult, solarResult, feed, forecast, weatherResult]) => {
           console.log('[LocalData] Fetch results:', { magResult, solarResult, weatherResult });
           if (magResult && weatherResult) {
-            // Determine magnetic status based on intensity delta or absolute value
-            // For simplicity, we use the raw intensity thresholds
-            let status: 'HIGH' | 'MODERATE' | 'LOW' | 'QUIET' = 'QUIET';
-            const intensity = magResult.fieldIntensity;
-
-            // Note: These are very rough thresholds for Finnish latitudes
-            if (intensity > 52000) status = 'HIGH';
-            else if (intensity > 51000) status = 'MODERATE';
-            else if (intensity > 50500) status = 'LOW';
+            // Activity comes from the live disturbance of the nearest open-feed station
+            const nearest = findNearestFeedStation(
+              feed,
+              effectiveCoords.latitude,
+              effectiveCoords.longitude,
+            );
+            const fieldStatus: FieldStatus = nearest?.station.status ?? 'UNKNOWN';
 
             setData({
               magStation: magResult.station,
               fieldIntensity: magResult.fieldIntensity,
-              fieldStatus: status,
+              fieldStatus,
+              feedStation: nearest?.station.name ?? null,
+              trend: nearest ? computeTrend(nearest.station.samples) : null,
+              forecast,
               weatherStation: weatherResult.station,
               temperature: weatherResult.temperature,
               cloudCover: weatherResult.cloudCover,
@@ -132,15 +144,33 @@ export const LocalData = ({
   };
 
   const sky = data ? getSkyCondition(data.cloudCover, data.description) : { text: '', color: '' };
-  const report =
-    data && effectiveCoords
-      ? getViewingProbability(
-          effectiveCoords.latitude,
-          effectiveCoords.longitude,
-          data.cloudCover,
-          data.fieldStatus,
-        )
-      : null;
+  const verdictInput = useMemo(
+    () =>
+      data && effectiveCoords
+        ? {
+            lat: effectiveCoords.latitude,
+            lon: effectiveCoords.longitude,
+            fieldStatus: data.fieldStatus,
+            kp: data.solar?.kp ?? 0,
+            bz: data.solar?.bz ?? 0,
+          }
+        : null,
+    [data, effectiveCoords],
+  );
+  const verdict = useMemo(
+    () =>
+      verdictInput && data
+        ? computeVerdict({ ...verdictInput, date: new Date(), cloudCover: data.cloudCover })
+        : null,
+    [verdictInput, data],
+  );
+  const timeline = useMemo(
+    () =>
+      verdictInput && data
+        ? buildNightTimeline(verdictInput, data.cloudCover, data.forecast, new Date())
+        : null,
+    [verdictInput, data],
+  );
 
   if (!effectiveCoords && !geoLoading && !geoError) {
     return (
@@ -177,12 +207,21 @@ export const LocalData = ({
         </div>
       ) : data ? (
         <div className="space-y-6">
-          {effectiveCoords && (
-            <VisibilityDashboard
-              lat={effectiveCoords.latitude}
-              lon={effectiveCoords.longitude}
-              cloudCover={data.cloudCover}
-              magneticStatus={data.fieldStatus}
+          {verdict && (
+            <VerdictCard
+              verdict={verdict}
+              timeline={timeline}
+              trend={data.trend}
+              trendStation={
+                data.feedStation
+                  ? t(`common.loc.${normalizeStationKey(data.feedStation)}`, {
+                      defaultValue: data.feedStation,
+                    })
+                  : undefined
+              }
+              place={t(`common.loc.${normalizeStationKey(data.feedStation ?? data.magStation)}`, {
+                defaultValue: data.feedStation ?? data.magStation,
+              })}
             />
           )}
 
@@ -244,17 +283,6 @@ export const LocalData = ({
                       speed: data.windSpeed,
                     })}
                   </p>
-                </div>
-                <div className="text-left md:text-right">
-                  {/* Aurora Gauge */}
-                  <div className="flex justify-center md:justify-end">
-                    <AuroraGauge
-                      cloudCover={data.cloudCover}
-                      kp={data.solar?.kp ?? 0}
-                      bz={data.solar?.bz ?? 0}
-                      isTooBright={report?.isTooBright}
-                    />
-                  </div>
                 </div>
               </div>
             </div>

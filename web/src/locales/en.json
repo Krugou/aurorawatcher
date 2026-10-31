@@ -146,7 +146,11 @@
     "customLocation": "Using your selected location",
     "rawData": "Latest raw samples",
     "historySlider": "Camera history position",
-    "historySliderValue": "{{time}}"
+    "historySliderValue": "{{time}}",
+    "stations_title": "Station disturbance (last 24h)",
+    "stations_hint": "Deviation of the horizontal magnetic field from each station's 24h median. Dashed line: moderate activity.",
+    "stations_missing": "Not in the open feed (map image only): {{stations}}",
+    "stationChartLabel": "{{station}}: 24 hour disturbance, peak {{peak}} {{unit}}"
   },
   "gallery": {
     "title": "Aurora Color Gallery",
@@ -229,7 +233,51 @@
     "nogo_desc": "Space weather is quiet. Check back later.",
     "go_to_observatory_status": "Cams",
     "go_to_graphs": "Graphs",
-    "go_to_map": "Map"
+    "go_to_map": "Map",
+    "level": {
+      "go": "GO FOR IT! 🚀",
+      "maybe": "WORTH A LOOK 👀",
+      "wait": "WAIT FOR ACTIVITY ⏳",
+      "nogo": "CLOUDED OUT ☁️",
+      "daylight": "TOO BRIGHT! 😎"
+    },
+    "odds": "Odds {{percent}}%",
+    "reason": {
+      "none": "Dark, clear and active – everything lines up.",
+      "darkness": "The sky is not dark enough yet.",
+      "cloud": "Clouds are in the way.",
+      "moon": "The bright Moon washes out the sky.",
+      "activity": "The sky is fine, but the aurora is quiet."
+    },
+    "factors": {
+      "title": "What decides the verdict",
+      "darkness": "Darkness",
+      "cloud": "Clear sky",
+      "moon": "Moon",
+      "activity": "Activity"
+    },
+    "trend": {
+      "rising": "Activity rising",
+      "falling": "Activity falling",
+      "steady": "Activity steady",
+      "unknown": "Trend unavailable",
+      "hint": "{{station}}, last 30 min vs. the 30 min before"
+    },
+    "best": {
+      "title": "Best time tonight",
+      "window": "{{start}}–{{end}}",
+      "none": "No good window in the next 18 hours",
+      "note": "Hourly cloud forecast and darkness; assumes activity stays as it is now.",
+      "slot": "{{time}}: {{level}}, odds {{percent}}%"
+    },
+    "share": {
+      "button": "Share verdict",
+      "heading": "Revontulivahti",
+      "text": "Aurora verdict: {{level}} (odds {{percent}}%)",
+      "shared": "Shared!",
+      "saved": "Card saved to your device",
+      "failed": "Could not create the card"
+    }
   },
   "common": {
     "daylight": {

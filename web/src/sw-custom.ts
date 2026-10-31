@@ -4,7 +4,8 @@ import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
 import { NavigationRoute, registerRoute } from 'workbox-routing';
 import { NetworkFirst } from 'workbox-strategies';
 
-import { scanStationPixels } from './utils/auroraUtils';
+import { fetchStationFeed, getStationsMissingFromFeed } from './services/stationFeed';
+import { scanStationPixels, type StationStatus } from './utils/auroraUtils';
 import {
   DEFAULT_NOTIFY_PREFS,
   getTriggeredStations,
@@ -53,10 +54,15 @@ async function loadPrefs(): Promise<NotifyPrefs> {
   return { ...DEFAULT_NOTIFY_PREFS };
 }
 
-/**
- * Returns the stations whose activity matches the user's notification prefs
- */
-async function checkAuroraActivity(prefs: NotifyPrefs): Promise<string[]> {
+const FEED_COLORS = {
+  QUIET: '#D7D7D7',
+  LOW: '#66CCEE',
+  MODERATE: '#228833',
+  HIGH: '#EE6677',
+} as const;
+
+/** Reads the given stations (all when `only` is undefined) from the FMI map image. */
+async function scanMapImage(only?: string[]): Promise<StationStatus[]> {
   try {
     const response = await fetch(`${AURORA_DATA_URL}?t=${Date.now()}`);
     if (!response.ok) return [];
@@ -68,11 +74,32 @@ async function checkAuroraActivity(prefs: NotifyPrefs): Promise<string[]> {
 
     ctx.drawImage(bitmap, 0, 0);
     const { data } = ctx.getImageData(0, 0, bitmap.width, bitmap.height);
-    return getTriggeredStations(scanStationPixels(data, bitmap.width, bitmap.height), prefs);
+    return scanStationPixels(data, bitmap.width, bitmap.height, only);
   } catch (e) {
-    console.error('[SW] Failed to check aurora activity:', e);
+    console.error('[SW] Failed to read aurora map image:', e);
     return [];
   }
+}
+
+/**
+ * Returns the stations whose activity matches the user's notification prefs. The open
+ * magnetometer feed is authoritative; the map image only covers stations the feed lacks (or
+ * every station if the feed fails).
+ */
+async function checkAuroraActivity(prefs: NotifyPrefs): Promise<string[]> {
+  const statuses: StationStatus[] = [];
+  let imageStations: string[] | undefined;
+  try {
+    const series = await fetchStationFeed(6);
+    statuses.push(
+      ...series.map((s) => ({ name: s.name, status: s.status, color: FEED_COLORS[s.status] })),
+    );
+    imageStations = getStationsMissingFromFeed(series);
+  } catch (e) {
+    console.warn('[SW] Magnetometer feed unavailable, falling back to map image:', e);
+  }
+  if (imageStations?.length !== 0) statuses.push(...(await scanMapImage(imageStations)));
+  return getTriggeredStations(statuses, prefs);
 }
 
 /**

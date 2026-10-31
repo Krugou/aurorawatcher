@@ -64,3 +64,33 @@ export const fetchNorwayWeather = async (lat: number, lon: number): Promise<Weat
     );
   }
 };
+
+export interface CloudForecastPoint {
+  time: number; // unix ms
+  cloudCover: number; // 0-100%
+}
+
+/** Hourly cloud-cover forecast (MET Norway locationforecast, global coverage). */
+export const fetchCloudForecast = async (
+  lat: number,
+  lon: number,
+): Promise<CloudForecastPoint[]> => {
+  const response = await fetch(
+    `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`,
+    { headers: { Accept: 'application/json' } },
+  );
+  if (!response.ok) throw new WeatherError(`Forecast API error: ${response.status}`);
+  const data = (await response.json()) as {
+    properties?: {
+      timeseries?: {
+        time: string;
+        data?: { instant?: { details?: { cloud_area_fraction?: number } } };
+      }[];
+    };
+  };
+  return (data.properties?.timeseries ?? []).flatMap((entry) => {
+    const cloudCover = entry.data?.instant?.details?.cloud_area_fraction;
+    const time = Date.parse(entry.time);
+    return typeof cloudCover === 'number' && Number.isFinite(time) ? [{ time, cloudCover }] : [];
+  });
+};

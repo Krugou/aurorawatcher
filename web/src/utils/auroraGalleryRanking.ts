@@ -16,7 +16,9 @@ export const isFullyRedAurora = (entry: AuroraGalleryRankable) =>
 
 export const compareAuroraColor = (a: AuroraGalleryRankable, b: AuroraGalleryRankable) =>
   Number(isFullyRedAurora(b)) - Number(isFullyRedAurora(a)) ||
-  auroraColorCount(b) - auroraColorCount(a) || b.score - a.score || b.timestamp - a.timestamp;
+  auroraColorCount(b) - auroraColorCount(a) ||
+  b.score - a.score ||
+  b.timestamp - a.timestamp;
 
 export const rankAuroraGallery = <T extends AuroraGalleryRankable>(
   entries: readonly T[],

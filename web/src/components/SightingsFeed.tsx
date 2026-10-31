@@ -47,11 +47,7 @@ export const SightingsFeed = () => {
   }, []);
 
   if (loading)
-    return (
-      <div className="font-mono text-xs text-aurora-teal px-4">
-        {t('social.scanning')}
-      </div>
-    );
+    return <div className="font-mono text-xs text-aurora-teal px-4">{t('social.scanning')}</div>;
 
   const newestTimestamp = sightings[0]?.timestamp?.toDate().getTime();
   const isStale = newestTimestamp !== undefined && now - newestTimestamp > STALE_AFTER_MS;

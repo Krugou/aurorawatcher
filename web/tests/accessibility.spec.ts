@@ -7,7 +7,7 @@ test.describe('Accessibility', () => {
   test('should not have any automatically detectable accessibility issues', async ({ page }) => {
     await page.goto('/');
     try {
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('networkidle', { timeout: 10000 });
     } catch {
       console.log('Network idle timeout');
     }
