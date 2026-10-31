@@ -195,7 +195,13 @@
     "blocked_hint": "Ota käyttöön selaimen asetuksista",
     "enable": "TILAA REVONTULIHÄLYTYKSET",
     "for_station": "Asemalle {{station}}",
-    "for_any": "Kaikki korkea aktiivisuus"
+    "for_any": "Kaikki korkea aktiivisuus",
+    "scope_label": "Ilmoita",
+    "scope_station": "Oma asema",
+    "scope_any": "Mikä tahansa asema",
+    "level_label": "Kun",
+    "level_high": "Punainen (korkea)",
+    "level_moderate": "Keltainen tai punainen"
   },
   "data_info": {
     "title": "Miten palvelu toimii & Tietolähteet",

@@ -4,6 +4,13 @@ import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
 import { NavigationRoute, registerRoute } from 'workbox-routing';
 import { NetworkFirst } from 'workbox-strategies';
 
+import { scanStationPixels } from './utils/auroraUtils';
+import {
+  DEFAULT_NOTIFY_PREFS,
+  getTriggeredStations,
+  type NotifyPrefs,
+} from './utils/notificationPrefs';
+
 declare let self: ServiceWorkerGlobalScope;
 
 // Workbox precaching
@@ -27,64 +34,78 @@ registerRoute(
 const AURORA_DATA_URL =
   'https://cdn.fmi.fi/weather-observations/products/magnetic-disturbance-observations/map-latest-fi.png';
 
-// Color definitions for HIGH activity (matches auroraUtils.ts)
-const HIGH_COLOR = { red: 238, green: 102, blue: 119 }; // #EE6677
+const PREFS_CACHE = 'aurora-prefs';
+const PREFS_URL = '/aurorawatcher/__notify-prefs.json';
+
+async function savePrefs(prefs: NotifyPrefs): Promise<void> {
+  const cache = await caches.open(PREFS_CACHE);
+  await cache.put(PREFS_URL, new Response(JSON.stringify(prefs)));
+}
+
+async function loadPrefs(): Promise<NotifyPrefs> {
+  try {
+    const cache = await caches.open(PREFS_CACHE);
+    const res = await cache.match(PREFS_URL);
+    if (res) return { ...DEFAULT_NOTIFY_PREFS, ...((await res.json()) as Partial<NotifyPrefs>) };
+  } catch (e) {
+    console.warn('[SW] Failed to load notification prefs:', e);
+  }
+  return { ...DEFAULT_NOTIFY_PREFS };
+}
 
 /**
- * Check if aurora image has HIGH activity
+ * Returns the stations whose activity matches the user's notification prefs
  */
-async function checkAuroraActivity(): Promise<boolean> {
+async function checkAuroraActivity(prefs: NotifyPrefs): Promise<string[]> {
   try {
     const response = await fetch(`${AURORA_DATA_URL}?t=${Date.now()}`);
-    if (!response.ok) return false;
+    if (!response.ok) return [];
 
-    const blob = await response.blob();
-    const bitmap = await createImageBitmap(blob);
-
+    const bitmap = await createImageBitmap(await response.blob());
     const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
     const ctx = canvas.getContext('2d');
-    if (!ctx) return false;
+    if (!ctx) return [];
 
     ctx.drawImage(bitmap, 0, 0);
-    const imageData = ctx.getImageData(0, 0, bitmap.width, bitmap.height);
-    const data = imageData.data;
-
-    // Check for HIGH color
-    for (let i = 0; i < data.length; i += 4) {
-      if (
-        data[i] === HIGH_COLOR.red &&
-        data[i + 1] === HIGH_COLOR.green &&
-        data[i + 2] === HIGH_COLOR.blue
-      ) {
-        return true;
-      }
-    }
-    return false;
+    const { data } = ctx.getImageData(0, 0, bitmap.width, bitmap.height);
+    return getTriggeredStations(scanStationPixels(data, bitmap.width, bitmap.height), prefs);
   } catch (e) {
     console.error('[SW] Failed to check aurora activity:', e);
-    return false;
+    return [];
   }
 }
 
 /**
  * Show notification for aurora activity
  */
-async function showAuroraNotification(savedStation: string | null): Promise<void> {
-  const title = savedStation
-    ? `🌌 ${savedStation.toUpperCase()}: HIGH ACTIVITY!`
-    : '🌌 Aurora Alert!';
-
-  await self.registration.showNotification(title, {
-    body: 'High magnetic activity detected. Great aurora viewing conditions!',
-    icon: '/aurorawatcher/pwa-192x192.png',
-    badge: '/aurorawatcher/pwa-192x192.png',
-    tag: 'aurora-alert',
-    data: {
-      url: '/aurorawatcher/',
+async function showAuroraNotification(stations: string[], title?: string, body?: string) {
+  await self.registration.showNotification(
+    title ?? `🌌 ${stations.slice(0, 3).join(', ').toUpperCase()}: aurora activity!`,
+    {
+      body: body ?? 'High magnetic activity detected. Great aurora viewing conditions!',
+      icon: '/aurorawatcher/pwa-192x192.png',
+      badge: '/aurorawatcher/pwa-192x192.png',
+      tag: 'aurora-alert',
+      data: {
+        url: '/aurorawatcher/',
+      },
     },
-  });
+  );
 }
 
+// Web Push: show payloads sent by a push service (title/body JSON or plain text)
+self.addEventListener('push', (event: PushEvent) => {
+  let title: string | undefined;
+  let body: string | undefined;
+  try {
+    const json = event.data?.json() as { title?: string; body?: string } | undefined;
+    title = json?.title;
+    body = json?.body;
+  } catch {
+    body = event.data?.text();
+  }
+  event.waitUntil(showAuroraNotification([], title ?? '🌌 Aurora Alert!', body));
+});
 // Handle notification click
 self.addEventListener('notificationclick', (event: NotificationEvent) => {
   event.notification.close();
@@ -114,9 +135,9 @@ self.addEventListener('periodicsync', ((event: PeriodicSyncEvent) => {
   if (event.tag === 'aurora-check') {
     event.waitUntil(
       (async () => {
-        const hasActivity = await checkAuroraActivity();
-        if (hasActivity) {
-          await showAuroraNotification(null);
+        const stations = await checkAuroraActivity(await loadPrefs());
+        if (stations.length > 0) {
+          await showAuroraNotification(stations);
         }
       })(),
     );
@@ -125,20 +146,22 @@ self.addEventListener('periodicsync', ((event: PeriodicSyncEvent) => {
 
 interface AuroraMessage {
   type: string;
-  savedStation?: string;
+  prefs?: NotifyPrefs;
 }
 
 self.addEventListener('message', (event: ExtendableMessageEvent) => {
   const data = event.data as AuroraMessage | undefined;
-  if (data?.type === 'CHECK_AURORA') {
+  if (data?.type === 'SET_NOTIFY_PREFS' && data.prefs) {
+    event.waitUntil(savePrefs(data.prefs));
+  } else if (data?.type === 'CHECK_AURORA') {
     event.waitUntil(
       (async () => {
-        const hasActivity = await checkAuroraActivity();
-        if (hasActivity) {
-          await showAuroraNotification(data.savedStation ?? null);
+        const prefs = data.prefs ?? (await loadPrefs());
+        const stations = await checkAuroraActivity(prefs);
+        if (stations.length > 0) {
+          await showAuroraNotification(stations);
         }
-        // Respond to the client
-        event.ports[0]?.postMessage({ hasActivity });
+        event.ports[0]?.postMessage({ hasActivity: stations.length > 0, stations });
       })(),
     );
   }

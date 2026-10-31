@@ -101,12 +101,20 @@ export const scanStationStatuses = (img: HTMLImageElement): StationStatus[] => {
     return [];
   }
 
+  return scanStationPixels(imageData, img.width, img.height);
+};
+
+export const scanStationPixels = (
+  imageData: ArrayLike<number>,
+  width: number,
+  height: number,
+): StationStatus[] => {
   const results: StationStatus[] = [];
 
   Object.entries(STATION_COORDINATES).forEach(([name, coords]) => {
     // Sample a 3x3 area to find the colored dot
-    const cx = Math.floor(coords.x * img.width);
-    const cy = Math.floor(coords.y * img.height);
+    const cx = Math.floor(coords.x * width);
+    const cy = Math.floor(coords.y * height);
     const boxSize = 10;
 
     let foundStatus = null;
@@ -115,9 +123,9 @@ export const scanStationStatuses = (img: HTMLImageElement): StationStatus[] => {
     // Search around the expected coordinate
     for (let y = cy - boxSize; y <= cy + boxSize; y++) {
       for (let x = cx - boxSize; x <= cx + boxSize; x++) {
-        if (x < 0 || x >= img.width || y < 0 || y >= img.height) continue;
+        if (x < 0 || x >= width || y < 0 || y >= height) continue;
 
-        const i = (y * img.width + x) * 4;
+        const i = (y * width + x) * 4;
         const r = imageData[i];
         const g = imageData[i + 1];
         const b = imageData[i + 2];

@@ -195,7 +195,13 @@
     "blocked_hint": "Enable in browser settings",
     "enable": "ENABLE AURORA ALERTS",
     "for_station": "For {{station}} station",
-    "for_any": "For any high activity"
+    "for_any": "For any high activity",
+    "scope_label": "Notify for",
+    "scope_station": "My station",
+    "scope_any": "Any station",
+    "level_label": "When",
+    "level_high": "Red (high)",
+    "level_moderate": "Yellow or red"
   },
   "data_info": {
     "title": "How it Works & Data Sources",

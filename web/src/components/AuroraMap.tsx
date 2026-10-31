@@ -11,6 +11,8 @@ import {
   StationStatus,
 } from '../utils/auroraUtils';
 import { normalizeStationKey } from '../utils/i18nUtils';
+import { getTriggeredStations, loadNotifyPrefs } from '../utils/notificationPrefs';
+import { NotificationPermission } from './NotificationPermission';
 import { Skeleton } from './Skeleton';
 
 const AURORA_DATA =
@@ -33,6 +35,7 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
   });
 
   const lastToastTimeRef = useRef<number>(0);
+  const lastPushTimeRef = useRef<number>(0);
 
   // Reset states when timestamp changes
   useEffect(() => {
@@ -77,6 +80,33 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
       // 2. Alerts Logic
       const now = Date.now();
       const COOLDOWN = 5 * 60 * 1000;
+
+      // PWA push notification, driven by the user's notification settings
+      if (
+        now - lastPushTimeRef.current > COOLDOWN * 6 &&
+        'Notification' in window &&
+        Notification.permission === 'granted' &&
+        'serviceWorker' in navigator
+      ) {
+        const stations = getTriggeredStations(scanned, {
+          ...loadNotifyPrefs(),
+          station: savedStation,
+        });
+        if (stations.length > 0) {
+          lastPushTimeRef.current = now;
+          void navigator.serviceWorker.ready.then((reg) =>
+            reg.showNotification(
+              `🌌 ${stations.slice(0, 3).join(', ').toUpperCase()}: ${t('map.toast')}`,
+              {
+                icon: '/aurorawatcher/pwa-192x192.png',
+                badge: '/aurorawatcher/pwa-192x192.png',
+                tag: 'aurora-alert',
+                data: { url: '/aurorawatcher/' },
+              },
+            ),
+          );
+        }
+      }
 
       if (now - lastToastTimeRef.current > COOLDOWN) {
         let shouldAlert = false;
@@ -226,6 +256,8 @@ export const AuroraMap = ({ timestamp }: AuroraMapProps) => {
             )}
           </div>
         </div>
+
+        <NotificationPermission savedStation={savedStation} />
 
         <div className="pt-4 border-t border-white/[0.06]">
           <p className="text-white/65 leading-relaxed font-mono text-xs mb-4">
