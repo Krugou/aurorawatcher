@@ -1,3 +1,9 @@
+## [1.31.1](https://github.com/Krugou/aurorawatcher/compare/v1.31.0...v1.31.1) (2026-10-31)
+
+### Bug Fixes
+
+- keep gauge needle inside arc so it no longer overlaps the verdict label ([1c48ffe](https://github.com/Krugou/aurorawatcher/commit/1c48ffecdb5214e4c1a90434c890a4028f37dcc8))
+
 # [1.31.0](https://github.com/Krugou/aurorawatcher/compare/v1.30.1...v1.31.0) (2026-10-31)
 
 ### Features
