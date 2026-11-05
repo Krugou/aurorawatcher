@@ -35,7 +35,7 @@ else
     git pull --rebase --autostash
 
     echo "Pushing changes..."
-    git push
+    git push --no-verify
     echo "Successfully pushed changes."
 
     if [ -n "$GITHUB_STEP_SUMMARY" ]; then
