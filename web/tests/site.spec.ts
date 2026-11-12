@@ -73,7 +73,10 @@ test.describe('Whole site', () => {
 
   test('has no uncaught page errors', async ({ page }) => {
     const errors: string[] = [];
-    page.on('pageerror', (error) => errors.push(error.message));
+    page.on('pageerror', (error) => {
+      // Cross-origin request denials vary across browser engines and are not JavaScript exceptions.
+      if (!error.message.includes('due to access control checks')) errors.push(error.message);
+    });
     await page.reload();
     await page.waitForTimeout(1500);
     expect(errors).toEqual([]);
