@@ -20,8 +20,19 @@ test.describe('Whole site', () => {
         });
         return;
       }
-      await route.fulfill({ status: 200, contentType: 'text/plain', body: '' });
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        headers: {
+          'access-control-allow-origin': 'http://localhost:3005',
+          'access-control-allow-credentials': 'true',
+        },
+        body: '{}',
+      });
     });
+    await page.route('**/dev-sw.js*', (route) =>
+      route.fulfill({ status: 200, contentType: 'application/javascript', body: '' }),
+    );
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
   });
