@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:3005/aurorawatcher/',
+    baseURL: 'http://localhost:3005/',
     trace: 'on-first-retry',
     headless: true,
   },
@@ -20,8 +20,8 @@ export default defineConfig({
     { name: 'Mobile Safari', use: { ...devices['iPhone 12'] } },
   ],
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3005/aurorawatcher/',
+    command: 'npm run dev -- --mode e2e',
+    url: 'http://localhost:3005/',
     reuseExistingServer: !process.env.CI,
   },
 });
