@@ -59,7 +59,7 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       devOptions: {
-        enabled: true,
+        enabled: mode !== 'e2e',
         type: 'module',
       },
     }),
@@ -67,7 +67,7 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     dedupe: ['react', 'react-dom'],
   },
-  base: mode === 'development' ? '/' : '/aurorawatcher/', // Assumes repository name is 'aurorawatcher' for GitHub Pages
+  base: mode === 'development' || mode === 'e2e' ? '/' : '/aurorawatcher/', // Assumes repository name is 'aurorawatcher' for GitHub Pages
   server: {
     port: 3005,
   },
