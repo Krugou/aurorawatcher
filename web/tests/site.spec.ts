@@ -8,11 +8,20 @@ const kpIndex = [{ time_tag: '2026-10-31T16:00:00', kp_index: 6, estimated_kp: 6
 
 test.describe('Whole site', () => {
   test.beforeEach(async ({ page }) => {
-    await page.route('**/services.swpc.noaa.gov/**', (route) =>
-      route.fulfill({
-        json: route.request().url().includes('planetary_k_index') ? kpIndex : solarWind,
-      }),
-    );
+    await page.route('**/*', async (route) => {
+      const requestUrl = new URL(route.request().url());
+      if (requestUrl.hostname === 'localhost') {
+        await route.continue();
+        return;
+      }
+      if (requestUrl.hostname === 'services.swpc.noaa.gov') {
+        await route.fulfill({
+          json: requestUrl.pathname.includes('planetary_k_index') ? kpIndex : solarWind,
+        });
+        return;
+      }
+      await route.fulfill({ status: 200, contentType: 'text/plain', body: '' });
+    });
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
   });
