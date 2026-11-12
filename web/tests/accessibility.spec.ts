@@ -5,6 +5,23 @@ import * as path from 'path';
 
 test.describe('Accessibility', () => {
   test('should not have any automatically detectable accessibility issues', async ({ page }) => {
+    test.setTimeout(60_000);
+    await page.route('**/*', async (route) => {
+      const requestUrl = new URL(route.request().url());
+      if (requestUrl.hostname === 'localhost') {
+        await route.continue();
+        return;
+      }
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        headers: {
+          'access-control-allow-origin': 'http://localhost:3005',
+          'access-control-allow-credentials': 'true',
+        },
+        body: '{}',
+      });
+    });
     await page.goto('/');
     try {
       await page.waitForLoadState('networkidle', { timeout: 10000 });
